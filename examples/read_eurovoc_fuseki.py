@@ -1,9 +1,10 @@
 from SPARQLWrapper import SPARQLWrapper, JSON
 
+URL = 'http://localhost:3030/DGFisma/query'  # make sure port number is correct.
+
 
 def main():
-    url = 'http://localhost:8080/fuseki/DGFisma/query'
-    sparql = SPARQLWrapper(url)
+    sparql = SPARQLWrapper(URL)
     sparql.setReturnFormat(JSON)
 
     if 0:
@@ -31,14 +32,19 @@ def main():
         for result in results["results"]["bindings"]:
             print(result)  # subject, predicate, object
 
-    if 0:
+    if 1:
         predicates = get_predicates(sparql)
 
         predicates_definition = list(filter(lambda x: 'definition' in x, predicates))
 
         predicates_term = list(filter(lambda x: 'term' in x, predicates))
 
-    get_definitions(sparql)
+    # if 1:
+    #
+    #     # classes? Don't seem to exist.
+
+    if 0:
+        get_definitions(sparql)
 
     return
 
