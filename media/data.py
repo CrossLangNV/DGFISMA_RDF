@@ -1,4 +1,3 @@
-import requests
 import os.path
 from zipfile import ZipFile
 
@@ -38,7 +37,7 @@ def download_file(filename, url):
         response = requests.get(url, stream=True)
         response.raise_for_status()
         # Write response data to file
-        for block in response.iter_content(2**12):
+        for block in response.iter_content(2 ** 12):
             fout.write(block)
 
 
