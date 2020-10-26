@@ -48,14 +48,13 @@ class CasContent(dict):
 
         view_text_html = cas.get_view(SOFA_ID_HTML2TEXT)
 
-        l_ro2 = []
+        l_ro = []
 
         for annot_p in view_text_html.select(VALUE_BETWEEN_TAG_TYPE_CLASS):
             if annot_p.tagName == "p":
 
                 ro_i = []
 
-                # TODO rename foo
                 for annot_span in view_text_html.select_covered(VALUE_BETWEEN_TAG_TYPE_CLASS, annot_p):
                     if annot_span.tagName == "span":
                         import re
@@ -72,9 +71,9 @@ class CasContent(dict):
                         ro_i.append({KEY_SENTENCE_FRAG_CLASS: class_atr,
                                      KEY_CHILD: annot_span.get_covered_text()})
 
-                l_ro2.append(ro_i)
+                l_ro.append(ro_i)
 
-        return cls.from_list(l_ro2)
+        return cls.from_list(l_ro)
 
 
 class ROContent(list):
