@@ -1,5 +1,5 @@
 import rdflib
-
+import warnings
 from media.data import get_eurovoc_rdf
 
 
@@ -9,7 +9,9 @@ def main():
     Returns:
 
     """
-    raise DeprecationWarning()
+    warnings.warn("deprecated", DeprecationWarning)
+
+    # warnings.W DeprecationWarning()
 
     g = rdflib.Graph()
 
