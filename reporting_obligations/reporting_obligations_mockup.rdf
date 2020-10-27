@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+  xmlns:ns1="http:/dgfisma.com/ontology/"
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+  <ns1:CatalogueDocument rdf:nodeID="N8f52ad93e199401abce8e22b9999bd16">
+    <ns1:hasReportingObligation>
+      <ns1:ReportingObligation rdf:nodeID="N8de3a8b17ac5481d95b8617fd7ee98bd">
+        <ns1:hasRegulatoryBody>
+          <skos:Concept rdf:nodeID="N9c971c74bab74e9c92cd41cad7931e87">
+            <skos:prefLabel xml:lang="en">the Board</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasRegulatoryBody>
+        <ns1:hasReport>
+          <skos:Concept rdf:nodeID="Nd0d36f1ab2c840d58e7c2042b35ddbdd">
+            <skos:prefLabel xml:lang="en">with data on each contribution debtor</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReport>
+        <ns1:hasPropTmp>
+          <skos:Concept rdf:nodeID="Nddd8eb19a9014a6299387525de911839">
+            <skos:prefLabel xml:lang="en">within 5 working days of the issuance of fee notices in accordance with Article 12(1 ) of Regulation ( EU ) No 1163/2014 , and in any case no later than 31 December of the year for which the fee notices are issued</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropTmp>
+        <ns1:hasEntity>
+          <skos:Concept rdf:nodeID="Nc48d0a9f1f3846899a61453f092a5ed5">
+            <skos:prefLabel xml:lang="en">as collected by the ECB in that year and used to determine the supervisory fees in accordance with Regulation ( EU ) No 1163/2014</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasEntity>
+        <ns1:hasVerb>
+          <skos:Concept rdf:nodeID="Nf6b2101750ef4c6dba3b94584097c54e">
+            <skos:prefLabel xml:lang="en">provide</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasVerb>
+        <ns1:hasReporter>
+          <skos:Concept rdf:nodeID="N0a8f3c01bf6244f5a313b44bfa2858d9">
+            <skos:prefLabel xml:lang="en">the ECB</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReporter>
+        <ns1:hasPropMod>
+          <skos:Concept rdf:nodeID="Nc04567cea54c42d0b397752b26a51350">
+            <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropMod>
+        <ns1:hasPropTmp>
+          <skos:Concept rdf:nodeID="Nb9d2b843139744a7b84f878e00f11506">
+            <skos:prefLabel xml:lang="en">Each year</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropTmp>
+      </ns1:ReportingObligation>
+    </ns1:hasReportingObligation>
+    <ns1:hasReportingObligation>
+      <ns1:ReportingObligation rdf:nodeID="Nb0687fda0bbd4a72b3972be8825fb9d7">
+        <ns1:hasReporter>
+          <skos:Concept rdf:nodeID="Nacb111c428134b189131cd9480c110e2">
+            <skos:prefLabel xml:lang="en">Data sharing between the ECB and the Board</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReporter>
+        <ns1:hasReport>
+          <skos:Concept rdf:nodeID="N47807cfe6a954383937dcf343e7d3160">
+            <skos:prefLabel xml:lang="en">avoiding duplication of the data verification process by the Board</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReport>
+        <ns1:hasPropAdv>
+          <skos:Concept rdf:nodeID="Na0f50dd69563424c82faf9d6d1130c65">
+            <skos:prefLabel xml:lang="en">also</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropAdv>
+        <ns1:hasVerb>
+          <skos:Concept rdf:nodeID="N1b011cb6716d4920801dafea0d21f9f7">
+            <skos:prefLabel xml:lang="en">allow</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasVerb>
+        <ns1:hasPropMod>
+          <skos:Concept rdf:nodeID="N9c1643212ce945048edc2283bf5aa2d5">
+            <skos:prefLabel xml:lang="en">would</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropMod>
+      </ns1:ReportingObligation>
+    </ns1:hasReportingObligation>
+    <ns1:hasReportingObligation>
+      <ns1:ReportingObligation rdf:nodeID="Ne927905cff16441ca503fac44d9cbf72">
+        <ns1:hasPropMod>
+          <skos:Concept rdf:nodeID="N12da30d1a6a64db1b9ed888716f15b0d">
+            <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropMod>
+        <ns1:hasVerb>
+          <skos:Concept rdf:nodeID="Na81b3a2bc15846e8a56a2ba4b32641d8">
+            <skos:prefLabel xml:lang="en">inform</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasVerb>
+        <ns1:hasRegulatoryBody>
+          <skos:Concept rdf:nodeID="N51f1400ca40740408133389da96eeb6a">
+            <skos:prefLabel xml:lang="en">the national resolution authority of the participating Member State in which the contribution debtor is established</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasRegulatoryBody>
+        <ns1:hasPropAdv>
+          <skos:Concept rdf:nodeID="N65308b28d92040fe9b230270e58e39be">
+            <skos:prefLabel xml:lang="en">In the event of any partial payment , non - payment or non - compliance with the conditions for payment specified in the contribution notice by the contribution debtor</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropAdv>
+        <ns1:hasReporter>
+          <skos:Concept rdf:nodeID="Ncb1060d855c5490385ac15aeae5ee53f">
+            <skos:prefLabel xml:lang="en">the Board</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReporter>
+      </ns1:ReportingObligation>
+    </ns1:hasReportingObligation>
+    <ns1:hasReportingObligation>
+      <ns1:ReportingObligation rdf:nodeID="Nad1ea18bbb5744a8b22552080f6e1b90">
+        <ns1:hasVerb>
+          <skos:Concept rdf:nodeID="N78c2fb257d3544cc853b2fc6769f3cf8">
+            <skos:prefLabel xml:lang="en">communicate</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasVerb>
+        <ns1:hasPropTmp>
+          <skos:Concept rdf:nodeID="N1d20be660e55435c950d0a11acf5d2c1">
+            <skos:prefLabel xml:lang="en">within 5 days of the issuance of fee notices</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropTmp>
+        <ns1:hasReporter>
+          <skos:Concept rdf:nodeID="N5885e192a4794375afcd73f424f0e798">
+            <skos:prefLabel xml:lang="en">the ECB</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReporter>
+        <ns1:hasPropAdv>
+          <skos:Concept rdf:nodeID="N0b5fe5863ce440e8b909197d7a4faea6">
+            <skos:prefLabel xml:lang="en">In case the ECB issues additional invoices or recalculates the annual supervisory fee in accordance with Article 7 of Regulation ( EU ) No 1163/2014</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropAdv>
+        <ns1:hasReport>
+          <skos:Concept rdf:nodeID="Ne2c787b1469c4a899c3f5da96c99f4c9">
+            <skos:prefLabel xml:lang="en">the new data</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReport>
+        <ns1:hasRegulatoryBody>
+          <skos:Concept rdf:nodeID="Na03a96084e1b4767b83597913c5d8a18">
+            <skos:prefLabel xml:lang="en">to the Board</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasRegulatoryBody>
+        <ns1:hasPropMod>
+          <skos:Concept rdf:nodeID="Neb49b21d4b8c44fe8d97dc84df78c745">
+            <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropMod>
+      </ns1:ReportingObligation>
+    </ns1:hasReportingObligation>
+    <ns1:hasReportingObligation>
+      <ns1:ReportingObligation rdf:nodeID="N6ab0a0b27161409aab15919945d96833">
+        <ns1:hasPropTmp>
+          <skos:Concept rdf:nodeID="N17375aba22f64a8dbe65fe0f70e23c56">
+            <skos:prefLabel xml:lang="en">upon request</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropTmp>
+        <ns1:hasVerb>
+          <skos:Concept rdf:nodeID="N4f2fb237e22149aa96ae3659b6ec66bd">
+            <skos:prefLabel xml:lang="en">provide</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasVerb>
+        <ns1:hasPropAdv>
+          <skos:Concept rdf:nodeID="N57da4aa9814e49d293d6d8ada0da72f6">
+            <skos:prefLabel xml:lang="en">In case no data provided by the national competent authority is available</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropAdv>
+        <ns1:hasRegulatoryBody>
+          <skos:Concept rdf:nodeID="N6c946fd9aaaf43428f07be803ebf754f">
+            <skos:prefLabel xml:lang="en">the Board</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasRegulatoryBody>
+        <ns1:hasReporter>
+          <skos:Concept rdf:nodeID="N4f62f7092b344871a90c4be14b0487ba">
+            <skos:prefLabel xml:lang="en">the contribution debtor</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReporter>
+        <ns1:hasPropTmp>
+          <skos:Concept rdf:nodeID="N25f2de05abac49f98889cce01ae8af12">
+            <skos:prefLabel xml:lang="en">within a deadline set by the Board</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropTmp>
+        <ns1:hasReport>
+          <skos:Concept rdf:nodeID="Nbdf776a03431441bbd396f8965fd9fec">
+            <skos:prefLabel xml:lang="en">with the necessary data</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReport>
+        <ns1:hasPropMod>
+          <skos:Concept rdf:nodeID="N4501efbf92bb43cf810a0d64971657db">
+            <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropMod>
+      </ns1:ReportingObligation>
+    </ns1:hasReportingObligation>
+    <ns1:hasReportingObligation>
+      <ns1:ReportingObligation rdf:nodeID="Nf501a18b8fcf4505ba8c6a2b611119cb">
+        <ns1:hasReport>
+          <skos:Concept rdf:nodeID="N3a1be1b7fa484f3b916d50c3028a267e">
+            <skos:prefLabel xml:lang="en">A contribution notice</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReport>
+        <ns1:hasPropMod>
+          <skos:Concept rdf:nodeID="Nccf5ebd16dfa4f518562bffa94055dbb">
+            <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropMod>
+        <ns1:hasReporter>
+          <skos:Concept rdf:nodeID="N72b9303a227f468da5e9c9b0cec571d6">
+            <skos:prefLabel xml:lang="en">by the Board</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReporter>
+        <ns1:hasRegulatoryBody>
+          <skos:Concept rdf:nodeID="Na13ee810d8964605ba3075082d20cb72">
+            <skos:prefLabel xml:lang="en">to the contribution debtors</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasRegulatoryBody>
+        <ns1:hasVerb>
+          <skos:Concept rdf:nodeID="N6ec248824568486ab47f770866727367">
+            <skos:prefLabel xml:lang="en">issued</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasVerb>
+      </ns1:ReportingObligation>
+    </ns1:hasReportingObligation>
+    <ns1:hasReportingObligation>
+      <ns1:ReportingObligation rdf:nodeID="N3ae237a436f54159aec7d3a6e0ec1c2d">
+        <ns1:hasPropMod>
+          <skos:Concept rdf:nodeID="N73de08afdc564841ab46d42008bf11c4">
+            <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropMod>
+        <ns1:hasRegulatoryBody>
+          <skos:Concept rdf:nodeID="Ncb072516856a4a6cb00cb2bf5e234ebc">
+            <skos:prefLabel xml:lang="en">the contribution notice</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasRegulatoryBody>
+        <ns1:hasVerb>
+          <skos:Concept rdf:nodeID="Nd390d95eb7af40fcadbecbad3384d943">
+            <skos:prefLabel xml:lang="en">notify</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasVerb>
+        <ns1:hasReporter>
+          <skos:Concept rdf:nodeID="N80ac9c92751543dcb09d82f7dbdbf4c2">
+            <skos:prefLabel xml:lang="en">The Board</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReporter>
+        <ns1:hasRegulatoryBody>
+          <skos:Concept rdf:nodeID="Nda54575bd5854e5c82dda39a91323de6">
+            <skos:prefLabel xml:lang="en">through any of the following means ❮electronically or by other comparable means of communication ‖ by fax ‖ by express courier service ‖ by registered mail with a form for acknowledgement of receipt ‖ by service or delivery by hand❯</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasRegulatoryBody>
+      </ns1:ReportingObligation>
+    </ns1:hasReportingObligation>
+    <ns1:hasReportingObligation>
+      <ns1:ReportingObligation rdf:nodeID="Na0eaa82ff7304b6dbac9be2ee0ebd9fc">
+        <ns1:hasVerb>
+          <skos:Concept rdf:nodeID="Nc8751e6f8cd244728ba1bc90cf10541e">
+            <skos:prefLabel xml:lang="en">share</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasVerb>
+        <ns1:hasReporter>
+          <skos:Concept rdf:nodeID="N55832205d10f4094a332bef1c60c814f">
+            <skos:prefLabel xml:lang="en">the Board</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReporter>
+        <ns1:hasRegulatoryBody>
+          <skos:Concept rdf:nodeID="N1c499e711b5e4464a3017f51f30eebe7">
+            <skos:prefLabel xml:lang="en">with a service provider</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasRegulatoryBody>
+        <ns1:hasReport>
+          <skos:Concept rdf:nodeID="N69f06440f43640498325d0a11f548646">
+            <skos:prefLabel xml:lang="en">the data provided by the ECB</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReport>
+        <ns1:hasPropMnr>
+          <skos:Concept rdf:nodeID="N2a9030a610ef4bea8864e2fd53c6df1a">
+            <skos:prefLabel xml:lang="en">in accordance with applicable confidentiality provisions</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropMnr>
+      </ns1:ReportingObligation>
+    </ns1:hasReportingObligation>
+    <ns1:hasReportingObligation>
+      <ns1:ReportingObligation rdf:nodeID="Nf3842bcdd2354896806106e8c57372ea">
+        <ns1:hasPropMod>
+          <skos:Concept rdf:nodeID="Ne16bf7663a4c4fb596125126ea0280a5">
+            <skos:prefLabel xml:lang="en">should</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropMod>
+        <ns1:hasReporter>
+          <skos:Concept rdf:nodeID="N9f11beaa6e814f2f9a83396fbd41f50a">
+            <skos:prefLabel xml:lang="en">Such a final system</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReporter>
+        <ns1:hasEntity>
+          <skos:Concept rdf:nodeID="Nfd32b8e0284649fcaba0ecbf30273c20">
+            <skos:prefLabel xml:lang="en">not only for significant entities , but for all entities that are subjected to the Single Resolution Mechanism</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasEntity>
+        <ns1:hasReport>
+          <skos:Concept rdf:nodeID="N92a0c939b5d84d3b9f93d76291ed26ae">
+            <skos:prefLabel xml:lang="en">for the determination and raising of administrative contributions</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReport>
+        <ns1:hasVerb>
+          <skos:Concept rdf:nodeID="N210eb78f6fbc4cfb9375ec4ed8b5ef90">
+            <skos:prefLabel xml:lang="en">provide</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasVerb>
+      </ns1:ReportingObligation>
+    </ns1:hasReportingObligation>
+    <ns1:hasReportingObligation>
+      <ns1:ReportingObligation rdf:nodeID="Nbfb8d3b7678b489d9a6f68947a7e1bf9">
+        <ns1:hasReporter>
+          <skos:Concept rdf:nodeID="N4feb6e7b10cf4520afcfdbd424ebeff7">
+            <skos:prefLabel xml:lang="en">Any mandate given to a service provider for the purposes of outsourcing tasks</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReporter>
+        <ns1:hasPropMod>
+          <skos:Concept rdf:nodeID="Nbb7e948cff0b4874a310d3d121b46e27">
+            <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropMod>
+        <ns1:hasPropMnr>
+          <skos:Concept rdf:nodeID="N032be8c0a9aa4cb18204ce666ed5488f">
+            <skos:prefLabel xml:lang="en">clearly</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropMnr>
+        <ns1:hasReport>
+          <skos:Concept rdf:nodeID="N9d9914b74f52472c9cc67a8bd12c4992">
+            <skos:prefLabel xml:lang="en">the duration of the mandate and the specific tasks that are outsourced</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReport>
+        <ns1:hasVerb>
+          <skos:Concept rdf:nodeID="Ndd9adbfc7b3b42b781bc065ea6cd390d">
+            <skos:prefLabel xml:lang="en">state</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasVerb>
+      </ns1:ReportingObligation>
+    </ns1:hasReportingObligation>
+    <ns1:hasReportingObligation>
+      <ns1:ReportingObligation rdf:nodeID="N0fcfafec7e6c4380ad704b9ec6f84a95">
+        <ns1:hasReport>
+          <skos:Concept rdf:nodeID="Nc212c4f3245343408ad89321560f87ec">
+            <skos:prefLabel xml:lang="en">with the data at its disposal</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReport>
+        <ns1:hasPropMod>
+          <skos:Concept rdf:nodeID="Nc954449992f3420d836665e857e51345">
+            <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropMod>
+        <ns1:hasRegulatoryBody>
+          <skos:Concept rdf:nodeID="N11d257a6066b439cae6077354b10579c">
+            <skos:prefLabel xml:lang="en">the Board</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasRegulatoryBody>
+        <ns1:hasPropAdv>
+          <skos:Concept rdf:nodeID="N55fd68c6a75b433fb210958458fbcf0f">
+            <skos:prefLabel xml:lang="en">In case no data provided by the ECB is available</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropAdv>
+        <ns1:hasReporter>
+          <skos:Concept rdf:nodeID="N89d51a77976c48b590a3d038efc4dd18">
+            <skos:prefLabel xml:lang="en">the relevant national competent authority</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReporter>
+        <ns1:hasPropTmp>
+          <skos:Concept rdf:nodeID="Nc41e20d6242a4949948a6ad9fa567d76">
+            <skos:prefLabel xml:lang="en">upon request</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropTmp>
+        <ns1:hasVerb>
+          <skos:Concept rdf:nodeID="Nadcb5e82ccc34d409dec3474f1e485ca">
+            <skos:prefLabel xml:lang="en">provide</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasVerb>
+      </ns1:ReportingObligation>
+    </ns1:hasReportingObligation>
+    <ns1:hasReportingObligation>
+      <ns1:ReportingObligation rdf:nodeID="Ne5f8892cd9364f149cf5fff19e797744">
+        <ns1:hasRegulatoryBody>
+          <skos:Concept rdf:nodeID="Nf5964c9a7feb45bab3d295b5e8cefaec">
+            <skos:prefLabel xml:lang="en">to the Commission</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasRegulatoryBody>
+        <ns1:hasReporter>
+          <skos:Concept rdf:nodeID="Ne4cc402cb6424c77b4909c68b0973862">
+            <skos:prefLabel xml:lang="en">The Board</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReporter>
+        <ns1:hasPropMod>
+          <skos:Concept rdf:nodeID="N3c9e646933f144d492521ac1d4475086">
+            <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropMod>
+        <ns1:hasVerb>
+          <skos:Concept rdf:nodeID="Ne9660000f12a4bbb82fae73d46bcca04">
+            <skos:prefLabel xml:lang="en">report</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasVerb>
+        <ns1:hasPropTmp>
+          <skos:Concept rdf:nodeID="N45de68677f484f6ea70c61238b90c41b">
+            <skos:prefLabel xml:lang="en">yearly</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropTmp>
+        <ns1:hasReport>
+          <skos:Concept rdf:nodeID="N0f17568dcf8949158c9aa19e0eebfe54">
+            <skos:prefLabel xml:lang="en">on the appropriateness of the allocation laid down in paragraph 1 , in the light of the changing composition of the two categories of entities and groups</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReport>
+      </ns1:ReportingObligation>
+    </ns1:hasReportingObligation>
+    <ns1:hasReportingObligation>
+      <ns1:ReportingObligation rdf:nodeID="N3163a88d83b946c499367182fba2403a">
+        <ns1:hasRegulatoryBody>
+          <skos:Concept rdf:nodeID="Nb1b5ee0e634041debc46bc68cfff7b41">
+            <skos:prefLabel xml:lang="en">an authority for the purposes of verifying the authenticity of individual contribution decisions</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasRegulatoryBody>
+        <ns1:hasReporter>
+          <skos:Concept rdf:nodeID="Nf36ce42a3f6a4e75a9ba06b96b2ff0cf">
+            <skos:prefLabel xml:lang="en">The government of each participating Member State</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReporter>
+        <ns1:hasVerb>
+          <skos:Concept rdf:nodeID="N87218aea33104d68b121c42e16c57fd5">
+            <skos:prefLabel xml:lang="en">notify</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasVerb>
+        <ns1:hasPropMod>
+          <skos:Concept rdf:nodeID="N628cc8fc9b4e44189b4f658dbc5f8746">
+            <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropMod>
+        <ns1:hasRegulatoryBody>
+          <skos:Concept rdf:nodeID="N0d69b089e0c7447885543a01892b2aff">
+            <skos:prefLabel xml:lang="en">to the Board and to the Court of Justice of the European Union</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasRegulatoryBody>
+      </ns1:ReportingObligation>
+    </ns1:hasReportingObligation>
+    <ns1:hasReportingObligation>
+      <ns1:ReportingObligation rdf:nodeID="N8fb513c7a03445349ad101e64729f6c7">
+        <ns1:hasVerb>
+          <skos:Concept rdf:nodeID="Ne92f142f20404302a9e5e8a90a10bbd8">
+            <skos:prefLabel xml:lang="en">collected</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasVerb>
+        <ns1:hasPropMod>
+          <skos:Concept rdf:nodeID="N6d1b2153cd1641a792a1cf9349f444de">
+            <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropMod>
+        <ns1:hasRegulatoryBody>
+          <skos:Concept rdf:nodeID="N5f470c1c11fb42b684286374d072b6ed">
+            <skos:prefLabel xml:lang="en">from the contribution debtor of that group</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasRegulatoryBody>
+        <ns1:hasReport>
+          <skos:Concept rdf:nodeID="Ncaaebe262bcf40e1948606454ceb68fa">
+            <skos:prefLabel xml:lang="en">The annual contribution due by the entities referred to in Article 2 of Regulation ( EU ) No 806/2014 that are members of the same group</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReport>
+      </ns1:ReportingObligation>
+    </ns1:hasReportingObligation>
+    <ns1:hasReportingObligation>
+      <ns1:ReportingObligation rdf:nodeID="Nde9d0704bcec41708e3a02614f4a21e0">
+        <ns1:hasPropTmp>
+          <skos:Concept rdf:nodeID="N45a3cc98a664467d87d2bd17698b9c5b">
+            <skos:prefLabel xml:lang="en">in the previous financial year</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropTmp>
+        <ns1:hasVerb>
+          <skos:Concept rdf:nodeID="Na87948b910f5453481c0ad75f730035d">
+            <skos:prefLabel xml:lang="en">collected</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasVerb>
+        <ns1:hasReporter>
+          <skos:Concept rdf:nodeID="Ne860afa2102645a083b639e035d4c369">
+            <skos:prefLabel xml:lang="en">by the ECB</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReporter>
+        <ns1:hasReport>
+          <skos:Concept rdf:nodeID="N3310603027af4864b3c9a18968067185">
+            <skos:prefLabel xml:lang="en">the data</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReport>
+      </ns1:ReportingObligation>
+    </ns1:hasReportingObligation>
+    <ns1:hasReportingObligation>
+      <ns1:ReportingObligation rdf:nodeID="Nf369e9dadddf4f7b96fec64dad1cb12e">
+        <ns1:hasVerb>
+          <skos:Concept rdf:nodeID="N0b6e8bae348f457087106952fb0fc1cd">
+            <skos:prefLabel xml:lang="en">collected</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasVerb>
+        <ns1:hasReporter>
+          <skos:Concept rdf:nodeID="Naef07a7ac9ac4d36acb9006b60ba3b5a">
+            <skos:prefLabel xml:lang="en">by the ECB</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReporter>
+        <ns1:hasPropTmp>
+          <skos:Concept rdf:nodeID="Nb28565ef1d1d43b49ad5527c6cb372f5">
+            <skos:prefLabel xml:lang="en">in those financial years</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropTmp>
+        <ns1:hasReport>
+          <skos:Concept rdf:nodeID="Nade90aed53ee4621a6d7b50b832cf438">
+            <skos:prefLabel xml:lang="en">the data</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReport>
+      </ns1:ReportingObligation>
+    </ns1:hasReportingObligation>
+    <ns1:hasReportingObligation>
+      <ns1:ReportingObligation rdf:nodeID="N0bd9de714c06402f9dd96d7c7995160c">
+        <ns1:hasVerb>
+          <skos:Concept rdf:nodeID="N24fa1df77b8c4673a61f65d502dd2327">
+            <skos:prefLabel xml:lang="en">provide</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasVerb>
+        <ns1:hasReport>
+          <skos:Concept rdf:nodeID="Nec77aad02ee043728bc08f52b6ee1a53">
+            <skos:prefLabel xml:lang="en">with the data as specified in Article 6 and collected by the ECB in accordance with Regulation ( EU ) No 1163/2014 in financial years belonging to the provisional period</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReport>
+        <ns1:hasReporter>
+          <skos:Concept rdf:nodeID="N163fef07c8df4e6bad04cccc50f94254">
+            <skos:prefLabel xml:lang="en">the ECB</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasReporter>
+        <ns1:hasRegulatoryBody>
+          <skos:Concept rdf:nodeID="N3bd118d9d13846d4b0ee88b646816df0">
+            <skos:prefLabel xml:lang="en">the Board</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasRegulatoryBody>
+        <ns1:hasPropMod>
+          <skos:Concept rdf:nodeID="Nd3cd5892b4204a82ba9356091584362b">
+            <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropMod>
+        <ns1:hasPropTmp>
+          <skos:Concept rdf:nodeID="Nc0cde9ff5f604c17bbd7b538b13f281e">
+            <skos:prefLabel xml:lang="en">Within 30 days of the entry into force of this Regulation</skos:prefLabel>
+          </skos:Concept>
+        </ns1:hasPropTmp>
+      </ns1:ReportingObligation>
+    </ns1:hasReportingObligation>
+  </ns1:CatalogueDocument>
+</rdf:RDF>
