@@ -1,113 +1,216 @@
 import os
 
-from rdflib import URIRef, BNode, Literal, Namespace, Graph
-from rdflib.namespace import SKOS, RDF
+from rdflib import BNode, Literal, Namespace, Graph
+from rdflib.namespace import SKOS, RDF, RDFS, OWL, URIRef, DC
 
 from reporting_obligations.cas_parser import CasContent, KEY_CHILD, KEY_SENTENCE_FRAG_CLASS
 
-# TODO find good URI base
 NS_BASE = Namespace("http://dgfisma.com/")
-RO_BASE = Namespace(NS_BASE + 'reporting_obligation/')
-ONT_BASE = Namespace(NS_BASE + 'ontology/reporting_obligations#')
+RO_BASE = Namespace(NS_BASE + 'reporting_obligation#')
 
-MOCKUP_FILENAME = 'reporting_obligations_mockup.rdf'
+ROOT = os.path.join(os.path.dirname(__file__), '..')
+MOCKUP_FILENAME = os.path.join(ROOT, 'data/examples', 'reporting_obligations_mockup.rdf')
+
+# FROM https://github.com/CrossLangNV/DGFISMA_reporting_obligations
+D_ENTITIES = {'ARG0': (RO_BASE['hasReporter'], RO_BASE['Reporter']),
+              'ARG1': (RO_BASE['hasReport'], RO_BASE['Report']),
+              'ARG2': (RO_BASE['hasRegulatoryBody'], RO_BASE['RegulatoryBody']),
+              'ARG3': (RO_BASE['hasDetails'], RO_BASE['Details']),
+
+              'V': (RO_BASE['hasVerb'], RO_BASE['Verb']),
+
+              'ARGM-TMP': (RO_BASE['hasPropTmp'], RO_BASE['PropTmp']),
+              'ARGM-LOC': (RO_BASE['hasPropLoc'], RO_BASE['PropLoc']),
+              'ARGM-CAU': (RO_BASE['hasPropCau'], RO_BASE['PropCau']),
+              'ARGM-EXT': (RO_BASE['hasPropExt'], RO_BASE['PropExt']),
+              'ARGM-MNR': (RO_BASE['hasPropMnr'], RO_BASE['PropMnr']),
+              'ARGM-PNC': (RO_BASE['hasPropPnc'], RO_BASE['PropPnc']),
+              'ARGM-ADV': (RO_BASE['hasPropAdv'], RO_BASE['PropAdv']),
+              'ARGM-DIR': (RO_BASE['hasPropDir'], RO_BASE['PropDir']),
+              'ARGM-NEG': (RO_BASE['hasPropNeg'], RO_BASE['PropNeg']),
+              'ARGM-MOD': (RO_BASE['hasPropMod'], RO_BASE['PropMod']),
+              'ARGM-DIS': (RO_BASE['hasPropDis'], RO_BASE['PropDis']),
+              }
 
 
-def main(l: CasContent):
-    """ Build an RDF.
-    Looks quite clean if implemented with RDFLib https://github.com/RDFLib/rdflib
-
-    :param l: CasContent dictionary
-    :return:
+class ROGraph(Graph):
+    """
+    Reporting Obligation Graph
     """
 
+    # Final
+    # Init classes & connections
+    # Classes
+    class_cat_doc = RO_BASE.CatalogueDocument
+    class_rep_obl = RO_BASE['ReportingObligation']
+    # Connections
+    prop_has_rep_obl = RO_BASE['hasReportingObligation']
+    prop_has_entity = RO_BASE['hasEntity']
+
+    def __init__(self, *args, **kwargs):
+        """ Looks quite clean if implemented with RDFLib https://github.com/RDFLib/rdflib
+        Ontology can be visualised with http://www.visualdataweb.de/webvowl/
+
+        Args:
+            *args:
+            **kwargs:
+        """
+        super(ROGraph, self).__init__(*args, **kwargs)
+
+        self.bind("skos", SKOS)
+        self.bind("owl", OWL)
+        self.bind("dgf", NS_BASE)
+        self.bind("dgfro", RO_BASE)
+        self.bind("dc", DC)
+
+        """
+        describe ontology
+        """
+        # header info
+        ont = OWL.Ontology
+        self.add((RO_BASE[''],
+                  RDF.type,
+                  ont
+                  ))
+        self.add((RO_BASE[''],
+                  DC.title,
+                  Literal("Reporting obligations (RO) vocabulary")))
+
+        # OWL classes
+        self.add((self.class_cat_doc,
+                  RDF.type,
+                  RDFS.Class
+                  ))
+        self.add((self.class_cat_doc,
+                  RDF.type,
+                  OWL.Class
+                  ))
+
+        # OWL properties
+        self.add((self.prop_has_rep_obl,
+                  RDF.type,
+                  RDF.Property
+                  ))
+        self.add((self.prop_has_rep_obl,
+                  RDFS.domain,
+                  self.class_cat_doc
+                  ))
+        self.add((self.prop_has_rep_obl,
+                  RDFS.range,
+                  self.class_rep_obl
+                  ))
+
+        self.add_property(self.prop_has_rep_obl, self.class_cat_doc, self.class_rep_obl)
+
+        self.add_property(self.prop_has_entity, self.class_rep_obl, SKOS.Concept)
+
+        for prop, cls in D_ENTITIES.values():
+            self.add_property(prop, self.class_rep_obl, cls)
+            # Sub property
+            self.add((prop,
+                      RDFS.subPropertyOf,
+                      self.prop_has_entity
+                      ))
+            self.add_sub_class(cls, SKOS.Concept)
+
+    def add_cas_content(self, l: CasContent):
+        """ Build the RDF from cas content.
+        """
+
+        # add a document
+        if 0:
+            cat_doc = RO_BASE['catalogue_document/' + _serial_number_generator()()]
+        else:
+            cat_doc = BNode()
+
+        self.add((cat_doc, RDF.type, self.class_cat_doc))
+
+        # iterate over reporting obligations (RO's)
+        list_ro = l[KEY_CHILD]
+        for ro_i in list_ro:
+
+            if 0:
+                rep_obl_i = BNode(_prefix=RO_BASE + 'reporting_obligation/')
+            else:
+                rep_obl_i = BNode()
+
+            self.add((rep_obl_i, RDF.type, self.class_rep_obl))
+            # link to catalog document + ontology
+            self.add((cat_doc, self.prop_has_rep_obl, rep_obl_i))
+
+            # iterate over different entities of RO
+            for ent_i in ro_i:
+
+                if 0:
+                    concept_i = BNode(_prefix=RO_BASE + 'entity/')
+                else:
+                    concept_i = BNode()
+
+                t_pred_cls = D_ENTITIES.get(ent_i[KEY_SENTENCE_FRAG_CLASS])
+                if t_pred_cls is None:
+                    # Unknown property/entity class
+                    # TODO catch in an other way?
+
+                    print(f'Unknown sentence entitity class: {ent_i[KEY_SENTENCE_FRAG_CLASS]}')
+
+                    pred_i = RO_BASE['hasEntity']
+                    cls = SKOS.Concept
+
+                else:
+                    pred_i, cls = t_pred_cls
+
+                # type definition
+                self.add((concept_i, RDF.type, cls))
+                # Add the string representation
+                value_i = Literal(ent_i[KEY_CHILD], lang='en')
+                self.add((concept_i, SKOS.prefLabel, value_i))
+
+                # connect entity with RO
+                self.add((rep_obl_i, pred_i, concept_i))
+
+    def add_property(self, property: URIRef, domain: URIRef, ran: URIRef) -> None:
+        """ shared function to build all necessary triples for a property in the ontology.
+
+        Args:
+            g:
+            property:
+            domain:
+            ran:
+
+        Returns:
+            None
+        """
+        self.add((property,
+                  RDF.type,
+                  RDF.Property
+                  ))
+        self.add((property,
+                  RDFS.domain,
+                  domain
+                  ))
+        self.add((property,
+                  RDFS.range,
+                  ran
+                  ))
+
+    def add_sub_class(self,
+                      child_cls: URIRef,
+                      parent_cls: URIRef
+                      ) -> None:
+        self.add((child_cls,
+                  RDFS.subClassOf,
+                  parent_cls
+                  ))
+
+    def get_graph(self):
+        return self.g
+
+
+def example_querying(filename):
+
+    # Immediately test if parsing works
     g = Graph()
-    g.bind("skos", SKOS)
-    g.bind("dgf", NS_BASE)
-
-    # new classes
-    # class_cat_doc = URIRef(ONT_BASE + 'CatalogueDocument')
-    class_cat_doc = URIRef(base=ONT_BASE, value='CatalogueDocument')
-    class_rep_obl = URIRef(base=ONT_BASE, value='ReportingObligation')
-    has_rep_obl = URIRef(base=ONT_BASE, value='hasReportingObligation')
-
-    # TODO in a test keys should be checked with what comes out of cas!
-    # FROM https://github.com/CrossLangNV/DGFISMA_reporting_obligations
-    d_entities = {'ARG0': URIRef(base=ONT_BASE, value='hasReporter'),
-                  'ARG1': URIRef(base=ONT_BASE, value='hasReport'),
-                  'ARG2': URIRef(base=ONT_BASE, value='hasRegulatoryBody'),
-                  'ARG3': URIRef(base=ONT_BASE, value='hasDetails'),
-
-                  'V': URIRef(base=ONT_BASE, value='hasVerb'),  # TODO
-
-                  'ARGM-TMP': URIRef(base=ONT_BASE, value='hasPropTmp'),
-                  'ARGM-LOC': URIRef(base=ONT_BASE, value='hasPropLoc'),
-                  'ARGM-CAU': URIRef(base=ONT_BASE, value='hasPropCau'),
-                  'ARGM-EXT': URIRef(base=ONT_BASE, value='hasPropExt'),
-                  'ARGM-MNR': URIRef(base=ONT_BASE, value='hasPropMnr'),
-                  'ARGM-PNC': URIRef(base=ONT_BASE, value='hasPropPnc'),
-                  'ARGM-ADV': URIRef(base=ONT_BASE, value='hasPropAdv'),
-                  'ARGM-DIR': URIRef(base=ONT_BASE, value='hasPropDir'),
-                  'ARGM-NEG': URIRef(base=ONT_BASE, value='hasPropNeg'),
-                  'ARGM-MOD': URIRef(base=ONT_BASE, value='hasPropMod'),
-                  'ARGM-DIS': URIRef(base=ONT_BASE, value='hasPropDis'),
-                  }
-
-    # add a document
-    # TODO get rid of BNodes
-    # cat_doc = URIRef(base=RO_BASE + 'catalogue_document/', value=_serial_number_generator()())
-    cat_doc = BNode()
-
-    g.add((cat_doc, RDF.type, class_cat_doc))
-
-    # iterate over reporting obligations (RO's)
-    list_ro = l[KEY_CHILD]
-    for ro_i in list_ro:
-
-        # TODO get rid of BNodes # rep_obl_i = BNode(_prefix=RO_BASE + 'reporting_obligation/')
-        rep_obl_i = BNode()
-        g.add((rep_obl_i, RDF.type, class_rep_obl))
-        # link to catalog document
-        g.add((cat_doc, has_rep_obl, rep_obl_i))
-
-        # iterate over different entities of RO
-        for ent_i in ro_i:
-            # TODO instead of saving everything as skos, make distinctions?
-
-            # TODO get rid of BNodes # concept_i = BNode(_prefix=RO_BASE + 'entity/')
-            concept_i = BNode()
-            # type definition
-            g.add((concept_i, RDF.type, SKOS.Concept))
-            # Add the string representation
-            value_i = Literal(ent_i[KEY_CHILD], lang='en')
-            g.add((concept_i, SKOS.prefLabel, value_i))
-
-            # TODO
-            # The link with RO defines the class of the entity
-
-            pred_i = d_entities.get(ent_i[KEY_SENTENCE_FRAG_CLASS])
-
-            if pred_i is None:
-                # Unknown property/entity class
-                # TODO catch in an other way?
-
-                pred_i = URIRef(base=ONT_BASE, value='hasEntity')
-
-            g.add((rep_obl_i, pred_i, concept_i))
-
-    # XML = RDF
-    print(g.serialize(format="pretty-xml").decode("utf-8"))
-    if 1:  # save
-        g.serialize(destination=MOCKUP_FILENAME, format="pretty-xml")
-
-    return g
-
-
-def example_querying():
-    g = Graph()
-
-    # ... add some triples to g somehow ...
-    g.parse(MOCKUP_FILENAME)
+    g.parse(filename)
 
     if 1:
         get_all(g)
@@ -152,7 +255,6 @@ def get_different_entities(g: Graph):
             rdf:type dgfo:ReportingObligation .
             ?object rdf:type skos:Concept
         }
-
     """
 
     qres = g.query(q)
@@ -188,20 +290,31 @@ def get_all_from_class(g: Graph, sentence_segment_class):
 
 
 if __name__ == '__main__':
-    # TODO start from cas
-    folder_cas = 'reporting_obligations/output_reporting_obligations'
-    # filename_cas = 'cas_laurens.xml'
-    filename_cas = 'ro + html2text.xml'  # 17 RO's0
-    rel_path_typesystem = 'reporting_obligations/output_reporting_obligations/typesystem_tmp.xml'
 
-    # from ROOT
-    path_cas = os.path.join(os.path.dirname(__file__), '..', folder_cas, filename_cas)
-    path_typesystem = os.path.join(os.path.dirname(__file__), '..', rel_path_typesystem)
+    b_build = 1
+    if b_build:  # already processed
+        b_save = True
+        b_print = False
 
-    l = CasContent.from_cas(path_cas, path_typesystem)
+        g = ROGraph()
 
-    b = 1
-    if b:  # already processed
-        main(l)
+        folder_cas = 'reporting_obligations/output_reporting_obligations'
+        # filename_cas = 'cas_laurens.xml'
+        filename_cas = 'ro + html2text.xml'  # 17 RO's0
+        rel_path_typesystem = 'reporting_obligations/output_reporting_obligations/typesystem_tmp.xml'
 
-    example_querying()
+        # from ROOT
+        path_cas = os.path.join(ROOT, folder_cas, filename_cas)
+        path_typesystem = os.path.join(ROOT, rel_path_typesystem)
+        l = CasContent.from_cas(path_cas, path_typesystem)
+
+        g.add_cas_content(l)
+
+        if b_print:
+            # XML = RDF
+            print(g.serialize(format="pretty-xml").decode("utf-8"))
+
+        if b_save:  # save
+            g.serialize(destination=MOCKUP_FILENAME, format="pretty-xml")
+
+    example_querying(MOCKUP_FILENAME)
