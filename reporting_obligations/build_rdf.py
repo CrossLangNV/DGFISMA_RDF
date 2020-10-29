@@ -206,89 +206,6 @@ class ROGraph(Graph):
         return self.g
 
 
-def example_querying(filename):
-
-    # Immediately test if parsing works
-    g = Graph()
-    g.parse(filename)
-
-    if 1:
-        get_all(g)
-
-    if 1:
-        entity_classes = get_different_entities(g)
-
-        for entity_class in entity_classes:
-            l_values = get_all_from_class(g, entity_class)
-            print(f'class: {entity_class}')
-            print('\t', l_values)
-
-    return
-
-
-def get_all(g: Graph):
-    q = """
-        SELECT ?subject ?predicate ?object
-        WHERE {
-
-             {  {?subject ?predicate ?object .}
-           }
-        }
-    """
-
-    qres = g.query(q)
-    for row in qres:
-        print(*row)
-
-
-def get_different_entities(g: Graph):
-    q = """
-        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-        PREFIX dgf: <http:/dgfisma.com/>
-        PREFIX dgfo: <http:/dgfisma.com/ontology/>
-
-        SELECT DISTINCT ?predicate 
-
-        WHERE {
-            ?subject ?predicate ?object ;
-            rdf:type dgfo:ReportingObligation .
-            ?object rdf:type skos:Concept
-        }
-    """
-
-    qres = g.query(q)
-
-    for row in qres:
-        a, *_ = row
-        print(*row)
-
-    entity_classes = [ent_class for ent_class, *_ in qres]
-    return entity_classes
-
-
-def get_all_from_class(g: Graph, sentence_segment_class):
-    q = f"""
-        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-        PREFIX dgfo: <http:/dgfisma.com/ontology/>
-
-        SELECT DISTINCT ?value
-
-        WHERE {{
-            ?reOb <{sentence_segment_class}> ?seg .
-            ?seg rdf:type skos:Concept ;
-                skos:prefLabel ?value
-        }}
-    """
-
-    qres = g.query(q)
-
-    l_values = [v for v, *_ in qres]
-
-    return l_values
-
-
 if __name__ == '__main__':
 
     b_build = 1
@@ -316,5 +233,3 @@ if __name__ == '__main__':
 
         if b_save:  # save
             g.serialize(destination=MOCKUP_FILENAME, format="pretty-xml")
-
-    example_querying(MOCKUP_FILENAME)

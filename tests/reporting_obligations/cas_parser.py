@@ -62,7 +62,7 @@ class TestMain(unittest.TestCase):
         self.assertEqual(KEY_CHILD, cas_parser.KEY_CHILD, 'key value should match')
 
     def test_return(self):
-        cas_content = cas_parser.main(path_cas, path_typesystem)
+        cas_content = cas_parser.CasContent.from_cas(path_cas, path_typesystem)
 
         self.assertIsInstance(cas_content, cas_parser.CasContent, 'CasContent is tested separately')
 
