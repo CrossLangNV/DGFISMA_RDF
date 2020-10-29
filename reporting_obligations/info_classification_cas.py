@@ -4,6 +4,8 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 
 from reporting_obligations import cas_parser
 
+URL = 'http://localhost:8080/fuseki/DGFisma'  # make sure port number is correct.
+
 
 def get_examples():
     """ Per classification in the reporting obligations, made by Francois, give examples
@@ -48,8 +50,6 @@ def get_examples():
 
 def link_eurovoc_skos(l_concepts):
     print(f'Concepts to find in EuroVoc: {l_concepts}')
-
-    URL = 'http://localhost:8080/fuseki/DGFisma'  # make sure port number is correct.
 
     sparql = SPARQLWrapper(URL)
     sparql.setReturnFormat(JSON)
@@ -127,6 +127,84 @@ def link_eurovoc_skos(l_concepts):
     print(f'overlapping concepts:\n\t{set_overlap}')
     print(f'new concepts:\n\t{set_different}')
 
+
+def link_atto_skos(l_concepts):
+
+    sparql = SPARQLWrapper(URL)
+    sparql.setReturnFormat(JSON)
+    sparql.method = 'GET'
+
+    # k_label = 's'
+    # k_definition = 'p'
+    # k_subject = 'o'
+
+    def get_concepts_atto():
+        s_label = 'label'
+
+#         # query_string = f"""
+#         #             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+#         #
+#         #             SELECT {concept} ?{k_definition} ?{k_subject} ?language
+#         #                     WHERE {{
+#         #                     ?{k_subject} skos:prefLabel "{concept}" .
+#         #                     BIND (lang(?{k_label}) AS ?language)
+#         #
+#         #                     FILTER (
+#         #                         lang(?{k_label}) = 'en'
+#         #                         )
+#         #                     }}
+#         #                     ORDER BY ?{k_label}
+#         #         """
+#         #
+#         # query_string = f"""
+#         #             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+#         #
+#         #             SELECT ?s ?o
+#         #             WHERE {{
+#         #             ?s skos:prefLabel ?o
+#         #                                   BIND (lang(?o) AS ?language)
+#         #
+#         #                                  FILTER (
+#         #                                     lang(?o) = 'en' &&
+#         #                                     ?o = "{concept}"@en
+#         #                                     )
+#         #             }}
+#         #                   liMIT 25
+#         #         """
+#
+#         query_string = f"""
+#                 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+#
+#                 SELECT ?{s_label} ?language
+#                         WHERE {{
+#                         ?s skos:prefLabel ?{s_label} .
+#                         BIND (lang(?{s_label}) AS ?language)
+#
+#                         FILTER (
+#                             lang(?{s_label}) = 'en'
+#                             )
+#                         }}
+#                         ORDER BY ?{s_label}
+#             """
+#
+#         sparql.setQuery(query_string)
+#         q = sparql.query()
+#         results = q.convert()
+#
+#         concepts_skos = (triplet[s_label]['value'] for triplet in results['results']['bindings'])
+#
+#         return concepts_skos
+#
+#     concepts_skos = get_concepts_skos()
+#
+#     set_concepts = set(l_concepts)
+#     set_concepts_skos = set(concepts_skos)
+#
+#     set_overlap = set_concepts.intersection(set_concepts_skos)
+#     set_different = set_concepts - set_concepts_skos
+#
+#     print(f'overlapping concepts:\n\t{set_overlap}')
+#     print(f'new concepts:\n\t{set_different}')
 
 if __name__ == '__main__':
     args_dict = get_examples()
