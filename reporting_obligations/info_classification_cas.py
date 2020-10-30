@@ -28,11 +28,11 @@ def get_examples():
     # combine per ARG
 
     args_dict = {}
-    for ro in l[cas_parser.KEY_CHILD]:
+    for ro in l[cas_parser.KEY_CHILDREN]:
 
         for segm in ro:
             cls = segm[cas_parser.KEY_SENTENCE_FRAG_CLASS]
-            text = segm[cas_parser.KEY_CHILD]
+            text = segm[cas_parser.KEY_CHILDREN]
 
             if cls not in args_dict:
                 args_dict[cls] = []

@@ -2,7 +2,8 @@ import os
 
 from cassis import load_typesystem, load_cas_from_xmi
 
-KEY_CHILD = 'value'
+KEY_CHILDREN = 'children'
+KEY_VALUE = 'value'
 KEY_SENTENCE_FRAG_CLASS = 'class'
 
 SOFA_ID_HTML2TEXT = "html2textView"
@@ -24,7 +25,7 @@ class CasContent(dict):
             meta: optional value to save in meta data argument of dict.
         """
 
-        d = {KEY_CHILD: [ROContent.from_list(ro) for ro in list_ro],
+        d = {KEY_CHILDREN: [ROContent.from_list(ro) for ro in list_ro],
              'meta': meta}
 
         return cls(d)
@@ -53,7 +54,8 @@ class CasContent(dict):
         for annot_p in view_text_html.select(VALUE_BETWEEN_TAG_TYPE_CLASS):
             if annot_p.tagName == "p":
 
-                ro_i = []
+                ro_i = {KEY_VALUE: annot_p.get_covered_text(),  # string representation
+                        KEY_CHILDREN: []}
 
                 for annot_span in view_text_html.select_covered(VALUE_BETWEEN_TAG_TYPE_CLASS, annot_p):
                     if annot_span.tagName == "span":
@@ -68,28 +70,30 @@ class CasContent(dict):
                         attributes, values = l_str_attr[::2], l_str_attr[1::2]
                         class_atr = values[attributes.index("class=")]
 
-                        ro_i.append({KEY_SENTENCE_FRAG_CLASS: class_atr,
-                                     KEY_CHILD: annot_span.get_covered_text()})
+                        ro_i[KEY_CHILDREN].append({KEY_SENTENCE_FRAG_CLASS: class_atr,
+                                                   KEY_VALUE: annot_span.get_covered_text()})
 
                 l_ro.append(ro_i)
 
         return cls.from_list(l_ro)
 
 
-class ROContent(list):
+class ROContent(dict):
     """
     List of reporting obligations
     """
 
     @classmethod
     def from_list(cls, list_sentence_fragments):
+
         l = []
-        for sent_frag in list_sentence_fragments:
-            l.append(SentenceFragment.from_value_class(v=sent_frag[KEY_CHILD],
+        for sent_frag in list_sentence_fragments[KEY_CHILDREN]:
+            l.append(SentenceFragment.from_value_class(v=sent_frag[KEY_VALUE],
                                                        c=sent_frag[KEY_SENTENCE_FRAG_CLASS])
                      )
 
-        return cls(l)
+        return cls({KEY_VALUE: list_sentence_fragments[KEY_VALUE],
+                 KEY_CHILDREN: l})
 
 
 class SentenceFragment(dict):
@@ -100,13 +104,19 @@ class SentenceFragment(dict):
     @classmethod
     def from_value_class(cls, v: str, c: str):
         return cls({KEY_SENTENCE_FRAG_CLASS: str(c),
-                    KEY_CHILD: str(v)
+                    KEY_VALUE: str(v)
                     }
                    )
 
 
-if __name__ == '__main__':
-    # fixed example.
+def _get_example_cas_content() -> CasContent:
+    """
+    fixed example.
+
+    Returns:
+
+    """
+    #
     rel_path_cas = 'reporting_obligations/output_reporting_obligations/cas_laurens.xml'
     rel_path_typesystem = 'reporting_obligations/output_reporting_obligations/typesystem_tmp.xml'
 
@@ -115,4 +125,10 @@ if __name__ == '__main__':
     path_typesystem = os.path.join(os.path.dirname(__file__), '..', rel_path_typesystem)
 
     cas_content = CasContent.from_cas(path_cas, path_typesystem)
+
+    return cas_content
+
+
+if __name__ == '__main__':
+    cas_content = _get_example_cas_content()
     print(cas_content)

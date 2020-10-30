@@ -3,7 +3,7 @@ import os
 from rdflib import BNode, Literal, Namespace, Graph
 from rdflib.namespace import SKOS, RDF, RDFS, OWL, URIRef, DC
 
-from reporting_obligations.cas_parser import CasContent, KEY_CHILD, KEY_SENTENCE_FRAG_CLASS
+from reporting_obligations.cas_parser import CasContent, KEY_CHILDREN, KEY_SENTENCE_FRAG_CLASS, KEY_VALUE
 
 NS_BASE = Namespace("http://dgfisma.com/")
 RO_BASE = Namespace(NS_BASE + 'reporting_obligation#')
@@ -42,10 +42,10 @@ class ROGraph(Graph):
     # Init classes & connections
     # Classes
     class_cat_doc = RO_BASE.CatalogueDocument
-    class_rep_obl = RO_BASE['ReportingObligation']
+    class_rep_obl = RO_BASE.ReportingObligation
     # Connections
-    prop_has_rep_obl = RO_BASE['hasReportingObligation']
-    prop_has_entity = RO_BASE['hasEntity']
+    prop_has_rep_obl = RO_BASE.hasReportingObligation
+    prop_has_entity = RO_BASE.hasEntity
 
     def __init__(self, *args, **kwargs):
         """ Looks quite clean if implemented with RDFLib https://github.com/RDFLib/rdflib
@@ -77,41 +77,36 @@ class ROGraph(Graph):
                   Literal("Reporting obligations (RO) vocabulary")))
 
         # OWL classes
-        self.add((self.class_cat_doc,
-                  RDF.type,
-                  RDFS.Class
-                  ))
-        self.add((self.class_cat_doc,
-                  RDF.type,
-                  OWL.Class
-                  ))
+        def add_owl_class(cls):
+            self.add((cls,
+                      RDF.type,
+                      RDFS.Class
+                      ))
+            self.add((cls,
+                      RDF.type,
+                      OWL.Class
+                      ))
+
+        add_owl_class(self.class_cat_doc)
+        add_owl_class(self.class_rep_obl)
 
         # OWL properties
-        self.add((self.prop_has_rep_obl,
-                  RDF.type,
-                  RDF.Property
-                  ))
-        self.add((self.prop_has_rep_obl,
-                  RDFS.domain,
-                  self.class_cat_doc
-                  ))
-        self.add((self.prop_has_rep_obl,
-                  RDFS.range,
-                  self.class_rep_obl
-                  ))
+        self._add_property(self.prop_has_rep_obl, self.class_cat_doc, self.class_rep_obl)
 
-        self.add_property(self.prop_has_rep_obl, self.class_cat_doc, self.class_rep_obl)
+        self._add_property(RDF.value,
+                           self.class_rep_obl,
+                           RDFS.Literal)
 
-        self.add_property(self.prop_has_entity, self.class_rep_obl, SKOS.Concept)
+        self._add_property(self.prop_has_entity, self.class_rep_obl, SKOS.Concept)
 
         for prop, cls in D_ENTITIES.values():
-            self.add_property(prop, self.class_rep_obl, cls)
+            self._add_property(prop, self.class_rep_obl, cls)
             # Sub property
             self.add((prop,
                       RDFS.subPropertyOf,
                       self.prop_has_entity
                       ))
-            self.add_sub_class(cls, SKOS.Concept)
+            self._add_sub_class(cls, SKOS.Concept)
 
     def add_cas_content(self, l: CasContent):
         """ Build the RDF from cas content.
@@ -126,7 +121,7 @@ class ROGraph(Graph):
         self.add((cat_doc, RDF.type, self.class_cat_doc))
 
         # iterate over reporting obligations (RO's)
-        list_ro = l[KEY_CHILD]
+        list_ro = l[KEY_CHILDREN]
         for ro_i in list_ro:
 
             if 0:
@@ -137,9 +132,11 @@ class ROGraph(Graph):
             self.add((rep_obl_i, RDF.type, self.class_rep_obl))
             # link to catalog document + ontology
             self.add((cat_doc, self.prop_has_rep_obl, rep_obl_i))
+            # add whole reporting obligation
+            self.add((rep_obl_i, RDF.value, Literal(ro_i[KEY_VALUE])))
 
             # iterate over different entities of RO
-            for ent_i in ro_i:
+            for ent_i in ro_i[KEY_CHILDREN]:
 
                 if 0:
                     concept_i = BNode(_prefix=RO_BASE + 'entity/')
@@ -162,13 +159,13 @@ class ROGraph(Graph):
                 # type definition
                 self.add((concept_i, RDF.type, cls))
                 # Add the string representation
-                value_i = Literal(ent_i[KEY_CHILD], lang='en')
+                value_i = Literal(ent_i[KEY_VALUE], lang='en')
                 self.add((concept_i, SKOS.prefLabel, value_i))
 
                 # connect entity with RO
                 self.add((rep_obl_i, pred_i, concept_i))
 
-    def add_property(self, property: URIRef, domain: URIRef, ran: URIRef) -> None:
+    def _add_property(self, property: URIRef, domain: URIRef, ran: URIRef) -> None:
         """ shared function to build all necessary triples for a property in the ontology.
 
         Args:
@@ -193,10 +190,10 @@ class ROGraph(Graph):
                   ran
                   ))
 
-    def add_sub_class(self,
-                      child_cls: URIRef,
-                      parent_cls: URIRef
-                      ) -> None:
+    def _add_sub_class(self,
+                       child_cls: URIRef,
+                       parent_cls: URIRef
+                       ) -> None:
         self.add((child_cls,
                   RDFS.subClassOf,
                   parent_cls
@@ -204,6 +201,28 @@ class ROGraph(Graph):
 
     def get_graph(self):
         return self.g
+
+
+class ExampleCasContent(CasContent):
+    def __init__(self, *args, **kwargs):
+        super(ExampleCasContent, self).__init__(*args, **kwargs)
+
+        self.NUM_RO = len(self[KEY_CHILDREN])
+
+    def get_NUM_RO(self):
+        return self.NUM_RO
+
+    @classmethod
+    def build(cls):
+        folder_cas = 'reporting_obligations/output_reporting_obligations'
+        # filename_cas = 'cas_laurens.xml'
+        filename_cas = 'ro + html2text.xml'  # 17 RO's0
+        rel_path_typesystem = 'reporting_obligations/output_reporting_obligations/typesystem_tmp.xml'
+
+        # from ROOT
+        path_cas = os.path.join(ROOT, folder_cas, filename_cas)
+        path_typesystem = os.path.join(ROOT, rel_path_typesystem)
+        return cls.from_cas(path_cas, path_typesystem)
 
 
 if __name__ == '__main__':
@@ -215,15 +234,7 @@ if __name__ == '__main__':
 
         g = ROGraph()
 
-        folder_cas = 'reporting_obligations/output_reporting_obligations'
-        # filename_cas = 'cas_laurens.xml'
-        filename_cas = 'ro + html2text.xml'  # 17 RO's0
-        rel_path_typesystem = 'reporting_obligations/output_reporting_obligations/typesystem_tmp.xml'
-
-        # from ROOT
-        path_cas = os.path.join(ROOT, folder_cas, filename_cas)
-        path_typesystem = os.path.join(ROOT, rel_path_typesystem)
-        l = CasContent.from_cas(path_cas, path_typesystem)
+        l = ExampleCasContent.build()
 
         g.add_cas_content(l)
 

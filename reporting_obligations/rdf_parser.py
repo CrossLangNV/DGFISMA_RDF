@@ -1,6 +1,7 @@
 import abc
 import os
-from typing import Iterable
+from typing import Iterable, List, Tuple
+from reporting_obligations import build_rdf
 
 import rdflib
 
@@ -80,7 +81,7 @@ class SPARQLReportingObligationProvider:
         return l_entity_predicates
 
     def get_all_from_type(self, type_uri,
-                          distinct=False):
+                          distinct=False) -> List[str]:
         q = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             PREFIX dgfro: <http://dgfisma.com/reporting_obligation#>
@@ -98,3 +99,117 @@ class SPARQLReportingObligationProvider:
         l_values = [str(a) for a, *_ in l]
 
         return l_values
+
+    def get_all_ro_uri(self) -> List[str]:
+        q = f"""
+            PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+            PREFIX dgfro: <http://dgfisma.com/reporting_obligation#>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+            SELECT ?ro_id
+
+            WHERE {{
+                ?ro_id rdf:type <{build_rdf.ROGraph.class_rep_obl}> .
+            }}
+            """
+        l = self.graph_wrapper.query(q)
+
+        l_uri = [str(a) for a, *_ in l]
+
+        return l_uri
+
+    def get_all_ro_str(self):
+
+        q = f"""
+            PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+            PREFIX dgfro: <http://dgfisma.com/reporting_obligation#>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+            SELECT ?value ?ro_id
+
+            WHERE {{
+                ?ro_id rdf:type <{build_rdf.ROGraph.class_rep_obl}> ;
+                    rdf:value ?value
+            }}
+        """
+        l = self.graph_wrapper.query(q)
+
+        l_ro = [str(a) for a, *_ in l]
+
+        return l_ro
+
+    def get_filter_single(self, pred, value):
+        """ Retrieve reporting obligations with a matching value for certain predicate
+
+        Args:
+            pred:
+            value:
+
+        Returns:
+
+        """
+
+        q = f"""
+            PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+            PREFIX dgfro: <http://dgfisma.com/reporting_obligation#>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+            SELECT ?value ?ro_id ?p
+
+            WHERE {{
+                ?ro_id rdf:type <{build_rdf.ROGraph.class_rep_obl}> ;
+                    rdf:value ?value ;
+                    <{pred}> ?ent .
+                ?ent skos:prefLabel ?p
+                FILTER (lang(?p) = "en"   )
+                FILTER ( str(?p) ="{value}"    )
+            }}
+        """
+        l = self.graph_wrapper.query(q)
+
+        l_ro = [str(a) for a, *_ in l]
+
+        return l_ro
+
+    def get_filter_multiple(self, list_pred_value:List[Tuple[str]] = []):
+        """ Retrieve reporting obligations with a matching value for certain predicate
+
+        Args:
+            list_pred_value: List[(pred:str, value:str)]
+
+        Returns:
+
+        """
+
+        q = f"""
+            PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+            PREFIX dgfro: <http://dgfisma.com/reporting_obligation#>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+            SELECT ?value ?ro_id ?p
+
+            WHERE {{
+                ?ro_id rdf:type <{build_rdf.ROGraph.class_rep_obl}> ;
+                   rdf:value ?value .
+
+            """
+
+        for i, (pred, value) in enumerate(list_pred_value):
+            q_i = f"""
+                     ?ro_id  <{pred}> ?ent{i} .
+                        ?ent{i} skos:prefLabel ?p{i} .
+                                FILTER (lang(?p{i}) = "en"   )
+                                FILTER ( str(?p{i}) ="{value}"    )
+            """
+
+            q += q_i
+
+        q += f"""
+        }}
+        """
+
+        l = self.graph_wrapper.query(q)
+
+        l_ro = [str(a) for a, *_ in l]
+
+        return l_ro

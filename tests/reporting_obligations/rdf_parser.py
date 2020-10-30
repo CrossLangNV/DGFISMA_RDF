@@ -2,7 +2,7 @@ import os
 import unittest
 from typing import Iterable
 
-from reporting_obligations.build_rdf import D_ENTITIES
+from reporting_obligations.build_rdf import D_ENTITIES, ExampleCasContent
 from reporting_obligations.rdf_parser import SPARQLReportingObligationProvider, RDFLibGraphWrapper
 
 ROOT = os.path.join(os.path.dirname(__file__), '../..')
@@ -76,6 +76,115 @@ class TestSPARQLReportingObligationProvider(unittest.TestCase):
         self.assertEqual(set(l_labels), (set(l_labels_distinct)),
                          'distinct should contain the same values, just no doubles.')
         self.assertLess(len(list(l_labels_distinct)), len(list(l_labels)), 'distinct should contain less values.')
+
+
+class TestGetRO(unittest.TestCase):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        graph_wrapper = RDFLibGraphWrapper(os.path.join(ROOT, 'data/examples/reporting_obligations_mockup.rdf'))
+        self.ro_provider = SPARQLReportingObligationProvider(graph_wrapper)
+
+        self.cas_content_example = ExampleCasContent.build()
+
+    def get_ro_provider(self):
+        return self.ro_provider
+
+    def test_get_all(self):
+        """ Query all reporting obligations
+
+        Returns:
+
+        """
+        l_ro_uri = self.get_ro_provider().get_all_ro_uri()
+
+        self.assertEqual(self.cas_content_example.get_NUM_RO(), len(l_ro_uri),
+                         'Amount of reporting obligations do not seem to match.')
+
+    def test_get_ro_str(self):
+        """ Possible to get the string representation of a reporting obligation
+
+        Returns:
+
+        """
+
+        l_to_find = ['a final system should provide for the determination',
+                     'contribution debtor shall upon request provide the Board',
+                     'of outsourcing tasks shall clearly state the'
+                     ]
+
+        l_ro = self.get_ro_provider().get_all_ro_str()
+
+        for s_to_find in l_to_find:
+            with self.subTest(s_to_find):
+                self.assertTrue(any((s_to_find in ro_i) for ro_i in l_ro), "couldn't find string")
+
+    def test_get_ro_str_context(self):
+        """ We suppose it is necessary that the the context around a RO should be retrieved too.
+
+        Returns:
+
+        """
+
+        l_to_find = ['belonging to the provisional period , the Board shall use the data collected',
+                     'Board shall use the data collected',
+                     ' tasks that are outsourced and establish a framework',
+                     'previous financial year in accordance with Regulation ( EU )',
+                     'members of the same group shall be collected from the',  # gap in between
+                     ]
+
+        l_ro = self.get_ro_provider().get_all_ro_str()
+
+        for s_to_find in l_to_find:
+            with self.subTest(s_to_find):
+                self.assertTrue(any(s_to_find in ro_i for ro_i in l_ro), "couldn't find string")
+
+    def test_get_filter_single(self):
+
+        l_ent_types = self.get_ro_provider().get_different_entities()
+
+        pred = l_ent_types[0]
+
+        l_ent_type0 = self.get_ro_provider().get_all_from_type(pred)
+
+        value = l_ent_type0[0]
+        l_ro = self.get_ro_provider().get_filter_single(pred, value)
+
+        self.assertTrue(l_ro, 'Should return a non-empty object')
+
+        with self.subTest("Filter value should be contained in reporting obligation"):
+            for ro_i in l_ro:
+                self.assertIn(value, ro_i, 'Value should be contained in reporting obligation')
+
+    def test_get_filter_nothing(self):
+
+        l_ro = self.get_ro_provider().get_filter_multiple()
+
+        self.assertTrue(l_ro, "Should return all RO's")
+
+    def test_get_filter_multiple(self):
+
+        l_ent_types = self.get_ro_provider().get_different_entities()
+
+        pred0 = list(filter(lambda s: 'hasVerb' in s, l_ent_types))[0]
+        pred1 = list(filter(lambda s: 'hasRegulatoryBody' in s, l_ent_types))[0]
+
+        #
+        l_ent_type0 = self.get_ro_provider().get_all_from_type(pred0)
+        l_ent_type1 = self.get_ro_provider().get_all_from_type(pred1)
+
+        # value0 = l_ent_type0[0]
+        # value1 = l_ent_type1[0]
+
+        value0 = 'provide'
+        value1 = 'the Board'
+
+        assert value0 in l_ent_type0
+        assert value1 in l_ent_type1
+
+        l_ro = self.get_ro_provider().get_filter_multiple([(pred0, value0), (pred1, value1)])
+
+        self.assertTrue(l_ro, 'Should return a non-empty object')
 
 
 if __name__ == '__main__':
