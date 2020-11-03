@@ -1,9 +1,12 @@
 import abc
 import os
 from typing import Iterable, List, Tuple
-from reporting_obligations import build_rdf
+from SPARQLWrapper import SPARQLWrapper, JSON
+
 
 import rdflib
+
+from reporting_obligations import build_rdf
 
 ROOT = os.path.join(os.path.dirname(__file__), '..')
 
@@ -37,17 +40,33 @@ class RDFLibGraphWrapper(GraphWrapper):
     def query(self, q):
         qres = self.g.query(q)
 
+        # TODO use qres.bindings
+
         return qres
 
 
 class SPARQLGraphWrapper(GraphWrapper):
     def __init__(self, endpoint):
-        raise NotImplementedError()
+        self.sparql = SPARQLWrapper(endpoint)
+        self.sparql.setReturnFormat(JSON)
 
         # TODO connect to endpoint to allow querying
 
     def query(self, q: str) -> Iterable[tuple]:
-        raise NotImplementedError()
+
+        self.sparql.setQuery(q)
+        ret = self.sparql.query()
+        results = ret.convert()
+
+        l = []
+        for result in results["results"]["bindings"]:
+            list(result.keys())
+
+            l_i = tuple(result[k]['value'] for k in list(result.keys()))
+
+            l.append(l_i)
+
+        return l
 
 
 class SPARQLReportingObligationProvider:
@@ -60,7 +79,6 @@ class SPARQLReportingObligationProvider:
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
             PREFIX dgfro: <http://dgfisma.com/reporting_obligation#>
-
 
             SELECT DISTINCT ?pred ?entClass
             WHERE {
@@ -119,7 +137,6 @@ class SPARQLReportingObligationProvider:
         return l_uri
 
     def get_all_ro_str(self):
-
         q = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             PREFIX dgfro: <http://dgfisma.com/reporting_obligation#>
@@ -138,7 +155,7 @@ class SPARQLReportingObligationProvider:
 
         return l_ro
 
-    def get_filter_single(self, pred, value):
+    def get_filter_single(self, pred, value) -> List[str]:
         """ Retrieve reporting obligations with a matching value for certain predicate
 
         Args:
@@ -171,11 +188,14 @@ class SPARQLReportingObligationProvider:
 
         return l_ro
 
-    def get_filter_multiple(self, list_pred_value:List[Tuple[str]] = []):
+    def get_filter_multiple(self, list_pred_value: List[Tuple[str]] = []) -> List[str]:
         """ Retrieve reporting obligations with a matching value for certain predicate
 
         Args:
             list_pred_value: List[(pred:str, value:str)]
+            e.g. [ ("<pred 1>", "<value 1>"),
+                    ...
+                    ("<pred n>", "<value n>") ]
 
         Returns:
 
