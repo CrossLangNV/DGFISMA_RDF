@@ -14,13 +14,13 @@ URL_FUSEKI = "http://localhost:8080/fuseki/sandbox/sparql"
 
 
 class TestSPARQLGraphWrapper(unittest.TestCase):
-    def test_init(self):
+    def test_query_get_triples(self):
+        """ Test for non empty query results.
 
-        graph_wrapper = SPARQLGraphWrapper(URL_FUSEKI)
+        Returns:
 
-        self.assertTrue(graph_wrapper)
+        """
 
-    def test_query(self):
         q = """
         SELECT ?subject ?predicate ?object
         WHERE {
@@ -32,7 +32,11 @@ class TestSPARQLGraphWrapper(unittest.TestCase):
         graph_wrapper = SPARQLGraphWrapper(URL_FUSEKI)
         l = graph_wrapper.query(q)
 
-        self.assertTrue(l)
+        with self.subTest("type"):
+            self.assertIsInstance(l, list, 'Expected to return a list')
+
+        with self.subTest("non-empty"):
+            self.assertTrue(len(l), 'Expected non empty list')
 
 
 class TestSPARQLReportingObligationProvider(unittest.TestCase):
@@ -109,10 +113,11 @@ class TestGetRO(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        if 0: # Locally
+        b_locally = True
+        if b_locally:  # Locally
             graph_wrapper = RDFLibGraphWrapper(os.path.join(ROOT, 'data/examples/reporting_obligations_mockup.rdf'))
 
-        else: # Through fuseki endpoint
+        else:  # Through fuseki endpoint
             graph_wrapper = SPARQLGraphWrapper(URL_FUSEKI)
 
         self.ro_provider = SPARQLReportingObligationProvider(graph_wrapper)
@@ -175,7 +180,8 @@ class TestGetRO(unittest.TestCase):
 
         l_ent_types = self.get_ro_provider().get_different_entities()
 
-        pred = l_ent_types[0]
+        # Get verb predicate
+        pred = list(filter(lambda x: 'Verb' in x, l_ent_types))[0]
 
         l_ent_type0 = self.get_ro_provider().get_all_from_type(pred)
 
@@ -220,14 +226,16 @@ class TestGetRO(unittest.TestCase):
 
 
 class TestSPARQLReportingObligationProviderGetFilterMultiple(unittest.TestCase):
-
     L_ENTITIES = list(D_ENTITIES.keys())
     L_ENT1 = L_ENTITIES[1]
     L_ENT2 = L_ENTITIES[2]
     L_ENT3 = L_ENTITIES[3]
 
     S0 = 'a0 a1 a2 a0 a0'
+    S1 = 'b2 a0 a3 a1 a0 a0 a0'
+    S2 = 'b0 c0 a2 a2, a1, a0.'
     l = {build_rdf.KEY_CHILDREN: [
+        # Base sentence
         {build_rdf.KEY_VALUE: S0,
          build_rdf.KEY_CHILDREN: [
              {build_rdf.KEY_VALUE: 'a1',
@@ -236,18 +244,30 @@ class TestSPARQLReportingObligationProviderGetFilterMultiple(unittest.TestCase):
               build_rdf.KEY_SENTENCE_FRAG_CLASS: L_ENT2},
          ]
          },
-        # {build_rdf.KEY_VALUE: 'b3 a1 a2 a0 a0',
-        #  build_rdf.KEY_CHILDREN: [
-        #      {build_rdf.KEY_VALUE: 'a1',
-        #       build_rdf.KEY_SENTENCE_FRAG_CLASS: L_ENT1},
-        #      {build_rdf.KEY_VALUE: 'a2',
-        #       build_rdf.KEY_SENTENCE_FRAG_CLASS: L_ENT2},
-        #  ]
-        #  },
+        # 1 key matching
+        {build_rdf.KEY_VALUE: S1,
+         build_rdf.KEY_CHILDREN: [
+             {build_rdf.KEY_VALUE: 'a1',
+              build_rdf.KEY_SENTENCE_FRAG_CLASS: L_ENT1},
+             {build_rdf.KEY_VALUE: 'b2',
+              build_rdf.KEY_SENTENCE_FRAG_CLASS: L_ENT2},
+             {build_rdf.KEY_VALUE: 'a3',
+              build_rdf.KEY_SENTENCE_FRAG_CLASS: L_ENT3},
+         ]
+         },
+        # 2 same but different order
+        {build_rdf.KEY_VALUE: S2,
+         build_rdf.KEY_CHILDREN: [
+             {build_rdf.KEY_VALUE: 'a1',
+              build_rdf.KEY_SENTENCE_FRAG_CLASS: L_ENT1},
+             {build_rdf.KEY_VALUE: 'a2',
+              build_rdf.KEY_SENTENCE_FRAG_CLASS: L_ENT2},
+         ]
+         },
     ]}
 
     def __init__(self, *args, **kwargs):
-        super(TestSPARQLReportingObligationProviderGetFilterMultiple, self).__init__( *args, **kwargs)
+        super(TestSPARQLReportingObligationProviderGetFilterMultiple, self).__init__(*args, **kwargs)
 
         # Building the Reporting Obligation Provider
         g = ROGraph()
@@ -258,19 +278,119 @@ class TestSPARQLReportingObligationProviderGetFilterMultiple(unittest.TestCase):
             graph_wrapper = RDFLibGraphWrapper(filename)
         self.ro_provider = SPARQLReportingObligationProvider(graph_wrapper)
 
+    def test_no_filter(self):
+        """ Without a filter, all reporting obligations should be returned
+
+        :return:
+        None
+        """
+        l_ro = self.ro_provider.get_filter_multiple()
+
+        l = [ro_i[build_rdf.KEY_VALUE] for ro_i in self.l[build_rdf.KEY_CHILDREN]]
+        self.assertEqual(set(l), set(l_ro), "Should return ALL reporting obligations")
+
     def test_single_filter(self):
+        """Finding reporting obligations based on single filter"""
 
-        l_ro = self.ro_provider.get_filter_multiple([(D_ENTITIES[self.L_ENT2][0], 'a2')])
+        with self.subTest("In all"):
+            l_ro = self.ro_provider.get_filter_multiple([(D_ENTITIES[self.L_ENT1][0], 'a1')])
+            self.assertEqual(set([self.S0, self.S1, self.S2]), set(l_ro), "Should return these specific reporting obligations")
 
-        self.assertEqual(set([self.S0]), set(l_ro), '')
+        with self.subTest("In some"):
+            l_ro = self.ro_provider.get_filter_multiple([(D_ENTITIES[self.L_ENT2][0], 'a2')])
+            self.assertEqual(set([self.S0, self.S2]), set(l_ro), "Should return these specific reporting obligations")
+
+    def test_multiple_filters(self):
+        """Retrieving reporting obligations based on multiple filter
+
+        :return: None
+        """
+
+        with self.subTest("test 1"):
+            list_filters = [(D_ENTITIES[self.L_ENT1][0], 'a1'),
+                            (D_ENTITIES[self.L_ENT2][0], 'a2')
+                            ]
+            l_ro = self.ro_provider.get_filter_multiple(list_filters)
+
+            self.assertEqual(set([self.S0, self.S2]), set(l_ro), "Should return these specific reporting obligations")
+
+            del list_filters, l_ro
+
+        with self.subTest("test 2"):
+            list_filters = [(D_ENTITIES[self.L_ENT1][0], 'a1'),
+                            (D_ENTITIES[self.L_ENT2][0], 'b2')
+                            ]
+            l_ro = self.ro_provider.get_filter_multiple(list_filters)
+
+            self.assertEqual(set([self.S1]), set(l_ro), "Should return these specific reporting obligations")
+
+            del list_filters, l_ro
+
+    def test_duplicates(self):
+        """ Should not complain if duplicates in key-value pairs.
+        """
+
+        with self.subTest("matching duplicate 1"):
+            list_filters = [(D_ENTITIES[self.L_ENT1][0], 'a1'),
+                            ]
+            l_ro = self.ro_provider.get_filter_multiple(list_filters)
+
+            list_filters_dup = [(D_ENTITIES[self.L_ENT1][0], 'a1'),
+                                (D_ENTITIES[self.L_ENT1][0], 'a1'),
+                                ]
+            l_ro_dup = self.ro_provider.get_filter_multiple(list_filters_dup)
+
+            self.assertEqual(set(l_ro), set(l_ro_dup), "Should return same as with single filter")
+
+        with self.subTest("different values for same key"):
+            list_filters = [(D_ENTITIES[self.L_ENT1][0], 'a1'),
+                            (D_ENTITIES[self.L_ENT1][0], 'a2'),
+                            ]
+            l_ro = self.ro_provider.get_filter_multiple(list_filters)
+
+            self.assertEqual(set(), set(l_ro), "Should return nothing")
+
+        with self.subTest("Lot of duplicates"):
+            list_filters = [(D_ENTITIES[self.L_ENT1][0], 'a1'),
+                               (D_ENTITIES[self.L_ENT2][0], 'a2')]
+            l_ro = self.ro_provider.get_filter_multiple(list_filters)
+
+            list_filters_dup = [(D_ENTITIES[self.L_ENT1][0], 'a1')]*3 + \
+                               [(D_ENTITIES[self.L_ENT2][0], 'a2')]*2
+
+            l_ro_dup = self.ro_provider.get_filter_multiple(list_filters_dup)
+
+            self.assertEqual(set(l_ro), set(l_ro_dup), "Should return same as with single filter")
 
 
-    # def test_multiple_filters(self):
-    #
-    #     l_ro = self.get_ro_provider().get_filter_multiple([(D_ENTITIES[L_ENT1], 'a1'), (pred1, value1)])
-    #
-    #     self.assertEqual(set([s0]), set(l_ro), '')
-    #
+    def test_no_matches(self):
+        """Try to receive reporting obligations that don't exist
+
+        :return: None
+        """
+
+        with self.subTest("two different values for same key"):
+            list_filters = [(D_ENTITIES[self.L_ENT2][0], 'a2'),
+                            (D_ENTITIES[self.L_ENT2][0], 'b2')
+                            ]
+            l_ro = self.ro_provider.get_filter_multiple(list_filters)
+
+            self.assertEqual(set(), set(l_ro), "Should return nothing")
+
+        with self.subTest("Value not in data"):
+            list_filters = [(D_ENTITIES[self.L_ENT1][0], 'z1'),
+                            ]
+            l_ro = self.ro_provider.get_filter_multiple(list_filters)
+
+            self.assertEqual(set(), set(l_ro), "Should return nothing")
+
+        with self.subTest("Value not in data and existing key-value"):
+            list_filters = [(D_ENTITIES[self.L_ENT1][0], 'a1'),
+                            (D_ENTITIES[self.L_ENT2][0], 'z2')
+                            ]
+            l_ro = self.ro_provider.get_filter_multiple(list_filters)
+
+            self.assertEqual(set(), set(l_ro), "Should return nothing")
 
 
 if __name__ == '__main__':
