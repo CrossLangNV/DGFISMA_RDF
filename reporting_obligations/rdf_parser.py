@@ -1,10 +1,10 @@
 import abc
 import os
-from typing import Iterable, List, Tuple
-from SPARQLWrapper import SPARQLWrapper, JSON
-
+from typing import Iterable, List, Tuple, Dict
 
 import rdflib
+from SPARQLWrapper import SPARQLWrapper, JSON
+from rdflib import Literal, BNode, URIRef
 
 from reporting_obligations import build_rdf
 
@@ -17,7 +17,7 @@ class GraphWrapper(abc.ABC):
     """
 
     @abc.abstractmethod
-    def query(self, q: str) -> Iterable[tuple]:
+    def query(self, q: str) -> Iterable[Dict[str, Dict[str, str]]]:
         """
 
         Args:
@@ -28,6 +28,19 @@ class GraphWrapper(abc.ABC):
         """
         pass
 
+    def get_column(self, l, k: str):
+        """ Convert results to simpler format
+
+        Args:
+            l:
+            k: key
+
+        Returns:
+
+        """
+
+        return [row[k]['value'] for row in l]
+
 
 class RDFLibGraphWrapper(GraphWrapper):
     def __init__(self, path_rdf):
@@ -37,12 +50,27 @@ class RDFLibGraphWrapper(GraphWrapper):
 
         self.g = g
 
-    def query(self, q):
+    def query(self, q) -> List[Tuple[str]]:
         qres = self.g.query(q)
 
-        # TODO use qres.bindings
+        l = []
 
-        return qres
+        for binding_i in qres.bindings:
+
+            l_i = {}
+            for k, v in binding_i.items():
+                t = 'literal' if isinstance(v, Literal) else (
+                    'bnode' if isinstance(v, BNode) else (
+                        'uri' if isinstance(v, URIRef) else None)
+                )
+
+                l_i[str(k)] = {'type': t,
+                               'value': v.toPython()
+                               }
+
+            l.append(l_i)
+
+        return l
 
 
 class SPARQLGraphWrapper(GraphWrapper):
@@ -50,21 +78,19 @@ class SPARQLGraphWrapper(GraphWrapper):
         self.sparql = SPARQLWrapper(endpoint)
         self.sparql.setReturnFormat(JSON)
 
-        # TODO connect to endpoint to allow querying
-
-    def query(self, q: str) -> Iterable[tuple]:
-
+    def query(self, q: str) -> Iterable[Dict[str, Dict[str, str]]]:
         self.sparql.setQuery(q)
         ret = self.sparql.query()
         results = ret.convert()
 
         l = []
-        for result in results["results"]["bindings"]:
-            list(result.keys())
+        for binding_i in results["results"]["bindings"]:
+            # l.append({k: v['value'] for k, v in binding_i.items()})
+            # list(binding_i.keys())
+            #
+            # l_i = tuple(binding_i[k]['value'] for k in list(binding_i.keys()))
 
-            l_i = tuple(result[k]['value'] for k in list(result.keys()))
-
-            l.append(l_i)
+            l.append(binding_i)
 
         return l
 
@@ -94,7 +120,7 @@ class SPARQLReportingObligationProvider:
 
         l = list(self.graph_wrapper.query(q))
 
-        l_entity_predicates = [str(a) for a, *_ in l]
+        l_entity_predicates = self.graph_wrapper.get_column(l, 'pred')
 
         return l_entity_predicates
 
@@ -114,7 +140,7 @@ class SPARQLReportingObligationProvider:
         """
         l = list(self.graph_wrapper.query(q))
 
-        l_values = [str(a) for a, *_ in l]
+        l_values = self.graph_wrapper.get_column(l, 'value')
 
         return l_values
 
@@ -132,7 +158,7 @@ class SPARQLReportingObligationProvider:
             """
         l = self.graph_wrapper.query(q)
 
-        l_uri = [str(a) for a, *_ in l]
+        l_uri = self.graph_wrapper.get_column(l, 'ro_id')
 
         return l_uri
 
@@ -151,7 +177,7 @@ class SPARQLReportingObligationProvider:
         """
         l = self.graph_wrapper.query(q)
 
-        l_ro = [str(a) for a, *_ in l]
+        l_ro = self.graph_wrapper.get_column(l, 'value')
 
         return l_ro
 
@@ -184,7 +210,7 @@ class SPARQLReportingObligationProvider:
         """
         l = self.graph_wrapper.query(q)
 
-        l_ro = [str(a) for a, *_ in l]
+        l_ro = self.graph_wrapper.get_column(l, 'value')
 
         return l_ro
 
@@ -230,6 +256,6 @@ class SPARQLReportingObligationProvider:
 
         l = self.graph_wrapper.query(q)
 
-        l_ro = [str(a) for a, *_ in l]
+        l_ro = self.graph_wrapper.get_column(l, 'value')
 
         return l_ro

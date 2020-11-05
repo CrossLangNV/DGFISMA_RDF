@@ -13,6 +13,41 @@ ROOT = os.path.join(os.path.dirname(__file__), '../..')
 URL_FUSEKI = "http://localhost:8080/fuseki/sandbox/sparql"
 
 
+class TestRDFLibGraphWrapper(unittest.TestCase):
+    def test_query_get_triples(self):
+        """ Test for non empty query results.
+
+        Returns:
+
+        """
+
+        q = """
+        SELECT ?subject ?predicate ?object
+        WHERE {
+          ?subject ?predicate ?object
+        }
+        LIMIT 25
+        """
+        graph_wrapper = RDFLibGraphWrapper(os.path.join(ROOT, 'data/examples/reporting_obligations_mockup.rdf'))
+
+        l = graph_wrapper.query(q)
+
+        with self.subTest("type"):
+            self.assertIsInstance(l, Iterable, 'Expected to return an Iterable')
+
+        with self.subTest("non-empty"):
+            self.assertTrue(len(l), 'Expected non empty list')
+
+        with self.subTest("keys"):
+            self.assertEqual({'subject', 'predicate', 'object'}, set(l[0].keys()),
+                             'keys per row should contain O R S.')
+
+        with self.subTest("keys of value"):
+            v = l[0]['subject']
+            self.assertTrue({'value', 'type'}.issubset(set(v.keys())),
+                            f'Value and type should be contained in {v.keys()}')
+
+
 class TestSPARQLGraphWrapper(unittest.TestCase):
     def test_query_get_triples(self):
         """ Test for non empty query results.
@@ -33,10 +68,82 @@ class TestSPARQLGraphWrapper(unittest.TestCase):
         l = graph_wrapper.query(q)
 
         with self.subTest("type"):
-            self.assertIsInstance(l, list, 'Expected to return a list')
+            self.assertIsInstance(l, Iterable, 'Expected to return an Iterable')
 
         with self.subTest("non-empty"):
             self.assertTrue(len(l), 'Expected non empty list')
+
+        with self.subTest("keys"):
+            self.assertEqual({'subject', 'predicate', 'object'}, set(l[0].keys()),
+                             'keys per row should contain O R S.')
+
+        with self.subTest("keys of value"):
+            v = l[0]['subject']
+            self.assertTrue({'value', 'type'}.issubset(set(v.keys())),
+                            f'Value and type should be contained in {v.keys()}')
+
+
+class TestGraphWrapper(unittest.TestCase):
+    """
+    All GraphWrappers should be equivalent
+    """
+
+    def test_query_identical_pref_labels(self):
+        """ For the different GraphWrapper, check that they all give back the same SKOS:prefLabel
+
+        Returns:
+            None
+        """
+
+        q = """
+        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+        SELECT ?subject ?object
+        WHERE {
+          ?subject skos:prefLabel ?object
+        }
+        ORDER BY ?object
+        LIMIT 25
+        """
+        graph_wrapper_RDFLib = RDFLibGraphWrapper(os.path.join(ROOT, 'data/examples/reporting_obligations_mockup.rdf'))
+        l_RDFLib = graph_wrapper_RDFLib.query(q)
+
+        graph_wrapper_SPARQLWrapper = SPARQLGraphWrapper(URL_FUSEKI)
+        l_SPARQLWrapper = graph_wrapper_SPARQLWrapper.query(q)
+
+        # def get_rdf_objects(l):
+        #     return tuple(str(l_i[-1]) for l_i in l)
+
+        def filter_exclude_bnode(l):
+            """ Returns filtered dictionary excluding bnodes
+
+            Args:
+                l:
+
+            Returns:
+
+            """
+
+            # Row
+            l_new = []
+            for l_i in l:
+
+                l_i_new = {}
+                # column
+                for k, v in l_i.items():
+                    if v['type'] == 'bnode':
+                        continue
+
+                    l_i_new[k] = {'type': v['type'],
+                                  'value': v['value']}
+
+                l_new.append(l_i_new)
+
+            return l_new
+
+        self.assertEqual(filter_exclude_bnode(l_RDFLib),
+                         filter_exclude_bnode(l_SPARQLWrapper),
+                         'Should give identical output.')
 
 
 class TestSPARQLReportingObligationProvider(unittest.TestCase):
@@ -207,7 +314,6 @@ class TestGetRO(unittest.TestCase):
         pred0 = list(filter(lambda s: 'hasVerb' in s, l_ent_types))[0]
         pred1 = list(filter(lambda s: 'hasRegulatoryBody' in s, l_ent_types))[0]
 
-        #
         l_ent_type0 = self.get_ro_provider().get_all_from_type(pred0)
         l_ent_type1 = self.get_ro_provider().get_all_from_type(pred1)
 
@@ -294,7 +400,8 @@ class TestSPARQLReportingObligationProviderGetFilterMultiple(unittest.TestCase):
 
         with self.subTest("In all"):
             l_ro = self.ro_provider.get_filter_multiple([(D_ENTITIES[self.L_ENT1][0], 'a1')])
-            self.assertEqual(set([self.S0, self.S1, self.S2]), set(l_ro), "Should return these specific reporting obligations")
+            self.assertEqual(set([self.S0, self.S1, self.S2]), set(l_ro),
+                             "Should return these specific reporting obligations")
 
         with self.subTest("In some"):
             l_ro = self.ro_provider.get_filter_multiple([(D_ENTITIES[self.L_ENT2][0], 'a2')])
@@ -352,16 +459,15 @@ class TestSPARQLReportingObligationProviderGetFilterMultiple(unittest.TestCase):
 
         with self.subTest("Lot of duplicates"):
             list_filters = [(D_ENTITIES[self.L_ENT1][0], 'a1'),
-                               (D_ENTITIES[self.L_ENT2][0], 'a2')]
+                            (D_ENTITIES[self.L_ENT2][0], 'a2')]
             l_ro = self.ro_provider.get_filter_multiple(list_filters)
 
-            list_filters_dup = [(D_ENTITIES[self.L_ENT1][0], 'a1')]*3 + \
-                               [(D_ENTITIES[self.L_ENT2][0], 'a2')]*2
+            list_filters_dup = [(D_ENTITIES[self.L_ENT1][0], 'a1')] * 3 + \
+                               [(D_ENTITIES[self.L_ENT2][0], 'a2')] * 2
 
             l_ro_dup = self.ro_provider.get_filter_multiple(list_filters_dup)
 
             self.assertEqual(set(l_ro), set(l_ro_dup), "Should return same as with single filter")
-
 
     def test_no_matches(self):
         """Try to receive reporting obligations that don't exist

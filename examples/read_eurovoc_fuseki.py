@@ -84,13 +84,13 @@ def get_predicates(sparql, verbose=0):
     return predicates
 
 
-def get_definitions(sparql,
-                    limit=50, verbose=1):
+def get_definitions(sparql: SPARQLWrapper,
+                    verbose=1):
     """Predicate is found before. http://www.w3.org/2004/02/skos/core#definition
 
     Args:
-        sparql:
-        predicate:
+        sparql: SPARQLWrapper object
+        verbose: value positive for printing intermediate states.
 
     Returns:
     """
