@@ -79,7 +79,7 @@ class TestMain(unittest.TestCase):
         self.assertEqual(KEY_SENTENCE_FRAG_CLASS, cas_parser.KEY_SENTENCE_FRAG_CLASS, 'key value should match')
 
     def test_return(self):
-        cas_content = cas_parser.CasContent.from_cas(path_cas, path_typesystem)
+        cas_content = cas_parser.CasContent.from_cas_file(path_cas, path_typesystem)
 
         self.assertIsInstance(cas_content, cas_parser.CasContent, 'CasContent is tested separately')
 
@@ -90,7 +90,7 @@ class TestMain(unittest.TestCase):
             None
         """
 
-        cas_content = cas_parser.CasContent.from_cas(path_cas, path_typesystem)
+        cas_content = cas_parser.CasContent.from_cas_file(path_cas, path_typesystem)
 
         ro0 = cas_content[KEY_CHILDREN][0]
 

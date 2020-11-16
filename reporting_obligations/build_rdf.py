@@ -55,7 +55,9 @@ class ROGraph(Graph):
             *args:
             **kwargs:
         """
-        super(ROGraph, self).__init__(*args, **kwargs)
+        super(ROGraph, self).__init__(
+            # identifier=RO_BASE,  # Not needed at the moment
+            *args, **kwargs)
 
         self.bind("skos", SKOS)
         self.bind("owl", OWL)
@@ -108,26 +110,30 @@ class ROGraph(Graph):
                       ))
             self._add_sub_class(cls, SKOS.Concept)
 
-    def add_cas_content(self, l: CasContent):
+    def add_cas_content(self, cas_content: CasContent):
         """ Build the RDF from cas content.
         """
 
         # add a document
         if 0:
             cat_doc = RO_BASE['catalogue_document/' + _serial_number_generator()()]
-        else:
+        elif 0:
             cat_doc = BNode()
+        else:  # https://github.com/RDFLib/rdflib/pull/512#issuecomment-133857982
+            cat_doc = BNode().skolemize()
 
         self.add((cat_doc, RDF.type, self.class_cat_doc))
 
         # iterate over reporting obligations (RO's)
-        list_ro = l[KEY_CHILDREN]
+        list_ro = cas_content[KEY_CHILDREN]
         for ro_i in list_ro:
 
             if 0:
                 rep_obl_i = BNode(_prefix=RO_BASE + 'reporting_obligation/')
-            else:
+            elif 0:
                 rep_obl_i = BNode()
+            else:  # https://github.com/RDFLib/rdflib/pull/512#issuecomment-133857982
+                rep_obl_i = BNode().skolemize()
 
             self.add((rep_obl_i, RDF.type, self.class_rep_obl))
             # link to catalog document + ontology
@@ -140,17 +146,19 @@ class ROGraph(Graph):
 
                 if 0:
                     concept_i = BNode(_prefix=RO_BASE + 'entity/')
-                else:
+                elif 0:
                     concept_i = BNode()
+                else:  # https://github.com/RDFLib/rdflib/pull/512#issuecomment-133857982
+                    concept_i = BNode().skolemize()
 
                 t_pred_cls = D_ENTITIES.get(ent_i[KEY_SENTENCE_FRAG_CLASS])
                 if t_pred_cls is None:
                     # Unknown property/entity class
-                    # TODO catch in an other way?
+                    # TODO how to handle unknown entities?
 
-                    print(f'Unknown sentence entitity class: {ent_i[KEY_SENTENCE_FRAG_CLASS]}')
+                    print(f'Unknown sentence entity class: {ent_i[KEY_SENTENCE_FRAG_CLASS]}')
 
-                    pred_i = RO_BASE['hasEntity']
+                    pred_i = prop_has_entity
                     cls = SKOS.Concept
 
                 else:
@@ -165,27 +173,26 @@ class ROGraph(Graph):
                 # connect entity with RO
                 self.add((rep_obl_i, pred_i, concept_i))
 
-    def _add_property(self, property: URIRef, domain: URIRef, ran: URIRef) -> None:
+    def _add_property(self, prop: URIRef, domain: URIRef, ran: URIRef) -> None:
         """ shared function to build all necessary triples for a property in the ontology.
 
         Args:
-            g:
-            property:
+            prop:
             domain:
             ran:
 
         Returns:
             None
         """
-        self.add((property,
+        self.add((prop,
                   RDF.type,
                   RDF.Property
                   ))
-        self.add((property,
+        self.add((prop,
                   RDFS.domain,
                   domain
                   ))
-        self.add((property,
+        self.add((prop,
                   RDFS.range,
                   ran
                   ))
@@ -199,21 +206,33 @@ class ROGraph(Graph):
                   parent_cls
                   ))
 
-    def get_graph(self):
-        return self.g
-
 
 class ExampleCasContent(CasContent):
+    """
+    A preconfigured cas content for testing.
+    """
     def __init__(self, *args, **kwargs):
         super(ExampleCasContent, self).__init__(*args, **kwargs)
 
         self.NUM_RO = len(self[KEY_CHILDREN])
 
-    def get_NUM_RO(self):
+    def get_NUM_RO(self) -> int:
+        """
+        Get the number of reporting obligations.
+
+        Returns:
+            integer value of number of reporting obligations
+        """
         return self.NUM_RO
 
     @classmethod
-    def build(cls):
+    def build(cls) -> CasContent:
+        """
+            Build the example cas content
+
+        Returns:
+            The example cas content
+        """
         folder_cas = 'reporting_obligations/output_reporting_obligations'
         # filename_cas = 'cas_laurens.xml'
         filename_cas = 'ro + html2text.xml'  # 17 RO's0
@@ -222,7 +241,7 @@ class ExampleCasContent(CasContent):
         # from ROOT
         path_cas = os.path.join(ROOT, folder_cas, filename_cas)
         path_typesystem = os.path.join(ROOT, rel_path_typesystem)
-        return cls.from_cas(path_cas, path_typesystem)
+        return cls.from_cas_file(path_cas, path_typesystem)
 
 
 if __name__ == '__main__':

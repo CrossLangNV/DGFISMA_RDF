@@ -1,5 +1,6 @@
 import os
 
+import cassis
 from cassis import load_typesystem, load_cas_from_xmi
 
 KEY_CHILDREN = 'children'
@@ -31,21 +32,7 @@ class CasContent(dict):
         return cls(d)
 
     @classmethod
-    def from_cas(cls, path_cas, path_typesystem):
-        """ Build up CasContent from file directly
-
-           Args:
-               path_cas:
-               path_typesystem:
-
-           Returns:
-               a list
-           """
-        with open(path_typesystem, 'rb') as f:
-            typesystem = load_typesystem(f)
-
-        with open(path_cas, 'rb') as f:
-            cas = load_cas_from_xmi(f, typesystem=typesystem)
+    def from_cassis_cas(cls, cas: cassis.Cas):
 
         view_text_html = cas.get_view(SOFA_ID_HTML2TEXT)
 
@@ -76,6 +63,25 @@ class CasContent(dict):
                 l_ro.append(ro_i)
 
         return cls.from_list(l_ro)
+
+    @classmethod
+    def from_cas_file(cls, path_cas, path_typesystem):
+        """ Build up CasContent from file directly
+
+           Args:
+               path_cas:
+               path_typesystem:
+
+           Returns:
+               a list
+           """
+        with open(path_typesystem, 'rb') as f:
+            typesystem = load_typesystem(f)
+
+        with open(path_cas, 'rb') as f:
+            cas = load_cas_from_xmi(f, typesystem=typesystem)
+
+        return cls.from_cassis_cas(cas)
 
 
 class ROContent(dict):
@@ -124,7 +130,7 @@ def _get_example_cas_content() -> CasContent:
     path_cas = os.path.join(os.path.dirname(__file__), '..', rel_path_cas)
     path_typesystem = os.path.join(os.path.dirname(__file__), '..', rel_path_typesystem)
 
-    cas_content = CasContent.from_cas(path_cas, path_typesystem)
+    cas_content = CasContent.from_cas_file(path_cas, path_typesystem)
 
     return cas_content
 

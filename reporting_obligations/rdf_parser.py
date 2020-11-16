@@ -1,10 +1,10 @@
 import abc
 import os
-from typing import Iterable, List, Tuple, Dict
 
 import rdflib
 from SPARQLWrapper import SPARQLWrapper, JSON
 from rdflib import Literal, BNode, URIRef
+from typing import Iterable, List, Tuple, Dict
 
 from reporting_obligations import build_rdf
 
