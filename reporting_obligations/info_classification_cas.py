@@ -23,7 +23,7 @@ def get_examples():
     path_cas = os.path.join(os.path.dirname(__file__), '..', folder_cas, filename_cas)
     path_typesystem = os.path.join(os.path.dirname(__file__), '..', rel_path_typesystem)
 
-    l = cas_parser.CasContent.from_cas(path_cas, path_typesystem)
+    l = cas_parser.CasContent.from_cas_file(path_cas, path_typesystem)
 
     # combine per ARG
 
@@ -55,43 +55,8 @@ def link_eurovoc_skos(l_concepts):
     sparql.setReturnFormat(JSON)
     sparql.method = 'GET'
 
-    k_label = 's'
-    k_definition = 'p'
-    k_subject = 'o'
-
     def get_concepts_skos():
         s_label = 'label'
-
-        # query_string = f"""
-        #             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-        #
-        #             SELECT {concept} ?{k_definition} ?{k_subject} ?language
-        #                     WHERE {{
-        #                     ?{k_subject} skos:prefLabel "{concept}" .
-        #                     BIND (lang(?{k_label}) AS ?language)
-        #
-        #                     FILTER (
-        #                         lang(?{k_label}) = 'en'
-        #                         )
-        #                     }}
-        #                     ORDER BY ?{k_label}
-        #         """
-        #
-        # query_string = f"""
-        #             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-        #
-        #             SELECT ?s ?o
-        #             WHERE {{
-        #             ?s skos:prefLabel ?o
-        #                                   BIND (lang(?o) AS ?language)
-        #
-        #                                  FILTER (
-        #                                     lang(?o) = 'en' &&
-        #                                     ?o = "{concept}"@en
-        #                                     )
-        #             }}
-        #                   liMIT 25
-        #         """
 
         query_string = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -129,7 +94,6 @@ def link_eurovoc_skos(l_concepts):
 
 
 def link_atto_skos(l_concepts):
-
     sparql = SPARQLWrapper(URL)
     sparql.setReturnFormat(JSON)
     sparql.method = 'GET'
@@ -140,6 +104,7 @@ def link_atto_skos(l_concepts):
 
     def get_concepts_atto():
         s_label = 'label'
+
 
 #         # query_string = f"""
 #         #             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>

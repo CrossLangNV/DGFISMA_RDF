@@ -158,7 +158,7 @@ class ROGraph(Graph):
 
                     print(f'Unknown sentence entity class: {ent_i[KEY_SENTENCE_FRAG_CLASS]}')
 
-                    pred_i = prop_has_entity
+                    pred_i = self.prop_has_entity
                     cls = SKOS.Concept
 
                 else:
