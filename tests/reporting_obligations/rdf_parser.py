@@ -1,6 +1,7 @@
 import os
 import tempfile
 import unittest
+
 from typing import Iterable
 
 from reporting_obligations import build_rdf
@@ -182,9 +183,9 @@ class TestSPARQLReportingObligationProvider(unittest.TestCase):
         ro_provider = self.test_get_ro_provider()
 
         # from self.test_different_entities
-        l_types = ['http://dgfisma.com/reporting_obligation#hasVerb',
-                   'http://dgfisma.com/reporting_obligation#hasRegulatoryBody',
-                   'http://dgfisma.com/reporting_obligation#hasEntity'  # This one might get deprecated in the future
+        l_types = [D_ENTITIES['V'][0],
+                   D_ENTITIES['ARG2'][0],
+                   build_rdf.PROP_HAS_ENTITY, # This one might get deprecated in the future
                    ]
 
         for type_uri in l_types:
@@ -201,7 +202,8 @@ class TestSPARQLReportingObligationProvider(unittest.TestCase):
                 print('\t', l_labels)
 
     def test_distinct(self):
-        type_uri = 'http://dgfisma.com/reporting_obligation#hasVerb'
+
+        type_uri = D_ENTITIES['V'][0]
 
         ro_provider = self.test_get_ro_provider()
 
@@ -242,6 +244,8 @@ class TestGetRO(unittest.TestCase):
         """
         l_ro_uri = self.get_ro_provider().get_all_ro_uri()
 
+        self.assertGreater(self.cas_content_example.get_NUM_RO(), 0,
+                           'Sanity check: Cas content example should not be empty!')
         self.assertEqual(self.cas_content_example.get_NUM_RO(), len(l_ro_uri),
                          'Amount of reporting obligations do not seem to match.')
 

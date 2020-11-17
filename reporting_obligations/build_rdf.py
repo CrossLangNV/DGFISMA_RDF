@@ -2,11 +2,12 @@ import os
 
 from rdflib import BNode, Literal, Namespace, Graph
 from rdflib.namespace import SKOS, RDF, RDFS, OWL, URIRef, DC
+from rdflib.term import _serial_number_generator
 
 from reporting_obligations.cas_parser import CasContent, KEY_CHILDREN, KEY_SENTENCE_FRAG_CLASS, KEY_VALUE
 
 NS_BASE = Namespace("http://dgfisma.com/")
-RO_BASE = Namespace(NS_BASE + 'reporting_obligation#')
+RO_BASE = Namespace(NS_BASE + 'reporting_obligations/')
 
 ROOT = os.path.join(os.path.dirname(__file__), '..')
 MOCKUP_FILENAME = os.path.join(ROOT, 'data/examples', 'reporting_obligations_mockup.rdf')
@@ -32,6 +33,8 @@ D_ENTITIES = {'ARG0': (RO_BASE['hasReporter'], RO_BASE['Reporter']),
               'ARGM-DIS': (RO_BASE['hasPropDis'], RO_BASE['PropDis']),
               }
 
+PROP_HAS_ENTITY = RO_BASE.hasEntity
+
 
 class ROGraph(Graph):
     """
@@ -45,7 +48,6 @@ class ROGraph(Graph):
     class_rep_obl = RO_BASE.ReportingObligation
     # Connections
     prop_has_rep_obl = RO_BASE.hasReportingObligation
-    prop_has_entity = RO_BASE.hasEntity
 
     def __init__(self, *args, **kwargs):
         """ Looks quite clean if implemented with RDFLib https://github.com/RDFLib/rdflib
@@ -99,14 +101,14 @@ class ROGraph(Graph):
                            self.class_rep_obl,
                            RDFS.Literal)
 
-        self._add_property(self.prop_has_entity, self.class_rep_obl, SKOS.Concept)
+        self._add_property(PROP_HAS_ENTITY, self.class_rep_obl, SKOS.Concept)
 
         for prop, cls in D_ENTITIES.values():
             self._add_property(prop, self.class_rep_obl, cls)
             # Sub property
             self.add((prop,
                       RDFS.subPropertyOf,
-                      self.prop_has_entity
+                      PROP_HAS_ENTITY
                       ))
             self._add_sub_class(cls, SKOS.Concept)
 
@@ -115,12 +117,7 @@ class ROGraph(Graph):
         """
 
         # add a document
-        if 0:
-            cat_doc = RO_BASE['catalogue_document/' + _serial_number_generator()()]
-        elif 0:
-            cat_doc = BNode()
-        else:  # https://github.com/RDFLib/rdflib/pull/512#issuecomment-133857982
-            cat_doc = BNode().skolemize()
+        cat_doc = get_UID_node(info='cat_doc_')
 
         self.add((cat_doc, RDF.type, self.class_cat_doc))
 
@@ -128,12 +125,7 @@ class ROGraph(Graph):
         list_ro = cas_content[KEY_CHILDREN]
         for ro_i in list_ro:
 
-            if 0:
-                rep_obl_i = BNode(_prefix=RO_BASE + 'reporting_obligation/')
-            elif 0:
-                rep_obl_i = BNode()
-            else:  # https://github.com/RDFLib/rdflib/pull/512#issuecomment-133857982
-                rep_obl_i = BNode().skolemize()
+            rep_obl_i = get_UID_node(info='rep_obl_')
 
             self.add((rep_obl_i, RDF.type, self.class_rep_obl))
             # link to catalog document + ontology
@@ -144,12 +136,7 @@ class ROGraph(Graph):
             # iterate over different entities of RO
             for ent_i in ro_i[KEY_CHILDREN]:
 
-                if 0:
-                    concept_i = BNode(_prefix=RO_BASE + 'entity/')
-                elif 0:
-                    concept_i = BNode()
-                else:  # https://github.com/RDFLib/rdflib/pull/512#issuecomment-133857982
-                    concept_i = BNode().skolemize()
+                concept_i = get_UID_node(info='entity_')
 
                 t_pred_cls = D_ENTITIES.get(ent_i[KEY_SENTENCE_FRAG_CLASS])
                 if t_pred_cls is None:
@@ -158,7 +145,7 @@ class ROGraph(Graph):
 
                     print(f'Unknown sentence entity class: {ent_i[KEY_SENTENCE_FRAG_CLASS]}')
 
-                    pred_i = self.prop_has_entity
+                    pred_i = PROP_HAS_ENTITY
                     cls = SKOS.Concept
 
                 else:
@@ -211,6 +198,7 @@ class ExampleCasContent(CasContent):
     """
     A preconfigured cas content for testing.
     """
+
     def __init__(self, *args, **kwargs):
         super(ExampleCasContent, self).__init__(*args, **kwargs)
 
@@ -244,12 +232,33 @@ class ExampleCasContent(CasContent):
         return cls.from_cas_file(path_cas, path_typesystem)
 
 
+def get_UID_node(base=RO_BASE, info=None):
+    """ Shared function to generate nodes that need a unique ID.
+    ID is randomly generated.
+
+    Args:
+        base: used namespace
+        info: info to add to the ID.
+
+    Returns:
+        a URI or BNode
+    """
+    if 1:
+        node = base[info + _serial_number_generator()()]
+    elif 0:  # blank nodes
+        node = BNode()
+    else:  # https://github.com/RDFLib/rdflib/pull/512#issuecomment-133857982
+        node = BNode().skolemize()
+
+    return node
+
+
 if __name__ == '__main__':
 
     b_build = 1
     if b_build:  # already processed
         b_save = True
-        b_print = False
+        b_print = True
 
         g = ROGraph()
 

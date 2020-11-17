@@ -100,22 +100,22 @@ class SPARQLReportingObligationProvider:
         self.graph_wrapper = graph_wrapper
 
     def get_different_entities(self):
-        q = """
+        q = f"""
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-            PREFIX dgfro: <http://dgfisma.com/reporting_obligation#>
+            PREFIX dgfro: <{build_rdf.RO_BASE}>
 
             SELECT DISTINCT ?pred ?entClass
-            WHERE {
+            WHERE {{
                 ?pred rdfs:domain dgfro:ReportingObligation .
                 ?pred rdfs:range ?entClass .
                 ?_ro 			rdf:type dgfro:ReportingObligation .
     
-            FILTER ( EXISTS { ?entClass rdfs:subClassOf skos:Concept . } ||
+            FILTER ( EXISTS {{ ?entClass rdfs:subClassOf skos:Concept . }} ||
                 ?entClass = skos:Concept 
             )
-            }
+            }}
         """
 
         l = list(self.graph_wrapper.query(q))
@@ -128,7 +128,7 @@ class SPARQLReportingObligationProvider:
                           distinct=False) -> List[str]:
         q = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-            PREFIX dgfro: <http://dgfisma.com/reporting_obligation#>
+            PREFIX dgfro: <{build_rdf.RO_BASE}>
 
             SELECT {'DISTINCT' if distinct else ''} ?value
 
@@ -147,7 +147,7 @@ class SPARQLReportingObligationProvider:
     def get_all_ro_uri(self) -> List[str]:
         q = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-            PREFIX dgfro: <http://dgfisma.com/reporting_obligation#>
+            PREFIX dgfro: <{build_rdf.RO_BASE}>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
             SELECT ?ro_id
@@ -165,7 +165,7 @@ class SPARQLReportingObligationProvider:
     def get_all_ro_str(self):
         q = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-            PREFIX dgfro: <http://dgfisma.com/reporting_obligation#>
+            PREFIX dgfro: <{build_rdf.RO_BASE}>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
             SELECT ?value ?ro_id
@@ -194,7 +194,7 @@ class SPARQLReportingObligationProvider:
 
         q = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-            PREFIX dgfro: <http://dgfisma.com/reporting_obligation#>
+            PREFIX dgfro: <{build_rdf.RO_BASE}>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
             SELECT ?value ?ro_id ?p
@@ -229,7 +229,7 @@ class SPARQLReportingObligationProvider:
 
         q = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-            PREFIX dgfro: <http://dgfisma.com/reporting_obligation#>
+            PREFIX dgfro: <{build_rdf.RO_BASE}>
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
             SELECT ?value ?ro_id ?p
