@@ -79,7 +79,10 @@ def update_rdf_from_cas_content(cas_content) -> cas_parser.CasContent:
 
     def get_string_repr(n):
         if isinstance(n, Literal):
-            return f"""\"{n.toPython()}\""""
+            # If you want to include line breaks on your ttl files you need to use long literals,
+            # ie three double quotes (""")
+            # https://github.com/ckan/ckanext-dcat/issues/63
+            return f"""\"\"\"{n.toPython()}\"\"\""""
         else:
             return f"""<{n.toPython()}>"""
 
@@ -99,10 +102,14 @@ def update_rdf_from_cas_content(cas_content) -> cas_parser.CasContent:
 
     q = get_q(g)
 
+    logging.info('Update query')
+    logging.info('\t' + q)
+
     sparql.setQuery(q)
     ret = sparql.query()
 
     results = ret.convert()
+
     logging.info(results)
 
     return cas_content

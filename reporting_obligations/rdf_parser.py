@@ -1,6 +1,8 @@
 import abc
 import os
 
+import logging
+
 import rdflib
 from SPARQLWrapper import SPARQLWrapper, JSON
 from rdflib import Literal, BNode, URIRef
@@ -253,6 +255,8 @@ class SPARQLReportingObligationProvider:
         q += f"""
         }}
         """
+
+        logging.info(q)
 
         l = self.graph_wrapper.query(q)
 

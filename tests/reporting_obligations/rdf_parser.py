@@ -11,7 +11,8 @@ from reporting_obligations.rdf_parser import SPARQLReportingObligationProvider, 
 ROOT = os.path.join(os.path.dirname(__file__), '../..')
 
 # You might have to change this
-URL_FUSEKI = "http://localhost:8080/fuseki/sandbox/sparql"
+# URL_FUSEKI = "http://localhost:8080/fuseki/sandbox/sparql"
+URL_FUSEKI = "http://fuseki_RO:3030/RO"
 
 
 class TestRDFLibGraphWrapper(unittest.TestCase):
@@ -185,7 +186,7 @@ class TestSPARQLReportingObligationProvider(unittest.TestCase):
         # from self.test_different_entities
         l_types = [D_ENTITIES['V'][0],
                    D_ENTITIES['ARG2'][0],
-                   build_rdf.PROP_HAS_ENTITY, # This one might get deprecated in the future
+                   build_rdf.PROP_HAS_ENTITY,  # This one might get deprecated in the future
                    ]
 
         for type_uri in l_types:

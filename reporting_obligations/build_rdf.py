@@ -120,10 +120,11 @@ class ROGraph(Graph):
         cat_doc = get_UID_node(info='cat_doc_')
 
         self.add((cat_doc, RDF.type, self.class_cat_doc))
+        cas_content['id'] = cat_doc.toPython()  # adding ID to cas
 
         # iterate over reporting obligations (RO's)
         list_ro = cas_content[KEY_CHILDREN]
-        for ro_i in list_ro:
+        for i, ro_i in enumerate(list_ro):
 
             rep_obl_i = get_UID_node(info='rep_obl_')
 
@@ -132,18 +133,19 @@ class ROGraph(Graph):
             self.add((cat_doc, self.prop_has_rep_obl, rep_obl_i))
             # add whole reporting obligation
             self.add((rep_obl_i, RDF.value, Literal(ro_i[KEY_VALUE])))
+            cas_content[KEY_CHILDREN][i]['id'] = rep_obl_i.toPython()  # adding ID to cas
 
             # iterate over different entities of RO
-            for ent_i in ro_i[KEY_CHILDREN]:
+            for j, ent_j in enumerate(ro_i[KEY_CHILDREN]):
 
-                concept_i = get_UID_node(info='entity_')
+                concept_j = get_UID_node(info='entity_')
 
-                t_pred_cls = D_ENTITIES.get(ent_i[KEY_SENTENCE_FRAG_CLASS])
+                t_pred_cls = D_ENTITIES.get(ent_j[KEY_SENTENCE_FRAG_CLASS])
                 if t_pred_cls is None:
                     # Unknown property/entity class
                     # TODO how to handle unknown entities?
 
-                    print(f'Unknown sentence entity class: {ent_i[KEY_SENTENCE_FRAG_CLASS]}')
+                    print(f'Unknown sentence entity class: {ent_j[KEY_SENTENCE_FRAG_CLASS]}')
 
                     pred_i = PROP_HAS_ENTITY
                     cls = SKOS.Concept
@@ -152,13 +154,15 @@ class ROGraph(Graph):
                     pred_i, cls = t_pred_cls
 
                 # type definition
-                self.add((concept_i, RDF.type, cls))
+                self.add((concept_j, RDF.type, cls))
                 # Add the string representation
-                value_i = Literal(ent_i[KEY_VALUE], lang='en')
-                self.add((concept_i, SKOS.prefLabel, value_i))
+                value_i = Literal(ent_j[KEY_VALUE], lang='en')
+                self.add((concept_j, SKOS.prefLabel, value_i))
 
                 # connect entity with RO
-                self.add((rep_obl_i, pred_i, concept_i))
+                self.add((rep_obl_i, pred_i, concept_j))
+
+                cas_content[KEY_CHILDREN][i][KEY_CHILDREN][j]['id'] = concept_j.toPython()  # adding ID to cas
 
     def _add_property(self, prop: URIRef, domain: URIRef, ran: URIRef) -> None:
         """ shared function to build all necessary triples for a property in the ontology.
