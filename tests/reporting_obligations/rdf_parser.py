@@ -104,9 +104,9 @@ class TestGraphWrapper(unittest.TestCase):
         WHERE {
           ?subject skos:prefLabel ?object
         }
-        ORDER BY ?object
-        LIMIT 25
+        ORDER BY ?object ?subject
         """
+
         graph_wrapper_RDFLib = RDFLibGraphWrapper(os.path.join(ROOT, 'data/examples/reporting_obligations_mockup.rdf'))
         l_RDFLib = graph_wrapper_RDFLib.query(q)
 
@@ -143,9 +143,17 @@ class TestGraphWrapper(unittest.TestCase):
 
             return l_new
 
-        self.assertEqual(filter_exclude_bnode(l_RDFLib),
-                         filter_exclude_bnode(l_SPARQLWrapper),
-                         'Should give identical output.')
+        l_RDFLib_filtered = filter_exclude_bnode(l_RDFLib)
+        l_SPARQLWrapper_filtered = filter_exclude_bnode(l_SPARQLWrapper)
+        # if they are not same length, no reason to compare
+        self.assertEqual(len(l_RDFLib_filtered),
+                         len(l_SPARQLWrapper_filtered),
+                         'Should give same amount of elements.')
+
+        for i, (triple_RDFLib, triple_SPARQL) in enumerate(zip(l_RDFLib_filtered, l_SPARQLWrapper_filtered)):
+            self.assertEqual(triple_RDFLib,
+                             triple_SPARQL,
+                             f'Triple {i}. Should give back identical triples.')
 
 
 class TestSPARQLReportingObligationProvider(unittest.TestCase):
@@ -174,7 +182,8 @@ class TestSPARQLReportingObligationProvider(unittest.TestCase):
 
         l = list(l)
         with self.subTest("Checking for string compatible elements of the list"):
-            for _ in map(str, l): pass
+            for _ in map(str, l):
+                pass
 
         with self.subTest("Length of list"):
             self.assertEqual(len(D_ENTITIES) + 1, len(l), 'amount of RO sentence entities are defined beforehand. '
@@ -186,6 +195,10 @@ class TestSPARQLReportingObligationProvider(unittest.TestCase):
         # from self.test_different_entities
         l_types = [D_ENTITIES['V'][0],
                    D_ENTITIES['ARG2'][0],
+                   D_ENTITIES['ARG0'][0],
+                   D_ENTITIES['ARG1'][0],
+                   D_ENTITIES['ARG2'][0],
+                   D_ENTITIES['ARG3'][0],
                    build_rdf.PROP_HAS_ENTITY,  # This one might get deprecated in the future
                    ]
 
@@ -194,15 +207,18 @@ class TestSPARQLReportingObligationProvider(unittest.TestCase):
             with self.subTest(f'{basename}'):
                 l_labels = ro_provider.get_all_from_type(type_uri)
 
-                self.assertIsInstance(l_labels, Iterable)
+                self.assertIsInstance(l_labels, Iterable, 'Sanity check output type')
                 l_labels = list(l_labels)  # convert to list to get info
-                self.assertGreater(len(l_labels), 0, 'Should be more than one element')
-                for _ in map(str, l_labels): pass  # should contain string-like objects
 
-                print(f'class: {basename}')
-                print('\t', l_labels)
+                with self.subTest('Non-emtpy'):
+                    self.assertGreater(len(l_labels), 0, 'Should be more than one element')
 
-    def test_distinct(self):
+                with self.subTest('Uniqueness'):
+                    # Casing is NOT ignored
+                    set_labels = set(l_labels)  # map(str.lower, l_labels)
+                    self.assertEqual(len(l_labels), len(set_labels), 'Should contain no duplicates')
+
+    def test_distinctness(self):
 
         type_uri = D_ENTITIES['V'][0]
 
@@ -334,6 +350,34 @@ class TestGetRO(unittest.TestCase):
         l_ro = self.get_ro_provider().get_filter_multiple([(pred0, value0), (pred1, value1)])
 
         self.assertTrue(l_ro, 'Should return a non-empty object')
+
+    def test_filter_case_insensitive(self):
+
+        l_ent_types = self.get_ro_provider().get_different_entities()
+
+        pred0 = list(filter(lambda s: 'hasVerb' in s, l_ent_types))[0]
+        pred1 = list(filter(lambda s: 'hasRegulatoryBody' in s, l_ent_types))[0]
+
+        l_ent_type0 = self.get_ro_provider().get_all_from_type(pred0)
+        l_ent_type1 = self.get_ro_provider().get_all_from_type(pred1)
+
+        value0 = 'provide'
+        value1 = 'the Board'
+
+        self.assertIn(value0, l_ent_type0, 'Sanity check')
+        self.assertIn(value1, l_ent_type1, 'Sanity check')
+
+        l_ro = self.get_ro_provider().get_filter_multiple([(pred0, value0), (pred1, value1)])
+
+        self.assertTrue(len(l_ro), 'Sanity check, should be non-emtpy')
+
+        with self.subTest('Uppercase'):
+            l_ro_upper = self.get_ro_provider().get_filter_multiple([(pred0, value0.upper()), (pred1, value1.upper())])
+            self.assertEqual(set(l_ro), set(l_ro_upper), 'Output should be identical')
+
+        with self.subTest('Lowercase'):
+            l_ro_lower = self.get_ro_provider().get_filter_multiple([(pred0, value0.lower()), (pred1, value1.lower())])
+            self.assertEqual(set(l_ro), set(l_ro_lower), 'Output should be identical')
 
 
 class TestSPARQLReportingObligationProviderGetFilterMultiple(unittest.TestCase):

@@ -1,7 +1,6 @@
 import abc
-import os
-
 import logging
+import os
 
 import rdflib
 from SPARQLWrapper import SPARQLWrapper, JSON
@@ -127,7 +126,16 @@ class SPARQLReportingObligationProvider:
         return l_entity_predicates
 
     def get_all_from_type(self, type_uri,
-                          distinct=False) -> List[str]:
+                          distinct=True) -> List[str]:
+        """
+
+        Args:
+            type_uri:
+            distinct: Returning distinct elements is base behaviour
+
+        Returns:
+
+        """
         q = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             PREFIX dgfro: <{build_rdf.RO_BASE}>
@@ -187,34 +195,15 @@ class SPARQLReportingObligationProvider:
         """ Retrieve reporting obligations with a matching value for certain predicate
 
         Args:
-            pred:
-            value:
+            pred: predicate URI
+            value: string to match
 
         Returns:
-
+            List of reporting obligations with matching content.
         """
 
-        q = f"""
-            PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-            PREFIX dgfro: <{build_rdf.RO_BASE}>
-            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        return self.get_filter_multiple([(pred, value)])
 
-            SELECT ?value ?ro_id ?p
-
-            WHERE {{
-                ?ro_id rdf:type <{build_rdf.ROGraph.class_rep_obl}> ;
-                    rdf:value ?value ;
-                    <{pred}> ?ent .
-                ?ent skos:prefLabel ?p
-                FILTER (lang(?p) = "en"   )
-                FILTER ( str(?p) ="{value}"    )
-            }}
-        """
-        l = self.graph_wrapper.query(q)
-
-        l_ro = self.graph_wrapper.get_column(l, 'value')
-
-        return l_ro
 
     def get_filter_multiple(self, list_pred_value: List[Tuple[str]] = []) -> List[str]:
         """ Retrieve reporting obligations with a matching value for certain predicate
@@ -239,7 +228,6 @@ class SPARQLReportingObligationProvider:
             WHERE {{
                 ?ro_id rdf:type <{build_rdf.ROGraph.class_rep_obl}> ;
                    rdf:value ?value .
-
             """
 
         for i, (pred, value) in enumerate(list_pred_value):
@@ -247,7 +235,7 @@ class SPARQLReportingObligationProvider:
                      ?ro_id  <{pred}> ?ent{i} .
                         ?ent{i} skos:prefLabel ?p{i} .
                                 FILTER (lang(?p{i}) = "en"   )
-                                FILTER ( str(?p{i}) ="{value}"    )
+                                FILTER (lcase(str(?p{i})) =lcase(\"\"\"{value}\"\"\"))
             """
 
             q += q_i

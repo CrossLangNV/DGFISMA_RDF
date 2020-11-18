@@ -18,19 +18,28 @@ D_ENTITIES = {'ARG0': (RO_BASE['hasReporter'], RO_BASE['Reporter']),
               'ARG2': (RO_BASE['hasRegulatoryBody'], RO_BASE['RegulatoryBody']),
               'ARG3': (RO_BASE['hasDetails'], RO_BASE['Details']),
 
-              'V': (RO_BASE['hasVerb'], RO_BASE['Verb']),
+              'V': (RO_BASE['hasVerb'], RO_BASE['Verb']),  # Pivot verb
 
+              # http://clear.colorado.edu/compsem/documents/propbank_guidelines.pdf
               'ARGM-TMP': (RO_BASE['hasPropTmp'], RO_BASE['PropTmp']),
-              'ARGM-LOC': (RO_BASE['hasPropLoc'], RO_BASE['PropLoc']),
+              'ARGM-LOC': (RO_BASE['hasPropLoc'], RO_BASE['PropLoc']),  # Locatives
               'ARGM-CAU': (RO_BASE['hasPropCau'], RO_BASE['PropCau']),
               'ARGM-EXT': (RO_BASE['hasPropExt'], RO_BASE['PropExt']),
               'ARGM-MNR': (RO_BASE['hasPropMnr'], RO_BASE['PropMnr']),
               'ARGM-PNC': (RO_BASE['hasPropPnc'], RO_BASE['PropPnc']),
               'ARGM-ADV': (RO_BASE['hasPropAdv'], RO_BASE['PropAdv']),
-              'ARGM-DIR': (RO_BASE['hasPropDir'], RO_BASE['PropDir']),
+              'ARGM-DIR': (RO_BASE['hasPropDir'], RO_BASE['PropDir']),  # Directional
               'ARGM-NEG': (RO_BASE['hasPropNeg'], RO_BASE['PropNeg']),
-              'ARGM-MOD': (RO_BASE['hasPropMod'], RO_BASE['PropMod']),
-              'ARGM-DIS': (RO_BASE['hasPropDis'], RO_BASE['PropDis']),
+              'ARGM-MOD': (RO_BASE['hasPropMod'], RO_BASE['PropMod']),  # Modals
+              'ARGM-DIS': (RO_BASE['hasPropDis'], RO_BASE['PropDis']),  # Discourse
+              'ARGM-PRP': (RO_BASE['hasPropPrp'], RO_BASE['PropPrp']),  # Purpose
+              'ARGM-PRD': (RO_BASE['hasPropPrd'], RO_BASE['PropPrd']),  # Secondary Predication
+              # Unused until proven, added for completeness
+              'ARGM-COM': (RO_BASE['hasPropCom'], RO_BASE['PropCom']),  # Comitatives
+              'ARGM-GOL': (RO_BASE['hasPropGol'], RO_BASE['PropGol']),  # Goal
+              'ARGM-REC': (RO_BASE['hasPropRec'], RO_BASE['PropRec']),  # Reciprocals
+              'ARGM-DSP': (RO_BASE['hasPropDsp'], RO_BASE['PropDsp']),  # Direct Speech
+              'ARGM-LVB': (RO_BASE['hasPropLVB'], RO_BASE['PropLvb']),  # Light Verb
               }
 
 PROP_HAS_ENTITY = RO_BASE.hasEntity
