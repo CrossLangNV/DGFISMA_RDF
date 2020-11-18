@@ -204,7 +204,6 @@ class SPARQLReportingObligationProvider:
 
         return self.get_filter_multiple([(pred, value)])
 
-
     def get_filter_multiple(self, list_pred_value: List[Tuple[str]] = []) -> List[str]:
         """ Retrieve reporting obligations with a matching value for certain predicate
 
@@ -251,3 +250,50 @@ class SPARQLReportingObligationProvider:
         l_ro = self.graph_wrapper.get_column(l, 'value')
 
         return l_ro
+
+    def get_filter_ro_id_multiple(self, list_pred_value: List[Tuple[str]] = []) -> List[str]:
+        """ Retrieve reporting obligations UID's with a matching value for certain predicate
+
+        Args:
+            list_pred_value: List[(pred:str, value:str)]
+            e.g. [ ("<pred 1>", "<value 1>"),
+                    ...
+                    ("<pred n>", "<value n>") ]
+
+        Returns:
+
+        """
+
+        q = f"""
+            PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+            PREFIX dgfro: <{build_rdf.RO_BASE}>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+            SELECT ?value ?ro_id ?p
+
+            WHERE {{
+                ?ro_id rdf:type <{build_rdf.ROGraph.class_rep_obl}> ;
+                   rdf:value ?value .
+            """
+
+        for i, (pred, value) in enumerate(list_pred_value):
+            q_i = f"""
+                     ?ro_id  <{pred}> ?ent{i} .
+                        ?ent{i} skos:prefLabel ?p{i} .
+                                FILTER (lang(?p{i}) = "en"   )
+                                FILTER (lcase(str(?p{i})) =lcase(\"\"\"{value}\"\"\"))
+            """
+
+            q += q_i
+
+        q += f"""
+        }}
+        """
+
+        logging.info(q)
+
+        l = self.graph_wrapper.query(q)
+
+        l_ro_id = self.graph_wrapper.get_column(l, 'ro_id')
+
+        return l_ro_id
