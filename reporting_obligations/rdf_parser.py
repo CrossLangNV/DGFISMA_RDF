@@ -138,16 +138,15 @@ class SPARQLReportingObligationProvider:
         """
         q = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-            PREFIX dgfro: <{build_rdf.RO_BASE}>
 
             SELECT {'DISTINCT' if distinct else ''} ?value
 
             WHERE {{
                 ?ro <{type_uri}> ?ent .
     			?ent skos:prefLabel ?value
-                FILTER (lang(?value) = 'en')
             }}
         """
+        #                 FILTER (lang(?value) = 'en')
         l = list(self.graph_wrapper.query(q))
 
         l_values = self.graph_wrapper.get_column(l, 'value')
@@ -233,9 +232,9 @@ class SPARQLReportingObligationProvider:
             q_i = f"""
                      ?ro_id  <{pred}> ?ent{i} .
                         ?ent{i} skos:prefLabel ?p{i} .
-                                FILTER (lang(?p{i}) = "en"   )
                                 FILTER (lcase(str(?p{i})) =lcase(\"\"\"{value}\"\"\"))
             """
+            #                   FILTER (lang(?p{i}) = "en"   )
 
             q += q_i
 
@@ -280,7 +279,6 @@ class SPARQLReportingObligationProvider:
             q_i = f"""
                      ?ro_id  <{pred}> ?ent{i} .
                         ?ent{i} skos:prefLabel ?p{i} .
-                                FILTER (lang(?p{i}) = "en"   )
                                 FILTER (lcase(str(?p{i})) =lcase(\"\"\"{value}\"\"\"))
             """
 
@@ -289,6 +287,7 @@ class SPARQLReportingObligationProvider:
         q += f"""
         }}
         """
+        #                       FILTER (lang(?p{i}) = "en"   )
 
         logging.info(q)
 
