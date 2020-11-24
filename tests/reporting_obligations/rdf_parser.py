@@ -548,5 +548,32 @@ class TestSPARQLReportingObligationProviderGetFilterMultiple(unittest.TestCase):
             self.assertEqual(set(), set(l_ro), "Should return nothing")
 
 
+    def test_multiple_filters_ro_id(self):
+        """Retrieving reporting obligation UID's based on multiple filters
+
+        :return: None
+        """
+
+        with self.subTest("test 1"):
+            list_filters = [(D_ENTITIES[self.L_ENT1][0], 'a1'),
+                            (D_ENTITIES[self.L_ENT2][0], 'a2')
+                            ]
+            l_ro = self.ro_provider.get_filter_ro_id_multiple(list_filters)
+
+            self.assertEqual(set([self.S0, self.S2]), set(l_ro), "Should return these specific reporting obligations")
+
+            del list_filters, l_ro
+
+        with self.subTest("test 2"):
+            list_filters = [(D_ENTITIES[self.L_ENT1][0], 'a1'),
+                            (D_ENTITIES[self.L_ENT2][0], 'b2')
+                            ]
+            l_ro = self.ro_provider.get_filter_ro_id_multiple(list_filters)
+
+            self.assertEqual(set([self.S1]), set(l_ro), "Should return these specific reporting obligations")
+
+            del list_filters, l_ro
+
+
 if __name__ == '__main__':
     unittest.main()
