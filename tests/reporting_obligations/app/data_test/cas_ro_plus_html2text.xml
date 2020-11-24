@@ -1,0 +1,717 @@
+<?xml version="1.0"?>
+<xmi:XMI xmlns:xmi="http://www.omg.org/XMI" xmlns:cas="http:///uima/cas.ecore" xmlns:html="http:///com/crosslang/sdk/types/html.ecore" xmlns:tcas="http:///uima/tcas.ecore" xmlns:type="http:///de/tudarmstadt/ukp/dkpro/core/api/metadata/type.ecore" xmlns:type0="http:///com/crosslang/uimahtmltotext/uima/type.ecore" xmi:version="2.0">
+	<cas:NULL xmi:id="0"/>
+	<html:HtmlTag xmi:id="13" tagName="!doctype" tagRole="UNKNOWN" begin="0" end="15" sofa="1"/>
+	<html:HtmlTag xmi:id="22" tagName="style" tagRole="OPENING" attributes="" begin="16" end="23" sofa="1"/>
+	<html:HtmlTag xmi:id="29" tagName="style" tagRole="CLOSING" begin="2539" end="2547" sofa="1"/>
+	<html:TagAttribute xmi:id="46" name="data-frequency-class" value="2" begin="2549" end="2860" sofa="1"/>
+	<html:TagAttribute xmi:id="52" name="data-frequency-could-be-1" value="false" begin="2549" end="2860" sofa="1"/>
+	<html:TagAttribute xmi:id="58" name="data-frequency-could-be-2" value="true" begin="2549" end="2860" sofa="1"/>
+	<html:TagAttribute xmi:id="64" name="data-frequency-could-be-3" value="false" begin="2549" end="2860" sofa="1"/>
+	<html:TagAttribute xmi:id="70" name="data-frequency-might-be-1" value="true" begin="2549" end="2860" sofa="1"/>
+	<html:TagAttribute xmi:id="76" name="data-frequency-might-be-2" value="true" begin="2549" end="2860" sofa="1"/>
+	<html:TagAttribute xmi:id="82" name="data-frequency-might-be-3" value="false" begin="2549" end="2860" sofa="1"/>
+	<html:TagAttribute xmi:id="88" name="data-frequency-split" value="0.20515594523894834|0.7843106687068939|0.01053336447566835" begin="2549" end="2860" sofa="1"/>
+	<html:HtmlTag xmi:id="94" tagName="p" tagRole="OPENING" attributes="46 52 58 64 70 76 82 88" begin="2549" end="2860" sofa="1"/>
+	<html:TagAttribute xmi:id="104" name="class" value="ARG0" begin="2872" end="2891" sofa="1"/>
+	<html:HtmlTag xmi:id="110" tagName="span" tagRole="OPENING" attributes="104" begin="2872" end="2891" sofa="1"/>
+	<html:HtmlTag xmi:id="117" tagName="span" tagRole="CLOSING" begin="2910" end="2917" sofa="1"/>
+	<html:TagAttribute xmi:id="127" name="class" value="ARGM-MOD" begin="2918" end="2941" sofa="1"/>
+	<html:HtmlTag xmi:id="133" tagName="span" tagRole="OPENING" attributes="127" begin="2918" end="2941" sofa="1"/>
+	<html:HtmlTag xmi:id="140" tagName="span" tagRole="CLOSING" begin="2947" end="2954" sofa="1"/>
+	<html:TagAttribute xmi:id="150" name="class" value="V" begin="2955" end="2971" sofa="1"/>
+	<html:HtmlTag xmi:id="156" tagName="span" tagRole="OPENING" attributes="150" begin="2955" end="2971" sofa="1"/>
+	<html:HtmlTag xmi:id="163" tagName="span" tagRole="CLOSING" begin="2978" end="2985" sofa="1"/>
+	<html:TagAttribute xmi:id="173" name="class" value="ARG1" begin="2986" end="3005" sofa="1"/>
+	<html:HtmlTag xmi:id="179" tagName="span" tagRole="OPENING" attributes="173" begin="2986" end="3005" sofa="1"/>
+	<html:HtmlTag xmi:id="186" tagName="span" tagRole="CLOSING" begin="3070" end="3077" sofa="1"/>
+	<html:TagAttribute xmi:id="196" name="class" value="ARGM-PRP" begin="3078" end="3101" sofa="1"/>
+	<html:HtmlTag xmi:id="202" tagName="span" tagRole="OPENING" attributes="196" begin="3078" end="3101" sofa="1"/>
+	<html:HtmlTag xmi:id="209" tagName="span" tagRole="CLOSING" begin="3211" end="3218" sofa="1"/>
+	<html:HtmlTag xmi:id="216" tagName="p" tagRole="CLOSING" begin="4254" end="4258" sofa="1"/>
+	<html:TagAttribute xmi:id="233" name="data-frequency-class" value="2" begin="4259" end="4570" sofa="1"/>
+	<html:TagAttribute xmi:id="239" name="data-frequency-could-be-1" value="false" begin="4259" end="4570" sofa="1"/>
+	<html:TagAttribute xmi:id="245" name="data-frequency-could-be-2" value="true" begin="4259" end="4570" sofa="1"/>
+	<html:TagAttribute xmi:id="251" name="data-frequency-could-be-3" value="false" begin="4259" end="4570" sofa="1"/>
+	<html:TagAttribute xmi:id="257" name="data-frequency-might-be-1" value="true" begin="4259" end="4570" sofa="1"/>
+	<html:TagAttribute xmi:id="263" name="data-frequency-might-be-2" value="true" begin="4259" end="4570" sofa="1"/>
+	<html:TagAttribute xmi:id="269" name="data-frequency-might-be-3" value="false" begin="4259" end="4570" sofa="1"/>
+	<html:TagAttribute xmi:id="275" name="data-frequency-split" value="0.1909633757546544|0.808315920829773|0.0007206876383861528" begin="4259" end="4570" sofa="1"/>
+	<html:HtmlTag xmi:id="281" tagName="p" tagRole="OPENING" attributes="233 239 245 251 257 263 269 275" begin="4259" end="4570" sofa="1"/>
+	<html:TagAttribute xmi:id="291" name="class" value="ARG0" begin="4856" end="4875" sofa="1"/>
+	<html:HtmlTag xmi:id="297" tagName="span" tagRole="OPENING" attributes="291" begin="4856" end="4875" sofa="1"/>
+	<html:HtmlTag xmi:id="304" tagName="span" tagRole="CLOSING" begin="4917" end="4924" sofa="1"/>
+	<html:TagAttribute xmi:id="314" name="class" value="ARGM-MOD" begin="4925" end="4948" sofa="1"/>
+	<html:HtmlTag xmi:id="320" tagName="span" tagRole="OPENING" attributes="314" begin="4925" end="4948" sofa="1"/>
+	<html:HtmlTag xmi:id="327" tagName="span" tagRole="CLOSING" begin="4953" end="4960" sofa="1"/>
+	<html:TagAttribute xmi:id="337" name="class" value="ARGM-ADV" begin="4961" end="4984" sofa="1"/>
+	<html:HtmlTag xmi:id="343" tagName="span" tagRole="OPENING" attributes="337" begin="4961" end="4984" sofa="1"/>
+	<html:HtmlTag xmi:id="350" tagName="span" tagRole="CLOSING" begin="4988" end="4995" sofa="1"/>
+	<html:TagAttribute xmi:id="360" name="class" value="V" begin="4996" end="5012" sofa="1"/>
+	<html:HtmlTag xmi:id="366" tagName="span" tagRole="OPENING" attributes="360" begin="4996" end="5012" sofa="1"/>
+	<html:HtmlTag xmi:id="373" tagName="span" tagRole="CLOSING" begin="5017" end="5024" sofa="1"/>
+	<html:TagAttribute xmi:id="383" name="class" value="ARG1" begin="5025" end="5044" sofa="1"/>
+	<html:HtmlTag xmi:id="389" tagName="span" tagRole="OPENING" attributes="383" begin="5025" end="5044" sofa="1"/>
+	<html:HtmlTag xmi:id="396" tagName="span" tagRole="CLOSING" begin="5110" end="5117" sofa="1"/>
+	<html:HtmlTag xmi:id="403" tagName="p" tagRole="CLOSING" begin="5800" end="5804" sofa="1"/>
+	<html:HtmlTag xmi:id="412" tagName="h6" tagRole="OPENING" attributes="" begin="5805" end="5809" sofa="1"/>
+	<html:HtmlTag xmi:id="419" tagName="h6" tagRole="CLOSING" begin="5818" end="5823" sofa="1"/>
+	<html:TagAttribute xmi:id="436" name="data-frequency-class" value="3" begin="5824" end="6140" sofa="1"/>
+	<html:TagAttribute xmi:id="442" name="data-frequency-could-be-1" value="false" begin="5824" end="6140" sofa="1"/>
+	<html:TagAttribute xmi:id="448" name="data-frequency-could-be-2" value="false" begin="5824" end="6140" sofa="1"/>
+	<html:TagAttribute xmi:id="454" name="data-frequency-could-be-3" value="true" begin="5824" end="6140" sofa="1"/>
+	<html:TagAttribute xmi:id="460" name="data-frequency-might-be-1" value="false" begin="5824" end="6140" sofa="1"/>
+	<html:TagAttribute xmi:id="466" name="data-frequency-might-be-2" value="false" begin="5824" end="6140" sofa="1"/>
+	<html:TagAttribute xmi:id="472" name="data-frequency-might-be-3" value="true" begin="5824" end="6140" sofa="1"/>
+	<html:TagAttribute xmi:id="478" name="data-frequency-split" value="0.0042372159183287185|0.0001664219653960686|0.9955963790416719" begin="5824" end="6140" sofa="1"/>
+	<html:HtmlTag xmi:id="484" tagName="p" tagRole="OPENING" attributes="436 442 448 454 460 466 472 478" begin="5824" end="6140" sofa="1"/>
+	<html:TagAttribute xmi:id="494" name="class" value="ARG0" begin="6140" end="6159" sofa="1"/>
+	<html:HtmlTag xmi:id="500" tagName="span" tagRole="OPENING" attributes="494" begin="6140" end="6159" sofa="1"/>
+	<html:HtmlTag xmi:id="507" tagName="span" tagRole="CLOSING" begin="6168" end="6175" sofa="1"/>
+	<html:TagAttribute xmi:id="517" name="class" value="ARGM-MOD" begin="6176" end="6199" sofa="1"/>
+	<html:HtmlTag xmi:id="523" tagName="span" tagRole="OPENING" attributes="517" begin="6176" end="6199" sofa="1"/>
+	<html:HtmlTag xmi:id="530" tagName="span" tagRole="CLOSING" begin="6204" end="6211" sofa="1"/>
+	<html:TagAttribute xmi:id="540" name="class" value="V" begin="6212" end="6228" sofa="1"/>
+	<html:HtmlTag xmi:id="546" tagName="span" tagRole="OPENING" attributes="540" begin="6212" end="6228" sofa="1"/>
+	<html:HtmlTag xmi:id="553" tagName="span" tagRole="CLOSING" begin="6234" end="6241" sofa="1"/>
+	<html:TagAttribute xmi:id="563" name="class" value="ARGM-TMP" begin="6242" end="6265" sofa="1"/>
+	<html:HtmlTag xmi:id="569" tagName="span" tagRole="OPENING" attributes="563" begin="6242" end="6265" sofa="1"/>
+	<html:HtmlTag xmi:id="576" tagName="span" tagRole="CLOSING" begin="6271" end="6278" sofa="1"/>
+	<html:TagAttribute xmi:id="586" name="class" value="ARG2" begin="6279" end="6298" sofa="1"/>
+	<html:HtmlTag xmi:id="592" tagName="span" tagRole="OPENING" attributes="586" begin="6279" end="6298" sofa="1"/>
+	<html:HtmlTag xmi:id="599" tagName="span" tagRole="CLOSING" begin="6315" end="6322" sofa="1"/>
+	<html:TagAttribute xmi:id="609" name="class" value="ARG1" begin="6323" end="6342" sofa="1"/>
+	<html:HtmlTag xmi:id="615" tagName="span" tagRole="OPENING" attributes="609" begin="6323" end="6342" sofa="1"/>
+	<html:HtmlTag xmi:id="622" tagName="span" tagRole="CLOSING" begin="6495" end="6502" sofa="1"/>
+	<html:HtmlTag xmi:id="629" tagName="p" tagRole="CLOSING" begin="6504" end="6508" sofa="1"/>
+	<html:HtmlTag xmi:id="638" tagName="h6" tagRole="OPENING" attributes="" begin="6509" end="6513" sofa="1"/>
+	<html:HtmlTag xmi:id="645" tagName="h6" tagRole="CLOSING" begin="6522" end="6527" sofa="1"/>
+	<html:TagAttribute xmi:id="662" name="data-frequency-class" value="2" begin="6528" end="6838" sofa="1"/>
+	<html:TagAttribute xmi:id="668" name="data-frequency-could-be-1" value="false" begin="6528" end="6838" sofa="1"/>
+	<html:TagAttribute xmi:id="674" name="data-frequency-could-be-2" value="true" begin="6528" end="6838" sofa="1"/>
+	<html:TagAttribute xmi:id="680" name="data-frequency-could-be-3" value="true" begin="6528" end="6838" sofa="1"/>
+	<html:TagAttribute xmi:id="686" name="data-frequency-might-be-1" value="false" begin="6528" end="6838" sofa="1"/>
+	<html:TagAttribute xmi:id="692" name="data-frequency-might-be-2" value="true" begin="6528" end="6838" sofa="1"/>
+	<html:TagAttribute xmi:id="698" name="data-frequency-might-be-3" value="true" begin="6528" end="6838" sofa="1"/>
+	<html:TagAttribute xmi:id="704" name="data-frequency-split" value="0.001330306047884733|0.5857867021113634|0.4128830189816654" begin="6528" end="6838" sofa="1"/>
+	<html:HtmlTag xmi:id="710" tagName="p" tagRole="OPENING" attributes="662 668 674 680 686 692 698 704" begin="6528" end="6838" sofa="1"/>
+	<html:TagAttribute xmi:id="720" name="class" value="ARGM-TMP" begin="6838" end="6861" sofa="1"/>
+	<html:HtmlTag xmi:id="726" tagName="span" tagRole="OPENING" attributes="720" begin="6838" end="6861" sofa="1"/>
+	<html:HtmlTag xmi:id="733" tagName="span" tagRole="CLOSING" begin="6870" end="6877" sofa="1"/>
+	<html:TagAttribute xmi:id="743" name="class" value="ARGM-TMP" begin="6880" end="6903" sofa="1"/>
+	<html:HtmlTag xmi:id="749" tagName="span" tagRole="OPENING" attributes="743" begin="6880" end="6903" sofa="1"/>
+	<html:HtmlTag xmi:id="756" tagName="span" tagRole="CLOSING" begin="7116" end="7123" sofa="1"/>
+	<html:TagAttribute xmi:id="766" name="class" value="ARG0" begin="7126" end="7145" sofa="1"/>
+	<html:HtmlTag xmi:id="772" tagName="span" tagRole="OPENING" attributes="766" begin="7126" end="7145" sofa="1"/>
+	<html:HtmlTag xmi:id="779" tagName="span" tagRole="CLOSING" begin="7152" end="7159" sofa="1"/>
+	<html:TagAttribute xmi:id="789" name="class" value="ARGM-MOD" begin="7160" end="7183" sofa="1"/>
+	<html:HtmlTag xmi:id="795" tagName="span" tagRole="OPENING" attributes="789" begin="7160" end="7183" sofa="1"/>
+	<html:HtmlTag xmi:id="802" tagName="span" tagRole="CLOSING" begin="7188" end="7195" sofa="1"/>
+	<html:TagAttribute xmi:id="812" name="class" value="V" begin="7196" end="7212" sofa="1"/>
+	<html:HtmlTag xmi:id="818" tagName="span" tagRole="OPENING" attributes="812" begin="7196" end="7212" sofa="1"/>
+	<html:HtmlTag xmi:id="825" tagName="span" tagRole="CLOSING" begin="7219" end="7226" sofa="1"/>
+	<html:TagAttribute xmi:id="835" name="class" value="ARG2" begin="7227" end="7246" sofa="1"/>
+	<html:HtmlTag xmi:id="841" tagName="span" tagRole="OPENING" attributes="835" begin="7227" end="7246" sofa="1"/>
+	<html:HtmlTag xmi:id="848" tagName="span" tagRole="CLOSING" begin="7255" end="7262" sofa="1"/>
+	<html:TagAttribute xmi:id="858" name="class" value="ARG1" begin="7263" end="7282" sofa="1"/>
+	<html:HtmlTag xmi:id="864" tagName="span" tagRole="OPENING" attributes="858" begin="7263" end="7282" sofa="1"/>
+	<html:HtmlTag xmi:id="871" tagName="span" tagRole="CLOSING" begin="7319" end="7326" sofa="1"/>
+	<html:TagAttribute xmi:id="881" name="class" value="ARGM-PRD" begin="7327" end="7350" sofa="1"/>
+	<html:HtmlTag xmi:id="887" tagName="span" tagRole="OPENING" attributes="881" begin="7327" end="7350" sofa="1"/>
+	<html:HtmlTag xmi:id="894" tagName="span" tagRole="CLOSING" begin="7479" end="7486" sofa="1"/>
+	<html:HtmlTag xmi:id="901" tagName="p" tagRole="CLOSING" begin="7488" end="7492" sofa="1"/>
+	<html:TagAttribute xmi:id="918" name="data-frequency-class" value="2" begin="7493" end="7804" sofa="1"/>
+	<html:TagAttribute xmi:id="924" name="data-frequency-could-be-1" value="false" begin="7493" end="7804" sofa="1"/>
+	<html:TagAttribute xmi:id="930" name="data-frequency-could-be-2" value="true" begin="7493" end="7804" sofa="1"/>
+	<html:TagAttribute xmi:id="936" name="data-frequency-could-be-3" value="false" begin="7493" end="7804" sofa="1"/>
+	<html:TagAttribute xmi:id="942" name="data-frequency-might-be-1" value="false" begin="7493" end="7804" sofa="1"/>
+	<html:TagAttribute xmi:id="948" name="data-frequency-might-be-2" value="true" begin="7493" end="7804" sofa="1"/>
+	<html:TagAttribute xmi:id="954" name="data-frequency-might-be-3" value="false" begin="7493" end="7804" sofa="1"/>
+	<html:TagAttribute xmi:id="960" name="data-frequency-split" value="0.12815370485186578|0.834447529911995|0.03739875489845872" begin="7493" end="7804" sofa="1"/>
+	<html:HtmlTag xmi:id="966" tagName="p" tagRole="OPENING" attributes="918 924 930 936 942 948 954 960" begin="7493" end="7804" sofa="1"/>
+	<html:TagAttribute xmi:id="976" name="class" value="ARGM-ADV" begin="7804" end="7827" sofa="1"/>
+	<html:HtmlTag xmi:id="982" tagName="span" tagRole="OPENING" attributes="976" begin="7804" end="7827" sofa="1"/>
+	<html:HtmlTag xmi:id="989" tagName="span" tagRole="CLOSING" begin="7975" end="7982" sofa="1"/>
+	<html:TagAttribute xmi:id="999" name="class" value="ARG0" begin="7985" end="8004" sofa="1"/>
+	<html:HtmlTag xmi:id="1005" tagName="span" tagRole="OPENING" attributes="999" begin="7985" end="8004" sofa="1"/>
+	<html:HtmlTag xmi:id="1012" tagName="span" tagRole="CLOSING" begin="8011" end="8018" sofa="1"/>
+	<html:TagAttribute xmi:id="1022" name="class" value="ARGM-MOD" begin="8019" end="8042" sofa="1"/>
+	<html:HtmlTag xmi:id="1028" tagName="span" tagRole="OPENING" attributes="1022" begin="8019" end="8042" sofa="1"/>
+	<html:HtmlTag xmi:id="1035" tagName="span" tagRole="CLOSING" begin="8047" end="8054" sofa="1"/>
+	<html:TagAttribute xmi:id="1045" name="class" value="V" begin="8055" end="8071" sofa="1"/>
+	<html:HtmlTag xmi:id="1051" tagName="span" tagRole="OPENING" attributes="1045" begin="8055" end="8071" sofa="1"/>
+	<html:HtmlTag xmi:id="1058" tagName="span" tagRole="CLOSING" begin="8082" end="8089" sofa="1"/>
+	<html:TagAttribute xmi:id="1068" name="class" value="ARG2" begin="8090" end="8109" sofa="1"/>
+	<html:HtmlTag xmi:id="1074" tagName="span" tagRole="OPENING" attributes="1068" begin="8090" end="8109" sofa="1"/>
+	<html:HtmlTag xmi:id="1081" tagName="span" tagRole="CLOSING" begin="8121" end="8128" sofa="1"/>
+	<html:TagAttribute xmi:id="1091" name="class" value="ARG1" begin="8129" end="8148" sofa="1"/>
+	<html:HtmlTag xmi:id="1097" tagName="span" tagRole="OPENING" attributes="1091" begin="8129" end="8148" sofa="1"/>
+	<html:HtmlTag xmi:id="1104" tagName="span" tagRole="CLOSING" begin="8160" end="8167" sofa="1"/>
+	<html:TagAttribute xmi:id="1114" name="class" value="ARGM-TMP" begin="8168" end="8191" sofa="1"/>
+	<html:HtmlTag xmi:id="1120" tagName="span" tagRole="OPENING" attributes="1114" begin="8168" end="8191" sofa="1"/>
+	<html:HtmlTag xmi:id="1127" tagName="span" tagRole="CLOSING" begin="8235" end="8242" sofa="1"/>
+	<html:HtmlTag xmi:id="1134" tagName="p" tagRole="CLOSING" begin="8244" end="8248" sofa="1"/>
+	<html:TagAttribute xmi:id="1151" name="data-frequency-class" value="1" begin="8249" end="8559" sofa="1"/>
+	<html:TagAttribute xmi:id="1157" name="data-frequency-could-be-1" value="true" begin="8249" end="8559" sofa="1"/>
+	<html:TagAttribute xmi:id="1163" name="data-frequency-could-be-2" value="false" begin="8249" end="8559" sofa="1"/>
+	<html:TagAttribute xmi:id="1169" name="data-frequency-could-be-3" value="false" begin="8249" end="8559" sofa="1"/>
+	<html:TagAttribute xmi:id="1175" name="data-frequency-might-be-1" value="true" begin="8249" end="8559" sofa="1"/>
+	<html:TagAttribute xmi:id="1181" name="data-frequency-might-be-2" value="true" begin="8249" end="8559" sofa="1"/>
+	<html:TagAttribute xmi:id="1187" name="data-frequency-might-be-3" value="true" begin="8249" end="8559" sofa="1"/>
+	<html:TagAttribute xmi:id="1193" name="data-frequency-split" value="0.5007092013955117|0.25160889732651415|0.24768189192327555" begin="8249" end="8559" sofa="1"/>
+	<html:HtmlTag xmi:id="1199" tagName="p" tagRole="OPENING" attributes="1151 1157 1163 1169 1175 1181 1187 1193" begin="8249" end="8559" sofa="1"/>
+	<html:TagAttribute xmi:id="1209" name="class" value="ARG1" begin="8682" end="8701" sofa="1"/>
+	<html:HtmlTag xmi:id="1215" tagName="span" tagRole="OPENING" attributes="1209" begin="8682" end="8701" sofa="1"/>
+	<html:HtmlTag xmi:id="1222" tagName="span" tagRole="CLOSING" begin="8709" end="8716" sofa="1"/>
+	<html:TagAttribute xmi:id="1232" name="class" value="V" begin="8717" end="8733" sofa="1"/>
+	<html:HtmlTag xmi:id="1238" tagName="span" tagRole="OPENING" attributes="1232" begin="8717" end="8733" sofa="1"/>
+	<html:HtmlTag xmi:id="1245" tagName="span" tagRole="CLOSING" begin="8742" end="8749" sofa="1"/>
+	<html:TagAttribute xmi:id="1255" name="class" value="ARG0" begin="8750" end="8769" sofa="1"/>
+	<html:HtmlTag xmi:id="1261" tagName="span" tagRole="OPENING" attributes="1255" begin="8750" end="8769" sofa="1"/>
+	<html:HtmlTag xmi:id="1268" tagName="span" tagRole="CLOSING" begin="8779" end="8786" sofa="1"/>
+	<html:TagAttribute xmi:id="1278" name="class" value="ARGM-TMP" begin="8787" end="8810" sofa="1"/>
+	<html:HtmlTag xmi:id="1284" tagName="span" tagRole="OPENING" attributes="1278" begin="8787" end="8810" sofa="1"/>
+	<html:HtmlTag xmi:id="1291" tagName="span" tagRole="CLOSING" begin="8840" end="8847" sofa="1"/>
+	<html:HtmlTag xmi:id="1298" tagName="p" tagRole="CLOSING" begin="8987" end="8991" sofa="1"/>
+	<html:TagAttribute xmi:id="1315" name="data-frequency-class" value="2" begin="8992" end="9308" sofa="1"/>
+	<html:TagAttribute xmi:id="1321" name="data-frequency-could-be-1" value="false" begin="8992" end="9308" sofa="1"/>
+	<html:TagAttribute xmi:id="1327" name="data-frequency-could-be-2" value="true" begin="8992" end="9308" sofa="1"/>
+	<html:TagAttribute xmi:id="1333" name="data-frequency-could-be-3" value="false" begin="8992" end="9308" sofa="1"/>
+	<html:TagAttribute xmi:id="1339" name="data-frequency-might-be-1" value="false" begin="8992" end="9308" sofa="1"/>
+	<html:TagAttribute xmi:id="1345" name="data-frequency-might-be-2" value="true" begin="8992" end="9308" sofa="1"/>
+	<html:TagAttribute xmi:id="1351" name="data-frequency-might-be-3" value="false" begin="8992" end="9308" sofa="1"/>
+	<html:TagAttribute xmi:id="1357" name="data-frequency-split" value="0.006017554854042829|0.9939320094883441|5.0436644927742696e-05" begin="8992" end="9308" sofa="1"/>
+	<html:HtmlTag xmi:id="1363" tagName="p" tagRole="OPENING" attributes="1315 1321 1327 1333 1339 1345 1351 1357" begin="8992" end="9308" sofa="1"/>
+	<html:TagAttribute xmi:id="1373" name="class" value="ARGM-ADV" begin="9308" end="9331" sofa="1"/>
+	<html:HtmlTag xmi:id="1379" tagName="span" tagRole="OPENING" attributes="1373" begin="9308" end="9331" sofa="1"/>
+	<html:HtmlTag xmi:id="1386" tagName="span" tagRole="CLOSING" begin="9379" end="9386" sofa="1"/>
+	<html:TagAttribute xmi:id="1396" name="class" value="ARG0" begin="9389" end="9408" sofa="1"/>
+	<html:HtmlTag xmi:id="1402" tagName="span" tagRole="OPENING" attributes="1396" begin="9389" end="9408" sofa="1"/>
+	<html:HtmlTag xmi:id="1409" tagName="span" tagRole="CLOSING" begin="9449" end="9456" sofa="1"/>
+	<html:TagAttribute xmi:id="1419" name="class" value="ARGM-MOD" begin="9457" end="9480" sofa="1"/>
+	<html:HtmlTag xmi:id="1425" tagName="span" tagRole="OPENING" attributes="1419" begin="9457" end="9480" sofa="1"/>
+	<html:HtmlTag xmi:id="1432" tagName="span" tagRole="CLOSING" begin="9485" end="9492" sofa="1"/>
+	<html:TagAttribute xmi:id="1442" name="class" value="ARGM-TMP" begin="9493" end="9516" sofa="1"/>
+	<html:HtmlTag xmi:id="1448" tagName="span" tagRole="OPENING" attributes="1442" begin="9493" end="9516" sofa="1"/>
+	<html:HtmlTag xmi:id="1455" tagName="span" tagRole="CLOSING" begin="9528" end="9535" sofa="1"/>
+	<html:TagAttribute xmi:id="1465" name="class" value="V" begin="9536" end="9552" sofa="1"/>
+	<html:HtmlTag xmi:id="1471" tagName="span" tagRole="OPENING" attributes="1465" begin="9536" end="9552" sofa="1"/>
+	<html:HtmlTag xmi:id="1478" tagName="span" tagRole="CLOSING" begin="9559" end="9566" sofa="1"/>
+	<html:TagAttribute xmi:id="1488" name="class" value="ARG2" begin="9567" end="9586" sofa="1"/>
+	<html:HtmlTag xmi:id="1494" tagName="span" tagRole="OPENING" attributes="1488" begin="9567" end="9586" sofa="1"/>
+	<html:HtmlTag xmi:id="1501" tagName="span" tagRole="CLOSING" begin="9595" end="9602" sofa="1"/>
+	<html:TagAttribute xmi:id="1511" name="class" value="ARG1" begin="9603" end="9622" sofa="1"/>
+	<html:HtmlTag xmi:id="1517" tagName="span" tagRole="OPENING" attributes="1511" begin="9603" end="9622" sofa="1"/>
+	<html:HtmlTag xmi:id="1524" tagName="span" tagRole="CLOSING" begin="9651" end="9658" sofa="1"/>
+	<html:HtmlTag xmi:id="1531" tagName="p" tagRole="CLOSING" begin="9660" end="9664" sofa="1"/>
+	<html:TagAttribute xmi:id="1548" name="data-frequency-class" value="2" begin="9665" end="9979" sofa="1"/>
+	<html:TagAttribute xmi:id="1554" name="data-frequency-could-be-1" value="false" begin="9665" end="9979" sofa="1"/>
+	<html:TagAttribute xmi:id="1560" name="data-frequency-could-be-2" value="true" begin="9665" end="9979" sofa="1"/>
+	<html:TagAttribute xmi:id="1566" name="data-frequency-could-be-3" value="false" begin="9665" end="9979" sofa="1"/>
+	<html:TagAttribute xmi:id="1572" name="data-frequency-might-be-1" value="false" begin="9665" end="9979" sofa="1"/>
+	<html:TagAttribute xmi:id="1578" name="data-frequency-might-be-2" value="true" begin="9665" end="9979" sofa="1"/>
+	<html:TagAttribute xmi:id="1584" name="data-frequency-might-be-3" value="false" begin="9665" end="9979" sofa="1"/>
+	<html:TagAttribute xmi:id="1590" name="data-frequency-split" value="0.05358475090833963|0.9457095101475717|0.0007057117192061925" begin="9665" end="9979" sofa="1"/>
+	<html:HtmlTag xmi:id="1596" tagName="p" tagRole="OPENING" attributes="1548 1554 1560 1566 1572 1578 1584 1590" begin="9665" end="9979" sofa="1"/>
+	<html:TagAttribute xmi:id="1606" name="class" value="ARGM-ADV" begin="9979" end="10002" sofa="1"/>
+	<html:HtmlTag xmi:id="1612" tagName="span" tagRole="OPENING" attributes="1606" begin="9979" end="10002" sofa="1"/>
+	<html:HtmlTag xmi:id="1619" tagName="span" tagRole="CLOSING" begin="10075" end="10082" sofa="1"/>
+	<html:TagAttribute xmi:id="1629" name="class" value="ARG0" begin="10085" end="10104" sofa="1"/>
+	<html:HtmlTag xmi:id="1635" tagName="span" tagRole="OPENING" attributes="1629" begin="10085" end="10104" sofa="1"/>
+	<html:HtmlTag xmi:id="1642" tagName="span" tagRole="CLOSING" begin="10127" end="10134" sofa="1"/>
+	<html:TagAttribute xmi:id="1652" name="class" value="ARGM-MOD" begin="10135" end="10158" sofa="1"/>
+	<html:HtmlTag xmi:id="1658" tagName="span" tagRole="OPENING" attributes="1652" begin="10135" end="10158" sofa="1"/>
+	<html:HtmlTag xmi:id="1665" tagName="span" tagRole="CLOSING" begin="10163" end="10170" sofa="1"/>
+	<html:TagAttribute xmi:id="1675" name="class" value="ARGM-TMP" begin="10171" end="10194" sofa="1"/>
+	<html:HtmlTag xmi:id="1681" tagName="span" tagRole="OPENING" attributes="1675" begin="10171" end="10194" sofa="1"/>
+	<html:HtmlTag xmi:id="1688" tagName="span" tagRole="CLOSING" begin="10206" end="10213" sofa="1"/>
+	<html:TagAttribute xmi:id="1698" name="class" value="V" begin="10214" end="10230" sofa="1"/>
+	<html:HtmlTag xmi:id="1704" tagName="span" tagRole="OPENING" attributes="1698" begin="10214" end="10230" sofa="1"/>
+	<html:HtmlTag xmi:id="1711" tagName="span" tagRole="CLOSING" begin="10237" end="10244" sofa="1"/>
+	<html:TagAttribute xmi:id="1721" name="class" value="ARG2" begin="10245" end="10264" sofa="1"/>
+	<html:HtmlTag xmi:id="1727" tagName="span" tagRole="OPENING" attributes="1721" begin="10245" end="10264" sofa="1"/>
+	<html:HtmlTag xmi:id="1734" tagName="span" tagRole="CLOSING" begin="10273" end="10280" sofa="1"/>
+	<html:TagAttribute xmi:id="1744" name="class" value="ARG1" begin="10281" end="10300" sofa="1"/>
+	<html:HtmlTag xmi:id="1750" tagName="span" tagRole="OPENING" attributes="1744" begin="10281" end="10300" sofa="1"/>
+	<html:HtmlTag xmi:id="1757" tagName="span" tagRole="CLOSING" begin="10323" end="10330" sofa="1"/>
+	<html:TagAttribute xmi:id="1767" name="class" value="ARGM-TMP" begin="10331" end="10354" sofa="1"/>
+	<html:HtmlTag xmi:id="1773" tagName="span" tagRole="OPENING" attributes="1767" begin="10331" end="10354" sofa="1"/>
+	<html:HtmlTag xmi:id="1780" tagName="span" tagRole="CLOSING" begin="10388" end="10395" sofa="1"/>
+	<html:HtmlTag xmi:id="1787" tagName="p" tagRole="CLOSING" begin="10563" end="10567" sofa="1"/>
+	<html:HtmlTag xmi:id="1796" tagName="h6" tagRole="OPENING" attributes="" begin="10568" end="10572" sofa="1"/>
+	<html:HtmlTag xmi:id="1803" tagName="h6" tagRole="CLOSING" begin="10581" end="10586" sofa="1"/>
+	<html:TagAttribute xmi:id="1820" name="data-frequency-class" value="2" begin="10587" end="10899" sofa="1"/>
+	<html:TagAttribute xmi:id="1826" name="data-frequency-could-be-1" value="true" begin="10587" end="10899" sofa="1"/>
+	<html:TagAttribute xmi:id="1832" name="data-frequency-could-be-2" value="true" begin="10587" end="10899" sofa="1"/>
+	<html:TagAttribute xmi:id="1838" name="data-frequency-could-be-3" value="false" begin="10587" end="10899" sofa="1"/>
+	<html:TagAttribute xmi:id="1844" name="data-frequency-might-be-1" value="true" begin="10587" end="10899" sofa="1"/>
+	<html:TagAttribute xmi:id="1850" name="data-frequency-might-be-2" value="true" begin="10587" end="10899" sofa="1"/>
+	<html:TagAttribute xmi:id="1856" name="data-frequency-might-be-3" value="false" begin="10587" end="10899" sofa="1"/>
+	<html:TagAttribute xmi:id="1862" name="data-frequency-split" value="0.46877795755863194|0.5301035627722741|0.0011184674251126126" begin="10587" end="10899" sofa="1"/>
+	<html:HtmlTag xmi:id="1868" tagName="p" tagRole="OPENING" attributes="1820 1826 1832 1838 1844 1850 1856 1862" begin="10587" end="10899" sofa="1"/>
+	<html:TagAttribute xmi:id="1878" name="class" value="ARG1" begin="10899" end="10918" sofa="1"/>
+	<html:HtmlTag xmi:id="1884" tagName="span" tagRole="OPENING" attributes="1878" begin="10899" end="10918" sofa="1"/>
+	<html:HtmlTag xmi:id="1891" tagName="span" tagRole="CLOSING" begin="10939" end="10946" sofa="1"/>
+	<html:TagAttribute xmi:id="1901" name="class" value="ARGM-MOD" begin="10947" end="10970" sofa="1"/>
+	<html:HtmlTag xmi:id="1907" tagName="span" tagRole="OPENING" attributes="1901" begin="10947" end="10970" sofa="1"/>
+	<html:HtmlTag xmi:id="1914" tagName="span" tagRole="CLOSING" begin="10975" end="10982" sofa="1"/>
+	<html:TagAttribute xmi:id="1924" name="class" value="V" begin="10986" end="11002" sofa="1"/>
+	<html:HtmlTag xmi:id="1930" tagName="span" tagRole="OPENING" attributes="1924" begin="10986" end="11002" sofa="1"/>
+	<html:HtmlTag xmi:id="1937" tagName="span" tagRole="CLOSING" begin="11008" end="11015" sofa="1"/>
+	<html:TagAttribute xmi:id="1947" name="class" value="ARG0" begin="11016" end="11035" sofa="1"/>
+	<html:HtmlTag xmi:id="1953" tagName="span" tagRole="OPENING" attributes="1947" begin="11016" end="11035" sofa="1"/>
+	<html:HtmlTag xmi:id="1960" tagName="span" tagRole="CLOSING" begin="11047" end="11054" sofa="1"/>
+	<html:TagAttribute xmi:id="1970" name="class" value="ARG2" begin="11055" end="11074" sofa="1"/>
+	<html:HtmlTag xmi:id="1976" tagName="span" tagRole="OPENING" attributes="1970" begin="11055" end="11074" sofa="1"/>
+	<html:HtmlTag xmi:id="1983" tagName="span" tagRole="CLOSING" begin="11101" end="11108" sofa="1"/>
+	<html:HtmlTag xmi:id="1990" tagName="p" tagRole="CLOSING" begin="11110" end="11114" sofa="1"/>
+	<html:TagAttribute xmi:id="2007" name="data-frequency-class" value="1" begin="11115" end="11426" sofa="1"/>
+	<html:TagAttribute xmi:id="2013" name="data-frequency-could-be-1" value="true" begin="11115" end="11426" sofa="1"/>
+	<html:TagAttribute xmi:id="2019" name="data-frequency-could-be-2" value="true" begin="11115" end="11426" sofa="1"/>
+	<html:TagAttribute xmi:id="2025" name="data-frequency-could-be-3" value="false" begin="11115" end="11426" sofa="1"/>
+	<html:TagAttribute xmi:id="2031" name="data-frequency-might-be-1" value="true" begin="11115" end="11426" sofa="1"/>
+	<html:TagAttribute xmi:id="2037" name="data-frequency-might-be-2" value="true" begin="11115" end="11426" sofa="1"/>
+	<html:TagAttribute xmi:id="2043" name="data-frequency-might-be-3" value="false" begin="11115" end="11426" sofa="1"/>
+	<html:TagAttribute xmi:id="2049" name="data-frequency-split" value="0.5527074243407697|0.4466692094225437|0.0006233781845367049" begin="11115" end="11426" sofa="1"/>
+	<html:HtmlTag xmi:id="2055" tagName="p" tagRole="OPENING" attributes="2007 2013 2019 2025 2031 2037 2043 2049" begin="11115" end="11426" sofa="1"/>
+	<html:TagAttribute xmi:id="2065" name="class" value="ARG0" begin="11426" end="11445" sofa="1"/>
+	<html:HtmlTag xmi:id="2071" tagName="span" tagRole="OPENING" attributes="2065" begin="11426" end="11445" sofa="1"/>
+	<html:HtmlTag xmi:id="2078" tagName="span" tagRole="CLOSING" begin="11454" end="11461" sofa="1"/>
+	<html:TagAttribute xmi:id="2088" name="class" value="ARGM-MOD" begin="11462" end="11485" sofa="1"/>
+	<html:HtmlTag xmi:id="2094" tagName="span" tagRole="OPENING" attributes="2088" begin="11462" end="11485" sofa="1"/>
+	<html:HtmlTag xmi:id="2101" tagName="span" tagRole="CLOSING" begin="11490" end="11497" sofa="1"/>
+	<html:TagAttribute xmi:id="2111" name="class" value="V" begin="11498" end="11514" sofa="1"/>
+	<html:HtmlTag xmi:id="2117" tagName="span" tagRole="OPENING" attributes="2111" begin="11498" end="11514" sofa="1"/>
+	<html:HtmlTag xmi:id="2124" tagName="span" tagRole="CLOSING" begin="11520" end="11527" sofa="1"/>
+	<html:TagAttribute xmi:id="2134" name="class" value="ARG2" begin="11528" end="11547" sofa="1"/>
+	<html:HtmlTag xmi:id="2140" tagName="span" tagRole="OPENING" attributes="2134" begin="11528" end="11547" sofa="1"/>
+	<html:HtmlTag xmi:id="2147" tagName="span" tagRole="CLOSING" begin="11570" end="11577" sofa="1"/>
+	<html:TagAttribute xmi:id="2157" name="class" value="ARG2" begin="11578" end="11597" sofa="1"/>
+	<html:HtmlTag xmi:id="2163" tagName="span" tagRole="OPENING" attributes="2157" begin="11578" end="11597" sofa="1"/>
+	<html:HtmlTag xmi:id="2170" tagName="span" tagRole="CLOSING" begin="11829" end="11836" sofa="1"/>
+	<html:HtmlTag xmi:id="2177" tagName="p" tagRole="CLOSING" begin="11836" end="11840" sofa="1"/>
+	<html:TagAttribute xmi:id="2194" name="data-frequency-class" value="1" begin="11841" end="12154" sofa="1"/>
+	<html:TagAttribute xmi:id="2200" name="data-frequency-could-be-1" value="true" begin="11841" end="12154" sofa="1"/>
+	<html:TagAttribute xmi:id="2206" name="data-frequency-could-be-2" value="false" begin="11841" end="12154" sofa="1"/>
+	<html:TagAttribute xmi:id="2212" name="data-frequency-could-be-3" value="false" begin="11841" end="12154" sofa="1"/>
+	<html:TagAttribute xmi:id="2218" name="data-frequency-might-be-1" value="true" begin="11841" end="12154" sofa="1"/>
+	<html:TagAttribute xmi:id="2224" name="data-frequency-might-be-2" value="false" begin="11841" end="12154" sofa="1"/>
+	<html:TagAttribute xmi:id="2230" name="data-frequency-might-be-3" value="false" begin="11841" end="12154" sofa="1"/>
+	<html:TagAttribute xmi:id="2236" name="data-frequency-split" value="0.9242614269256592|0.04688026979565621|0.028858251590281728" begin="11841" end="12154" sofa="1"/>
+	<html:HtmlTag xmi:id="2242" tagName="p" tagRole="OPENING" attributes="2194 2200 2206 2212 2218 2224 2230 2236" begin="11841" end="12154" sofa="1"/>
+	<html:TagAttribute xmi:id="2252" name="class" value="ARG1" begin="12154" end="12173" sofa="1"/>
+	<html:HtmlTag xmi:id="2258" tagName="span" tagRole="OPENING" attributes="2252" begin="12154" end="12173" sofa="1"/>
+	<html:HtmlTag xmi:id="2265" tagName="span" tagRole="CLOSING" begin="12309" end="12316" sofa="1"/>
+	<html:TagAttribute xmi:id="2275" name="class" value="ARGM-MOD" begin="12317" end="12340" sofa="1"/>
+	<html:HtmlTag xmi:id="2281" tagName="span" tagRole="OPENING" attributes="2275" begin="12317" end="12340" sofa="1"/>
+	<html:HtmlTag xmi:id="2288" tagName="span" tagRole="CLOSING" begin="12345" end="12352" sofa="1"/>
+	<html:TagAttribute xmi:id="2298" name="class" value="V" begin="12356" end="12372" sofa="1"/>
+	<html:HtmlTag xmi:id="2304" tagName="span" tagRole="OPENING" attributes="2298" begin="12356" end="12372" sofa="1"/>
+	<html:HtmlTag xmi:id="2311" tagName="span" tagRole="CLOSING" begin="12381" end="12388" sofa="1"/>
+	<html:TagAttribute xmi:id="2321" name="class" value="ARG2" begin="12389" end="12408" sofa="1"/>
+	<html:HtmlTag xmi:id="2327" tagName="span" tagRole="OPENING" attributes="2321" begin="12389" end="12408" sofa="1"/>
+	<html:HtmlTag xmi:id="2334" tagName="span" tagRole="CLOSING" begin="12450" end="12457" sofa="1"/>
+	<html:HtmlTag xmi:id="2341" tagName="p" tagRole="CLOSING" begin="12459" end="12463" sofa="1"/>
+	<html:TagAttribute xmi:id="2358" name="data-frequency-class" value="2" begin="12464" end="12780" sofa="1"/>
+	<html:TagAttribute xmi:id="2364" name="data-frequency-could-be-1" value="false" begin="12464" end="12780" sofa="1"/>
+	<html:TagAttribute xmi:id="2370" name="data-frequency-could-be-2" value="true" begin="12464" end="12780" sofa="1"/>
+	<html:TagAttribute xmi:id="2376" name="data-frequency-could-be-3" value="false" begin="12464" end="12780" sofa="1"/>
+	<html:TagAttribute xmi:id="2382" name="data-frequency-might-be-1" value="false" begin="12464" end="12780" sofa="1"/>
+	<html:TagAttribute xmi:id="2388" name="data-frequency-might-be-2" value="true" begin="12464" end="12780" sofa="1"/>
+	<html:TagAttribute xmi:id="2394" name="data-frequency-might-be-3" value="false" begin="12464" end="12780" sofa="1"/>
+	<html:TagAttribute xmi:id="2400" name="data-frequency-split" value="1.8616760553413772e-05|0.9998445689678193|0.000136777781881392" begin="12464" end="12780" sofa="1"/>
+	<html:HtmlTag xmi:id="2406" tagName="p" tagRole="OPENING" attributes="2358 2364 2370 2376 2382 2388 2394 2400" begin="12464" end="12780" sofa="1"/>
+	<html:TagAttribute xmi:id="2416" name="class" value="ARGM-ADV" begin="12780" end="12803" sofa="1"/>
+	<html:HtmlTag xmi:id="2422" tagName="span" tagRole="OPENING" attributes="2416" begin="12780" end="12803" sofa="1"/>
+	<html:HtmlTag xmi:id="2429" tagName="span" tagRole="CLOSING" begin="12970" end="12977" sofa="1"/>
+	<html:TagAttribute xmi:id="2439" name="class" value="ARG0" begin="12980" end="12999" sofa="1"/>
+	<html:HtmlTag xmi:id="2445" tagName="span" tagRole="OPENING" attributes="2439" begin="12980" end="12999" sofa="1"/>
+	<html:HtmlTag xmi:id="2452" tagName="span" tagRole="CLOSING" begin="13008" end="13015" sofa="1"/>
+	<html:TagAttribute xmi:id="2462" name="class" value="ARGM-MOD" begin="13016" end="13039" sofa="1"/>
+	<html:HtmlTag xmi:id="2468" tagName="span" tagRole="OPENING" attributes="2462" begin="13016" end="13039" sofa="1"/>
+	<html:HtmlTag xmi:id="2475" tagName="span" tagRole="CLOSING" begin="13044" end="13051" sofa="1"/>
+	<html:TagAttribute xmi:id="2485" name="class" value="V" begin="13052" end="13068" sofa="1"/>
+	<html:HtmlTag xmi:id="2491" tagName="span" tagRole="OPENING" attributes="2485" begin="13052" end="13068" sofa="1"/>
+	<html:HtmlTag xmi:id="2498" tagName="span" tagRole="CLOSING" begin="13074" end="13081" sofa="1"/>
+	<html:TagAttribute xmi:id="2508" name="class" value="ARG2" begin="13082" end="13101" sofa="1"/>
+	<html:HtmlTag xmi:id="2514" tagName="span" tagRole="OPENING" attributes="2508" begin="13082" end="13101" sofa="1"/>
+	<html:HtmlTag xmi:id="2521" tagName="span" tagRole="CLOSING" begin="13216" end="13223" sofa="1"/>
+	<html:HtmlTag xmi:id="2528" tagName="p" tagRole="CLOSING" begin="13225" end="13229" sofa="1"/>
+	<html:HtmlTag xmi:id="2537" tagName="h6" tagRole="OPENING" attributes="" begin="13230" end="13234" sofa="1"/>
+	<html:HtmlTag xmi:id="2544" tagName="h6" tagRole="CLOSING" begin="13243" end="13248" sofa="1"/>
+	<html:TagAttribute xmi:id="2561" name="data-frequency-class" value="2" begin="13249" end="13563" sofa="1"/>
+	<html:TagAttribute xmi:id="2567" name="data-frequency-could-be-1" value="false" begin="13249" end="13563" sofa="1"/>
+	<html:TagAttribute xmi:id="2573" name="data-frequency-could-be-2" value="true" begin="13249" end="13563" sofa="1"/>
+	<html:TagAttribute xmi:id="2579" name="data-frequency-could-be-3" value="false" begin="13249" end="13563" sofa="1"/>
+	<html:TagAttribute xmi:id="2585" name="data-frequency-might-be-1" value="false" begin="13249" end="13563" sofa="1"/>
+	<html:TagAttribute xmi:id="2591" name="data-frequency-might-be-2" value="true" begin="13249" end="13563" sofa="1"/>
+	<html:TagAttribute xmi:id="2597" name="data-frequency-might-be-3" value="false" begin="13249" end="13563" sofa="1"/>
+	<html:TagAttribute xmi:id="2603" name="data-frequency-split" value="0.11648192889988424|0.8804802387952806|0.0030378605704754593" begin="13249" end="13563" sofa="1"/>
+	<html:HtmlTag xmi:id="2609" tagName="p" tagRole="OPENING" attributes="2561 2567 2573 2579 2585 2591 2597 2603" begin="13249" end="13563" sofa="1"/>
+	<html:TagAttribute xmi:id="2619" name="class" value="ARG0" begin="13563" end="13582" sofa="1"/>
+	<html:HtmlTag xmi:id="2625" tagName="span" tagRole="OPENING" attributes="2619" begin="13563" end="13582" sofa="1"/>
+	<html:HtmlTag xmi:id="2632" tagName="span" tagRole="CLOSING" begin="13631" end="13638" sofa="1"/>
+	<html:TagAttribute xmi:id="2642" name="class" value="ARGM-MOD" begin="13639" end="13662" sofa="1"/>
+	<html:HtmlTag xmi:id="2648" tagName="span" tagRole="OPENING" attributes="2642" begin="13639" end="13662" sofa="1"/>
+	<html:HtmlTag xmi:id="2655" tagName="span" tagRole="CLOSING" begin="13667" end="13674" sofa="1"/>
+	<html:TagAttribute xmi:id="2665" name="class" value="V" begin="13689" end="13705" sofa="1"/>
+	<html:HtmlTag xmi:id="2671" tagName="span" tagRole="OPENING" attributes="2665" begin="13689" end="13705" sofa="1"/>
+	<html:HtmlTag xmi:id="2678" tagName="span" tagRole="CLOSING" begin="13711" end="13718" sofa="1"/>
+	<html:TagAttribute xmi:id="2688" name="class" value="ARG2" begin="13719" end="13738" sofa="1"/>
+	<html:HtmlTag xmi:id="2694" tagName="span" tagRole="OPENING" attributes="2688" begin="13719" end="13738" sofa="1"/>
+	<html:HtmlTag xmi:id="2701" tagName="span" tagRole="CLOSING" begin="13800" end="13807" sofa="1"/>
+	<html:TagAttribute xmi:id="2711" name="class" value="ARG2" begin="13808" end="13827" sofa="1"/>
+	<html:HtmlTag xmi:id="2717" tagName="span" tagRole="OPENING" attributes="2711" begin="13808" end="13827" sofa="1"/>
+	<html:HtmlTag xmi:id="2724" tagName="span" tagRole="CLOSING" begin="13923" end="13930" sofa="1"/>
+	<html:HtmlTag xmi:id="2731" tagName="p" tagRole="CLOSING" begin="13932" end="13936" sofa="1"/>
+	<html:HtmlTag xmi:id="2740" tagName="h6" tagRole="OPENING" attributes="" begin="13937" end="13941" sofa="1"/>
+	<html:HtmlTag xmi:id="2747" tagName="h6" tagRole="CLOSING" begin="13951" end="13956" sofa="1"/>
+	<html:TagAttribute xmi:id="2764" name="data-frequency-class" value="2" begin="13957" end="14269" sofa="1"/>
+	<html:TagAttribute xmi:id="2770" name="data-frequency-could-be-1" value="false" begin="13957" end="14269" sofa="1"/>
+	<html:TagAttribute xmi:id="2776" name="data-frequency-could-be-2" value="true" begin="13957" end="14269" sofa="1"/>
+	<html:TagAttribute xmi:id="2782" name="data-frequency-could-be-3" value="false" begin="13957" end="14269" sofa="1"/>
+	<html:TagAttribute xmi:id="2788" name="data-frequency-might-be-1" value="false" begin="13957" end="14269" sofa="1"/>
+	<html:TagAttribute xmi:id="2794" name="data-frequency-might-be-2" value="true" begin="13957" end="14269" sofa="1"/>
+	<html:TagAttribute xmi:id="2800" name="data-frequency-might-be-3" value="false" begin="13957" end="14269" sofa="1"/>
+	<html:TagAttribute xmi:id="2806" name="data-frequency-split" value="0.10562654389068485|0.8935340434312821|0.00083945326769026" begin="13957" end="14269" sofa="1"/>
+	<html:HtmlTag xmi:id="2812" tagName="p" tagRole="OPENING" attributes="2764 2770 2776 2782 2788 2794 2800 2806" begin="13957" end="14269" sofa="1"/>
+	<html:TagAttribute xmi:id="2822" name="class" value="ARG1" begin="14459" end="14478" sofa="1"/>
+	<html:HtmlTag xmi:id="2828" tagName="span" tagRole="OPENING" attributes="2822" begin="14459" end="14478" sofa="1"/>
+	<html:HtmlTag xmi:id="2835" tagName="span" tagRole="CLOSING" begin="14486" end="14493" sofa="1"/>
+	<html:TagAttribute xmi:id="2845" name="class" value="V" begin="14494" end="14510" sofa="1"/>
+	<html:HtmlTag xmi:id="2851" tagName="span" tagRole="OPENING" attributes="2845" begin="14494" end="14510" sofa="1"/>
+	<html:HtmlTag xmi:id="2858" tagName="span" tagRole="CLOSING" begin="14519" end="14526" sofa="1"/>
+	<html:TagAttribute xmi:id="2868" name="class" value="ARG0" begin="14527" end="14546" sofa="1"/>
+	<html:HtmlTag xmi:id="2874" tagName="span" tagRole="OPENING" attributes="2868" begin="14527" end="14546" sofa="1"/>
+	<html:HtmlTag xmi:id="2881" tagName="span" tagRole="CLOSING" begin="14556" end="14563" sofa="1"/>
+	<html:TagAttribute xmi:id="2891" name="class" value="ARGM-TMP" begin="14564" end="14587" sofa="1"/>
+	<html:HtmlTag xmi:id="2897" tagName="span" tagRole="OPENING" attributes="2891" begin="14564" end="14587" sofa="1"/>
+	<html:HtmlTag xmi:id="2904" tagName="span" tagRole="CLOSING" begin="14611" end="14618" sofa="1"/>
+	<html:HtmlTag xmi:id="2911" tagName="p" tagRole="CLOSING" begin="14726" end="14730" sofa="1"/>
+	<html:HtmlTag xmi:id="2920" tagName="h6" tagRole="OPENING" attributes="" begin="14731" end="14735" sofa="1"/>
+	<html:HtmlTag xmi:id="2927" tagName="h6" tagRole="CLOSING" begin="14745" end="14750" sofa="1"/>
+	<html:TagAttribute xmi:id="2944" name="data-frequency-class" value="2" begin="14751" end="15062" sofa="1"/>
+	<html:TagAttribute xmi:id="2950" name="data-frequency-could-be-1" value="true" begin="14751" end="15062" sofa="1"/>
+	<html:TagAttribute xmi:id="2956" name="data-frequency-could-be-2" value="true" begin="14751" end="15062" sofa="1"/>
+	<html:TagAttribute xmi:id="2962" name="data-frequency-could-be-3" value="false" begin="14751" end="15062" sofa="1"/>
+	<html:TagAttribute xmi:id="2968" name="data-frequency-might-be-1" value="true" begin="14751" end="15062" sofa="1"/>
+	<html:TagAttribute xmi:id="2974" name="data-frequency-might-be-2" value="true" begin="14751" end="15062" sofa="1"/>
+	<html:TagAttribute xmi:id="2980" name="data-frequency-might-be-3" value="false" begin="14751" end="15062" sofa="1"/>
+	<html:TagAttribute xmi:id="2986" name="data-frequency-split" value="0.4970387041568757|0.5022900804877282|0.0006712008733302354" begin="14751" end="15062" sofa="1"/>
+	<html:HtmlTag xmi:id="2992" tagName="p" tagRole="OPENING" attributes="2944 2950 2956 2962 2968 2974 2980 2986" begin="14751" end="15062" sofa="1"/>
+	<html:TagAttribute xmi:id="3002" name="class" value="ARGM-TMP" begin="15062" end="15085" sofa="1"/>
+	<html:HtmlTag xmi:id="3008" tagName="span" tagRole="OPENING" attributes="3002" begin="15062" end="15085" sofa="1"/>
+	<html:HtmlTag xmi:id="3015" tagName="span" tagRole="CLOSING" begin="15142" end="15149" sofa="1"/>
+	<html:TagAttribute xmi:id="3025" name="class" value="ARG0" begin="15152" end="15171" sofa="1"/>
+	<html:HtmlTag xmi:id="3031" tagName="span" tagRole="OPENING" attributes="3025" begin="15152" end="15171" sofa="1"/>
+	<html:HtmlTag xmi:id="3038" tagName="span" tagRole="CLOSING" begin="15178" end="15185" sofa="1"/>
+	<html:TagAttribute xmi:id="3048" name="class" value="ARGM-MOD" begin="15186" end="15209" sofa="1"/>
+	<html:HtmlTag xmi:id="3054" tagName="span" tagRole="OPENING" attributes="3048" begin="15186" end="15209" sofa="1"/>
+	<html:HtmlTag xmi:id="3061" tagName="span" tagRole="CLOSING" begin="15214" end="15221" sofa="1"/>
+	<html:TagAttribute xmi:id="3071" name="class" value="V" begin="15222" end="15238" sofa="1"/>
+	<html:HtmlTag xmi:id="3077" tagName="span" tagRole="OPENING" attributes="3071" begin="15222" end="15238" sofa="1"/>
+	<html:HtmlTag xmi:id="3084" tagName="span" tagRole="CLOSING" begin="15245" end="15252" sofa="1"/>
+	<html:TagAttribute xmi:id="3094" name="class" value="ARG2" begin="15253" end="15272" sofa="1"/>
+	<html:HtmlTag xmi:id="3100" tagName="span" tagRole="OPENING" attributes="3094" begin="15253" end="15272" sofa="1"/>
+	<html:HtmlTag xmi:id="3107" tagName="span" tagRole="CLOSING" begin="15281" end="15288" sofa="1"/>
+	<html:TagAttribute xmi:id="3117" name="class" value="ARG1" begin="15289" end="15308" sofa="1"/>
+	<html:HtmlTag xmi:id="3123" tagName="span" tagRole="OPENING" attributes="3117" begin="15289" end="15308" sofa="1"/>
+	<html:HtmlTag xmi:id="3130" tagName="span" tagRole="CLOSING" begin="15477" end="15484" sofa="1"/>
+	<html:HtmlTag xmi:id="3137" tagName="p" tagRole="CLOSING" begin="15486" end="15490" sofa="1"/>
+	<html:HtmlTag xmi:id="3146" tagName="h6" tagRole="OPENING" attributes="" begin="15491" end="15495" sofa="1"/>
+	<html:HtmlTag xmi:id="3153" tagName="h6" tagRole="CLOSING" begin="15505" end="15510" sofa="1"/>
+	<html:TagAttribute xmi:id="3170" name="data-frequency-class" value="2" begin="15511" end="15823" sofa="1"/>
+	<html:TagAttribute xmi:id="3176" name="data-frequency-could-be-1" value="false" begin="15511" end="15823" sofa="1"/>
+	<html:TagAttribute xmi:id="3182" name="data-frequency-could-be-2" value="true" begin="15511" end="15823" sofa="1"/>
+	<html:TagAttribute xmi:id="3188" name="data-frequency-could-be-3" value="false" begin="15511" end="15823" sofa="1"/>
+	<html:TagAttribute xmi:id="3194" name="data-frequency-might-be-1" value="true" begin="15511" end="15823" sofa="1"/>
+	<html:TagAttribute xmi:id="3200" name="data-frequency-might-be-2" value="true" begin="15511" end="15823" sofa="1"/>
+	<html:TagAttribute xmi:id="3206" name="data-frequency-might-be-3" value="false" begin="15511" end="15823" sofa="1"/>
+	<html:TagAttribute xmi:id="3212" name="data-frequency-split" value="0.15918048955500128|0.7814666539430619|0.059352852310985325" begin="15511" end="15823" sofa="1"/>
+	<html:HtmlTag xmi:id="3218" tagName="p" tagRole="OPENING" attributes="3170 3176 3182 3188 3194 3200 3206 3212" begin="15511" end="15823" sofa="1"/>
+	<html:TagAttribute xmi:id="3228" name="class" value="ARG0" begin="15823" end="15842" sofa="1"/>
+	<html:HtmlTag xmi:id="3234" tagName="span" tagRole="OPENING" attributes="3228" begin="15823" end="15842" sofa="1"/>
+	<html:HtmlTag xmi:id="3241" tagName="span" tagRole="CLOSING" begin="15919" end="15926" sofa="1"/>
+	<html:TagAttribute xmi:id="3251" name="class" value="ARGM-MOD" begin="15927" end="15950" sofa="1"/>
+	<html:HtmlTag xmi:id="3257" tagName="span" tagRole="OPENING" attributes="3251" begin="15927" end="15950" sofa="1"/>
+	<html:HtmlTag xmi:id="3264" tagName="span" tagRole="CLOSING" begin="15955" end="15962" sofa="1"/>
+	<html:TagAttribute xmi:id="3274" name="class" value="ARGM-MNR" begin="15963" end="15986" sofa="1"/>
+	<html:HtmlTag xmi:id="3280" tagName="span" tagRole="OPENING" attributes="3274" begin="15963" end="15986" sofa="1"/>
+	<html:HtmlTag xmi:id="3287" tagName="span" tagRole="CLOSING" begin="15993" end="16000" sofa="1"/>
+	<html:TagAttribute xmi:id="3297" name="class" value="V" begin="16001" end="16017" sofa="1"/>
+	<html:HtmlTag xmi:id="3303" tagName="span" tagRole="OPENING" attributes="3297" begin="16001" end="16017" sofa="1"/>
+	<html:HtmlTag xmi:id="3310" tagName="span" tagRole="CLOSING" begin="16022" end="16029" sofa="1"/>
+	<html:TagAttribute xmi:id="3320" name="class" value="ARG1" begin="16030" end="16049" sofa="1"/>
+	<html:HtmlTag xmi:id="3326" tagName="span" tagRole="OPENING" attributes="3320" begin="16030" end="16049" sofa="1"/>
+	<html:HtmlTag xmi:id="3333" tagName="span" tagRole="CLOSING" begin="16119" end="16126" sofa="1"/>
+	<html:HtmlTag xmi:id="3340" tagName="p" tagRole="CLOSING" begin="16213" end="16217" sofa="1"/>
+	<html:TagAttribute xmi:id="3357" name="data-frequency-class" value="1" begin="16218" end="16530" sofa="1"/>
+	<html:TagAttribute xmi:id="3363" name="data-frequency-could-be-1" value="true" begin="16218" end="16530" sofa="1"/>
+	<html:TagAttribute xmi:id="3369" name="data-frequency-could-be-2" value="false" begin="16218" end="16530" sofa="1"/>
+	<html:TagAttribute xmi:id="3375" name="data-frequency-could-be-3" value="false" begin="16218" end="16530" sofa="1"/>
+	<html:TagAttribute xmi:id="3381" name="data-frequency-might-be-1" value="true" begin="16218" end="16530" sofa="1"/>
+	<html:TagAttribute xmi:id="3387" name="data-frequency-might-be-2" value="true" begin="16218" end="16530" sofa="1"/>
+	<html:TagAttribute xmi:id="3393" name="data-frequency-might-be-3" value="false" begin="16218" end="16530" sofa="1"/>
+	<html:TagAttribute xmi:id="3399" name="data-frequency-split" value="0.7747497648000717|0.21148941181600095|0.013760789268417284" begin="16218" end="16530" sofa="1"/>
+	<html:HtmlTag xmi:id="3405" tagName="p" tagRole="OPENING" attributes="3357 3363 3369 3375 3381 3387 3393 3399" begin="16218" end="16530" sofa="1"/>
+	<html:TagAttribute xmi:id="3415" name="class" value="ARG0" begin="16574" end="16593" sofa="1"/>
+	<html:HtmlTag xmi:id="3421" tagName="span" tagRole="OPENING" attributes="3415" begin="16574" end="16593" sofa="1"/>
+	<html:HtmlTag xmi:id="3428" tagName="span" tagRole="CLOSING" begin="16602" end="16609" sofa="1"/>
+	<html:TagAttribute xmi:id="3438" name="class" value="V" begin="16649" end="16665" sofa="1"/>
+	<html:HtmlTag xmi:id="3444" tagName="span" tagRole="OPENING" attributes="3438" begin="16649" end="16665" sofa="1"/>
+	<html:HtmlTag xmi:id="3451" tagName="span" tagRole="CLOSING" begin="16670" end="16677" sofa="1"/>
+	<html:TagAttribute xmi:id="3461" name="class" value="ARG1" begin="16678" end="16697" sofa="1"/>
+	<html:HtmlTag xmi:id="3467" tagName="span" tagRole="OPENING" attributes="3461" begin="16678" end="16697" sofa="1"/>
+	<html:HtmlTag xmi:id="3474" tagName="span" tagRole="CLOSING" begin="16725" end="16732" sofa="1"/>
+	<html:TagAttribute xmi:id="3484" name="class" value="ARG2" begin="16733" end="16752" sofa="1"/>
+	<html:HtmlTag xmi:id="3490" tagName="span" tagRole="OPENING" attributes="3484" begin="16733" end="16752" sofa="1"/>
+	<html:HtmlTag xmi:id="3497" tagName="span" tagRole="CLOSING" begin="16775" end="16782" sofa="1"/>
+	<html:TagAttribute xmi:id="3507" name="class" value="ARGM-MNR" begin="16785" end="16808" sofa="1"/>
+	<html:HtmlTag xmi:id="3513" tagName="span" tagRole="OPENING" attributes="3507" begin="16785" end="16808" sofa="1"/>
+	<html:HtmlTag xmi:id="3520" tagName="span" tagRole="CLOSING" begin="16864" end="16871" sofa="1"/>
+	<html:HtmlTag xmi:id="3527" tagName="p" tagRole="CLOSING" begin="16873" end="16877" sofa="1"/>
+	<tcas:DocumentAnnotation xmi:id="3541" language="en" begin="0" end="8879" sofa="3534"/>
+	<type:DocumentMetaData xmi:id="3546" documentTitle="docTitle" documentId="docId" collectionId="colId" isLastSegment="false" begin="0" end="16877" sofa="1" language="en"/>
+	<type0:ValueBetweenTagType xmi:id="3557" tagName="style" attributes="" begin="23" end="2539" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3564" tagName="span" attributes="class='ARG0'" begin="2891" end="2910" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3571" tagName="span" attributes="class='ARGM-MOD'" begin="2941" end="2947" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3578" tagName="span" attributes="class='V'" begin="2971" end="2978" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3585" tagName="span" attributes="class='ARG1'" begin="3005" end="3070" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3592" tagName="span" attributes="class='ARGM-PRP'" begin="3101" end="3211" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3599" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='true'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.20515594523894834|0.7843106687068939|0.01053336447566835'" begin="2860" end="4254" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3606" tagName="span" attributes="class='ARG0'" begin="4875" end="4917" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3613" tagName="span" attributes="class='ARGM-MOD'" begin="4948" end="4953" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3620" tagName="span" attributes="class='ARGM-ADV'" begin="4984" end="4988" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3627" tagName="span" attributes="class='V'" begin="5012" end="5017" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3634" tagName="span" attributes="class='ARG1'" begin="5044" end="5110" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3641" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='true'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.1909633757546544|0.808315920829773|0.0007206876383861528'" begin="4570" end="5800" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3648" tagName="h6" attributes="" begin="5809" end="5818" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3655" tagName="span" attributes="class='ARG0'" begin="6159" end="6168" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3662" tagName="span" attributes="class='ARGM-MOD'" begin="6199" end="6204" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3669" tagName="span" attributes="class='V'" begin="6228" end="6234" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3676" tagName="span" attributes="class='ARGM-TMP'" begin="6265" end="6271" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3683" tagName="span" attributes="class='ARG2'" begin="6298" end="6315" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3690" tagName="span" attributes="class='ARG1'" begin="6342" end="6495" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3697" tagName="p" attributes="data-frequency-class='3'data-frequency-could-be-1='false'data-frequency-could-be-2='false'data-frequency-could-be-3='true'data-frequency-might-be-1='false'data-frequency-might-be-2='false'data-frequency-might-be-3='true'data-frequency-split='0.0042372159183287185|0.0001664219653960686|0.9955963790416719'" begin="6140" end="6504" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3704" tagName="h6" attributes="" begin="6513" end="6522" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3711" tagName="span" attributes="class='ARGM-TMP'" begin="6861" end="6870" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3718" tagName="span" attributes="class='ARGM-TMP'" begin="6903" end="7116" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3725" tagName="span" attributes="class='ARG0'" begin="7145" end="7152" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3732" tagName="span" attributes="class='ARGM-MOD'" begin="7183" end="7188" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3739" tagName="span" attributes="class='V'" begin="7212" end="7219" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3746" tagName="span" attributes="class='ARG2'" begin="7246" end="7255" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3753" tagName="span" attributes="class='ARG1'" begin="7282" end="7319" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3760" tagName="span" attributes="class='ARGM-PRD'" begin="7350" end="7479" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3767" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='true'data-frequency-might-be-1='false'data-frequency-might-be-2='true'data-frequency-might-be-3='true'data-frequency-split='0.001330306047884733|0.5857867021113634|0.4128830189816654'" begin="6838" end="7488" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3774" tagName="span" attributes="class='ARGM-ADV'" begin="7827" end="7975" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3781" tagName="span" attributes="class='ARG0'" begin="8004" end="8011" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3788" tagName="span" attributes="class='ARGM-MOD'" begin="8042" end="8047" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3795" tagName="span" attributes="class='V'" begin="8071" end="8082" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3802" tagName="span" attributes="class='ARG2'" begin="8109" end="8121" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3809" tagName="span" attributes="class='ARG1'" begin="8148" end="8160" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3816" tagName="span" attributes="class='ARGM-TMP'" begin="8191" end="8235" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3823" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='false'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.12815370485186578|0.834447529911995|0.03739875489845872'" begin="7804" end="8244" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3830" tagName="span" attributes="class='ARG1'" begin="8701" end="8709" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3837" tagName="span" attributes="class='V'" begin="8733" end="8742" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3844" tagName="span" attributes="class='ARG0'" begin="8769" end="8779" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3851" tagName="span" attributes="class='ARGM-TMP'" begin="8810" end="8840" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3858" tagName="p" attributes="data-frequency-class='1'data-frequency-could-be-1='true'data-frequency-could-be-2='false'data-frequency-could-be-3='false'data-frequency-might-be-1='true'data-frequency-might-be-2='true'data-frequency-might-be-3='true'data-frequency-split='0.5007092013955117|0.25160889732651415|0.24768189192327555'" begin="8559" end="8987" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3865" tagName="span" attributes="class='ARGM-ADV'" begin="9331" end="9379" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3872" tagName="span" attributes="class='ARG0'" begin="9408" end="9449" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3879" tagName="span" attributes="class='ARGM-MOD'" begin="9480" end="9485" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3886" tagName="span" attributes="class='ARGM-TMP'" begin="9516" end="9528" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3893" tagName="span" attributes="class='V'" begin="9552" end="9559" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3900" tagName="span" attributes="class='ARG2'" begin="9586" end="9595" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3907" tagName="span" attributes="class='ARG1'" begin="9622" end="9651" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3914" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='false'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.006017554854042829|0.9939320094883441|5.0436644927742696e-05'" begin="9308" end="9660" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3921" tagName="span" attributes="class='ARGM-ADV'" begin="10002" end="10075" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3928" tagName="span" attributes="class='ARG0'" begin="10104" end="10127" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3935" tagName="span" attributes="class='ARGM-MOD'" begin="10158" end="10163" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3942" tagName="span" attributes="class='ARGM-TMP'" begin="10194" end="10206" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3949" tagName="span" attributes="class='V'" begin="10230" end="10237" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3956" tagName="span" attributes="class='ARG2'" begin="10264" end="10273" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3963" tagName="span" attributes="class='ARG1'" begin="10300" end="10323" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3970" tagName="span" attributes="class='ARGM-TMP'" begin="10354" end="10388" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3977" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='false'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.05358475090833963|0.9457095101475717|0.0007057117192061925'" begin="9979" end="10563" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3984" tagName="h6" attributes="" begin="10572" end="10581" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3991" tagName="span" attributes="class='ARG1'" begin="10918" end="10939" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="3998" tagName="span" attributes="class='ARGM-MOD'" begin="10970" end="10975" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4005" tagName="span" attributes="class='V'" begin="11002" end="11008" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4012" tagName="span" attributes="class='ARG0'" begin="11035" end="11047" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4019" tagName="span" attributes="class='ARG2'" begin="11074" end="11101" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4026" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='true'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='true'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.46877795755863194|0.5301035627722741|0.0011184674251126126'" begin="10899" end="11110" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4033" tagName="span" attributes="class='ARG0'" begin="11445" end="11454" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4040" tagName="span" attributes="class='ARGM-MOD'" begin="11485" end="11490" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4047" tagName="span" attributes="class='V'" begin="11514" end="11520" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4054" tagName="span" attributes="class='ARG2'" begin="11547" end="11570" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4061" tagName="span" attributes="class='ARG2'" begin="11597" end="11829" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4068" tagName="p" attributes="data-frequency-class='1'data-frequency-could-be-1='true'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='true'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.5527074243407697|0.4466692094225437|0.0006233781845367049'" begin="11426" end="11836" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4075" tagName="span" attributes="class='ARG1'" begin="12173" end="12309" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4082" tagName="span" attributes="class='ARGM-MOD'" begin="12340" end="12345" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4089" tagName="span" attributes="class='V'" begin="12372" end="12381" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4096" tagName="span" attributes="class='ARG2'" begin="12408" end="12450" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4103" tagName="p" attributes="data-frequency-class='1'data-frequency-could-be-1='true'data-frequency-could-be-2='false'data-frequency-could-be-3='false'data-frequency-might-be-1='true'data-frequency-might-be-2='false'data-frequency-might-be-3='false'data-frequency-split='0.9242614269256592|0.04688026979565621|0.028858251590281728'" begin="12154" end="12459" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4110" tagName="span" attributes="class='ARGM-ADV'" begin="12803" end="12970" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4117" tagName="span" attributes="class='ARG0'" begin="12999" end="13008" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4124" tagName="span" attributes="class='ARGM-MOD'" begin="13039" end="13044" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4131" tagName="span" attributes="class='V'" begin="13068" end="13074" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4138" tagName="span" attributes="class='ARG2'" begin="13101" end="13216" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4145" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='false'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='1.8616760553413772e-05|0.9998445689678193|0.000136777781881392'" begin="12780" end="13225" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4152" tagName="h6" attributes="" begin="13234" end="13243" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4159" tagName="span" attributes="class='ARG0'" begin="13582" end="13631" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4166" tagName="span" attributes="class='ARGM-MOD'" begin="13662" end="13667" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4173" tagName="span" attributes="class='V'" begin="13705" end="13711" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4180" tagName="span" attributes="class='ARG2'" begin="13738" end="13800" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4187" tagName="span" attributes="class='ARG2'" begin="13827" end="13923" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4194" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='false'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.11648192889988424|0.8804802387952806|0.0030378605704754593'" begin="13563" end="13932" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4201" tagName="h6" attributes="" begin="13941" end="13951" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4208" tagName="span" attributes="class='ARG1'" begin="14478" end="14486" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4215" tagName="span" attributes="class='V'" begin="14510" end="14519" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4222" tagName="span" attributes="class='ARG0'" begin="14546" end="14556" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4229" tagName="span" attributes="class='ARGM-TMP'" begin="14587" end="14611" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4236" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='false'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.10562654389068485|0.8935340434312821|0.00083945326769026'" begin="14269" end="14726" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4243" tagName="h6" attributes="" begin="14735" end="14745" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4250" tagName="span" attributes="class='ARGM-TMP'" begin="15085" end="15142" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4257" tagName="span" attributes="class='ARG0'" begin="15171" end="15178" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4264" tagName="span" attributes="class='ARGM-MOD'" begin="15209" end="15214" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4271" tagName="span" attributes="class='V'" begin="15238" end="15245" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4278" tagName="span" attributes="class='ARG2'" begin="15272" end="15281" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4285" tagName="span" attributes="class='ARG1'" begin="15308" end="15477" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4292" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='true'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='true'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.4970387041568757|0.5022900804877282|0.0006712008733302354'" begin="15062" end="15486" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4299" tagName="h6" attributes="" begin="15495" end="15505" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4306" tagName="span" attributes="class='ARG0'" begin="15842" end="15919" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4313" tagName="span" attributes="class='ARGM-MOD'" begin="15950" end="15955" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4320" tagName="span" attributes="class='ARGM-MNR'" begin="15986" end="15993" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4327" tagName="span" attributes="class='V'" begin="16017" end="16022" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4334" tagName="span" attributes="class='ARG1'" begin="16049" end="16119" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4341" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='true'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.15918048955500128|0.7814666539430619|0.059352852310985325'" begin="15823" end="16213" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4348" tagName="span" attributes="class='ARG0'" begin="16593" end="16602" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4355" tagName="span" attributes="class='V'" begin="16665" end="16670" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4362" tagName="span" attributes="class='ARG1'" begin="16697" end="16725" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4369" tagName="span" attributes="class='ARG2'" begin="16752" end="16775" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4376" tagName="span" attributes="class='ARGM-MNR'" begin="16808" end="16864" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4383" tagName="p" attributes="data-frequency-class='1'data-frequency-could-be-1='true'data-frequency-could-be-2='false'data-frequency-could-be-3='false'data-frequency-might-be-1='true'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.7747497648000717|0.21148941181600095|0.013760789268417284'" begin="16530" end="16873" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="4390" tagName="style" attributes="" begin="1" end="2517" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4397" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='true'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.20515594523894834|0.7843106687068939|0.01053336447566835'" begin="2519" end="3778" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4404" tagName="span" attributes="class='ARG0'" begin="2531" end="2550" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4411" tagName="span" attributes="class='ARGM-MOD'" begin="2551" end="2557" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4418" tagName="span" attributes="class='V'" begin="2558" end="2565" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4425" tagName="span" attributes="class='ARG1'" begin="2566" end="2631" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4432" tagName="span" attributes="class='ARGM-PRP'" begin="2632" end="2742" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4439" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='true'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.1909633757546544|0.808315920829773|0.0007206876383861528'" begin="3779" end="4874" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4446" tagName="span" attributes="class='ARG0'" begin="4065" end="4107" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4453" tagName="span" attributes="class='ARGM-MOD'" begin="4108" end="4113" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4460" tagName="span" attributes="class='ARGM-ADV'" begin="4114" end="4118" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4467" tagName="span" attributes="class='V'" begin="4119" end="4124" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4474" tagName="span" attributes="class='ARG1'" begin="4125" end="4191" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4481" tagName="h6" attributes="" begin="4875" end="4884" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4488" tagName="p" attributes="data-frequency-class='3'data-frequency-could-be-1='false'data-frequency-could-be-2='false'data-frequency-could-be-3='true'data-frequency-might-be-1='false'data-frequency-might-be-2='false'data-frequency-might-be-3='true'data-frequency-split='0.0042372159183287185|0.0001664219653960686|0.9955963790416719'" begin="4885" end="5088" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4495" tagName="span" attributes="class='ARG0'" begin="4885" end="4894" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4502" tagName="span" attributes="class='ARGM-MOD'" begin="4895" end="4900" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4509" tagName="span" attributes="class='V'" begin="4901" end="4907" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4516" tagName="span" attributes="class='ARGM-TMP'" begin="4908" end="4914" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4523" tagName="span" attributes="class='ARG2'" begin="4915" end="4932" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4530" tagName="span" attributes="class='ARG1'" begin="4933" end="5086" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4537" tagName="h6" attributes="" begin="5089" end="5098" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4544" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='true'data-frequency-might-be-1='false'data-frequency-might-be-2='true'data-frequency-might-be-3='true'data-frequency-split='0.001330306047884733|0.5857867021113634|0.4128830189816654'" begin="5099" end="5528" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4551" tagName="span" attributes="class='ARGM-TMP'" begin="5099" end="5108" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4558" tagName="span" attributes="class='ARGM-TMP'" begin="5111" end="5324" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4565" tagName="span" attributes="class='ARG0'" begin="5327" end="5334" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4572" tagName="span" attributes="class='ARGM-MOD'" begin="5335" end="5340" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4579" tagName="span" attributes="class='V'" begin="5341" end="5348" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4586" tagName="span" attributes="class='ARG2'" begin="5349" end="5358" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4593" tagName="span" attributes="class='ARG1'" begin="5359" end="5396" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4600" tagName="span" attributes="class='ARGM-PRD'" begin="5397" end="5526" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4607" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='false'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.12815370485186578|0.834447529911995|0.03739875489845872'" begin="5529" end="5778" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4614" tagName="span" attributes="class='ARGM-ADV'" begin="5529" end="5677" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4621" tagName="span" attributes="class='ARG0'" begin="5680" end="5687" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4628" tagName="span" attributes="class='ARGM-MOD'" begin="5688" end="5693" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4635" tagName="span" attributes="class='V'" begin="5694" end="5705" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4642" tagName="span" attributes="class='ARG2'" begin="5706" end="5718" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4649" tagName="span" attributes="class='ARG1'" begin="5719" end="5731" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4656" tagName="span" attributes="class='ARGM-TMP'" begin="5732" end="5776" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4663" tagName="p" attributes="data-frequency-class='1'data-frequency-could-be-1='true'data-frequency-could-be-2='false'data-frequency-could-be-3='false'data-frequency-might-be-1='true'data-frequency-might-be-2='true'data-frequency-might-be-3='true'data-frequency-split='0.5007092013955117|0.25160889732651415|0.24768189192327555'" begin="5779" end="6102" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4670" tagName="span" attributes="class='ARG1'" begin="5902" end="5910" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4677" tagName="span" attributes="class='V'" begin="5911" end="5920" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4684" tagName="span" attributes="class='ARG0'" begin="5921" end="5931" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4691" tagName="span" attributes="class='ARGM-TMP'" begin="5932" end="5962" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4698" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='false'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.006017554854042829|0.9939320094883441|5.0436644927742696e-05'" begin="6103" end="6264" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4705" tagName="span" attributes="class='ARGM-ADV'" begin="6103" end="6151" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4712" tagName="span" attributes="class='ARG0'" begin="6154" end="6195" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4719" tagName="span" attributes="class='ARGM-MOD'" begin="6196" end="6201" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4726" tagName="span" attributes="class='ARGM-TMP'" begin="6202" end="6214" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4733" tagName="span" attributes="class='V'" begin="6215" end="6222" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4740" tagName="span" attributes="class='ARG2'" begin="6223" end="6232" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4747" tagName="span" attributes="class='ARG1'" begin="6233" end="6262" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4754" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='false'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.05358475090833963|0.9457095101475717|0.0007057117192061925'" begin="6265" end="6628" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4761" tagName="span" attributes="class='ARGM-ADV'" begin="6265" end="6338" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4768" tagName="span" attributes="class='ARG0'" begin="6341" end="6364" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4775" tagName="span" attributes="class='ARGM-MOD'" begin="6365" end="6370" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4782" tagName="span" attributes="class='ARGM-TMP'" begin="6371" end="6383" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4789" tagName="span" attributes="class='V'" begin="6384" end="6391" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4796" tagName="span" attributes="class='ARG2'" begin="6392" end="6401" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4803" tagName="span" attributes="class='ARG1'" begin="6402" end="6425" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4810" tagName="span" attributes="class='ARGM-TMP'" begin="6426" end="6460" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4817" tagName="h6" attributes="" begin="6629" end="6638" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4824" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='true'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='true'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.46877795755863194|0.5301035627722741|0.0011184674251126126'" begin="6639" end="6719" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4831" tagName="span" attributes="class='ARG1'" begin="6639" end="6660" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4838" tagName="span" attributes="class='ARGM-MOD'" begin="6661" end="6666" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4845" tagName="span" attributes="class='V'" begin="6670" end="6676" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4852" tagName="span" attributes="class='ARG0'" begin="6677" end="6689" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4859" tagName="span" attributes="class='ARG2'" begin="6690" end="6717" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4866" tagName="p" attributes="data-frequency-class='1'data-frequency-could-be-1='true'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='true'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.5527074243407697|0.4466692094225437|0.0006233781845367049'" begin="6720" end="6999" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4873" tagName="span" attributes="class='ARG0'" begin="6720" end="6729" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4880" tagName="span" attributes="class='ARGM-MOD'" begin="6730" end="6735" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4887" tagName="span" attributes="class='V'" begin="6736" end="6742" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4894" tagName="span" attributes="class='ARG2'" begin="6743" end="6766" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4901" tagName="span" attributes="class='ARG2'" begin="6767" end="6999" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4908" tagName="p" attributes="data-frequency-class='1'data-frequency-could-be-1='true'data-frequency-could-be-2='false'data-frequency-could-be-3='false'data-frequency-might-be-1='true'data-frequency-might-be-2='false'data-frequency-might-be-3='false'data-frequency-split='0.9242614269256592|0.04688026979565621|0.028858251590281728'" begin="7000" end="7200" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4915" tagName="span" attributes="class='ARG1'" begin="7000" end="7136" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4922" tagName="span" attributes="class='ARGM-MOD'" begin="7137" end="7142" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4929" tagName="span" attributes="class='V'" begin="7146" end="7155" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4936" tagName="span" attributes="class='ARG2'" begin="7156" end="7198" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4943" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='false'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='1.8616760553413772e-05|0.9998445689678193|0.000136777781881392'" begin="7201" end="7511" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4950" tagName="span" attributes="class='ARGM-ADV'" begin="7201" end="7368" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4957" tagName="span" attributes="class='ARG0'" begin="7371" end="7380" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4964" tagName="span" attributes="class='ARGM-MOD'" begin="7381" end="7386" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4971" tagName="span" attributes="class='V'" begin="7387" end="7393" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4978" tagName="span" attributes="class='ARG2'" begin="7394" end="7509" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4985" tagName="h6" attributes="" begin="7512" end="7521" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4992" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='false'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.11648192889988424|0.8804802387952806|0.0030378605704754593'" begin="7522" end="7760" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="4999" tagName="span" attributes="class='ARG0'" begin="7522" end="7571" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5006" tagName="span" attributes="class='ARGM-MOD'" begin="7572" end="7577" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5013" tagName="span" attributes="class='V'" begin="7592" end="7598" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5020" tagName="span" attributes="class='ARG2'" begin="7599" end="7661" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5027" tagName="span" attributes="class='ARG2'" begin="7662" end="7758" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5034" tagName="h6" attributes="" begin="7761" end="7771" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5041" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='false'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.10562654389068485|0.8935340434312821|0.00083945326769026'" begin="7772" end="8124" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5048" tagName="span" attributes="class='ARG1'" begin="7962" end="7970" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5055" tagName="span" attributes="class='V'" begin="7971" end="7980" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5062" tagName="span" attributes="class='ARG0'" begin="7981" end="7991" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5069" tagName="span" attributes="class='ARGM-TMP'" begin="7992" end="8016" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5076" tagName="h6" attributes="" begin="8125" end="8135" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5083" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='true'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='true'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.4970387041568757|0.5022900804877282|0.0006712008733302354'" begin="8136" end="8399" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5090" tagName="span" attributes="class='ARGM-TMP'" begin="8136" end="8193" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5097" tagName="span" attributes="class='ARG0'" begin="8196" end="8203" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5104" tagName="span" attributes="class='ARGM-MOD'" begin="8204" end="8209" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5111" tagName="span" attributes="class='V'" begin="8210" end="8217" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5118" tagName="span" attributes="class='ARG2'" begin="8218" end="8227" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5125" tagName="span" attributes="class='ARG1'" begin="8228" end="8397" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5132" tagName="h6" attributes="" begin="8400" end="8410" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5139" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='true'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.15918048955500128|0.7814666539430619|0.059352852310985325'" begin="8411" end="8666" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5146" tagName="span" attributes="class='ARG0'" begin="8411" end="8488" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5153" tagName="span" attributes="class='ARGM-MOD'" begin="8489" end="8494" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5160" tagName="span" attributes="class='ARGM-MNR'" begin="8495" end="8502" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5167" tagName="span" attributes="class='V'" begin="8503" end="8508" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5174" tagName="span" attributes="class='ARG1'" begin="8509" end="8579" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5181" tagName="p" attributes="data-frequency-class='1'data-frequency-could-be-1='true'data-frequency-could-be-2='false'data-frequency-could-be-3='false'data-frequency-might-be-1='true'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.7747497648000717|0.21148941181600095|0.013760789268417284'" begin="8667" end="8879" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5188" tagName="span" attributes="class='ARG0'" begin="8711" end="8720" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5195" tagName="span" attributes="class='V'" begin="8760" end="8765" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5202" tagName="span" attributes="class='ARG1'" begin="8766" end="8794" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5209" tagName="span" attributes="class='ARG2'" begin="8795" end="8818" sofa="3534"/>
+	<type0:ValueBetweenTagType xmi:id="5216" tagName="span" attributes="class='ARGM-MNR'" begin="8821" end="8877" sofa="3534"/>
+	<cas:Sofa xmi:id="1" sofaNum="1" sofaID="_InitialView" mimeType="text" sofaString="&lt;!doctype html&gt;&#10;&lt;style&gt;&#10;&#10;    p {&#10;        margin: 0.75em 0px;&#10;        line-height: 2em;&#10;        white-space: nowrap;&#10;    }&#10;&#10;    span {&#10;        border: 2px solid currentColor;&#10;        border-radius: 5px;&#10;        padding: 5px;&#10;    }&#10;&#10;    span {&#10;        background: lightblue;&#10;        color: royalblue;&#10;    }&#10;&#10;    .V {&#10;        background: yellow;&#10;        color: orangered;&#10;        font-weight: bold;&#10;    }&#10;&#10;    .ARG0,.ARG1,.ARG2,.C-ARG1 {&#10;        color: black;&#10;        background: white;&#10;    }&#10;&#10;    .ARGM-TMP {&#10;        color: green;&#10;        background: lightgreen;&#10;    }&#10;&#10;    .ARGM-NEG {&#10;        color: pink;&#10;        background: darkred;&#10;        border-color: darkred;&#10;    }&#10;&#10;    .PUNCT {&#10;        color: silver;&#10;        background: white;&#10;        border: none; padding: 0;&#10;    }&#10;&#10;    .ARG2 {&#10;        border-style: dotted;&#10;    }&#10;&#10;    .ARG1, .C-ARG1 {&#10;        color: white;&#10;        background: black;&#10;        border-color: black;&#10;        border-style: solid;&#10;    }&#10;&#10;    .ARG3, .ARGM-PRP, .ARGM-PRD, .ARGM-PNC {&#10;        color: white;&#10;        background: royalblue;&#10;        border-color: royalblue;&#10;        border-style: solid;&#10;    }&#10;&#10;    .updated-tag {&#10;        outline: 3px solid fuchsia;&#10;        outline-offset: 2px;&#10;    }&#10;&#10;    p[data-frequency-class=&quot;1&quot;] {&#10;        opacity: 0.15;&#10;    }&#10;&#10;    p[data-frequency-might-be-3=&quot;true&quot;]::before {&#10;        content: &quot;&#x267A;&quot;;&#10;        border: 7px solid royalblue;&#10;        margin-right: 5px;&#10;        border-radius: 5px;&#10;        background: royalblue;&#10;        color: white;&#10;    }&#10;    p[data-frequency-class=&quot;3&quot;]::before {&#10;        border-color: red;&#10;        background: red;&#10;        color: yellow;&#10;    }&#10;&#10;    h1,h2,h3,h4,h5,h6 {&#10;        font-family: sans-serif;&#10;        font-size: 12px;&#10;        color: silver;&#10;        font-weight: bold;&#10;        margin: 5px 0px;&#10;        border-left: 3px solid silver;&#10;        padding-left: 3px;&#10;    }&#10;    h2 { border-left-width: 3px; }&#10;    h2 { border-left-width: 6px; }&#10;    h3 { border-left-width: 9px; }&#10;    h4 { border-left-width: 12px; }&#10;    h5 { border-left-width: 15px; }&#10;    h6 { border-left-width: 18px; }&#10;    p + :not(p):not(h6) { margin-top: 45px; }&#10;&#10;    [data-old-text] {&#10;        outline: 4px dashed fuchsia;&#10;        outline-offset: 1px;&#10;        position: relative;&#10;    }&#10;    [TODO] {&#10;        outline: 4px dashed red;&#10;        outline-offset: 1px;&#10;    }&#10;&#10;    [data-old-text]:hover::before {&#10;        content: attr(data-old-text);&#10;        background: fuchsia;&#10;        color: white;&#10;        position: absolute; top: -2em;&#10;        padding: 1px 6px; border-radius: 4px;&#10;    }&#10;&#10;&lt;/style&gt;&#10;&#10;&lt;p data-frequency-class=&quot;2&quot; data-frequency-could-be-1=&quot;false&quot; data-frequency-could-be-2=&quot;true&quot; data-frequency-could-be-3=&quot;false&quot; data-frequency-might-be-1=&quot;true&quot; data-frequency-might-be-2=&quot;true&quot; data-frequency-might-be-3=&quot;false&quot; data-frequency-split=&quot;0.20515594523894834|0.7843106687068939|0.01053336447566835&quot;&gt;Whereas , , &lt;span class=&quot;ARG0&quot;&gt;Such a final system&lt;/span&gt; &lt;span class=&quot;ARGM-MOD&quot;&gt;should&lt;/span&gt; &lt;span class=&quot;V&quot;&gt;provide&lt;/span&gt; &lt;span class=&quot;ARG1&quot;&gt;for the determination and raising of administrative contributions&lt;/span&gt; &lt;span class=&quot;ARGM-PRP&quot;&gt;not only for significant entities , but for all entities that are subjected to the Single Resolution Mechanism&lt;/span&gt; . The contributions should be calculated at the highest level of consolidation of those entities within the participating Member States , since all subsidiaries of a group inside the perimeter of consolidation fall within the scope of the decision - making powers of the Board when adopting group resolution plans , carrying out the assessment of resolvability of groups and adopting resolution decisions for groups . The exercise of those tasks implies expenditures for the Board for collecting and analysing information and data related to each subsidiary included in the perimeter of consolidation . Since those are expenditures related to the services provided by the Board to the entities that are subjected to the Single Resolution Mechanism , they should be paid by those entities and therefore the administrative contributions should be calculated on the basis of their consolidated accounts at the highest level of consolidation within the participating Member States and only one contribution per group should be calculated .&lt;/p&gt;&#10;&lt;p data-frequency-class=&quot;2&quot; data-frequency-could-be-1=&quot;false&quot; data-frequency-could-be-2=&quot;true&quot; data-frequency-could-be-3=&quot;false&quot; data-frequency-might-be-1=&quot;true&quot; data-frequency-might-be-2=&quot;true&quot; data-frequency-might-be-3=&quot;false&quot; data-frequency-split=&quot;0.1909633757546544|0.808315920829773|0.0007206876383861528&quot;&gt;It is more efficient to request the ECB to transmit data it received and verified in the exercise of its tasks and powers conferred on it by Council Regulation ( EU ) No 1024/2013 ( 4 ) to the Board , than to duplicate the reporting burden for the institutions and entities concerned . &lt;span class=&quot;ARG0&quot;&gt;Data sharing between the ECB and the Board&lt;/span&gt; &lt;span class=&quot;ARGM-MOD&quot;&gt;would&lt;/span&gt; &lt;span class=&quot;ARGM-ADV&quot;&gt;also&lt;/span&gt; &lt;span class=&quot;V&quot;&gt;allow&lt;/span&gt; &lt;span class=&quot;ARG1&quot;&gt;avoiding duplication of the data verification process by the Board&lt;/span&gt; and builds on the obligation of the Board and the ECB to cooperate closely in the exercise of their respective responsibilities under Regulation ( EU ) No 806/2014 . Any duplication of the data reporting and verification processes would inevitably require more time for the calculation and raising of contributions and would lead to a less efficient system . It follows that , as a part of the cooperation obligation , the ECB should be required to transmit to the Board the data received from the institutions and entities concerned for the purpose of calculating contributions to the Board . The Board should rely to the greatest extent possible on the data collected by the ECB .&lt;/p&gt;&#10;&lt;h6&gt;Article 4&lt;/h6&gt;&#10;&lt;p data-frequency-class=&quot;3&quot; data-frequency-could-be-1=&quot;false&quot; data-frequency-could-be-2=&quot;false&quot; data-frequency-could-be-3=&quot;true&quot; data-frequency-might-be-1=&quot;false&quot; data-frequency-might-be-2=&quot;false&quot; data-frequency-might-be-3=&quot;true&quot; data-frequency-split=&quot;0.0042372159183287185|0.0001664219653960686|0.9955963790416719&quot;&gt;&lt;span class=&quot;ARG0&quot;&gt;The Board&lt;/span&gt; &lt;span class=&quot;ARGM-MOD&quot;&gt;shall&lt;/span&gt; &lt;span class=&quot;V&quot;&gt;report&lt;/span&gt; &lt;span class=&quot;ARGM-TMP&quot;&gt;yearly&lt;/span&gt; &lt;span class=&quot;ARG2&quot;&gt;to the Commission&lt;/span&gt; &lt;span class=&quot;ARG1&quot;&gt;on the appropriateness of the allocation laid down in paragraph 1 , in the light of the changing composition of the two categories of entities and groups&lt;/span&gt; .&lt;/p&gt;&#10;&lt;h6&gt;Article 6&lt;/h6&gt;&#10;&lt;p data-frequency-class=&quot;2&quot; data-frequency-could-be-1=&quot;false&quot; data-frequency-could-be-2=&quot;true&quot; data-frequency-could-be-3=&quot;true&quot; data-frequency-might-be-1=&quot;false&quot; data-frequency-might-be-2=&quot;true&quot; data-frequency-might-be-3=&quot;true&quot; data-frequency-split=&quot;0.001330306047884733|0.5857867021113634|0.4128830189816654&quot;&gt;&lt;span class=&quot;ARGM-TMP&quot;&gt;Each year&lt;/span&gt; , &lt;span class=&quot;ARGM-TMP&quot;&gt;within 5 working days of the issuance of fee notices in accordance with Article 12(1 ) of Regulation ( EU ) No 1163/2014 , and in any case no later than 31 December of the year for which the fee notices are issued&lt;/span&gt; , &lt;span class=&quot;ARG0&quot;&gt;the ECB&lt;/span&gt; &lt;span class=&quot;ARGM-MOD&quot;&gt;shall&lt;/span&gt; &lt;span class=&quot;V&quot;&gt;provide&lt;/span&gt; &lt;span class=&quot;ARG2&quot;&gt;the Board&lt;/span&gt; &lt;span class=&quot;ARG1&quot;&gt;with data on each contribution debtor&lt;/span&gt; &lt;span class=&quot;ARGM-PRD&quot;&gt;as collected by the ECB in that year and used to determine the supervisory fees in accordance with Regulation ( EU ) No 1163/2014&lt;/span&gt; .&lt;/p&gt;&#10;&lt;p data-frequency-class=&quot;2&quot; data-frequency-could-be-1=&quot;false&quot; data-frequency-could-be-2=&quot;true&quot; data-frequency-could-be-3=&quot;false&quot; data-frequency-might-be-1=&quot;false&quot; data-frequency-might-be-2=&quot;true&quot; data-frequency-might-be-3=&quot;false&quot; data-frequency-split=&quot;0.12815370485186578|0.834447529911995|0.03739875489845872&quot;&gt;&lt;span class=&quot;ARGM-ADV&quot;&gt;In case the ECB issues additional invoices or recalculates the annual supervisory fee in accordance with Article 7 of Regulation ( EU ) No 1163/2014&lt;/span&gt; , &lt;span class=&quot;ARG0&quot;&gt;the ECB&lt;/span&gt; &lt;span class=&quot;ARGM-MOD&quot;&gt;shall&lt;/span&gt; &lt;span class=&quot;V&quot;&gt;communicate&lt;/span&gt; &lt;span class=&quot;ARG2&quot;&gt;to the Board&lt;/span&gt; &lt;span class=&quot;ARG1&quot;&gt;the new data&lt;/span&gt; &lt;span class=&quot;ARGM-TMP&quot;&gt;within 5 days of the issuance of fee notices&lt;/span&gt; .&lt;/p&gt;&#10;&lt;p data-frequency-class=&quot;1&quot; data-frequency-could-be-1=&quot;true&quot; data-frequency-could-be-2=&quot;false&quot; data-frequency-could-be-3=&quot;false&quot; data-frequency-might-be-1=&quot;true&quot; data-frequency-might-be-2=&quot;true&quot; data-frequency-might-be-3=&quot;true&quot; data-frequency-split=&quot;0.5007092013955117|0.25160889732651415|0.24768189192327555&quot;&gt;For the calculation of the individual annual contributions to be collected in a given financial year , the Board shall use &lt;span class=&quot;ARG1&quot;&gt;the data&lt;/span&gt; &lt;span class=&quot;V&quot;&gt;collected&lt;/span&gt; &lt;span class=&quot;ARG0&quot;&gt;by the ECB&lt;/span&gt; &lt;span class=&quot;ARGM-TMP&quot;&gt;in the previous financial year&lt;/span&gt; in accordance with Regulation ( EU ) No 1163/2014 and provided to the Board in accordance with this Article or Article 11 , as applicable .&lt;/p&gt;&#10;&lt;p data-frequency-class=&quot;2&quot; data-frequency-could-be-1=&quot;false&quot; data-frequency-could-be-2=&quot;true&quot; data-frequency-could-be-3=&quot;false&quot; data-frequency-might-be-1=&quot;false&quot; data-frequency-might-be-2=&quot;true&quot; data-frequency-might-be-3=&quot;false&quot; data-frequency-split=&quot;0.006017554854042829|0.9939320094883441|5.0436644927742696e-05&quot;&gt;&lt;span class=&quot;ARGM-ADV&quot;&gt;In case no data provided by the ECB is available&lt;/span&gt; , &lt;span class=&quot;ARG0&quot;&gt;the relevant national competent authority&lt;/span&gt; &lt;span class=&quot;ARGM-MOD&quot;&gt;shall&lt;/span&gt; &lt;span class=&quot;ARGM-TMP&quot;&gt;upon request&lt;/span&gt; &lt;span class=&quot;V&quot;&gt;provide&lt;/span&gt; &lt;span class=&quot;ARG2&quot;&gt;the Board&lt;/span&gt; &lt;span class=&quot;ARG1&quot;&gt;with the data at its disposal&lt;/span&gt; .&lt;/p&gt;&#10;&lt;p data-frequency-class=&quot;2&quot; data-frequency-could-be-1=&quot;false&quot; data-frequency-could-be-2=&quot;true&quot; data-frequency-could-be-3=&quot;false&quot; data-frequency-might-be-1=&quot;false&quot; data-frequency-might-be-2=&quot;true&quot; data-frequency-might-be-3=&quot;false&quot; data-frequency-split=&quot;0.05358475090833963|0.9457095101475717|0.0007057117192061925&quot;&gt;&lt;span class=&quot;ARGM-ADV&quot;&gt;In case no data provided by the national competent authority is available&lt;/span&gt; , &lt;span class=&quot;ARG0&quot;&gt;the contribution debtor&lt;/span&gt; &lt;span class=&quot;ARGM-MOD&quot;&gt;shall&lt;/span&gt; &lt;span class=&quot;ARGM-TMP&quot;&gt;upon request&lt;/span&gt; &lt;span class=&quot;V&quot;&gt;provide&lt;/span&gt; &lt;span class=&quot;ARG2&quot;&gt;the Board&lt;/span&gt; &lt;span class=&quot;ARG1&quot;&gt;with the necessary data&lt;/span&gt; &lt;span class=&quot;ARGM-TMP&quot;&gt;within a deadline set by the Board&lt;/span&gt; . In the absence of a reply by the contribution debtor within the deadline set by the Board , the Board may determine the data on the basis of reasonable assumptions .&lt;/p&gt;&#10;&lt;h6&gt;Article 8&lt;/h6&gt;&#10;&lt;p data-frequency-class=&quot;2&quot; data-frequency-could-be-1=&quot;true&quot; data-frequency-could-be-2=&quot;true&quot; data-frequency-could-be-3=&quot;false&quot; data-frequency-might-be-1=&quot;true&quot; data-frequency-might-be-2=&quot;true&quot; data-frequency-might-be-3=&quot;false&quot; data-frequency-split=&quot;0.46877795755863194|0.5301035627722741|0.0011184674251126126&quot;&gt;&lt;span class=&quot;ARG1&quot;&gt;A contribution notice&lt;/span&gt; &lt;span class=&quot;ARGM-MOD&quot;&gt;shall&lt;/span&gt; be &lt;span class=&quot;V&quot;&gt;issued&lt;/span&gt; &lt;span class=&quot;ARG0&quot;&gt;by the Board&lt;/span&gt; &lt;span class=&quot;ARG2&quot;&gt;to the contribution debtors&lt;/span&gt; .&lt;/p&gt;&#10;&lt;p data-frequency-class=&quot;1&quot; data-frequency-could-be-1=&quot;true&quot; data-frequency-could-be-2=&quot;true&quot; data-frequency-could-be-3=&quot;false&quot; data-frequency-might-be-1=&quot;true&quot; data-frequency-might-be-2=&quot;true&quot; data-frequency-might-be-3=&quot;false&quot; data-frequency-split=&quot;0.5527074243407697|0.4466692094225437|0.0006233781845367049&quot;&gt;&lt;span class=&quot;ARG0&quot;&gt;The Board&lt;/span&gt; &lt;span class=&quot;ARGM-MOD&quot;&gt;shall&lt;/span&gt; &lt;span class=&quot;V&quot;&gt;notify&lt;/span&gt; &lt;span class=&quot;ARG2&quot;&gt;the contribution notice&lt;/span&gt; &lt;span class=&quot;ARG2&quot;&gt;through any of the following means &#x276E;electronically or by other comparable means of communication &#x2016; by fax &#x2016; by express courier service &#x2016; by registered mail with a form for acknowledgement of receipt &#x2016; by service or delivery by hand&#x276F;&lt;/span&gt;&lt;/p&gt;&#10;&lt;p data-frequency-class=&quot;1&quot; data-frequency-could-be-1=&quot;true&quot; data-frequency-could-be-2=&quot;false&quot; data-frequency-could-be-3=&quot;false&quot; data-frequency-might-be-1=&quot;true&quot; data-frequency-might-be-2=&quot;false&quot; data-frequency-might-be-3=&quot;false&quot; data-frequency-split=&quot;0.9242614269256592|0.04688026979565621|0.028858251590281728&quot;&gt;&lt;span class=&quot;ARG1&quot;&gt;The annual contribution due by the entities referred to in Article 2 of Regulation ( EU ) No 806/2014 that are members of the same group&lt;/span&gt; &lt;span class=&quot;ARGM-MOD&quot;&gt;shall&lt;/span&gt; be &lt;span class=&quot;V&quot;&gt;collected&lt;/span&gt; &lt;span class=&quot;ARG2&quot;&gt;from the contribution debtor of that group&lt;/span&gt; .&lt;/p&gt;&#10;&lt;p data-frequency-class=&quot;2&quot; data-frequency-could-be-1=&quot;false&quot; data-frequency-could-be-2=&quot;true&quot; data-frequency-could-be-3=&quot;false&quot; data-frequency-might-be-1=&quot;false&quot; data-frequency-might-be-2=&quot;true&quot; data-frequency-might-be-3=&quot;false&quot; data-frequency-split=&quot;1.8616760553413772e-05|0.9998445689678193|0.000136777781881392&quot;&gt;&lt;span class=&quot;ARGM-ADV&quot;&gt;In the event of any partial payment , non - payment or non - compliance with the conditions for payment specified in the contribution notice by the contribution debtor&lt;/span&gt; , &lt;span class=&quot;ARG0&quot;&gt;the Board&lt;/span&gt; &lt;span class=&quot;ARGM-MOD&quot;&gt;shall&lt;/span&gt; &lt;span class=&quot;V&quot;&gt;inform&lt;/span&gt; &lt;span class=&quot;ARG2&quot;&gt;the national resolution authority of the participating Member State in which the contribution debtor is established&lt;/span&gt; .&lt;/p&gt;&#10;&lt;h6&gt;Article 9&lt;/h6&gt;&#10;&lt;p data-frequency-class=&quot;2&quot; data-frequency-could-be-1=&quot;false&quot; data-frequency-could-be-2=&quot;true&quot; data-frequency-could-be-3=&quot;false&quot; data-frequency-might-be-1=&quot;false&quot; data-frequency-might-be-2=&quot;true&quot; data-frequency-might-be-3=&quot;false&quot; data-frequency-split=&quot;0.11648192889988424|0.8804802387952806|0.0030378605704754593&quot;&gt;&lt;span class=&quot;ARG0&quot;&gt;The government of each participating Member State&lt;/span&gt; &lt;span class=&quot;ARGM-MOD&quot;&gt;shall&lt;/span&gt; designate and &lt;span class=&quot;V&quot;&gt;notify&lt;/span&gt; &lt;span class=&quot;ARG2&quot;&gt;to the Board and to the Court of Justice of the European Union&lt;/span&gt; &lt;span class=&quot;ARG2&quot;&gt;an authority for the purposes of verifying the authenticity of individual contribution decisions&lt;/span&gt; .&lt;/p&gt;&#10;&lt;h6&gt;Article 10&lt;/h6&gt;&#10;&lt;p data-frequency-class=&quot;2&quot; data-frequency-could-be-1=&quot;false&quot; data-frequency-could-be-2=&quot;true&quot; data-frequency-could-be-3=&quot;false&quot; data-frequency-might-be-1=&quot;false&quot; data-frequency-might-be-2=&quot;true&quot; data-frequency-might-be-3=&quot;false&quot; data-frequency-split=&quot;0.10562654389068485|0.8935340434312821|0.00083945326769026&quot;&gt;Without prejudice to Article 6(4 ) , for the recalculation of the amount of contributions due by each entity in the financial years belonging to the provisional period , the Board shall use &lt;span class=&quot;ARG1&quot;&gt;the data&lt;/span&gt; &lt;span class=&quot;V&quot;&gt;collected&lt;/span&gt; &lt;span class=&quot;ARG0&quot;&gt;by the ECB&lt;/span&gt; &lt;span class=&quot;ARGM-TMP&quot;&gt;in those financial years&lt;/span&gt; in accordance with Regulation ( EU ) No 1163/2014 and provided to the Board in accordance with Article 11 .&lt;/p&gt;&#10;&lt;h6&gt;Article 11&lt;/h6&gt;&#10;&lt;p data-frequency-class=&quot;2&quot; data-frequency-could-be-1=&quot;true&quot; data-frequency-could-be-2=&quot;true&quot; data-frequency-could-be-3=&quot;false&quot; data-frequency-might-be-1=&quot;true&quot; data-frequency-might-be-2=&quot;true&quot; data-frequency-might-be-3=&quot;false&quot; data-frequency-split=&quot;0.4970387041568757|0.5022900804877282|0.0006712008733302354&quot;&gt;&lt;span class=&quot;ARGM-TMP&quot;&gt;Within 30 days of the entry into force of this Regulation&lt;/span&gt; , &lt;span class=&quot;ARG0&quot;&gt;the ECB&lt;/span&gt; &lt;span class=&quot;ARGM-MOD&quot;&gt;shall&lt;/span&gt; &lt;span class=&quot;V&quot;&gt;provide&lt;/span&gt; &lt;span class=&quot;ARG2&quot;&gt;the Board&lt;/span&gt; &lt;span class=&quot;ARG1&quot;&gt;with the data as specified in Article 6 and collected by the ECB in accordance with Regulation ( EU ) No 1163/2014 in financial years belonging to the provisional period&lt;/span&gt; .&lt;/p&gt;&#10;&lt;h6&gt;Article 12&lt;/h6&gt;&#10;&lt;p data-frequency-class=&quot;2&quot; data-frequency-could-be-1=&quot;false&quot; data-frequency-could-be-2=&quot;true&quot; data-frequency-could-be-3=&quot;false&quot; data-frequency-might-be-1=&quot;true&quot; data-frequency-might-be-2=&quot;true&quot; data-frequency-might-be-3=&quot;false&quot; data-frequency-split=&quot;0.15918048955500128|0.7814666539430619|0.059352852310985325&quot;&gt;&lt;span class=&quot;ARG0&quot;&gt;Any mandate given to a service provider for the purposes of outsourcing tasks&lt;/span&gt; &lt;span class=&quot;ARGM-MOD&quot;&gt;shall&lt;/span&gt; &lt;span class=&quot;ARGM-MNR&quot;&gt;clearly&lt;/span&gt; &lt;span class=&quot;V&quot;&gt;state&lt;/span&gt; &lt;span class=&quot;ARG1&quot;&gt;the duration of the mandate and the specific tasks that are outsourced&lt;/span&gt; and establish a framework for regular reporting by the service provider to the Board .&lt;/p&gt;&#10;&lt;p data-frequency-class=&quot;1&quot; data-frequency-could-be-1=&quot;true&quot; data-frequency-could-be-2=&quot;false&quot; data-frequency-could-be-3=&quot;false&quot; data-frequency-might-be-1=&quot;true&quot; data-frequency-might-be-2=&quot;true&quot; data-frequency-might-be-3=&quot;false&quot; data-frequency-split=&quot;0.7747497648000717|0.21148941181600095|0.013760789268417284&quot;&gt;Before taking any decision on outsourcing , &lt;span class=&quot;ARG0&quot;&gt;the Board&lt;/span&gt; shall obtain the consent of the ECB to &lt;span class=&quot;V&quot;&gt;share&lt;/span&gt; &lt;span class=&quot;ARG1&quot;&gt;the data provided by the ECB&lt;/span&gt; &lt;span class=&quot;ARG2&quot;&gt;with a service provider&lt;/span&gt; , &lt;span class=&quot;ARGM-MNR&quot;&gt;in accordance with applicable confidentiality provisions&lt;/span&gt; .&lt;/p&gt;"/>
+	<cas:Sofa xmi:id="3534" sofaNum="2" sofaID="html2textView" mimeType="text" sofaString="&#10;&#10;&#10;    p {&#10;        margin: 0.75em 0px;&#10;        line-height: 2em;&#10;        white-space: nowrap;&#10;    }&#10;&#10;    span {&#10;        border: 2px solid currentColor;&#10;        border-radius: 5px;&#10;        padding: 5px;&#10;    }&#10;&#10;    span {&#10;        background: lightblue;&#10;        color: royalblue;&#10;    }&#10;&#10;    .V {&#10;        background: yellow;&#10;        color: orangered;&#10;        font-weight: bold;&#10;    }&#10;&#10;    .ARG0,.ARG1,.ARG2,.C-ARG1 {&#10;        color: black;&#10;        background: white;&#10;    }&#10;&#10;    .ARGM-TMP {&#10;        color: green;&#10;        background: lightgreen;&#10;    }&#10;&#10;    .ARGM-NEG {&#10;        color: pink;&#10;        background: darkred;&#10;        border-color: darkred;&#10;    }&#10;&#10;    .PUNCT {&#10;        color: silver;&#10;        background: white;&#10;        border: none; padding: 0;&#10;    }&#10;&#10;    .ARG2 {&#10;        border-style: dotted;&#10;    }&#10;&#10;    .ARG1, .C-ARG1 {&#10;        color: white;&#10;        background: black;&#10;        border-color: black;&#10;        border-style: solid;&#10;    }&#10;&#10;    .ARG3, .ARGM-PRP, .ARGM-PRD, .ARGM-PNC {&#10;        color: white;&#10;        background: royalblue;&#10;        border-color: royalblue;&#10;        border-style: solid;&#10;    }&#10;&#10;    .updated-tag {&#10;        outline: 3px solid fuchsia;&#10;        outline-offset: 2px;&#10;    }&#10;&#10;    p[data-frequency-class=&quot;1&quot;] {&#10;        opacity: 0.15;&#10;    }&#10;&#10;    p[data-frequency-might-be-3=&quot;true&quot;]::before {&#10;        content: &quot;&#x267A;&quot;;&#10;        border: 7px solid royalblue;&#10;        margin-right: 5px;&#10;        border-radius: 5px;&#10;        background: royalblue;&#10;        color: white;&#10;    }&#10;    p[data-frequency-class=&quot;3&quot;]::before {&#10;        border-color: red;&#10;        background: red;&#10;        color: yellow;&#10;    }&#10;&#10;    h1,h2,h3,h4,h5,h6 {&#10;        font-family: sans-serif;&#10;        font-size: 12px;&#10;        color: silver;&#10;        font-weight: bold;&#10;        margin: 5px 0px;&#10;        border-left: 3px solid silver;&#10;        padding-left: 3px;&#10;    }&#10;    h2 { border-left-width: 3px; }&#10;    h2 { border-left-width: 6px; }&#10;    h3 { border-left-width: 9px; }&#10;    h4 { border-left-width: 12px; }&#10;    h5 { border-left-width: 15px; }&#10;    h6 { border-left-width: 18px; }&#10;    p + :not(p):not(h6) { margin-top: 45px; }&#10;&#10;    [data-old-text] {&#10;        outline: 4px dashed fuchsia;&#10;        outline-offset: 1px;&#10;        position: relative;&#10;    }&#10;    [TODO] {&#10;        outline: 4px dashed red;&#10;        outline-offset: 1px;&#10;    }&#10;&#10;    [data-old-text]:hover::before {&#10;        content: attr(data-old-text);&#10;        background: fuchsia;&#10;        color: white;&#10;        position: absolute; top: -2em;&#10;        padding: 1px 6px; border-radius: 4px;&#10;    }&#10;&#10;&#10;&#10;Whereas , , Such a final system should provide for the determination and raising of administrative contributions not only for significant entities , but for all entities that are subjected to the Single Resolution Mechanism . The contributions should be calculated at the highest level of consolidation of those entities within the participating Member States , since all subsidiaries of a group inside the perimeter of consolidation fall within the scope of the decision - making powers of the Board when adopting group resolution plans , carrying out the assessment of resolvability of groups and adopting resolution decisions for groups . The exercise of those tasks implies expenditures for the Board for collecting and analysing information and data related to each subsidiary included in the perimeter of consolidation . Since those are expenditures related to the services provided by the Board to the entities that are subjected to the Single Resolution Mechanism , they should be paid by those entities and therefore the administrative contributions should be calculated on the basis of their consolidated accounts at the highest level of consolidation within the participating Member States and only one contribution per group should be calculated .&#10;It is more efficient to request the ECB to transmit data it received and verified in the exercise of its tasks and powers conferred on it by Council Regulation ( EU ) No 1024/2013 ( 4 ) to the Board , than to duplicate the reporting burden for the institutions and entities concerned . Data sharing between the ECB and the Board would also allow avoiding duplication of the data verification process by the Board and builds on the obligation of the Board and the ECB to cooperate closely in the exercise of their respective responsibilities under Regulation ( EU ) No 806/2014 . Any duplication of the data reporting and verification processes would inevitably require more time for the calculation and raising of contributions and would lead to a less efficient system . It follows that , as a part of the cooperation obligation , the ECB should be required to transmit to the Board the data received from the institutions and entities concerned for the purpose of calculating contributions to the Board . The Board should rely to the greatest extent possible on the data collected by the ECB .&#10;Article 4&#10;The Board shall report yearly to the Commission on the appropriateness of the allocation laid down in paragraph 1 , in the light of the changing composition of the two categories of entities and groups .&#10;Article 6&#10;Each year , within 5 working days of the issuance of fee notices in accordance with Article 12(1 ) of Regulation ( EU ) No 1163/2014 , and in any case no later than 31 December of the year for which the fee notices are issued , the ECB shall provide the Board with data on each contribution debtor as collected by the ECB in that year and used to determine the supervisory fees in accordance with Regulation ( EU ) No 1163/2014 .&#10;In case the ECB issues additional invoices or recalculates the annual supervisory fee in accordance with Article 7 of Regulation ( EU ) No 1163/2014 , the ECB shall communicate to the Board the new data within 5 days of the issuance of fee notices .&#10;For the calculation of the individual annual contributions to be collected in a given financial year , the Board shall use the data collected by the ECB in the previous financial year in accordance with Regulation ( EU ) No 1163/2014 and provided to the Board in accordance with this Article or Article 11 , as applicable .&#10;In case no data provided by the ECB is available , the relevant national competent authority shall upon request provide the Board with the data at its disposal .&#10;In case no data provided by the national competent authority is available , the contribution debtor shall upon request provide the Board with the necessary data within a deadline set by the Board . In the absence of a reply by the contribution debtor within the deadline set by the Board , the Board may determine the data on the basis of reasonable assumptions .&#10;Article 8&#10;A contribution notice shall be issued by the Board to the contribution debtors .&#10;The Board shall notify the contribution notice through any of the following means &#x276E;electronically or by other comparable means of communication &#x2016; by fax &#x2016; by express courier service &#x2016; by registered mail with a form for acknowledgement of receipt &#x2016; by service or delivery by hand&#x276F;&#10;The annual contribution due by the entities referred to in Article 2 of Regulation ( EU ) No 806/2014 that are members of the same group shall be collected from the contribution debtor of that group .&#10;In the event of any partial payment , non - payment or non - compliance with the conditions for payment specified in the contribution notice by the contribution debtor , the Board shall inform the national resolution authority of the participating Member State in which the contribution debtor is established .&#10;Article 9&#10;The government of each participating Member State shall designate and notify to the Board and to the Court of Justice of the European Union an authority for the purposes of verifying the authenticity of individual contribution decisions .&#10;Article 10&#10;Without prejudice to Article 6(4 ) , for the recalculation of the amount of contributions due by each entity in the financial years belonging to the provisional period , the Board shall use the data collected by the ECB in those financial years in accordance with Regulation ( EU ) No 1163/2014 and provided to the Board in accordance with Article 11 .&#10;Article 11&#10;Within 30 days of the entry into force of this Regulation , the ECB shall provide the Board with the data as specified in Article 6 and collected by the ECB in accordance with Regulation ( EU ) No 1163/2014 in financial years belonging to the provisional period .&#10;Article 12&#10;Any mandate given to a service provider for the purposes of outsourcing tasks shall clearly state the duration of the mandate and the specific tasks that are outsourced and establish a framework for regular reporting by the service provider to the Board .&#10;Before taking any decision on outsourcing , the Board shall obtain the consent of the ECB to share the data provided by the ECB with a service provider , in accordance with applicable confidentiality provisions ."/>
+	<cas:View sofa="1" members="13 22 29 94 110 117 133 140 156 163 179 186 202 209 216 281 297 304 320 327 343 350 366 373 389 396 403 412 419 484 500 507 523 530 546 553 569 576 592 599 615 622 629 638 645 710 726 733 749 756 772 779 795 802 818 825 841 848 864 871 887 894 901 966 982 989 1005 1012 1028 1035 1051 1058 1074 1081 1097 1104 1120 1127 1134 1199 1215 1222 1238 1245 1261 1268 1284 1291 1298 1363 1379 1386 1402 1409 1425 1432 1448 1455 1471 1478 1494 1501 1517 1524 1531 1596 1612 1619 1635 1642 1658 1665 1681 1688 1704 1711 1727 1734 1750 1757 1773 1780 1787 1796 1803 1868 1884 1891 1907 1914 1930 1937 1953 1960 1976 1983 1990 2055 2071 2078 2094 2101 2117 2124 2140 2147 2163 2170 2177 2242 2258 2265 2281 2288 2304 2311 2327 2334 2341 2406 2422 2429 2445 2452 2468 2475 2491 2498 2514 2521 2528 2537 2544 2609 2625 2632 2648 2655 2671 2678 2694 2701 2717 2724 2731 2740 2747 2812 2828 2835 2851 2858 2874 2881 2897 2904 2911 2920 2927 2992 3008 3015 3031 3038 3054 3061 3077 3084 3100 3107 3123 3130 3137 3146 3153 3218 3234 3241 3257 3264 3280 3287 3303 3310 3326 3333 3340 3405 3421 3428 3444 3451 3467 3474 3490 3497 3513 3520 3527 3546 3557 3564 3571 3578 3585 3592 3599 3606 3613 3620 3627 3634 3641 3648 3655 3662 3669 3676 3683 3690 3697 3704 3711 3718 3725 3732 3739 3746 3753 3760 3767 3774 3781 3788 3795 3802 3809 3816 3823 3830 3837 3844 3851 3858 3865 3872 3879 3886 3893 3900 3907 3914 3921 3928 3935 3942 3949 3956 3963 3970 3977 3984 3991 3998 4005 4012 4019 4026 4033 4040 4047 4054 4061 4068 4075 4082 4089 4096 4103 4110 4117 4124 4131 4138 4145 4152 4159 4166 4173 4180 4187 4194 4201 4208 4215 4222 4229 4236 4243 4250 4257 4264 4271 4278 4285 4292 4299 4306 4313 4320 4327 4334 4341 4348 4355 4362 4369 4376 4383"/>
+	<cas:View sofa="3534" members="3541 4390 4397 4404 4411 4418 4425 4432 4439 4446 4453 4460 4467 4474 4481 4488 4495 4502 4509 4516 4523 4530 4537 4544 4551 4558 4565 4572 4579 4586 4593 4600 4607 4614 4621 4628 4635 4642 4649 4656 4663 4670 4677 4684 4691 4698 4705 4712 4719 4726 4733 4740 4747 4754 4761 4768 4775 4782 4789 4796 4803 4810 4817 4824 4831 4838 4845 4852 4859 4866 4873 4880 4887 4894 4901 4908 4915 4922 4929 4936 4943 4950 4957 4964 4971 4978 4985 4992 4999 5006 5013 5020 5027 5034 5041 5048 5055 5062 5069 5076 5083 5090 5097 5104 5111 5118 5125 5132 5139 5146 5153 5160 5167 5174 5181 5188 5195 5202 5209 5216"/>
+</xmi:XMI>

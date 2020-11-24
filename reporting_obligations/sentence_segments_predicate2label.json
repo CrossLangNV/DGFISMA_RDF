@@ -1,0 +1,19 @@
+{
+  "http:/dgfisma.com/ontology/hasReporter": "Reporter",
+  "http:/dgfisma.com/ontology/hasReport": "Report",
+  "http:/dgfisma.com/ontology/hasRegulatoryBody": "Regulatory body",
+  "http:/dgfisma.com/ontology/hasVerb": "Verb",
+  "http:/dgfisma.com/ontology/hasPropTmp": "Time",
+  "http:/dgfisma.com/ontology/hasPropMnr": "Manner",
+  "http:/dgfisma.com/ontology/hasPropAdv": "General purpose",
+  "http:/dgfisma.com/ontology/hasPropMod": "Modal verb",
+  "__comment__": "The following keys are not yet confirmed to be used",
+  "http:/dgfisma.com/ontology/hasDetails": "Details",
+  "http:/dgfisma.com/ontology/hasPropLoc": "Location",
+  "http:/dgfisma.com/ontology/hasPropCau": "Cause",
+  "http:/dgfisma.com/ontology/hasPropExt": "Extent",
+  "http:/dgfisma.com/ontology/hasPropPnc": "Purpose",
+  "http:/dgfisma.com/ontology/hasPropDir": "Direction",
+  "http:/dgfisma.com/ontology/hasPropNeg": "Negation",
+  "http:/dgfisma.com/ontology/hasPropDis": "Discourse connectives"
+}

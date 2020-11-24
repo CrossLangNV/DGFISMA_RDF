@@ -1,4 +1,3 @@
-import requests
 import os.path
 from zipfile import ZipFile
 
@@ -30,15 +29,22 @@ def get_eurovoc_rdf():
     return filepath_rdf
 
 
-def download_file(filename, url):
-    """
-    Download an URL to a file
+def download_file(filename, url, chunk_size=2 ** 12):
+    """    Download an URL to a file
+
+    Args:
+        filename: to save file to locally
+        url: url to the file
+        chunk_size: Optional
+
+    Returns:
+        None
     """
     with open(filename, 'wb') as fout:
         response = requests.get(url, stream=True)
         response.raise_for_status()
         # Write response data to file
-        for block in response.iter_content(2**12):
+        for block in response.iter_content(chunk_size):
             fout.write(block)
 
 
