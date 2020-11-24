@@ -1,6 +1,6 @@
 FROM ro-rdf
 
-MAINTAINER Laurens <laurensmeeus93@gmail.com>
+LABEL maintainer="laurensmeeus93@gmail.com"
 
 RUN apt-get update
 

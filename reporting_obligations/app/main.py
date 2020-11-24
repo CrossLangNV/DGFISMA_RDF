@@ -22,7 +22,8 @@ path_typesystem = os.path.join(ROOT, rel_path_typesystem)
 with open(path_typesystem, 'rb') as f:
     TYPESYSTEM = load_typesystem(f)
 
-LOCAL_URL = 'http://fuseki_RO:3030/RO/'
+PORT = int(os.environ.get('PORT', 3030))
+LOCAL_URL = f'http://fuseki_RO:{PORT}/RO/'
 
 
 class CasBase64(BaseModel):
@@ -102,14 +103,7 @@ def update_rdf_from_cas_content(cas_content) -> cas_parser.CasContent:
 
     q = get_q(g)
 
-    logging.info('Update query')
-    logging.info('\t' + q)
-
     sparql.setQuery(q)
-    ret = sparql.query()
-
-    results = ret.convert()
-
-    logging.info(results)
+    sparql.query()
 
     return cas_content

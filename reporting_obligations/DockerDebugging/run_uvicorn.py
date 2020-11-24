@@ -1,3 +1,5 @@
+import os
+
 import uvicorn
 
 from reporting_obligations.app.main import app
@@ -9,7 +11,7 @@ if __name__ == "__main__":
     https://www.uvicorn.org/deployment/
     """
 
-    if 0:
-        uvicorn.run("example:app", host="127.0.0.1", port=80, log_level="info", reload=True)
-    else:
-        uvicorn.run(app, host="127.0.0.1", port=8080, log_level="info")
+    # Other options if automatic reloading is required.
+    # uvicorn.run("example:app", host="127.0.0.1", port=80, log_level="info", reload=True)
+    port = int(os.environ.get('PORT', 8080))
+    uvicorn.run(app, host="127.0.0.1", port=port, log_level="info")
