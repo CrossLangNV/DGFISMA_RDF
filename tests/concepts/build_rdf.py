@@ -4,7 +4,7 @@ import unittest
 
 from rdflib import Graph
 
-from concepts.build_rdf import ConceptGraph
+from concepts.build_rdf import ConceptGraph, LinkConceptGraph
 
 
 L0 = ['x@Q=ef(nz? tWJNuwVHyta K_d(p6)&X',
@@ -76,3 +76,35 @@ class TestBuild(unittest.TestCase):
                 l_terms_rdf = [dict_id_term[id] for id in sorted(dict_id_term)]
 
                 self.assertEqual(l, l_terms_rdf, 'Terms should be identical')
+
+class TestLinkConcepts(unittest.TestCase):
+    def test_add(self):
+        """
+        Links should be able to be added (and retrieved) to the graph
+
+        Returns:
+
+        """
+
+        graph = LinkConceptGraph()
+
+        links = {'1': ['1'],
+         '2': ['1', '3'],
+         }
+
+        graph.add_similar_terms(links)
+
+        for i, l_i in links.items():
+            for j in l_i:
+
+                b = False
+                # Get subject, predicate, object triples
+                for (s, _, o) in graph:
+                    if str(s) == i and str(o) == j:
+                        b = True
+
+                self.assertTrue(b, f'{i} -> {j} should be saved in the graph!')
+
+
+if __name__ == '__main__':
+    unittest.main()
