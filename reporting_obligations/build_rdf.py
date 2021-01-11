@@ -5,8 +5,8 @@ from rdflib.namespace import SKOS, RDF, RDFS, OWL, URIRef, DC
 from rdflib.term import _serial_number_generator
 
 from reporting_obligations.cas_parser import CasContent, KEY_CHILDREN, KEY_SENTENCE_FRAG_CLASS, KEY_VALUE
+from shared.rdf_dgfisma import NS_BASE
 
-NS_BASE = Namespace("http://dgfisma.com/")
 RO_BASE = Namespace(NS_BASE + 'reporting_obligations/')
 
 ROOT = os.path.join(os.path.dirname(__file__), '..')

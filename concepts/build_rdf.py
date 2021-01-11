@@ -3,7 +3,7 @@ from typing import Dict, List
 from rdflib import Literal, Namespace, Graph, URIRef
 from rdflib.namespace import SKOS, RDF
 
-from reporting_obligations.build_rdf import NS_BASE
+from shared.rdf_dgfisma import NS_BASE
 
 CONCEPT_BASE = Namespace(NS_BASE + 'concepts/')
 EN = 'en'
@@ -40,8 +40,8 @@ class ConceptGraph(Graph):
             list of RDF URI's of the new SKOS concepts.
         """
 
-        l_terms = list(map(str, l_terms)) #
-        l_uri = [None for _ in l_terms]    # Initialisation
+        l_terms = list(map(str, l_terms))  #
+        l_uri = [None for _ in l_terms]  # Initialisation
         for i, term_i in enumerate(l_terms):
             node_term_i = self.uid_iterator.get_next()
 
