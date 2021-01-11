@@ -15,7 +15,7 @@ setup(
     author='Laurens Meeus',
     author_email='laurens.meeus@crosslang.com',
     url="http://www.crosslang.com/",
-    packages=['dgfisma_rdf', ],  # 'concepts', 'reporting_obligations'],  # same as name
+    packages=[], #'dgfisma_rdf', ],  # 'concepts', 'reporting_obligations'],  # same as name
     install_requires=required,  # external packages as dependencies
     # scripts=[
     #          'scripts/cool',
