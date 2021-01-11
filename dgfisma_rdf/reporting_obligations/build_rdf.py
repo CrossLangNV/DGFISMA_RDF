@@ -4,8 +4,8 @@ from rdflib import BNode, Literal, Namespace, Graph
 from rdflib.namespace import SKOS, RDF, RDFS, OWL, URIRef, DC
 from rdflib.term import _serial_number_generator
 
-from reporting_obligations.cas_parser import CasContent, KEY_CHILDREN, KEY_SENTENCE_FRAG_CLASS, KEY_VALUE
-from shared.rdf_dgfisma import NS_BASE
+from dgfisma_rdf.reporting_obligations.cas_parser import CasContent, KEY_CHILDREN, KEY_SENTENCE_FRAG_CLASS, KEY_VALUE
+from dgfisma_rdf.shared.rdf_dgfisma import NS_BASE
 
 RO_BASE = Namespace(NS_BASE + 'reporting_obligations/')
 

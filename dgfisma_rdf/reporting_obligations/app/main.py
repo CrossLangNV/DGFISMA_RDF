@@ -11,8 +11,8 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from rdflib import Literal
 
-from reporting_obligations import cas_parser
-from reporting_obligations.build_rdf import ROGraph
+from .. import cas_parser
+from ..build_rdf import ROGraph
 
 app = FastAPI()
 

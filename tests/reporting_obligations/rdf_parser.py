@@ -4,9 +4,9 @@ import unittest
 
 from typing import Iterable
 
-from reporting_obligations import build_rdf
-from reporting_obligations.build_rdf import D_ENTITIES, ExampleCasContent, ROGraph
-from reporting_obligations.rdf_parser import SPARQLReportingObligationProvider, RDFLibGraphWrapper, SPARQLGraphWrapper
+from dgfisma_rdf.reporting_obligations import build_rdf
+from dgfisma_rdf.reporting_obligations.build_rdf import D_ENTITIES, ExampleCasContent, ROGraph
+from dgfisma_rdf.reporting_obligations.rdf_parser import SPARQLReportingObligationProvider, RDFLibGraphWrapper, SPARQLGraphWrapper
 
 ROOT = os.path.join(os.path.dirname(__file__), '../..')
 

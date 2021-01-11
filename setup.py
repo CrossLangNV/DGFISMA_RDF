@@ -6,6 +6,7 @@ with open("README.md", 'r') as f:
 with open('docker/requirements.txt') as f:
     required = f.read().splitlines()
 
+
 setup(
     name='RDF for DGFISMA',
     version='0.1',
@@ -15,7 +16,7 @@ setup(
     author='Laurens Meeus',
     author_email='laurens.meeus@crosslang.com',
     url="http://www.crosslang.com/",
-    packages=['concepts', 'reporting_obligations'],  # same as name
+    packages=['dgfisma_rdf'], # 'concepts', 'reporting_obligations'],  # same as name
     install_requires=required,  # external packages as dependencies
     # scripts=[
     #          'scripts/cool',

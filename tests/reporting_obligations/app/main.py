@@ -5,8 +5,8 @@ import unittest
 import requests
 from cassis import load_typesystem, load_cas_from_xmi
 
-from reporting_obligations import cas_parser
-from reporting_obligations.app.main import update_rdf_from_cas_content
+from dgfisma_rdf.reporting_obligations import cas_parser
+from dgfisma_rdf.reporting_obligations.app.main import update_rdf_from_cas_content
 
 ROOT = os.path.join(os.path.dirname(__file__), '../../..')
 

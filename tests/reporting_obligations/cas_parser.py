@@ -1,13 +1,13 @@
 import os
 import unittest
 
-from reporting_obligations import build_rdf
-from reporting_obligations import cas_parser
+from dgfisma_rdf.reporting_obligations import build_rdf
+from dgfisma_rdf.reporting_obligations import cas_parser
 
 ROOT = os.path.join(os.path.dirname(__file__), '../..')
 # fixed example.
-REL_PATH_CAS = 'reporting_obligations/output_reporting_obligations/cas_laurens.xml'
-REL_PATH_TYPESYSTEM = 'reporting_obligations/output_reporting_obligations/typesystem_tmp.xml'
+REL_PATH_CAS = 'dgfisma_rdf/reporting_obligations/output_reporting_obligations/cas_laurens.xml'
+REL_PATH_TYPESYSTEM = 'dgfisma_rdf/reporting_obligations/output_reporting_obligations/typesystem_tmp.xml'
 
 # from ROOT
 path_cas = os.path.join(ROOT, REL_PATH_CAS)

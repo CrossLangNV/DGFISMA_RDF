@@ -3,7 +3,7 @@ from typing import Dict, List
 from rdflib import Literal, Namespace, Graph, URIRef
 from rdflib.namespace import SKOS, RDF
 
-from shared.rdf_dgfisma import NS_BASE
+from dgfisma_rdf.shared.rdf_dgfisma import NS_BASE
 
 CONCEPT_BASE = Namespace(NS_BASE + 'concepts/')
 EN = 'en'

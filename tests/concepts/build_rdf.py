@@ -4,7 +4,7 @@ import unittest
 
 from rdflib import Graph
 
-from concepts.build_rdf import ConceptGraph, LinkConceptGraph
+from dgfisma_rdf.concepts.build_rdf import ConceptGraph, LinkConceptGraph
 
 
 L0 = ['x@Q=ef(nz? tWJNuwVHyta K_d(p6)&X',
