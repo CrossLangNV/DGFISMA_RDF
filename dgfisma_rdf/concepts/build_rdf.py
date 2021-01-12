@@ -29,11 +29,12 @@ class ConceptGraph(Graph):
 
         self.uid_iterator = UIDIterator()
 
-    def add_terms(self, l_terms: List[str], l_def: None, lang=EN):
+    def add_terms(self, l_terms: List[str], l_def: List[str] = None, lang=EN):
         """ Add new terms to the RDF as SKOS concepts.
 
         Args:
             l_terms: List of the terms in string format
+            l_def: Optional. List with definitions alongside the terms. If bool(term_i) is False, it is not added.
             lang: optional language parameter of the terms.
 
         Returns:
@@ -62,10 +63,12 @@ class ConceptGraph(Graph):
                       ))
 
             if l_def is not None:
-                self.add((node_term_i,
-                          SKOS.definition,
-                          Literal(l_def[i], lang=lang)
-                          ))
+                def_i = l_def[i]
+                if bool(def_i):
+                    self.add((node_term_i,
+                              SKOS.definition,
+                              Literal(def_i, lang=lang)
+                              ))
 
         return l_uri
 
