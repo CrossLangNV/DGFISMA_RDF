@@ -29,7 +29,7 @@ class ConceptGraph(Graph):
 
         self.uid_iterator = UIDIterator()
 
-    def add_terms(self, l_terms: List[str], lang=EN):
+    def add_terms(self, l_terms: List[str], l_def: None, lang=EN):
         """ Add new terms to the RDF as SKOS concepts.
 
         Args:
@@ -41,6 +41,10 @@ class ConceptGraph(Graph):
         """
 
         l_terms = list(map(str, l_terms))  #
+
+        if l_def is not None:
+            assert len(l_terms) == len(l_def), "Terms and definitions should have the same length."
+
         l_uri = [None for _ in l_terms]  # Initialisation
         for i, term_i in enumerate(l_terms):
             node_term_i = self.uid_iterator.get_next()
@@ -56,6 +60,12 @@ class ConceptGraph(Graph):
                       SKOS.prefLabel,
                       Literal(term_i, lang=lang)
                       ))
+
+            if l_def is not None:
+                self.add((node_term_i,
+                          SKOS.definition,
+                          Literal(l_def[i], lang=lang)
+                          ))
 
         return l_uri
 
