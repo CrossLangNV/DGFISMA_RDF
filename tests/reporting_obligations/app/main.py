@@ -14,7 +14,13 @@ ROOT = os.path.join(os.path.dirname(__file__), '../../..')
 See <ROOT>/reporting_obligations/README.md OR 
 <ROOT>/reporting_obligations/DockerDebugging/README.md + run_uvicorn.py
 """
-LOCAL_URL = 'http://127.0.0.1:8080'
+if 0:
+    LOCAL_URL = 'http://127.0.0.1:8081'
+    URL_ENDPOINT = 'http://127.0.0.1:8080/fuseki/RO_test'  # Make sure to run fusek locally!
+else:
+    LOCAL_URL = 'http://gpu1.crosslang.com:10080'
+    URL_ENDPOINT = 'http://gpu1.crosslang.com:3030/RO_test'  # Make sure to run fusek locally!
+
 URL_CAS_UPLOAD = LOCAL_URL + '/ro_cas/upload'
 URL_CAS_B64 = LOCAL_URL + '/ro_cas/base64'
 
@@ -43,10 +49,10 @@ class TestApp(unittest.TestCase):
 class TestUpdateRDFFromCasContent(unittest.TestCase):
 
     def test_send_cas_without_reporting_obligations(self):
-        path = os.path.join(ROOT, 'tests/reporting_obligations/app/data_test', 'ro_cas_1.xml')
+        path = os.path.abspath(os.path.join(ROOT, 'tests/reporting_obligations/app/data_test', 'ro_cas_1.xml'))
 
-        rel_path_typesystem = 'reporting_obligations/output_reporting_obligations/typesystem_tmp.xml'
-        path_typesystem = os.path.join(ROOT, rel_path_typesystem)
+        rel_path_typesystem = 'dgfisma_rdf/reporting_obligations/output_reporting_obligations/typesystem_tmp.xml'
+        path_typesystem = os.path.abspath(os.path.join(ROOT, rel_path_typesystem))
 
         cas_content = cas_parser.CasContent.from_cas_file(path, path_typesystem)
 
@@ -62,18 +68,20 @@ class TestUpdateRDFFromCasContent(unittest.TestCase):
         for i, cas_content_i in enumerate(cas_content_iterator(cas_content)):
             with self.subTest(f'RO {i}'):
                 try:
-                    update_rdf_from_cas_content(cas_content_i)
+                    update_rdf_from_cas_content(cas_content_i, endpoint=URL_ENDPOINT)
                 except Exception as e:
                     self.fail((e, cas_content_i))
 
 
 class TestUploadCas(unittest.TestCase):
     def test_upload_file(self):
-        path = os.path.join(ROOT, 'reporting_obligations/output_reporting_obligations/ro + html2text.xml')
+        path = os.path.join(ROOT, 'dgfisma_rdf/reporting_obligations/output_reporting_obligations/ro + html2text.xml')
         with open(path, 'rb') as f:
             files = {'file': f}
 
-            r = requests.post(URL_CAS_UPLOAD, files=files)
+            headers = {'endpoint': URL_ENDPOINT}
+
+            r = requests.post(URL_CAS_UPLOAD, files=files, headers=headers)
 
         with self.subTest('status code'):
             self.assertLess(r.status_code, 300, "Status code should indicate a proper connection.")
@@ -90,6 +98,7 @@ class TestUploadCas(unittest.TestCase):
                 self.assertTrue('arg' in cls.lower() or 'v' == cls.lower(), 'Not one of expected entity classes')
 
     def test_upload_example_files(self):
+
         for filename in FILENAMES:
             with self.subTest(filename):
                 path = os.path.join(ROOT, 'tests/reporting_obligations/app/data_test', filename)
@@ -97,7 +106,9 @@ class TestUploadCas(unittest.TestCase):
                 with open(path, 'rb') as f:
                     files = {'file': f}
 
-                    r = requests.post(URL_CAS_UPLOAD, files=files)
+                    headers = {'endpoint': URL_ENDPOINT}
+
+                    r = requests.post(URL_CAS_UPLOAD, files=files, headers=headers)
 
                 self.assertLess(r.status_code, 300, "Status code should indicate a proper connection.")
 
@@ -118,9 +129,9 @@ class TestUploadCasB64(unittest.TestCase):
     """
 
     def test_upload_file(self):
-        path = os.path.join(ROOT, 'reporting_obligations/output_reporting_obligations/ro + html2text.xml')
+        path = os.path.join(ROOT, 'dgfisma_rdf/reporting_obligations/output_reporting_obligations/ro + html2text.xml')
 
-        rel_path_typesystem = 'reporting_obligations/output_reporting_obligations/typesystem_tmp.xml'
+        rel_path_typesystem = 'dgfisma_rdf/reporting_obligations/output_reporting_obligations/typesystem_tmp.xml'
         path_typesystem = os.path.join(ROOT, rel_path_typesystem)
 
         with open(path, 'rb') as f:
@@ -131,9 +142,13 @@ class TestUploadCasB64(unittest.TestCase):
 
             encoded_cas = base64.b64encode(bytes(cas.to_xmi(), 'utf-8')).decode()
 
-            values = {'content': encoded_cas}
+            values = {'content': encoded_cas,
+                      }
+            headers = {'endpoint': URL_ENDPOINT}
 
-            r = requests.post(URL_CAS_B64, json=values)
+            r = requests.post(URL_CAS_B64, json=values,
+                              headers=headers
+                              )
 
         with self.subTest('status code'):
             self.assertLess(r.status_code, 300, "Status code should indicate a proper connection.")

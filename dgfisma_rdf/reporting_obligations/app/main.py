@@ -1,12 +1,12 @@
 import base64
+import binascii
 import logging
 import os
 import time
 
-import binascii
 from SPARQLWrapper import SPARQLWrapper, DIGEST, JSON, POST
 from cassis import load_typesystem, load_cas_from_xmi
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile, HTTPException, Header
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from rdflib import Literal
@@ -22,9 +22,6 @@ path_typesystem = os.path.join(ROOT, rel_path_typesystem)
 with open(path_typesystem, 'rb') as f:
     TYPESYSTEM = load_typesystem(f)
 
-PORT = int(os.environ.get('PORT', 3030))
-LOCAL_URL = f'http://fuseki_RO:{PORT}/RO/'
-
 
 class CasBase64(BaseModel):
     content: str  # Base64 content as string
@@ -36,18 +33,37 @@ async def root():
 
 
 @app.post("/ro_cas/upload")
-async def create_file(file: UploadFile = File(...)) -> cas_parser.CasContent:
-    # Get relevant data of reporting obligations out of the CAS:
+async def create_file(file: UploadFile = File(...), endpoint: str = Header(...)) -> cas_parser.CasContent:
+    """
 
+    Args:
+        file: CAS
+        endpoint: URL to Fuseki endpoint. e.g. f'http://fuseki_RO:3030/RO/'
+
+    Returns:
+        None
+    """
+    # Get relevant data of reporting obligations out of the CAS:
     cas = load_cas_from_xmi(file.file, typesystem=TYPESYSTEM)
     cas_content = cas_parser.CasContent.from_cassis_cas(cas)
 
     # Load into an RDF
-    return update_rdf_from_cas_content(cas_content)
+    return update_rdf_from_cas_content(cas_content, endpoint)
 
 
 @app.post("/ro_cas/base64")
-async def create_file_base64(cas_base64: CasBase64) -> cas_parser.CasContent:
+async def create_file_base64(cas_base64: CasBase64,
+                             endpoint: str = Header(...)
+                             ) -> cas_parser.CasContent:
+    """
+
+    Args:
+        cas_base64: CAS in base64 string
+        endpoint: URL to Fuseki endpoint. e.g. f'http://fuseki_RO:3030/RO/'
+
+    Returns:
+        None
+    """
     # Get relevant data of reporting obligations out of the CAS:
 
     try:
@@ -61,17 +77,18 @@ async def create_file_base64(cas_base64: CasBase64) -> cas_parser.CasContent:
     cas = load_cas_from_xmi(decoded_cas_content, typesystem=TYPESYSTEM)
     cas_content = cas_parser.CasContent.from_cassis_cas(cas)
 
-    return update_rdf_from_cas_content(cas_content)
+    return update_rdf_from_cas_content(cas_content, endpoint)
 
 
-def update_rdf_from_cas_content(cas_content) -> cas_parser.CasContent:
+def update_rdf_from_cas_content(cas_content, endpoint) -> cas_parser.CasContent:
     # Load into an RDF
     g = ROGraph()
     # # g = PersistentROGraph()
     g.add_cas_content(cas_content)
 
     # Store in Fuseki
-    sparql = SPARQLWrapper(LOCAL_URL)
+    sparql = SPARQLWrapper(endpoint)
+
     sparql.setHTTPAuth(DIGEST)
     if 0:  # doesn't seem to be necessary!
         sparql.setCredentials("", "")  # get from secret
@@ -104,6 +121,11 @@ def update_rdf_from_cas_content(cas_content) -> cas_parser.CasContent:
     q = get_q(g)
 
     sparql.setQuery(q)
-    sparql.query()
+    try:
+        sparql.query()
+    except ValueError as e:
+        raise HTTPException(status_code=406, detail=f"Unable to query to fuseki with endpoint = '{endpoint}'.\n{e}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Unable to query due to following exception:\n{e}")
 
     return cas_content
