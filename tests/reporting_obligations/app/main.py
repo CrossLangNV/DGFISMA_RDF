@@ -14,7 +14,7 @@ ROOT = os.path.join(os.path.dirname(__file__), '../../..')
 See <ROOT>/reporting_obligations/README.md OR 
 <ROOT>/reporting_obligations/DockerDebugging/README.md + run_uvicorn.py
 """
-if 0:
+if 1:
     LOCAL_URL = 'http://127.0.0.1:8081'
     URL_ENDPOINT = 'http://127.0.0.1:8080/fuseki/RO_test'  # Make sure to run fusek locally!
 else:
@@ -24,10 +24,17 @@ else:
 URL_CAS_UPLOAD = LOCAL_URL + '/ro_cas/upload'
 URL_CAS_B64 = LOCAL_URL + '/ro_cas/base64'
 
-FILENAMES = ('ro_cas_1.xml',  # non-empty
-             'ro_cas_2.xml',  # empty
-             'cas_ro_plus_html2text.xml'
-             )
+FILENAMES = (
+    'ro_cas_1.xml',  # non-empty
+    'ro_cas_2.xml',  # empty
+    'cas_ro_plus_html2text.xml',
+)
+
+FILENAMES_FRANCOIS_ATTRIBUTES = (
+    'oan_2021_01_18_N01.xml',
+    'oan_2021_01_18_N02.xml',
+    'oan_2021_01_18_N03.xml',
+)
 
 
 class TestApp(unittest.TestCase):
@@ -100,27 +107,64 @@ class TestUploadCas(unittest.TestCase):
     def test_upload_example_files(self):
 
         for filename in FILENAMES:
-            with self.subTest(filename):
-                path = os.path.join(ROOT, 'tests/reporting_obligations/app/data_test', filename)
+            path = os.path.join(ROOT, 'tests/reporting_obligations/app/data_test', filename)
 
-                with open(path, 'rb') as f:
-                    files = {'file': f}
+            with open(path, 'rb') as f:
+                files = {'file': f}
 
-                    headers = {'endpoint': URL_ENDPOINT}
+                headers = {'endpoint': URL_ENDPOINT}
 
-                    r = requests.post(URL_CAS_UPLOAD, files=files, headers=headers)
+                r = requests.post(URL_CAS_UPLOAD, files=files, headers=headers)
 
-                self.assertLess(r.status_code, 300, "Status code should indicate a proper connection.")
+            self.assertLess(r.status_code, 300, "Status code should indicate a proper connection.")
 
-                with self.subTest('cas content'):
-                    cas_content = r.json()
+            with self.subTest(f'cas content:{filename}'):
+                cas_content = r.json()
 
-                    s_cls = set([child['class'] for chldrn in cas_content['children'] if
-                                 chldrn['children'] for child in chldrn['children']])
+                s_cls = set([child['class'] for chldrn in cas_content['children'] if
+                             chldrn['children'] for child in chldrn['children']])
 
-                    for cls in s_cls:
-                        self.assertTrue('arg' in cls.lower() or 'v' == cls.lower(),
-                                        f'Not one of expected entity classes: {cls}')
+                for cls in s_cls:
+                    self.assertTrue('arg' in cls.lower() or 'v' == cls.lower(),
+                                    f'Not one of expected entity classes: {cls}')
+
+            with self.subTest(f'Entities:{filename}'):
+                self.assertTrue(s_cls, 'COULD BE FALSE ALARM, but we expected some entities to be found')
+
+    def test_upload_example_files_v2(self):
+        """ New attributes have been added that seem to cause issues.
+
+        Returns:
+
+        """
+
+        for filename in FILENAMES_FRANCOIS_ATTRIBUTES:
+            path = os.path.join(ROOT, 'tests/reporting_obligations/app/data_test', filename)
+
+            with open(path, 'rb') as f:
+                files = {'file': f}
+
+                headers = {'endpoint': URL_ENDPOINT}
+
+                r = requests.post(URL_CAS_UPLOAD, files=files, headers=headers)
+
+            with self.subTest(f'Status code: {filename}'):
+                self.assertLess(r.status_code, 300, r.text)
+            if r.status_code >= 300:
+                continue
+
+            with self.subTest(f'cas content: {filename}'):
+                cas_content = r.json()
+
+                s_cls = set([child['class'] for chldrn in cas_content['children'] if
+                             chldrn['children'] for child in chldrn['children']])
+
+                for cls in s_cls:
+                    self.assertTrue('arg' in cls.lower() or 'v' == cls.lower(),
+                                    f'Not one of expected entity classes: {cls}')
+
+            with self.subTest(f'Entities: {filename}'):
+                self.assertTrue(s_cls, 'COULD BE FALSE ALARM, but we expected some entities to be found')
 
 
 class TestUploadCasB64(unittest.TestCase):
@@ -180,6 +224,8 @@ class TestUID(unittest.TestCase):
                 r = requests.post(URL_CAS_UPLOAD, files=files)
 
             if r.status_code >= 300:  # uploading failed
+                with self.subTest('POST request'):
+                    self.fail('Uploading failed')
                 continue
 
             cas_content = r.json()

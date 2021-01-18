@@ -2,7 +2,8 @@ import os
 
 import uvicorn
 
-from ..app.main import app
+# No relative import possible as this is __main__.
+from dgfisma_rdf.reporting_obligations.app.main import app
 
 if __name__ == "__main__":
     """

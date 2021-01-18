@@ -43,12 +43,8 @@ async def create_file(file: UploadFile = File(...), endpoint: str = Header(...))
     Returns:
         None
     """
-    # Get relevant data of reporting obligations out of the CAS:
-    cas = load_cas_from_xmi(file.file, typesystem=TYPESYSTEM)
-    cas_content = cas_parser.CasContent.from_cassis_cas(cas)
 
-    # Load into an RDF
-    return update_rdf_from_cas_content(cas_content, endpoint)
+    return create_file_shared(file.file, endpoint)
 
 
 @app.post("/ro_cas/base64")
@@ -74,8 +70,19 @@ async def create_file_base64(cas_base64: CasBase64,
         logging.info(end)
         return JSONResponse(cas_base64)
 
+    return create_file_shared(decoded_cas_content, endpoint)
+
+
+def create_file_shared(decoded_cas_content, endpoint):
+    # Get relevant data of reporting obligations out of the CAS:
     cas = load_cas_from_xmi(decoded_cas_content, typesystem=TYPESYSTEM)
-    cas_content = cas_parser.CasContent.from_cassis_cas(cas)
+
+    try:
+        cas_content = cas_parser.CasContent.from_cassis_cas(cas)
+    except ValueError as e:
+        raise HTTPException(status_code=406, detail=f"CAS does contain expected annotations:\n{e}")
+    except Exception as e:
+        raise HTTPException(status_code=406, detail=f"Unable to extract content from CAS.\n{e}")
 
     return update_rdf_from_cas_content(cas_content, endpoint)
 
@@ -84,7 +91,11 @@ def update_rdf_from_cas_content(cas_content, endpoint) -> cas_parser.CasContent:
     # Load into an RDF
     g = ROGraph()
     # # g = PersistentROGraph()
-    g.add_cas_content(cas_content)
+
+    try:
+        g.add_cas_content(cas_content)
+    except Exception as e:
+        raise HTTPException(status_code=406, detail=f"Unable to add content to RDF.\n{e}")
 
     # Store in Fuseki
     sparql = SPARQLWrapper(endpoint)

@@ -46,15 +46,14 @@ class CasContent(dict):
 
                 for annot_span in view_text_html.select_covered(VALUE_BETWEEN_TAG_TYPE_CLASS, annot_p):
                     if annot_span.tagName == "span":
-                        import re
                         str_attr = annot_span.value('attributes')
-                        re.split('; |, ', str_attr)
 
                         # First split inner arguments with values.
                         # Then only take the values
                         # We expect the class to be the first value
                         l_str_attr = str_attr.split("'")
                         attributes, values = l_str_attr[::2], l_str_attr[1::2]
+
                         class_atr = values[attributes.index("class=")]
 
                         ro_i[KEY_CHILDREN].append({KEY_SENTENCE_FRAG_CLASS: class_atr,
@@ -91,7 +90,6 @@ class ROContent(dict):
 
     @classmethod
     def from_list(cls, list_sentence_fragments):
-
         l = []
         for sent_frag in list_sentence_fragments[KEY_CHILDREN]:
             l.append(SentenceFragment.from_value_class(v=sent_frag[KEY_VALUE],
@@ -99,7 +97,7 @@ class ROContent(dict):
                      )
 
         return cls({KEY_VALUE: list_sentence_fragments[KEY_VALUE],
-                 KEY_CHILDREN: l})
+                    KEY_CHILDREN: l})
 
 
 class SentenceFragment(dict):
