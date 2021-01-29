@@ -14,7 +14,7 @@ ROOT = os.path.join(os.path.dirname(__file__), '../../..')
 See <ROOT>/reporting_obligations/README.md OR 
 <ROOT>/reporting_obligations/DockerDebugging/README.md + run_uvicorn.py
 """
-if 1:
+if 0:
     LOCAL_URL = 'http://127.0.0.1:8081'
     URL_ENDPOINT = 'http://127.0.0.1:8080/fuseki/RO_test'  # Make sure to run fusek locally!
 else:

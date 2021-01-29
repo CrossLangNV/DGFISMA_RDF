@@ -1,18 +1,19 @@
 import os
 import tempfile
 import unittest
-
 from typing import Iterable
 
 from dgfisma_rdf.reporting_obligations import build_rdf
-from dgfisma_rdf.reporting_obligations.build_rdf import D_ENTITIES, ExampleCasContent, ROGraph
-from dgfisma_rdf.reporting_obligations.rdf_parser import SPARQLReportingObligationProvider, RDFLibGraphWrapper, SPARQLGraphWrapper
+from dgfisma_rdf.reporting_obligations.build_rdf import D_ENTITIES, ExampleCasContent, ROGraph, MOCKUP_FILENAME
+from dgfisma_rdf.reporting_obligations.rdf_parser import SPARQLReportingObligationProvider, RDFLibGraphWrapper, \
+    SPARQLGraphWrapper
 
 ROOT = os.path.join(os.path.dirname(__file__), '../..')
 
 # You might have to change this
 # URL_FUSEKI = "http://localhost:8080/fuseki/sandbox/sparql"
-URL_FUSEKI = "http://fuseki_RO:3030/RO"
+# URL_FUSEKI = "http://fuseki_RO:3030/RO"
+URL_FUSEKI = "http://gpu1.crosslang.com:3030/RO_test"
 
 
 class TestRDFLibGraphWrapper(unittest.TestCase):
@@ -30,7 +31,7 @@ class TestRDFLibGraphWrapper(unittest.TestCase):
         }
         LIMIT 25
         """
-        graph_wrapper = RDFLibGraphWrapper(os.path.join(ROOT, 'data/examples/reporting_obligations_mockup.rdf'))
+        graph_wrapper = RDFLibGraphWrapper(MOCKUP_FILENAME)
 
         l = graph_wrapper.query(q)
 
@@ -107,53 +108,36 @@ class TestGraphWrapper(unittest.TestCase):
         ORDER BY ?object ?subject
         """
 
-        graph_wrapper_RDFLib = RDFLibGraphWrapper(os.path.join(ROOT, 'data/examples/reporting_obligations_mockup.rdf'))
+        graph_wrapper_RDFLib = RDFLibGraphWrapper(MOCKUP_FILENAME)
         l_RDFLib = graph_wrapper_RDFLib.query(q)
 
         graph_wrapper_SPARQLWrapper = SPARQLGraphWrapper(URL_FUSEKI)
         l_SPARQLWrapper = graph_wrapper_SPARQLWrapper.query(q)
 
-        # def get_rdf_objects(l):
-        #     return tuple(str(l_i[-1]) for l_i in l)
+        with self.subTest('Type return value'):
+            self.assertEqual(type(l_RDFLib),
+                             type(l_SPARQLWrapper),
+                             'Should return same type')
 
-        def filter_exclude_bnode(l):
-            """ Returns filtered dictionary excluding bnodes
+        RDFLib_0 = l_RDFLib[0]
+        SPARQLWrapper_0 = l_SPARQLWrapper[0]
 
-            Args:
-                l:
+        with self.subTest('Type list element'):
+            self.assertEqual(type(RDFLib_0),
+                             type(SPARQLWrapper_0),
+                             'Both list elements should be of same type')
 
-            Returns:
+        with self.subTest('List element keys'):
+            self.assertEqual(RDFLib_0.keys(),
+                             SPARQLWrapper_0.keys(),
+                             'Both list elements should have the same dictionary keys')
 
-            """
+        with self.subTest('Sub dictionary keys'):
+            # Assumes previous test was successful.
+            for key, value_RDFLib_0 in RDFLib_0.items():
+                value_SPARQLWrapper_0 = SPARQLWrapper_0.get(key)
 
-            # Row
-            l_new = []
-            for l_i in l:
-
-                l_i_new = {}
-                # column
-                for k, v in l_i.items():
-                    if v['type'] == 'bnode':
-                        continue
-
-                    l_i_new[k] = {'type': v['type'],
-                                  'value': v['value']}
-
-                l_new.append(l_i_new)
-
-            return l_new
-
-        l_RDFLib_filtered = filter_exclude_bnode(l_RDFLib)
-        l_SPARQLWrapper_filtered = filter_exclude_bnode(l_SPARQLWrapper)
-        # if they are not same length, no reason to compare
-        self.assertEqual(len(l_RDFLib_filtered),
-                         len(l_SPARQLWrapper_filtered),
-                         'Should give same amount of elements.')
-
-        for i, (triple_RDFLib, triple_SPARQL) in enumerate(zip(l_RDFLib_filtered, l_SPARQLWrapper_filtered)):
-            self.assertEqual(triple_RDFLib,
-                             triple_SPARQL,
-                             f'Triple {i}. Should give back identical triples.')
+                self.assertEqual(value_RDFLib_0.keys(), value_SPARQLWrapper_0.keys())
 
 
 class TestSPARQLReportingObligationProvider(unittest.TestCase):
@@ -161,7 +145,7 @@ class TestSPARQLReportingObligationProvider(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.graph_wrapper = RDFLibGraphWrapper(os.path.join(ROOT, 'data/examples/reporting_obligations_mockup.rdf'))
+        self.graph_wrapper = RDFLibGraphWrapper(MOCKUP_FILENAME)
 
     def test_get_ro_provider(self):
 
@@ -198,8 +182,8 @@ class TestSPARQLReportingObligationProvider(unittest.TestCase):
                    D_ENTITIES['ARG0'][0],
                    D_ENTITIES['ARG1'][0],
                    D_ENTITIES['ARG2'][0],
-                   D_ENTITIES['ARG3'][0],
-                   build_rdf.PROP_HAS_ENTITY,  # This one might get deprecated in the future
+                   # D_ENTITIES['ARG3'][0],
+                   # build_rdf.PROP_HAS_ENTITY,  # This one might get deprecated in the future
                    ]
 
         for type_uri in l_types:
@@ -241,7 +225,7 @@ class TestGetRO(unittest.TestCase):
 
         b_locally = True
         if b_locally:  # Locally
-            graph_wrapper = RDFLibGraphWrapper(os.path.join(ROOT, 'data/examples/reporting_obligations_mockup.rdf'))
+            graph_wrapper = RDFLibGraphWrapper(MOCKUP_FILENAME)
 
         else:  # Through fuseki endpoint
             graph_wrapper = SPARQLGraphWrapper(URL_FUSEKI)
@@ -421,17 +405,17 @@ class TestSPARQLReportingObligationProviderGetFilterMultiple(unittest.TestCase):
          },
     ]}
 
+    g = ROGraph()
+    g.add_cas_content(l)
+    # Building the Reporting Obligation Provider
+    with tempfile.TemporaryDirectory() as d:
+        filename = os.path.join(d, 'tmp.rdf')
+        g.serialize(destination=filename, format="pretty-xml")
+        graph_wrapper = RDFLibGraphWrapper(filename)
+    ro_provider = SPARQLReportingObligationProvider(graph_wrapper)
+
     def __init__(self, *args, **kwargs):
         super(TestSPARQLReportingObligationProviderGetFilterMultiple, self).__init__(*args, **kwargs)
-
-        # Building the Reporting Obligation Provider
-        g = ROGraph()
-        g.add_cas_content(self.l)
-        with tempfile.TemporaryDirectory() as d:
-            filename = os.path.join(d, 'tmp.rdf')
-            g.serialize(destination=filename, format="pretty-xml")
-            graph_wrapper = RDFLibGraphWrapper(filename)
-        self.ro_provider = SPARQLReportingObligationProvider(graph_wrapper)
 
     def test_no_filter(self):
         """ Without a filter, all reporting obligations should be returned
@@ -547,7 +531,6 @@ class TestSPARQLReportingObligationProviderGetFilterMultiple(unittest.TestCase):
 
             self.assertEqual(set(), set(l_ro), "Should return nothing")
 
-
     def test_multiple_filters_ro_id(self):
         """Retrieving reporting obligation UID's based on multiple filters
 
@@ -560,7 +543,10 @@ class TestSPARQLReportingObligationProviderGetFilterMultiple(unittest.TestCase):
                             ]
             l_ro = self.ro_provider.get_filter_ro_id_multiple(list_filters)
 
-            self.assertEqual(set([self.S0, self.S2]), set(l_ro), "Should return these specific reporting obligations")
+            l_ro_GT = [a.get('id') for a in self.l.get(build_rdf.KEY_CHILDREN) if
+                       a.get(build_rdf.KEY_VALUE) in [self.S0, self.S2]]
+
+            self.assertEqual(set(l_ro_GT), set(l_ro), "Should return these specific reporting obligations")
 
             del list_filters, l_ro
 
@@ -570,9 +556,51 @@ class TestSPARQLReportingObligationProviderGetFilterMultiple(unittest.TestCase):
                             ]
             l_ro = self.ro_provider.get_filter_ro_id_multiple(list_filters)
 
-            self.assertEqual(set([self.S1]), set(l_ro), "Should return these specific reporting obligations")
+            l_ro_GT = [a.get('id') for a in self.l.get(build_rdf.KEY_CHILDREN) if
+                       a.get(build_rdf.KEY_VALUE) in [self.S1]]
+
+            self.assertEqual(set(l_ro_GT), set(l_ro), "Should return these specific reporting obligations")
 
             del list_filters, l_ro
+
+
+class TestPARQLPagination(unittest.TestCase):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        #     b_locally = True
+        #     if b_locally:  # Locally
+        #         graph_wrapper = RDFLibGraphWrapper(MOCKUP_FILENAME)
+
+        #     else:  # Through fuseki endpoint
+        graph_wrapper = SPARQLGraphWrapper(URL_FUSEKI)
+
+        self.ro_provider = SPARQLReportingObligationProvider(graph_wrapper)
+
+    #     self.cas_content_example = ExampleCasContent.build()
+
+    def get_ro_provider(self):
+        return self.ro_provider
+
+    def test_foo(self):
+        """ Query all reporting obligations
+
+        Returns:
+
+        """
+
+        limit = 10
+        l_ro_uri = self.get_ro_provider().get_filter_ro_id_multiple(limit=limit,
+                                                                    offset=0)
+        with self.subTest("Limit"):
+            self.assertEqual(len(l_ro_uri), limit, 'Should return less than limit')
+
+        with self.subTest("Next batch"):
+            l_ro_uri_next = self.get_ro_provider().get_filter_ro_id_multiple(limit=limit, offset=limit)
+
+            self.assertFalse(set(l_ro_uri).intersection(set(l_ro_uri_next)), 'There should be no overlap.')
+
+        return
 
 
 if __name__ == '__main__':

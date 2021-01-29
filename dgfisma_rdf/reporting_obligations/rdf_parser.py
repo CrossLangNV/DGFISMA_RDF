@@ -1,11 +1,11 @@
 import abc
 import logging
 import os
+from typing import Iterable, List, Tuple, Dict
 
 import rdflib
 from SPARQLWrapper import SPARQLWrapper, JSON
 from rdflib import Literal, BNode, URIRef
-from typing import Iterable, List, Tuple, Dict
 
 from . import build_rdf
 
@@ -250,7 +250,9 @@ class SPARQLReportingObligationProvider:
 
         return l_ro
 
-    def get_filter_ro_id_multiple(self, list_pred_value: List[Tuple[str]] = []) -> List[str]:
+    def get_filter_ro_id_multiple(self, list_pred_value: List[Tuple[str]] = [],
+                                  limit=None,
+                                  offset=0) -> List[str]:
         """ Retrieve reporting obligations UID's with a matching value for certain predicate
 
         Args:
@@ -258,36 +260,48 @@ class SPARQLReportingObligationProvider:
             e.g. [ ("<pred 1>", "<value 1>"),
                     ...
                     ("<pred n>", "<value n>") ]
+            limit: number of id's to return
+            offset: what index to start from (counting from 0)
 
         Returns:
-
+            List with URI's of the Reporting obligations.
         """
 
         q = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-            PREFIX dgfro: <{build_rdf.RO_BASE}>
+            PREFIX dgfro: {build_rdf.RO_BASE[None].n3()}
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
             SELECT ?value ?ro_id ?p
 
             WHERE {{
-                ?ro_id rdf:type <{build_rdf.ROGraph.class_rep_obl}> ;
+                ?ro_id rdf:type {build_rdf.ROGraph.class_rep_obl.n3()} ;
                    rdf:value ?value .
             """
 
         for i, (pred, value) in enumerate(list_pred_value):
             q_i = f"""
-                     ?ro_id  <{pred}> ?ent{i} .
+                     ?ro_id {URIRef(pred).n3()} ?ent{i} .
                         ?ent{i} skos:prefLabel ?p{i} .
-                                FILTER (lcase(str(?p{i})) =lcase(\"\"\"{value}\"\"\"))
+                                FILTER (
+                                    lcase(str(?p{i})) =lcase({Literal(value).n3()})
+                                )
             """
 
             q += q_i
 
         q += f"""
         }}
+        
+        ORDER BY (LCASE(?value))
+
         """
-        #                       FILTER (lang(?p{i}) = "en"   )
+
+        if limit is not None:
+            q += f"""LIMIT {limit}"""
+
+        if offset:
+            q += f"""OFFSET {offset}"""
 
         logging.info(q)
 
