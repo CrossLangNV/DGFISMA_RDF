@@ -107,7 +107,7 @@ class SPARQLReportingObligationProvider:
             PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
             PREFIX dgfro: <{build_rdf.RO_BASE}>
 
-            SELECT DISTINCT ?pred ?entClass
+            SELECT DISTINCT ?pred # ?entClass
             WHERE {{
                 ?pred rdfs:domain dgfro:ReportingObligation .
                 ?pred rdfs:range ?entClass .
@@ -272,7 +272,7 @@ class SPARQLReportingObligationProvider:
             PREFIX dgfro: {build_rdf.RO_BASE[None].n3()}
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
-            SELECT ?value ?ro_id ?p
+            SELECT DISTINCT ?ro_id
 
             WHERE {{
                 ?ro_id rdf:type {build_rdf.ROGraph.class_rep_obl.n3()} ;
