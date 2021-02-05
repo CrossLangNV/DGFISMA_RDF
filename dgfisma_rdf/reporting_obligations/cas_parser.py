@@ -32,9 +32,19 @@ class CasContent(dict):
         return cls(d)
 
     @classmethod
-    def from_cassis_cas(cls, cas: cassis.Cas):
+    def from_cassis_cas(cls, cas: cassis.Cas,
+                        name_view=SOFA_ID_HTML2TEXT):
+        """
 
-        view_text_html = cas.get_view(SOFA_ID_HTML2TEXT)
+        Args:
+            cas:
+            name_view: Should be "html2textView" according to Arne Defauw and NOT 'ReportingObligationsView'
+
+        Returns:
+
+        """
+
+        view_text_html = cas.get_view(name_view)
 
         l_ro = []
 

@@ -4,20 +4,28 @@ import logging
 import os
 import time
 
-from SPARQLWrapper import SPARQLWrapper, DIGEST, JSON, POST
 from cassis import load_typesystem, load_cas_from_xmi
+from dotenv import load_dotenv
 from fastapi import FastAPI, File, UploadFile, HTTPException, Header
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-from rdflib import Literal
+from rdflib.graph import DATASET_DEFAULT_GRAPH_ID
+from rdflib.plugins.stores.auditable import AuditableStore
+from rdflib.plugins.stores.sparqlstore import SPARQLUpdateStore
 
+from dgfisma_rdf.reporting_obligations.build_rdf import ROUpdate
 from .. import cas_parser
 from ..build_rdf import ROGraph
 
 app = FastAPI()
 
-ROOT = os.path.join(os.path.dirname(__file__), '../..')
-rel_path_typesystem = 'reporting_obligations/output_reporting_obligations/typesystem_tmp.xml'
+ROOT = os.path.join(os.path.dirname(__file__), '../../..')
+
+load_dotenv(os.path.join(ROOT, 'secrets/dgfisma.env'))
+SECRET_USER = os.getenv("FUSEKI_ADMIN_USERNAME")
+SECRET_PASS = os.getenv("FUSEKI_ADMIN_PASSWORD")
+
+rel_path_typesystem = 'dgfisma_rdf/reporting_obligations/output_reporting_obligations/typesystem_tmp.xml'
 path_typesystem = os.path.join(ROOT, rel_path_typesystem)
 with open(path_typesystem, 'rb') as f:
     TYPESYSTEM = load_typesystem(f)
@@ -33,29 +41,35 @@ async def root():
 
 
 @app.post("/ro_cas/upload")
-async def create_file(file: UploadFile = File(...), endpoint: str = Header(...)) -> cas_parser.CasContent:
+async def create_file(file: UploadFile = File(...),
+                      docid: str = Header(...),
+                      endpoint: str = Header(...),
+                      ) -> cas_parser.CasContent:
     """
 
     Args:
         file: CAS
         endpoint: URL to Fuseki endpoint. e.g. f'http://fuseki_RO:3030/RO/'
+        doc_id: ID to the document
 
     Returns:
         None
     """
 
-    return create_file_shared(file.file, endpoint)
+    return create_file_shared(file.file, endpoint, docid)
 
 
 @app.post("/ro_cas/base64")
 async def create_file_base64(cas_base64: CasBase64,
-                             endpoint: str = Header(...)
+                             docid: str = Header(...),
+                             endpoint: str = Header(...),
                              ) -> cas_parser.CasContent:
     """
 
     Args:
         cas_base64: CAS in base64 string
         endpoint: URL to Fuseki endpoint. e.g. f'http://fuseki_RO:3030/RO/'
+        doc_id: ID to the document
 
     Returns:
         None
@@ -70,10 +84,12 @@ async def create_file_base64(cas_base64: CasBase64,
         logging.info(end)
         return JSONResponse(cas_base64)
 
-    return create_file_shared(decoded_cas_content, endpoint)
+    return create_file_shared(decoded_cas_content, endpoint, docid)
 
 
-def create_file_shared(decoded_cas_content, endpoint):
+def create_file_shared(decoded_cas_content,
+                       endpoint,
+                       doc_id):
     # Get relevant data of reporting obligations out of the CAS:
     cas = load_cas_from_xmi(decoded_cas_content, typesystem=TYPESYSTEM)
 
@@ -84,59 +100,38 @@ def create_file_shared(decoded_cas_content, endpoint):
     except Exception as e:
         raise HTTPException(status_code=406, detail=f"Unable to extract content from CAS.\n{e}")
 
-    return update_rdf_from_cas_content(cas_content, endpoint)
+    return update_rdf_from_cas_content(cas_content, endpoint, doc_id)
 
 
-def update_rdf_from_cas_content(cas_content, endpoint) -> cas_parser.CasContent:
-    # Load into an RDF
-    g = ROGraph()
-    # # g = PersistentROGraph()
+def update_rdf_from_cas_content(cas_content: cas_parser.CasContent,
+                                endpoint: str,
+                                doc_id: str) -> cas_parser.CasContent:
+    sparql_update_store = SPARQLUpdateStore(queryEndpoint=endpoint,
+                                            update_endpoint=endpoint + '/update',  # Might have to add "/update"
+                                            auth=(SECRET_USER, SECRET_PASS)
+                                            )
+
+    g_init = ROGraph(sparql_update_store,
+                     DATASET_DEFAULT_GRAPH_ID,
+                     include_schema=False)  # TODO This causes a serious delay!
+
+    g = ROGraph(AuditableStore(g_init.store),
+                g_init.identifier,
+                include_schema=False  # Store should already include schema by now.
+                )
 
     try:
-        g.add_cas_content(cas_content)
+
+        g.add_cas_content(cas_content, doc_id, endpoint=endpoint)
+
     except Exception as e:
+
+        g.rollback()
+
         raise HTTPException(status_code=406, detail=f"Unable to add content to RDF.\n{e}")
 
-    # Store in Fuseki
-    sparql = SPARQLWrapper(endpoint)
-
-    sparql.setHTTPAuth(DIGEST)
-    if 0:  # doesn't seem to be necessary!
-        sparql.setCredentials("", "")  # get from secret
-    sparql.setReturnFormat(JSON)
-    sparql.setMethod(POST)
-
-    def get_string_repr(n):
-        if isinstance(n, Literal):
-            # If you want to include line breaks on your ttl files you need to use long literals,
-            # ie three double quotes (""")
-            # https://github.com/ckan/ckanext-dcat/issues/63
-            return f"""\"\"\"{n.toPython()}\"\"\""""
-        else:
-            return f"""<{n.toPython()}>"""
-
-    def get_q(g: ROGraph):
-        """
-        Based on  q = "INSERT DATA { <http://foo> <http://bar> <http://baz> . }"
-        """
-
-        q = """INSERT DATA {\n"""
-
-        for row in g:
-            q_i = " ".join(map(get_string_repr, row)) + ' . \n'
-            q += q_i
-
-        q += '}'
-        return q
-
-    q = get_q(g)
-
-    sparql.setQuery(q)
-    try:
-        sparql.query()
-    except ValueError as e:
-        raise HTTPException(status_code=406, detail=f"Unable to query to fuseki with endpoint = '{endpoint}'.\n{e}")
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Unable to query due to following exception:\n{e}")
+    else:
+        # Not necessary, but to clean up the pool.
+        g.commit()
 
     return cas_content

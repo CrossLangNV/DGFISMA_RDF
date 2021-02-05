@@ -106,13 +106,12 @@ class SPARQLReportingObligationProvider:
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
             PREFIX dgfro: <{build_rdf.RO_BASE}>
-
+    
             SELECT DISTINCT ?pred # ?entClass
             WHERE {{
-                ?pred rdfs:domain dgfro:ReportingObligation .
-                ?pred rdfs:range ?entClass .
-                ?_ro 			rdf:type dgfro:ReportingObligation .
-    
+                ?pred rdfs:domain dgfro:ReportingObligation ;
+                    rdfs:range ?entClass .
+       
             FILTER ( EXISTS {{ ?entClass rdfs:subClassOf skos:Concept . }} ||
                 ?entClass = skos:Concept 
             )
@@ -136,13 +135,14 @@ class SPARQLReportingObligationProvider:
         Returns:
 
         """
+
         q = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
             SELECT {'DISTINCT' if distinct else ''} ?value
 
             WHERE {{
-                ?ro <{type_uri}> ?ent .
+                ?ro {URIRef(type_uri).n3()} ?ent .
     			?ent skos:prefLabel ?value
             }}
         """
@@ -156,13 +156,13 @@ class SPARQLReportingObligationProvider:
     def get_all_ro_uri(self) -> List[str]:
         q = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-            PREFIX dgfro: <{build_rdf.RO_BASE}>
+            PREFIX dgfro: {build_rdf.RO_BASE[None].n3()}
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
             SELECT ?ro_id
 
             WHERE {{
-                ?ro_id rdf:type <{build_rdf.ROGraph.class_rep_obl}> .
+                ?ro_id rdf:type {build_rdf.ROGraph.class_rep_obl.n3()} .
             }}
             """
         l = self.graph_wrapper.query(q)
@@ -174,13 +174,13 @@ class SPARQLReportingObligationProvider:
     def get_all_ro_str(self):
         q = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-            PREFIX dgfro: <{build_rdf.RO_BASE}>
+            PREFIX dgfro: {build_rdf.RO_BASE[None].n3()}
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
             SELECT ?value ?ro_id
 
             WHERE {{
-                ?ro_id rdf:type <{build_rdf.ROGraph.class_rep_obl}> ;
+                ?ro_id rdf:type {build_rdf.ROGraph.class_rep_obl.n3()} ;
                     rdf:value ?value
             }}
         """
@@ -218,23 +218,23 @@ class SPARQLReportingObligationProvider:
 
         q = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-            PREFIX dgfro: <{build_rdf.RO_BASE}>
+            PREFIX dgfro: {build_rdf.RO_BASE[None].n3()}
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
             SELECT ?value ?ro_id ?p
 
             WHERE {{
-                ?ro_id rdf:type <{build_rdf.ROGraph.class_rep_obl}> ;
-                   rdf:value ?value .
+                ?ro_id rdf:type {build_rdf.ROGraph.class_rep_obl.n3()} ;
+                    rdf:value ?value .
             """
 
         for i, (pred, value) in enumerate(list_pred_value):
             q_i = f"""
-                     ?ro_id  <{pred}> ?ent{i} .
-                        ?ent{i} skos:prefLabel ?p{i} .
-                                FILTER (lcase(str(?p{i})) =lcase(\"\"\"{value}\"\"\"))
+                ?ro_id  <{pred}> ?ent{i} .
+                    ?ent{i} skos:prefLabel ?p{i} .
+                    FILTER (lcase(str(?p{i})) =lcase({Literal(value).n3()}))
             """
-            #                   FILTER (lang(?p{i}) = "en"   )
+            #         FILTER (lang(?p{i}) = "en"   )
 
             q += q_i
 

@@ -1,5 +1,6 @@
 import os
 
+from SPARQLWrapper import SPARQLWrapper, JSON, POST, GET
 from rdflib import BNode, Literal, Namespace, Graph
 from rdflib.namespace import SKOS, RDF, RDFS, OWL, URIRef, DC
 from rdflib.term import _serial_number_generator
@@ -50,6 +51,8 @@ D_ENTITIES = {'ARG0': (RO_BASE['hasReporter'], RO_BASE['Reporter']),
 
 PROP_HAS_ENTITY = RO_BASE.hasEntity
 
+i = 0
+
 
 class ROGraph(Graph):
     """
@@ -64,7 +67,7 @@ class ROGraph(Graph):
     # Connections
     prop_has_rep_obl = RO_BASE.hasReportingObligation
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, include_schema=False, **kwargs):
         """ Looks quite clean if implemented with RDFLib https://github.com/RDFLib/rdflib
         Ontology can be visualised with http://www.visualdataweb.de/webvowl/
 
@@ -72,10 +75,14 @@ class ROGraph(Graph):
             *args:
             **kwargs:
         """
+
         super(ROGraph, self).__init__(
-            # identifier=RO_BASE,  # Not needed at the moment
             *args, **kwargs)
 
+        if include_schema:
+            self._init_schema()
+
+    def _init_schema(self):
         self.bind("skos", SKOS)
         self.bind("owl", OWL)
         self.bind("dgf", NS_BASE)
@@ -96,7 +103,7 @@ class ROGraph(Graph):
                   Literal("Reporting obligations (RO) vocabulary")))
 
         # OWL classes
-        def add_owl_class(cls):
+        def add_owl_class(self, cls):
             self.add((cls,
                       RDF.type,
                       RDFS.Class
@@ -106,8 +113,8 @@ class ROGraph(Graph):
                       OWL.Class
                       ))
 
-        add_owl_class(self.class_cat_doc)
-        add_owl_class(self.class_rep_obl)
+        add_owl_class(self, self.class_cat_doc)
+        add_owl_class(self, self.class_rep_obl)
 
         # OWL properties
         self._add_property(self.prop_has_rep_obl, self.class_cat_doc, self.class_rep_obl)
@@ -127,27 +134,62 @@ class ROGraph(Graph):
                       ))
             self._add_sub_class(cls, SKOS.Concept)
 
-    def add_cas_content(self, cas_content: CasContent):
+    def add_cas_content(self, cas_content: CasContent,
+                        doc_id: str,
+                        endpoint: None):
         """ Build the RDF from cas content.
+
+        Args:
+            cas_content:
+            doc_id:
+            endpoint: Optional, is used to check if RO already exist. If so, the ID is re-used.
+                If an endpoint is provided, all previous RO's will be removed!
+
+        Returns:
+
         """
 
-        # add a document
-        cat_doc = get_UID_node(info='cat_doc_')
+        if endpoint:
+            ro_update = ROUpdate(endpoint)
 
-        self.add((cat_doc, RDF.type, self.class_cat_doc))
+        # add a document
+        cat_doc = RO_BASE['cat_doc/' + doc_id.strip().replace(' ', '_')]
+
         cas_content['id'] = cat_doc.toPython()  # adding ID to cas
 
         # iterate over reporting obligations (RO's)
         list_ro = cas_content[KEY_CHILDREN]
+
+        if len(list_ro) == 0:  # No reporting obligations, no need to add to fuseki
+            return
+
+        self.add((cat_doc, RDF.type, self.class_cat_doc))
+
         for i, ro_i in enumerate(list_ro):
 
-            rep_obl_i = get_UID_node(info='rep_obl_')
+            value_i = ro_i[KEY_VALUE]
+
+            if endpoint:
+                l_ro_uri = ro_update.get_l_ro(value_i,
+                                              doc_uri=cat_doc)
+
+                if len(l_ro_uri):  # At least one RO's found, keep 1 and remove the rest
+                    rep_obl_i = URIRef(l_ro_uri[0])
+                else:  # RO not found, just make a new one
+                    rep_obl_i = get_UID_node(info='rep_obl_')
+
+                for i_ro_uri, ro_uri_i in enumerate(l_ro_uri):
+                    ro_update.remove_reporting_obligation(ro_uri_i, keep_value=i_ro_uri == 0,
+                                                          g=self)
+
+            else:
+                rep_obl_i = get_UID_node(info='rep_obl_')
 
             self.add((rep_obl_i, RDF.type, self.class_rep_obl))
             # link to catalog document + ontology
             self.add((cat_doc, self.prop_has_rep_obl, rep_obl_i))
             # add whole reporting obligation
-            self.add((rep_obl_i, RDF.value, Literal(ro_i[KEY_VALUE])))
+            self.add((rep_obl_i, RDF.value, Literal(value_i)))
             cas_content[KEY_CHILDREN][i]['id'] = rep_obl_i.toPython()  # adding ID to cas
 
             # iterate over different entities of RO
@@ -171,8 +213,8 @@ class ROGraph(Graph):
                 # type definition
                 self.add((concept_j, RDF.type, cls))
                 # Add the string representation
-                value_i = Literal(ent_j[KEY_VALUE], lang='en')
-                self.add((concept_j, SKOS.prefLabel, value_i))
+                value_j = Literal(ent_j[KEY_VALUE], lang='en')
+                self.add((concept_j, SKOS.prefLabel, value_j))
 
                 # connect entity with RO
                 self.add((rep_obl_i, pred_i, concept_j))
@@ -265,3 +307,183 @@ def get_UID_node(base=RO_BASE, info=None):
         node = BNode().skolemize()
 
     return node
+
+
+class ROUpdate:
+    def __init__(self,
+                 endpoint):
+        self.sparql = SPARQLWrapper(endpoint)
+        self.sparql.setReturnFormat(JSON)
+
+    def get_l_ro(self, value: str,
+                 doc_uri=None):
+        RO_URI = 'ro_uri'
+        q = f"""
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            PREFIX dgfisma: <http://dgfisma.com/reporting_obligations/>
+
+            SELECT ?{RO_URI}
+
+            WHERE {{
+                {URIRef(doc_uri).n3() if doc_uri else "?cat_doc_uri"} dgfisma:hasReportingObligation ?{RO_URI} .
+                ?{RO_URI} a dgfisma:ReportingObligation ;
+                rdf:value ?o 
+            FILTER(?o = {Literal(value).n3()})
+            }}
+        """
+        self.sparql.setQuery(q)
+        self.sparql.setMethod(GET)
+
+        results = self.sparql.query().convert()['results']['bindings']
+        l_ro_uri = [res[RO_URI]['value'] for res in results]
+
+        return l_ro_uri
+
+    def remove_reporting_obligation(self, ro_i: URIRef,
+                                    keep_value=True,
+                                    g: Graph = None):
+        """
+        The reporting obligation (with it's entities should be deleted)
+
+        Args:
+            ro_i:
+            keep_value: Boolean, if keep_value, then a single triple stays with (RO URI, value, string)
+
+        Returns:
+
+        """
+
+        # Delete all entities
+        # q = f"""
+        # PREFIX dgfisma: <http://dgfisma.com/reporting_obligations/>
+        # PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        #
+        # # For testing, replace DELETE with SELECT
+        # DELETE {{
+        #     ?s_ro ?p_ro2 ?ro_uri.
+        #     ?ro_uri ?p_ro ?o_ro .
+        #     ?ent ?p ?o
+        # }}
+        # WHERE {{
+        # VALUES ?ro_uri {{ {URIRef(ro_i).n3()} }}
+        #
+        # ?ro_uri a dgfisma:ReportingObligation ;
+        #     ?hasEnt ?ent .
+        #
+        # ?ent ?p ?o
+        #
+        # FILTER (?a != rdf:type)
+        # }}
+        # """
+
+        # Delete all entities
+        q_ent = f"""
+        PREFIX dgfisma: <http://dgfisma.com/reporting_obligations/>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+        # For testing, replace DELETE with SELECT 
+        DELETE {{
+            ?ent ?p ?o .
+        }}
+        WHERE {{
+        VALUES ?ro_uri {{ {URIRef(ro_i).n3()} }}
+
+        ?ro_uri a dgfisma:ReportingObligation ;
+            ?hasEnt ?ent .
+
+        ?ent ?p ?o
+
+        FILTER (?hasEnt != rdf:type)
+        }}
+        """
+
+        q_ent_construct = f"""
+        PREFIX dgfisma: <http://dgfisma.com/reporting_obligations/>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+        # For testing, replace DELETE with SELECT 
+        CONSTRUCT {{
+            ?ent ?p ?o .
+        }}
+        WHERE {{
+        VALUES ?ro_uri {{ {URIRef(ro_i).n3()} }}
+
+        ?ro_uri a dgfisma:ReportingObligation ;
+            ?hasEnt ?ent .
+
+        ?ent ?p ?o
+
+        FILTER (?hasEnt != rdf:type)
+        }}
+        """
+
+        # Delete the RO's
+        q_ro = f"""
+        PREFIX dgfisma: <http://dgfisma.com/reporting_obligations/>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+        # For testing, replace DELETE with SELECT 
+        DELETE {{
+            ?s_ro ?p_ro2 ?ro_uri.
+            ?ro_uri ?p_ro ?o_ro .
+        }}
+        WHERE {{
+        VALUES ?ro_uri {{ {URIRef(ro_i).n3()} }}
+            ?ro_uri ?p_ro ?o_ro .
+            ?s_ro ?p_ro2 ?ro_uri .
+        
+        {
+        "FILTER(?p_ro2 != rdf:value)" if keep_value else ""
+        }
+
+        }}
+        """
+
+        q_ro_construct = f"""
+        PREFIX dgfisma: <http://dgfisma.com/reporting_obligations/>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+        # For testing, replace DELETE with SELECT 
+        CONSTRUCT {{
+            ?s_ro ?p_ro2 ?ro_uri.
+            ?ro_uri ?p_ro ?o_ro .
+        }}
+        WHERE {{
+        VALUES ?ro_uri {{ {URIRef(ro_i).n3()} }}
+            ?ro_uri ?p_ro ?o_ro .
+            ?s_ro ?p_ro2 ?ro_uri .
+        
+        {
+        "FILTER(?p_ro2 != rdf:value)" if keep_value else ""
+        }
+
+        }}
+        """
+
+        if g is None:
+            self.sparql.setMethod(POST)
+            self.sparql.setReturnFormat(JSON)
+
+            self.sparql.setQuery(q_ent)
+            self.sparql.query()
+
+            self.sparql.setQuery(q_ro)
+            self.sparql.query()
+
+        else:
+            if 0:
+                g.update(q_ent)
+                g.update(q_ro)
+            else:
+                # CONSTRUCT
+                a = g.query(q_ent_construct)
+
+                for a_i in a:
+                    g.remove(a_i)
+
+                a = g.query(q_ro_construct)
+
+                for a_i in a:
+                    g.remove(a_i)
+
+        return
