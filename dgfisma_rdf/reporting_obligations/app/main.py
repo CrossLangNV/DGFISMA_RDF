@@ -10,10 +10,8 @@ from fastapi import FastAPI, File, UploadFile, HTTPException, Header
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from rdflib.graph import DATASET_DEFAULT_GRAPH_ID
-from rdflib.plugins.stores.auditable import AuditableStore
 from rdflib.plugins.stores.sparqlstore import SPARQLUpdateStore
 
-from dgfisma_rdf.reporting_obligations.build_rdf import ROUpdate
 from .. import cas_parser
 from ..build_rdf import ROGraph
 
@@ -87,6 +85,31 @@ async def create_file_base64(cas_base64: CasBase64,
     return create_file_shared(decoded_cas_content, endpoint, docid)
 
 
+@app.post("/ro_cas/init")
+async def create_file_base64(endpoint: str = Header(...),
+                             ):
+    """ Initialise the RDF with the reporting obligation schema
+
+    Args:
+        endpoint: URL to Fuseki endpoint. e.g. f'http://fuseki_RO:3030/RO/'
+
+    Returns:
+        None
+    """
+
+    sparql_update_store = SPARQLUpdateStore(queryEndpoint=endpoint,
+                                            update_endpoint=endpoint + '/update',  # Might have to add "/update"
+                                            auth=(SECRET_USER, SECRET_PASS),
+                                            context_aware=False,
+                                            )
+
+    ROGraph(sparql_update_store,
+            DATASET_DEFAULT_GRAPH_ID,
+            include_schema=True)
+
+    return
+
+
 def create_file_shared(decoded_cas_content,
                        endpoint,
                        doc_id):
@@ -106,19 +129,17 @@ def create_file_shared(decoded_cas_content,
 def update_rdf_from_cas_content(cas_content: cas_parser.CasContent,
                                 endpoint: str,
                                 doc_id: str) -> cas_parser.CasContent:
+    # Context-aware has to be set to false to allow querying from the Graph object
     sparql_update_store = SPARQLUpdateStore(queryEndpoint=endpoint,
                                             update_endpoint=endpoint + '/update',  # Might have to add "/update"
-                                            auth=(SECRET_USER, SECRET_PASS)
+                                            auth=(SECRET_USER, SECRET_PASS),
+                                            context_aware=False,
+                                            autocommit=False
                                             )
 
-    g_init = ROGraph(sparql_update_store,
-                     DATASET_DEFAULT_GRAPH_ID,
-                     include_schema=False)  # TODO This causes a serious delay!
-
-    g = ROGraph(AuditableStore(g_init.store),
-                g_init.identifier,
-                include_schema=False  # Store should already include schema by now.
-                )
+    g = ROGraph(sparql_update_store,
+                DATASET_DEFAULT_GRAPH_ID,
+                include_schema=False)
 
     try:
 
@@ -131,7 +152,9 @@ def update_rdf_from_cas_content(cas_content: cas_parser.CasContent,
         raise HTTPException(status_code=406, detail=f"Unable to add content to RDF.\n{e}")
 
     else:
-        # Not necessary, but to clean up the pool.
+        # Push all updates to fuseki
         g.commit()
+
+    g.close(False)  # commit_pending_transaction flag shouldn't matter, but just to be safe
 
     return cas_content

@@ -1,6 +1,6 @@
 import os
 
-from SPARQLWrapper import SPARQLWrapper, JSON, POST, GET
+from SPARQLWrapper import SPARQLWrapper, JSON, GET
 from rdflib import BNode, Literal, Namespace, Graph
 from rdflib.namespace import SKOS, RDF, RDFS, OWL, URIRef, DC
 from rdflib.term import _serial_number_generator
@@ -149,6 +149,10 @@ class ROGraph(Graph):
 
         """
 
+        # Only add (and remove) triples at the end to enable auto-commit/transactions to work.
+        l_add = []
+        l_remove = []
+
         if endpoint:
             ro_update = ROUpdate(endpoint)
 
@@ -163,7 +167,7 @@ class ROGraph(Graph):
         if len(list_ro) == 0:  # No reporting obligations, no need to add to fuseki
             return
 
-        self.add((cat_doc, RDF.type, self.class_cat_doc))
+        l_add.append((cat_doc, RDF.type, self.class_cat_doc))
 
         for i, ro_i in enumerate(list_ro):
 
@@ -179,17 +183,18 @@ class ROGraph(Graph):
                     rep_obl_i = get_UID_node(info='rep_obl_')
 
                 for i_ro_uri, ro_uri_i in enumerate(l_ro_uri):
-                    ro_update.remove_reporting_obligation(ro_uri_i, keep_value=i_ro_uri == 0,
-                                                          g=self)
+                    l_remove.extend(self._get_triples_remove_reporting_obligation(ro_uri_i,
+                                                                                  keep_value=i_ro_uri == 0,
+                                                                                  ))
 
             else:
                 rep_obl_i = get_UID_node(info='rep_obl_')
 
-            self.add((rep_obl_i, RDF.type, self.class_rep_obl))
+            l_add.append((rep_obl_i, RDF.type, self.class_rep_obl))
             # link to catalog document + ontology
-            self.add((cat_doc, self.prop_has_rep_obl, rep_obl_i))
+            l_add.append((cat_doc, self.prop_has_rep_obl, rep_obl_i))
             # add whole reporting obligation
-            self.add((rep_obl_i, RDF.value, Literal(value_i)))
+            l_add.append((rep_obl_i, RDF.value, Literal(value_i)))
             cas_content[KEY_CHILDREN][i]['id'] = rep_obl_i.toPython()  # adding ID to cas
 
             # iterate over different entities of RO
@@ -211,15 +216,21 @@ class ROGraph(Graph):
                     pred_i, cls = t_pred_cls
 
                 # type definition
-                self.add((concept_j, RDF.type, cls))
+                l_add.append((concept_j, RDF.type, cls))
                 # Add the string representation
                 value_j = Literal(ent_j[KEY_VALUE], lang='en')
-                self.add((concept_j, SKOS.prefLabel, value_j))
+                l_add.append((concept_j, SKOS.prefLabel, value_j))
 
                 # connect entity with RO
-                self.add((rep_obl_i, pred_i, concept_j))
+                l_add.append((rep_obl_i, pred_i, concept_j))
 
                 cas_content[KEY_CHILDREN][i][KEY_CHILDREN][j]['id'] = concept_j.toPython()  # adding ID to cas
+
+        for triple in l_remove:
+            self.remove(triple)
+
+        for triple in l_add:
+            self.add(triple)
 
         return cas_content
 
@@ -255,6 +266,72 @@ class ROGraph(Graph):
                   RDFS.subClassOf,
                   parent_cls
                   ))
+
+    def _get_triples_remove_reporting_obligation(self,
+                                                 ro_i: URIRef,
+                                                 keep_value=True):
+        """
+        The reporting obligation (with it's entities should be deleted)
+
+        Args:
+            ro_i:
+            keep_value: Boolean, if keep_value, then a single triple stays with (RO URI, value, string)
+
+        Returns:
+
+        """
+
+        q_ent_construct = f"""
+        PREFIX dgfisma: <http://dgfisma.com/reporting_obligations/>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+        # For testing, replace DELETE with SELECT 
+        CONSTRUCT {{
+            ?ent ?p ?o .
+        }}
+        WHERE {{
+        VALUES ?ro_uri {{ {URIRef(ro_i).n3()} }}
+
+        ?ro_uri a dgfisma:ReportingObligation ;
+            ?hasEnt ?ent .
+
+        ?ent ?p ?o
+
+        FILTER (?hasEnt != rdf:type)
+        }}
+        """
+
+        q_ro_construct = f"""
+        PREFIX dgfisma: <http://dgfisma.com/reporting_obligations/>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+        # For testing, replace DELETE with SELECT 
+        CONSTRUCT {{
+            ?s_ro ?p_ro2 ?ro_uri.
+            ?ro_uri ?p_ro ?o_ro .
+        }}
+        WHERE {{
+        VALUES ?ro_uri {{ {URIRef(ro_i).n3()} }}
+            ?ro_uri ?p_ro ?o_ro .
+            ?s_ro ?p_ro2 ?ro_uri .
+
+        {
+        "FILTER(?p_ro2 != rdf:value)" if keep_value else ""
+        }
+
+        }}
+        """
+
+        l_remove = []
+
+        # CONSTRUCT
+        a = self.query(q_ent_construct)
+        l_remove.extend(a)
+
+        a = self.query(q_ro_construct)
+        l_remove.extend(a)
+
+        return l_remove
 
 
 class ExampleCasContent(CasContent):
@@ -338,152 +415,3 @@ class ROUpdate:
         l_ro_uri = [res[RO_URI]['value'] for res in results]
 
         return l_ro_uri
-
-    def remove_reporting_obligation(self, ro_i: URIRef,
-                                    keep_value=True,
-                                    g: Graph = None):
-        """
-        The reporting obligation (with it's entities should be deleted)
-
-        Args:
-            ro_i:
-            keep_value: Boolean, if keep_value, then a single triple stays with (RO URI, value, string)
-
-        Returns:
-
-        """
-
-        # Delete all entities
-        # q = f"""
-        # PREFIX dgfisma: <http://dgfisma.com/reporting_obligations/>
-        # PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        #
-        # # For testing, replace DELETE with SELECT
-        # DELETE {{
-        #     ?s_ro ?p_ro2 ?ro_uri.
-        #     ?ro_uri ?p_ro ?o_ro .
-        #     ?ent ?p ?o
-        # }}
-        # WHERE {{
-        # VALUES ?ro_uri {{ {URIRef(ro_i).n3()} }}
-        #
-        # ?ro_uri a dgfisma:ReportingObligation ;
-        #     ?hasEnt ?ent .
-        #
-        # ?ent ?p ?o
-        #
-        # FILTER (?a != rdf:type)
-        # }}
-        # """
-
-        # Delete all entities
-        q_ent = f"""
-        PREFIX dgfisma: <http://dgfisma.com/reporting_obligations/>
-        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-
-        # For testing, replace DELETE with SELECT 
-        DELETE {{
-            ?ent ?p ?o .
-        }}
-        WHERE {{
-        VALUES ?ro_uri {{ {URIRef(ro_i).n3()} }}
-
-        ?ro_uri a dgfisma:ReportingObligation ;
-            ?hasEnt ?ent .
-
-        ?ent ?p ?o
-
-        FILTER (?hasEnt != rdf:type)
-        }}
-        """
-
-        q_ent_construct = f"""
-        PREFIX dgfisma: <http://dgfisma.com/reporting_obligations/>
-        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-
-        # For testing, replace DELETE with SELECT 
-        CONSTRUCT {{
-            ?ent ?p ?o .
-        }}
-        WHERE {{
-        VALUES ?ro_uri {{ {URIRef(ro_i).n3()} }}
-
-        ?ro_uri a dgfisma:ReportingObligation ;
-            ?hasEnt ?ent .
-
-        ?ent ?p ?o
-
-        FILTER (?hasEnt != rdf:type)
-        }}
-        """
-
-        # Delete the RO's
-        q_ro = f"""
-        PREFIX dgfisma: <http://dgfisma.com/reporting_obligations/>
-        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-
-        # For testing, replace DELETE with SELECT 
-        DELETE {{
-            ?s_ro ?p_ro2 ?ro_uri.
-            ?ro_uri ?p_ro ?o_ro .
-        }}
-        WHERE {{
-        VALUES ?ro_uri {{ {URIRef(ro_i).n3()} }}
-            ?ro_uri ?p_ro ?o_ro .
-            ?s_ro ?p_ro2 ?ro_uri .
-        
-        {
-        "FILTER(?p_ro2 != rdf:value)" if keep_value else ""
-        }
-
-        }}
-        """
-
-        q_ro_construct = f"""
-        PREFIX dgfisma: <http://dgfisma.com/reporting_obligations/>
-        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-
-        # For testing, replace DELETE with SELECT 
-        CONSTRUCT {{
-            ?s_ro ?p_ro2 ?ro_uri.
-            ?ro_uri ?p_ro ?o_ro .
-        }}
-        WHERE {{
-        VALUES ?ro_uri {{ {URIRef(ro_i).n3()} }}
-            ?ro_uri ?p_ro ?o_ro .
-            ?s_ro ?p_ro2 ?ro_uri .
-        
-        {
-        "FILTER(?p_ro2 != rdf:value)" if keep_value else ""
-        }
-
-        }}
-        """
-
-        if g is None:
-            self.sparql.setMethod(POST)
-            self.sparql.setReturnFormat(JSON)
-
-            self.sparql.setQuery(q_ent)
-            self.sparql.query()
-
-            self.sparql.setQuery(q_ro)
-            self.sparql.query()
-
-        else:
-            if 0:
-                g.update(q_ent)
-                g.update(q_ro)
-            else:
-                # CONSTRUCT
-                a = g.query(q_ent_construct)
-
-                for a_i in a:
-                    g.remove(a_i)
-
-                a = g.query(q_ro_construct)
-
-                for a_i in a:
-                    g.remove(a_i)
-
-        return

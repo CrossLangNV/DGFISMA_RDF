@@ -1,20 +1,22 @@
 import base64
 import os
+import time
 import unittest
 
 import requests
 from cassis import load_typesystem, load_cas_from_xmi
 from dotenv import load_dotenv
 from fastapi.testclient import TestClient
-from rdflib import Graph, Namespace
-from rdflib.graph import DATASET_DEFAULT_GRAPH_ID
+from rdflib import Namespace
+from rdflib.graph import DATASET_DEFAULT_GRAPH_ID, Graph
 from rdflib.plugins.stores.auditable import AuditableStore
-from rdflib.plugins.stores.sparqlstore import SPARQLUpdateStore
+from rdflib.plugins.stores.sparqlstore import SPARQLUpdateStore, SPARQLStore
 from rdflib.store import Store
+from rdflib.term import Variable
 
 from dgfisma_rdf.reporting_obligations import cas_parser
 from dgfisma_rdf.reporting_obligations.app.main import update_rdf_from_cas_content, app
-from dgfisma_rdf.reporting_obligations.build_rdf import ROGraph
+from dgfisma_rdf.reporting_obligations.build_rdf import ROGraph, D_ENTITIES
 
 ROOT = os.path.join(os.path.dirname(__file__), '../../..')
 
@@ -577,6 +579,169 @@ class TestRDFStore(unittest.TestCase):
                 self.assertEqual(len(t), n_t, 'Graph should be restored')
 
         return
+
+
+class TestTransactions(unittest.TestCase):
+    def test_is_it_actually_removed(self):
+        store = SPARQLStore(URL_ENDPOINT, context_aware=False)
+
+        s_same_ro = 'This is a test reporting obligation.'
+        doc_id = 'test_doc_id'
+
+        arg0 = 'ARGM-TMP'
+        arg1 = 'ARG2'
+        # Sanity check
+        assert arg0 in D_ENTITIES
+        assert arg1 in D_ENTITIES
+
+        l0 = [{cas_parser.KEY_CHILDREN: [{cas_parser.KEY_VALUE: 'val',
+                                          cas_parser.KEY_SENTENCE_FRAG_CLASS: arg0
+                                          }
+                                         ],
+               cas_parser.KEY_VALUE: s_same_ro
+               }
+              ]
+
+        l1 = [{cas_parser.KEY_CHILDREN: [{cas_parser.KEY_VALUE: 'v_other',
+                                          cas_parser.KEY_SENTENCE_FRAG_CLASS: arg0
+                                          },
+                                         {cas_parser.KEY_VALUE: 'some other v',
+                                          cas_parser.KEY_SENTENCE_FRAG_CLASS: arg0
+                                          },
+                                         {cas_parser.KEY_VALUE: 'other arg',
+                                          cas_parser.KEY_SENTENCE_FRAG_CLASS: arg1
+                                          }
+                                         ],
+               cas_parser.KEY_VALUE: s_same_ro
+               }
+              ]
+
+        cas_content0 = cas_parser.CasContent.from_list(l0)
+
+        cas_content1 = cas_parser.CasContent.from_list(l1)
+
+        def _get_set_values():
+            s_val = 'val'
+
+            q = f"""
+
+            PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+            SELECT ?ro_i ?ent ?{s_val}
+
+            WHERE {{
+
+            ?doc_id ?hasRO ?ro_i  .
+            ?ro_i ?hasEnt ?ent .
+            ?ent skos:prefLabel ?val
+
+            FILTER regex(str(?doc_id), "{doc_id}") .
+            FILTER regex(str(?hasRO), "hasReportingObligation") .
+            FILTER regex(str(?hasEnt), "has") .
+
+            }}
+
+            """
+
+            r = [a.get(Variable(s_val)) for a in store.query(q).bindings]
+
+            return set(map(str, r))
+
+        def _get_set_l_i(l_i):
+            return set([a['value'] for a in l_i[0]['children']])
+
+        update_rdf_from_cas_content(cas_content0,
+                                    endpoint=URL_ENDPOINT,
+                                    doc_id=doc_id)
+
+        with self.subTest('0'):
+            self.assertEqual(_get_set_values(), _get_set_l_i(l0))
+
+        update_rdf_from_cas_content(cas_content1,
+                                    endpoint=URL_ENDPOINT,
+                                    doc_id=doc_id)
+
+        with self.subTest('1'):
+            self.assertEqual(_get_set_values(), _get_set_l_i(l1))
+
+        update_rdf_from_cas_content(cas_content0,
+                                    endpoint=URL_ENDPOINT,
+                                    doc_id=doc_id)
+
+        with self.subTest('0 again'):
+            self.assertEqual(_get_set_values(), _get_set_l_i(l0))
+
+        update_rdf_from_cas_content(cas_content1,
+                                    endpoint=URL_ENDPOINT,
+                                    doc_id=doc_id)
+
+        with self.subTest('1 again'):
+            self.assertEqual(_get_set_values(), _get_set_l_i(l1))
+
+        return
+
+
+class TestSpeed(unittest.TestCase):
+    """
+    While not really a unit-test, it will give us an estimate of the speed of building the RDF.
+    """
+
+    def test_speed_production_clone(self):
+        # Make sure this a test version of production!
+        ENDPOINT_PRD = 'http://gpu1.crosslang.com:3030/RO_prd_clone'
+
+        rel_path_typesystem = 'dgfisma_rdf/reporting_obligations/output_reporting_obligations/typesystem_tmp.xml'
+        path_typesystem = os.path.abspath(os.path.join(ROOT, rel_path_typesystem))
+
+        with self.subTest('cas_ro_plus_html2text'):
+            path = os.path.abspath(
+                os.path.join(ROOT, 'tests/reporting_obligations/app/data_test', 'cas_ro_plus_html2text.xml'))
+
+            cas_content = cas_parser.CasContent.from_cas_file(path, path_typesystem)
+
+            self._timer(cas_content, ENDPOINT_PRD)
+
+        with self.subTest('oan_2021_01_18_N03'):
+            path = os.path.abspath(
+                os.path.join(ROOT, 'tests/reporting_obligations/app/data_test', 'oan_2021_01_18_N03.xml'))
+
+            cas_content = cas_parser.CasContent.from_cas_file(path, path_typesystem)
+
+            self._timer(cas_content, ENDPOINT_PRD)
+
+        return
+
+    @staticmethod
+    def _timer(cas_content, endpoint):
+        # Expected number of triples
+        n_RO_ent = sum((1 for ro_i in cas_content['children'] for a in ro_i['children']))
+        n_RO = sum((1 for ro_i in cas_content['children']))
+
+        # Context-aware set to False seems to be imported when providing it to a graph object.
+        store_prd = SPARQLStore(endpoint, context_aware=False)
+        g_prd = Graph(store=store_prd)
+
+        n_query_RO = list(store_prd.query("""
+            SELECT COUNT( ?object )
+            WHERE {
+            values ?predicate {<http://dgfisma.com/reporting_obligations/hasReportingObligation>}
+            ?subject ?predicate ?object 
+            }
+            """).bindings[0].values())[0].value
+
+        t0 = time.time()
+        update_rdf_from_cas_content(cas_content,
+                                    endpoint=endpoint,
+                                    doc_id='test_doc_id')
+        t1 = time.time()
+
+        delta_t = t1 - t0
+        t_total_pred = delta_t * n_query_RO / n_RO
+
+        print(f"Expected total time:\n"
+              f"\t{t_total_pred:.2f} s\n"
+              f"\t{t_total_pred / 60:.2f} min\n"
+              f"\t{t_total_pred / 60 / 60:.2f} h")
 
 
 if __name__ == '__main__':
