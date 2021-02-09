@@ -79,15 +79,16 @@ class ROGraph(Graph):
         super(ROGraph, self).__init__(
             *args, **kwargs)
 
-        if include_schema:
-            self._init_schema()
-
-    def _init_schema(self):
         self.bind("skos", SKOS)
         self.bind("owl", OWL)
         self.bind("dgf", NS_BASE)
         self.bind("dgfro", RO_BASE)
         self.bind("dc", DC)
+
+        if include_schema:
+            self._init_schema()
+
+    def _init_schema(self):
 
         """
         describe ontology
@@ -102,19 +103,8 @@ class ROGraph(Graph):
                   DC.title,
                   Literal("Reporting obligations (RO) vocabulary")))
 
-        # OWL classes
-        def add_owl_class(self, cls):
-            self.add((cls,
-                      RDF.type,
-                      RDFS.Class
-                      ))
-            self.add((cls,
-                      RDF.type,
-                      OWL.Class
-                      ))
-
-        add_owl_class(self, self.class_cat_doc)
-        add_owl_class(self, self.class_rep_obl)
+        self._add_owl_class(self.class_cat_doc)
+        self._add_owl_class(self.class_rep_obl)
 
         # OWL properties
         self._add_property(self.prop_has_rep_obl, self.class_cat_doc, self.class_rep_obl)
@@ -133,6 +123,17 @@ class ROGraph(Graph):
                       PROP_HAS_ENTITY
                       ))
             self._add_sub_class(cls, SKOS.Concept)
+
+    # OWL classes
+    def _add_owl_class(self, cls):
+        self.add((cls,
+                  RDF.type,
+                  RDFS.Class
+                  ))
+        self.add((cls,
+                  RDF.type,
+                  OWL.Class
+                  ))
 
     def add_cas_content(self, cas_content: CasContent,
                         doc_id: str,
