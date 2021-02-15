@@ -405,8 +405,8 @@ class TestSPARQLReportingObligationProviderGetFilterMultiple(unittest.TestCase):
          },
     ]}
 
-    g = ROGraph()
-    g.add_cas_content(l)
+    g = ROGraph(include_schema=True)
+    g.add_cas_content(l, 'test_doc')
     # Building the Reporting Obligation Provider
     with tempfile.TemporaryDirectory() as d:
         filename = os.path.join(d, 'tmp.rdf')
@@ -564,7 +564,7 @@ class TestSPARQLReportingObligationProviderGetFilterMultiple(unittest.TestCase):
             del list_filters, l_ro
 
 
-class TestPARQLPagination(unittest.TestCase):
+class TestSPARQLPagination(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -602,6 +602,68 @@ class TestPARQLPagination(unittest.TestCase):
 
         return
 
+
+class TestFilterDropdown(unittest.TestCase):
+    """
+    When applying a filter, the the options for the other entities should be updated such that only valid options are shown.
+    """
+
+    def setUp(self) -> None:
+        """
+        Make the connection to the rdf.
+
+        This can be:
+        - Offline
+        - Staging fuseki
+        - Production fuseki
+
+        Returns:
+
+        """
+        raise NotImplementedError
+
+    def test_return(self):
+        """ Test if something can be returned
+
+        Returns:
+
+        """
+
+        raise NotImplementedError()
+
+
+
+    def test_no_filters_return_all(self):
+        """ When no filters are applied, it's should probably still work and return everything
+
+        Returns:
+
+        """
+        raise NotImplementedError()
+
+    def test_if_updated_filters_give_results(self):
+        """ The returned filters should give results if also adding to the filter
+
+        Returns:
+
+        """
+        raise NotImplementedError()
+
+    def test_multiple_filters(self):
+        """ It should be possible to apply multiple filters at once.
+
+        Returns:
+
+        """
+        raise NotImplementedError()
+
+    def test_multiple_filters_and_if_updated_filters_give_results(self):
+        """ The returned filters should give results if also adding to the filter even if already applying multiple filters.
+
+        Returns:
+
+        """
+        raise NotImplementedError()
 
 if __name__ == '__main__':
     unittest.main()

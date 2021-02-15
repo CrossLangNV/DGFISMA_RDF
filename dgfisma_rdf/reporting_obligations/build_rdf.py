@@ -137,7 +137,7 @@ class ROGraph(Graph):
 
     def add_cas_content(self, cas_content: CasContent,
                         doc_id: str,
-                        endpoint: None):
+                        endpoint=None):
         """ Build the RDF from cas content.
 
         Args:

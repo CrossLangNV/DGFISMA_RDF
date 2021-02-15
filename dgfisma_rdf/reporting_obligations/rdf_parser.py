@@ -65,9 +65,18 @@ class RDFLibGraphWrapper(GraphWrapper):
                         'uri' if isinstance(v, URIRef) else None)
                 )
 
-                l_i[str(k)] = {'type': t,
-                               'value': v.toPython()
-                               }
+                d_i = {'type': t,
+                       'value': v.toPython()
+                       }
+
+                try:
+                    lang = v.language
+                except AttributeError as e:
+                    pass
+                else:
+                    d_i['xml:lang'] = lang
+
+                l_i[str(k)] = d_i
 
             l.append(l_i)
 
