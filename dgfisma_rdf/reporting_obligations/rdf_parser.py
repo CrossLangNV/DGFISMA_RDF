@@ -11,6 +11,8 @@ from . import build_rdf
 
 ROOT = os.path.join(os.path.dirname(__file__), '..')
 
+B_LOG_QUERIES = False
+
 
 class GraphWrapper(abc.ABC):
     """
@@ -145,20 +147,25 @@ class SPARQLReportingObligationProvider:
 
         """
 
+        VALUE = 'value_ent'
+
         q = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-            SELECT {'DISTINCT' if distinct else ''} ?value
+            SELECT {'DISTINCT' if distinct else ''} ?{VALUE}
 
             WHERE {{
-                ?ro {URIRef(type_uri).n3()} ?ent .
-    			?ent skos:prefLabel ?value
+                ?ro a {build_rdf.ROGraph.class_rep_obl.n3()} ;
+                    {URIRef(type_uri).n3()} ?ent .
+    			?ent skos:prefLabel ?{VALUE}
             }}
+            
+            ORDER BY (LCASE(?{VALUE}))
         """
         #                 FILTER (lang(?value) = 'en')
         l = list(self.graph_wrapper.query(q))
 
-        l_values = self.graph_wrapper.get_column(l, 'value')
+        l_values = self.graph_wrapper.get_column(l, VALUE)
 
         return l_values
 
@@ -251,7 +258,8 @@ class SPARQLReportingObligationProvider:
         }}
         """
 
-        logging.info(q)
+        if B_LOG_QUERIES:
+            logging.info(q)
 
         l = self.graph_wrapper.query(q)
 
@@ -312,10 +320,127 @@ class SPARQLReportingObligationProvider:
         if offset:
             q += f"""OFFSET {offset}"""
 
-        logging.info(q)
+        if B_LOG_QUERIES:
+            logging.info(q)
 
         l = self.graph_wrapper.query(q)
 
         l_ro_id = self.graph_wrapper.get_column(l, 'ro_id')
 
         return l_ro_id
+
+    def get_filter_entities(self,
+                            list_pred_value: List[Tuple[str]] = [],
+                            distinct=True):
+        """ Return all entities per type based on filters
+
+        Args:
+            list_pred_value: Filters to apply similar to get_filter_ro_id_multiple.
+            distinct:
+
+        Returns:
+
+        """
+
+        VALUE = 'value_ent'
+        PRED = 'pred'
+        COUNT = 'count'
+
+        q = f"""
+            PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+            PREFIX dgfro: {build_rdf.RO_BASE[None].n3()}
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+            SELECT {'DISTINCT' if distinct else ''} ?{PRED} ?{VALUE} (count(?ro_id) as ?{COUNT})
+
+            WHERE {{
+                ?ro_id rdf:type {build_rdf.ROGraph.class_rep_obl.n3()} ;
+                    ?{PRED} ?ent .
+                ?ent skos:prefLabel ?{VALUE} .
+            """
+
+        for i, (pred, value) in enumerate(list_pred_value):
+            q_i = f"""
+                       ?ro_id {URIRef(pred).n3()} ?ent{i} .
+                          ?ent{i} skos:prefLabel ?p{i} .
+                                  FILTER (
+                                      lcase(str(?p{i})) =lcase({Literal(value).n3()})
+                                  )
+              """
+
+            q += q_i
+
+        q += f"""
+            }}
+            
+            GROUPBY ?{PRED} ?{VALUE}
+    
+            ORDER BY (LCASE(?{PRED})) (LCASE(?{VALUE}))
+
+        """
+
+        l = list(self.graph_wrapper.query(q))
+
+        d_filtered_ents = {}
+        for l_i in l:
+            ent_i = l_i.get(PRED).get('value')
+
+            d_filtered_ents.setdefault(ent_i, []).append({VALUE: l_i.get(VALUE).get('value'),
+                                                          COUNT: l_i.get(COUNT).get('value')})
+
+        return d_filtered_ents
+
+    def get_filter_entities_from_type(self,
+                                      type_uri,
+                                      list_pred_value: List[Tuple[str]] = [],
+                                      distinct=True):
+        """
+
+        Args:
+            type_uri: from which type of entity to return entities of.
+            list_pred_value: Filters to apply similar to get_filter_ro_id_multiple.
+            distinct:
+
+        Returns:
+
+        """
+
+        VALUE = 'value_ent'
+
+        q = f"""
+            PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+            PREFIX dgfro: {build_rdf.RO_BASE[None].n3()}
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        
+            # SELECT DISTINCT ?ro_id
+            SELECT {'DISTINCT' if distinct else ''} ?{VALUE}
+
+            WHERE {{
+                ?ro_id rdf:type {build_rdf.ROGraph.class_rep_obl.n3()} ;
+                    rdf:value ?value ;
+                    {URIRef(type_uri).n3()} ?ent .
+                ?ent skos:prefLabel ?{VALUE} .
+            """
+
+        for i, (pred, value) in enumerate(list_pred_value):
+            q_i = f"""
+                       ?ro_id {URIRef(pred).n3()} ?ent{i} .
+                          ?ent{i} skos:prefLabel ?p{i} .
+                                  FILTER (
+                                      lcase(str(?p{i})) =lcase({Literal(value).n3()})
+                                  )
+              """
+
+            q += q_i
+
+        q += f"""
+          }}
+
+          ORDER BY (LCASE(?{VALUE}))
+
+          """
+
+        l = list(self.graph_wrapper.query(q))
+        l_values = self.graph_wrapper.get_column(l, VALUE)
+
+        return l_values

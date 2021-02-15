@@ -1,7 +1,11 @@
 import os
+import random
 import tempfile
+import time
 import unittest
 from typing import Iterable
+
+import numpy as np
 
 from dgfisma_rdf.reporting_obligations import build_rdf
 from dgfisma_rdf.reporting_obligations.build_rdf import D_ENTITIES, ExampleCasContent, ROGraph, MOCKUP_FILENAME
@@ -14,6 +18,7 @@ ROOT = os.path.join(os.path.dirname(__file__), '../..')
 # URL_FUSEKI = "http://localhost:8080/fuseki/sandbox/sparql"
 # URL_FUSEKI = "http://fuseki_RO:3030/RO"
 URL_FUSEKI = "http://gpu1.crosslang.com:3030/RO_test"
+URL_FUSEKI_PRD = "http://gpu1.crosslang.com:3030/RO_prd_clone"
 
 
 class TestRDFLibGraphWrapper(unittest.TestCase):
@@ -620,7 +625,9 @@ class TestFilterDropdown(unittest.TestCase):
         Returns:
 
         """
-        raise NotImplementedError
+
+        graph_wrapper = SPARQLGraphWrapper(URL_FUSEKI)
+        self.prov = SPARQLReportingObligationProvider(graph_wrapper)
 
     def test_return(self):
         """ Test if something can be returned
@@ -629,9 +636,41 @@ class TestFilterDropdown(unittest.TestCase):
 
         """
 
-        raise NotImplementedError()
+        l_types_ent = self.prov.get_different_entities()
 
+        type_ent0 = l_types_ent[0]
+        type_ent1 = l_types_ent[1]
 
+        l_types_ent
+
+        l_ent_0 = self.prov.get_all_from_type(type_ent0)
+        l_ent_1 = self.prov.get_all_from_type(type_ent1)
+
+        ent_0_0 = l_ent_0[0]
+        ent_1_0 = l_ent_1[0]
+
+        l_ro = self.prov.get_filter_ro_id_multiple([(type_ent0, ent_0_0)])
+
+        with self.subTest("Sanity check: some RO's"):
+            self.assertGreater(len(l_ro), 0, 'Sanity check, should return some reporting obligations')
+
+        l_ro_multiple = self.prov.get_filter_ro_id_multiple([(type_ent0, ent_0_0), (type_ent1, ent_1_0)])
+        with self.subTest("Unlikely to get results with multiple filters"):
+            self.assertEqual(len(l_ro_multiple), 0, 'If lucky, this could give results, but most likely not')
+
+        for ent_0_i in l_ent_0:
+            with self.subTest(f'Should return itself. "{ent_0_i}"'):
+                l_ent_1_filtered = self.prov.get_filter_entities_from_type(
+                    type_ent0,
+                    [(type_ent0, ent_0_i)]
+                )
+
+                if len(l_ent_1_filtered) == 1:
+                    self.assertEqual(l_ent_1_filtered[0], ent_0_i, 'Expect same value')
+                else:
+                    self.assertIn(ent_0_i, l_ent_1_filtered, 'Expect same value')
+
+        return
 
     def test_no_filters_return_all(self):
         """ When no filters are applied, it's should probably still work and return everything
@@ -639,7 +678,18 @@ class TestFilterDropdown(unittest.TestCase):
         Returns:
 
         """
-        raise NotImplementedError()
+
+        l_types_ent = self.prov.get_different_entities()
+
+        for type_ent_i in l_types_ent:
+            with self.subTest(f'{type_ent_i}'):
+                l_ent_i = self.prov.get_all_from_type(type_ent_i)
+
+                l_ent_no_filter_i = self.prov.get_filter_entities_from_type(type_ent_i)
+
+                self.assertSetEqual(set(l_ent_i), set(l_ent_no_filter_i), 'Should contain same entities')
+
+                self.assertEqual(l_ent_i, l_ent_no_filter_i, 'Order should be the same.')
 
     def test_if_updated_filters_give_results(self):
         """ The returned filters should give results if also adding to the filter
@@ -647,7 +697,54 @@ class TestFilterDropdown(unittest.TestCase):
         Returns:
 
         """
-        raise NotImplementedError()
+
+        l_types_ent = self.prov.get_different_entities()
+
+        n_test_count = 0
+        n_test_max = 2
+
+        for type_ent_i in l_types_ent:
+
+            # HasReport/HasReporter has the most matches
+            # if 'hasReport' not in type_ent_i:
+            #     continue
+
+            l_ent_i = self.prov.get_all_from_type(type_ent_i)
+
+            for ent_i_i in l_ent_i:
+
+                l_ro_filter_i_i = self.prov.get_filter_ro_id_multiple([(type_ent_i, ent_i_i)])
+
+                for type_ent_j in l_types_ent:
+                    if type_ent_i == type_ent_j:
+                        continue
+                    #
+                    # if 'hasReporter' not in type_ent_j:
+                    #     continue
+
+                    l_ent_j = self.prov.get_all_from_type(type_ent_j)
+
+                    for ent_j_j in l_ent_j:
+
+                        l_ro_filter_j_j = self.prov.get_filter_ro_id_multiple([(type_ent_j, ent_j_j)])
+
+                        l_ro_filter_intersection = set(l_ro_filter_i_i).intersection(l_ro_filter_j_j)
+
+                        if len(l_ro_filter_intersection) == 0:
+                            continue
+
+                        # TODO Finding a match
+
+                        l_ent_filter_j = self.prov.get_filter_entities_from_type(type_ent_j, [(type_ent_i, ent_i_i)])
+
+                        with self.subTest(f'{ent_i_i} x {ent_j_j}'):
+                            self.assertIn(ent_j_j, l_ent_filter_j, 'Should return this entity.')
+
+                        n_test_count += 1
+                        if n_test_count >= n_test_max:  # Enough tests done
+                            return
+
+        self.fail('This test should have stopped before!')
 
     def test_multiple_filters(self):
         """ It should be possible to apply multiple filters at once.
@@ -655,7 +752,47 @@ class TestFilterDropdown(unittest.TestCase):
         Returns:
 
         """
-        raise NotImplementedError()
+        l_types_ent = self.prov.get_different_entities()
+
+        # n_test_count = 0
+        # n_test_max = 2
+
+        for type_ent_i in l_types_ent:
+
+            l_ent_i = self.prov.get_all_from_type(type_ent_i)
+
+            for ent_i_i in l_ent_i:
+
+                # l_ro_filter_i_i = self.prov.get_filter_ro_id_multiple([(type_ent_i, ent_i_i)])
+
+                for type_ent_j in l_types_ent:
+                    if type_ent_i == type_ent_j:
+                        continue
+
+                    l_ent_filter_j = self.prov.get_filter_entities_from_type(type_ent_j, [(type_ent_i, ent_i_i)])
+
+                    if len(l_ent_filter_j):
+
+                        for type_ent_k in l_types_ent:
+                            if type_ent_k in (type_ent_i, type_ent_j):
+                                continue
+
+                            for ent_j_j in l_ent_filter_j:
+
+                                l_ent_filter_k = self.prov.get_filter_entities_from_type(type_ent_k,
+                                                                                         [(type_ent_i, ent_i_i),
+                                                                                          (type_ent_j, ent_j_j),
+                                                                                          ])
+
+                                if len(l_ent_filter_k):
+                                    l_ro = self.prov.get_filter_ro_id_multiple([(type_ent_i, ent_i_i),
+                                                                                (type_ent_j, ent_j_j),
+                                                                                (type_ent_k, l_ent_filter_k[0]),
+                                                                                ])
+
+                                    self.assertTrue(len(l_ro), 'Should return at least one RO.')
+
+                                    return  # Done
 
     def test_multiple_filters_and_if_updated_filters_give_results(self):
         """ The returned filters should give results if also adding to the filter even if already applying multiple filters.
@@ -663,7 +800,174 @@ class TestFilterDropdown(unittest.TestCase):
         Returns:
 
         """
-        raise NotImplementedError()
+        l_types_ent = self.prov.get_different_entities()
+
+        # n_test_count = 0
+        # n_test_max = 2
+
+        for type_ent_i in l_types_ent:
+
+            l_ent_i = self.prov.get_all_from_type(type_ent_i)
+
+            for ent_i_i in l_ent_i:
+
+                # l_ro_filter_i_i = self.prov.get_filter_ro_id_multiple([(type_ent_i, ent_i_i)])
+
+                for type_ent_j in l_types_ent:
+                    if type_ent_i == type_ent_j:
+                        continue
+
+                    l_ent_filter_j = self.prov.get_filter_entities_from_type(type_ent_j, [(type_ent_i, ent_i_i)])
+
+                    if len(l_ent_filter_j):
+
+                        for type_ent_k in l_types_ent:
+                            if type_ent_k in (type_ent_i, type_ent_j):
+                                continue
+
+                            for ent_j_j in l_ent_filter_j:
+
+                                l_ent_filter_k = self.prov.get_filter_entities_from_type(type_ent_k,
+                                                                                         [(type_ent_i, ent_i_i),
+                                                                                          (type_ent_j, ent_j_j),
+                                                                                          ])
+
+                                if len(l_ent_filter_k):
+                                    l_ro = self.prov.get_filter_ro_id_multiple([(type_ent_i, ent_i_i),
+                                                                                (type_ent_j, ent_j_j),
+                                                                                (type_ent_k, l_ent_filter_k[0]),
+                                                                                ])
+
+                                    self.assertTrue(len(l_ro), 'Should return at least one RO.')
+
+                                    return  # Done
+
+    def test_speed(self):
+
+        n_samples = 10
+
+        graph_wrapper = SPARQLGraphWrapper(URL_FUSEKI_PRD)
+        prov = SPARQLReportingObligationProvider(graph_wrapper)
+
+        l_types_ent = prov.get_different_entities()
+
+        s_test = 'querying without filter'
+        with self.subTest(s_test):
+            print(s_test)
+
+            l_T = []
+            for type_ent_i in random.sample(l_types_ent, n_samples):
+                t0 = time.time()
+                prov.get_filter_entities_from_type(type_ent_i)
+                t1 = time.time()
+
+                l_T.append(t1 - t0)
+
+            print(f'T query = {np.mean(l_T):.2f} s')
+
+        s_test = 'querying with filter'
+        with self.subTest(s_test):
+            print(s_test)
+
+            l_T = []
+            for type_ent_i in random.sample(l_types_ent, n_samples):
+                type_ent_j = _sample_single(l_types_ent)
+                l_ent_j = prov.get_all_from_type(type_ent_j)
+                if len(l_ent_j) == 0:
+                    continue  # Could be empty
+                ent_j = _sample_single(l_ent_j)
+
+                t0 = time.time()
+                r = prov.get_filter_entities_from_type(type_ent_i,
+                                                       [(type_ent_j, ent_j)])
+                t1 = time.time()
+
+                l_T.append(t1 - t0)
+
+            print(f'T query = {np.mean(l_T):.2f} s')
+
+
+class TestFilterDropdownAllAtOnce(unittest.TestCase):
+
+    def setUp(self) -> None:
+        """
+        Make the connection to the rdf.
+
+        This can be:
+        - Offline
+        - Staging fuseki
+        - Production fuseki
+
+        Returns:
+
+        """
+
+        graph_wrapper = SPARQLGraphWrapper(URL_FUSEKI)
+        self.prov = SPARQLReportingObligationProvider(graph_wrapper)
+
+    def test_no_filters_return_all(self):
+        """ When no filters are applied, it's should probably still work and return everything
+
+        Returns:
+
+        """
+
+        l_types_ent = self.prov.get_different_entities()
+
+        d_filtered_ents = self.prov.get_filter_entities()
+
+        for ent_type, l_ent_filtered in d_filtered_ents.items():
+            with self.subTest(f'Type {ent_type}'):
+                self.assertIn(ent_type, l_types_ent)
+
+            with self.subTest(f'Non-empty {ent_type}'):
+                self.assertTrue(len(l_ent_filtered), 'Should return at least one element')
+
+    def test_speed(self):
+        n_samples = 10
+
+        graph_wrapper = SPARQLGraphWrapper(URL_FUSEKI_PRD)
+        prov = SPARQLReportingObligationProvider(graph_wrapper)
+
+        l_types_ent = prov.get_different_entities()
+
+        if 0:  # Bad idea as this is incredibly slow!
+            s_test = 'querying without filter'
+            with self.subTest(s_test):
+                print(s_test)
+
+                l_T = []
+                for _ in range(n_samples):
+                    t0 = time.time()
+                    r = prov.get_filter_entities()
+                    t1 = time.time()
+
+                    l_T.append(t1 - t0)
+
+                print(f'T query = {np.mean(l_T):.2f} s')
+
+        s_test = 'querying with filter'
+        with self.subTest(s_test):
+            print(s_test)
+
+            l_T = []
+            for type_ent_i in random.sample(l_types_ent, n_samples):
+                l_ent_i = prov.get_all_from_type(type_ent_i)
+
+                ent_i = _sample_single(l_ent_i)
+
+                t0 = time.time()
+                r = prov.get_filter_entities([(type_ent_i, ent_i)])
+                t1 = time.time()
+
+                l_T.append(t1 - t0)
+
+            print(f'T query = {np.mean(l_T):.2f} s')
+
+
+def _sample_single(l):
+    return list(random.sample(l, 1))[0]
+
 
 if __name__ == '__main__':
     unittest.main()
