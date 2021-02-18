@@ -13,6 +13,13 @@ ROOT = os.path.join(os.path.dirname(__file__), '..')
 
 B_LOG_QUERIES = False
 
+CONTAINS = 'contains'
+STARTS_WITH = 'starts with'
+
+VALUE = 'value_ent'
+PRED = 'pred'
+COUNT = 'count'
+
 
 class GraphWrapper(abc.ABC):
     """
@@ -111,7 +118,7 @@ class SPARQLReportingObligationProvider:
     def __init__(self, graph_wrapper: GraphWrapper):
         self.graph_wrapper = graph_wrapper
 
-    def get_different_entities(self):
+    def get_different_entity_types(self):
         q = f"""
             PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -159,7 +166,6 @@ class SPARQLReportingObligationProvider:
                     {URIRef(type_uri).n3()} ?ent .
     			?ent skos:prefLabel ?{VALUE}
             }}
-            
             ORDER BY (LCASE(?{VALUE}))
         """
         #                 FILTER (lang(?value) = 'en')
@@ -219,7 +225,8 @@ class SPARQLReportingObligationProvider:
 
         return self.get_filter_multiple([(pred, value)])
 
-    def get_filter_multiple(self, list_pred_value: List[Tuple[str]] = []) -> List[str]:
+    def get_filter_multiple(self, list_pred_value: List[Tuple[str]] = [],
+                            exact_match=False) -> List[str]:
         """ Retrieve reporting obligations with a matching value for certain predicate
 
         Args:
@@ -232,6 +239,8 @@ class SPARQLReportingObligationProvider:
 
         """
 
+        q_filter = _get_q_filter(list_pred_value, exact_match=exact_match)
+
         q = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             PREFIX dgfro: {build_rdf.RO_BASE[None].n3()}
@@ -242,20 +251,9 @@ class SPARQLReportingObligationProvider:
             WHERE {{
                 ?ro_id rdf:type {build_rdf.ROGraph.class_rep_obl.n3()} ;
                     rdf:value ?value .
-            """
-
-        for i, (pred, value) in enumerate(list_pred_value):
-            q_i = f"""
-                ?ro_id  <{pred}> ?ent{i} .
-                    ?ent{i} skos:prefLabel ?p{i} .
-                    FILTER (lcase(str(?p{i})) =lcase({Literal(value).n3()}))
-            """
-            #         FILTER (lang(?p{i}) = "en"   )
-
-            q += q_i
-
-        q += f"""
-        }}
+                    
+                {q_filter}
+            }}
         """
 
         if B_LOG_QUERIES:
@@ -269,7 +267,8 @@ class SPARQLReportingObligationProvider:
 
     def get_filter_ro_id_multiple(self, list_pred_value: List[Tuple[str]] = [],
                                   limit=None,
-                                  offset=0) -> List[str]:
+                                  offset=0,
+                                  exact_match: bool = False) -> List[str]:
         """ Retrieve reporting obligations UID's with a matching value for certain predicate
 
         Args:
@@ -279,10 +278,15 @@ class SPARQLReportingObligationProvider:
                     ("<pred n>", "<value n>") ]
             limit: number of id's to return
             offset: what index to start from (counting from 0)
+            exact_match: (boolean) if exact matches or contains in matches should be retrieved
 
         Returns:
             List with URI's of the Reporting obligations.
         """
+
+        q_filter = _get_q_filter(list_pred_value,
+                                 ro='ro_id',
+                                 exact_match=exact_match)
 
         q = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -294,20 +298,9 @@ class SPARQLReportingObligationProvider:
             WHERE {{
                 ?ro_id rdf:type {build_rdf.ROGraph.class_rep_obl.n3()} ;
                    rdf:value ?value .
-            """
+                
+            {q_filter}
 
-        for i, (pred, value) in enumerate(list_pred_value):
-            q_i = f"""
-                     ?ro_id {URIRef(pred).n3()} ?ent{i} .
-                        ?ent{i} skos:prefLabel ?p{i} .
-                                FILTER (
-                                    lcase(str(?p{i})) =lcase({Literal(value).n3()})
-                                )
-            """
-
-            q += q_i
-
-        q += f"""
         }}
         
         ORDER BY (LCASE(?value))
@@ -329,9 +322,57 @@ class SPARQLReportingObligationProvider:
 
         return l_ro_id
 
+    def get_entities(self,
+                     distinct=True):
+        """ Trying to speed up get_filter_entities without filters.
+
+        Returns:
+
+        """
+
+        l_has = [has_i for has_i, type_i in build_rdf.D_ENTITIES.values()]
+
+        q_values = f"""
+        VALUES ?{PRED} {{{' '.join(map(lambda x: x.n3(), l_has))}}}
+        """
+
+        q = f"""
+            PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+            PREFIX dgfro: {build_rdf.RO_BASE[None].n3()}
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+            SELECT {'DISTINCT' if distinct else ''} ?{PRED} ?{VALUE} (count(?ro_id) as ?{COUNT})
+
+            WHERE {{
+            
+                {q_values}
+            
+                ?ro_id rdf:type {build_rdf.ROGraph.class_rep_obl.n3()} ;
+                    ?{PRED} ?ent .
+                ?ent skos:prefLabel ?{VALUE} .
+            }}
+
+            GROUPBY ?{PRED} ?{VALUE}
+
+            ORDER BY (LCASE(?{PRED})) (LCASE(?{VALUE}))
+
+        """
+
+        l = list(self.graph_wrapper.query(q))
+
+        d_filtered_ents = {}
+        for l_i in l:
+            has_type_i = l_i.get(PRED).get('value')
+
+            d_filtered_ents.setdefault(has_type_i, []).append({VALUE: l_i.get(VALUE).get('value'),
+                                                               COUNT: l_i.get(COUNT).get('value')})
+
+        return d_filtered_ents
+
     def get_filter_entities(self,
                             list_pred_value: List[Tuple[str]] = [],
-                            distinct=True):
+                            distinct=True,
+                            exact_match: bool = False):
         """ Return all entities per type based on filters
 
         Args:
@@ -346,6 +387,8 @@ class SPARQLReportingObligationProvider:
         PRED = 'pred'
         COUNT = 'count'
 
+        q_filter = _get_q_filter(list_pred_value, exact_match=exact_match)
+
         q = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
             PREFIX dgfro: {build_rdf.RO_BASE[None].n3()}
@@ -357,20 +400,8 @@ class SPARQLReportingObligationProvider:
                 ?ro_id rdf:type {build_rdf.ROGraph.class_rep_obl.n3()} ;
                     ?{PRED} ?ent .
                 ?ent skos:prefLabel ?{VALUE} .
-            """
-
-        for i, (pred, value) in enumerate(list_pred_value):
-            q_i = f"""
-                       ?ro_id {URIRef(pred).n3()} ?ent{i} .
-                          ?ent{i} skos:prefLabel ?p{i} .
-                                  FILTER (
-                                      lcase(str(?p{i})) =lcase({Literal(value).n3()})
-                                  )
-              """
-
-            q += q_i
-
-        q += f"""
+                
+                {q_filter}
             }}
             
             GROUPBY ?{PRED} ?{VALUE}
@@ -393,7 +424,8 @@ class SPARQLReportingObligationProvider:
     def get_filter_entities_from_type(self,
                                       type_uri,
                                       list_pred_value: List[Tuple[str]] = [],
-                                      distinct=True):
+                                      distinct=True,
+                                      exact_match: bool = False):
         """
 
         Args:
@@ -406,6 +438,8 @@ class SPARQLReportingObligationProvider:
         """
 
         VALUE = 'value_ent'
+
+        q_filter = _get_q_filter(list_pred_value, exact_match=exact_match)
 
         q = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -420,20 +454,8 @@ class SPARQLReportingObligationProvider:
                     rdf:value ?value ;
                     {URIRef(type_uri).n3()} ?ent .
                 ?ent skos:prefLabel ?{VALUE} .
-            """
-
-        for i, (pred, value) in enumerate(list_pred_value):
-            q_i = f"""
-                       ?ro_id {URIRef(pred).n3()} ?ent{i} .
-                          ?ent{i} skos:prefLabel ?p{i} .
-                                  FILTER (
-                                      lcase(str(?p{i})) =lcase({Literal(value).n3()})
-                                  )
-              """
-
-            q += q_i
-
-        q += f"""
+                
+                {q_filter}
           }}
 
           ORDER BY (LCASE(?{VALUE}))
@@ -444,3 +466,112 @@ class SPARQLReportingObligationProvider:
         l_values = self.graph_wrapper.get_column(l, VALUE)
 
         return l_values
+
+    def get_filter_entities_from_type_lazy_loading(self,
+                                                   uri_type_has,
+                                                   str_match: str = '',
+                                                   type_match=CONTAINS,
+                                                   list_pred_value: List[Tuple[str]] = [],
+                                                   exact_match=False
+                                                   ):
+
+        """ Filter the entities for a certain entity type.
+
+        Args:
+            uri_type_has: The URI of the <hasEntity> predicate type.
+            str_match: (str) the string to match to.
+            type_match: rdf_parser.CONTAINS or rdf_parser.STARTS_WITH
+
+        Returns:
+            List of strings with the labels of the entities.
+        """
+
+        VALUE = 'value_ent'
+        RO = 'RO'
+
+        starts_with_options = [CONTAINS, STARTS_WITH]
+
+        q_filter = _get_q_filter(list_pred_value, ro=RO, exact_match=exact_match) if list_pred_value else ''
+
+        if str_match == '':
+            q_filter_entity = ''
+        elif type_match == CONTAINS:
+            q_filter_entity = f"""
+                FILTER CONTAINS(LCASE(?value_ent), LCASE({Literal(str_match).n3()}))
+            """
+        elif type_match == STARTS_WITH:
+            q_filter_entity = f"""
+                FILTER STRSTARTS(LCASE(?value_ent), LCASE({Literal(str_match).n3()}))
+            """
+        else:
+            raise ValueError(f'Unknown value for {type_match}. Expected a value from {starts_with_options}).')
+
+        q = f"""
+        
+        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+        PREFIX dgfro: {URIRef(build_rdf.RO_BASE).n3()}
+        
+        SELECT DISTINCT ?{VALUE}
+        
+        WHERE {{
+        
+            ?{RO} a dgfro:ReportingObligation ;
+                {URIRef(uri_type_has).n3()} ?ent .
+            ?ent skos:prefLabel ?{VALUE} .
+            {q_filter}
+        
+            {q_filter_entity}      
+
+        }}
+        
+        ORDER BY (LCASE(?{VALUE}))
+        
+        """
+
+        # print(q)
+
+        l = list(self.graph_wrapper.query(q))
+        l_values = self.graph_wrapper.get_column(l, VALUE)
+
+        return l_values
+
+
+def _get_q_filter(list_pred_value: List[Tuple[str]] = [],
+                  ro='ro_id',
+                  exact_match: bool = False):
+    """
+    values of the filters are stripped from leading and trailing spaces.
+
+    Args:
+        list_pred_value: e.g. [("dgfisma.com/hasReporter", "The highest authority")]
+        exact_match: (boolean) True means exact matches, although case insensitive, are retrieved
+            False means we look for substrings.
+    Returns:
+
+    """
+    q_filter = ""
+
+    for i, (pred, value) in enumerate(list_pred_value):
+
+        if exact_match:
+            q_i = f"""
+                ?{ro} {URIRef(pred).n3()} ?ent{i} .
+                ?ent{i} skos:prefLabel ?p{i} .
+                FILTER (
+                    lcase(str(?p{i})) = lcase({Literal(value.strip()).n3()})
+                )
+            """
+        else:
+            q_i = f"""
+                ?{ro} {URIRef(pred).n3()} ?ent{i} .
+                ?ent{i} skos:prefLabel ?p{i} .
+                FILTER (
+                    CONTAINS(
+                        lcase(str(?p{i})), lcase({Literal(value.strip()).n3()})
+                    )
+                )
+            """
+
+        q_filter += q_i
+
+    return q_filter

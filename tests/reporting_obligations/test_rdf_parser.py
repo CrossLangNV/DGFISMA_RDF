@@ -1,13 +1,15 @@
 import os
 import random
+import string
 import tempfile
 import time
 import unittest
 from typing import Iterable
 
 import numpy as np
+from rdflib.term import URIRef
 
-from dgfisma_rdf.reporting_obligations import build_rdf
+from dgfisma_rdf.reporting_obligations import build_rdf, rdf_parser
 from dgfisma_rdf.reporting_obligations.build_rdf import D_ENTITIES, ExampleCasContent, ROGraph, MOCKUP_FILENAME
 from dgfisma_rdf.reporting_obligations.rdf_parser import SPARQLReportingObligationProvider, RDFLibGraphWrapper, \
     SPARQLGraphWrapper
@@ -18,6 +20,7 @@ ROOT = os.path.join(os.path.dirname(__file__), '../..')
 # URL_FUSEKI = "http://localhost:8080/fuseki/sandbox/sparql"
 # URL_FUSEKI = "http://fuseki_RO:3030/RO"
 URL_FUSEKI = "http://gpu1.crosslang.com:3030/RO_test"
+URL_STAGING = "http://gpu1.crosslang.com:3030/RO_staging"
 URL_FUSEKI_PRD = "http://gpu1.crosslang.com:3030/RO_prd_clone"
 
 
@@ -164,7 +167,7 @@ class TestSPARQLReportingObligationProvider(unittest.TestCase):
     def test_different_entities(self):
 
         ro_provider = self.test_get_ro_provider()
-        l = ro_provider.get_different_entities()
+        l = ro_provider.get_different_entity_types()
 
         with self.subTest("Type checking"):
             self.assertIsInstance(l, Iterable)
@@ -222,6 +225,252 @@ class TestSPARQLReportingObligationProvider(unittest.TestCase):
         self.assertEqual(set(l_labels), (set(l_labels_distinct)),
                          'distinct should contain the same values, just no doubles.')
         self.assertLess(len(list(l_labels_distinct)), len(list(l_labels)), 'distinct should contain less values.')
+
+
+class TestGetAllFromType(unittest.TestCase):
+
+    def setUp(self) -> None:
+
+        graph_wrapper = SPARQLGraphWrapper(URL_FUSEKI_PRD)
+        self.prov = SPARQLReportingObligationProvider(graph_wrapper)
+
+    def test_equivalence(self):
+        """
+        While trying to optimize the query it is important to check if they are able to give all the same results.
+
+        Returns:
+            None
+        """
+
+        # work on faster
+        graph_wrapper = SPARQLGraphWrapper(URL_FUSEKI)  # URL_STAGING, URL_FUSEKI_PRD
+        self.prov = SPARQLReportingObligationProvider(graph_wrapper)
+
+        distinct = True
+        VALUE = 'value_ent'
+
+        l_has = self.prov.get_different_entity_types()
+
+        def check_equivalence(d0, d1,
+                              b_subtest=False):
+
+            for has_type_uri in l_has:
+
+                if b_subtest:
+                    with self.subTest(has_type_uri):
+                        self.assertEqual(d0.get(has_type_uri),
+                                         d1.get(has_type_uri),
+                                         'Output should be the same.')
+                else:
+                    self.assertEqual(d0.get(has_type_uri),
+                                     d1.get(has_type_uri),
+                                     'Output should be the same.')
+
+        def get_d_correct():
+
+            d = {}
+            for has_type_uri in l_has:
+                q = f"""
+                    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+                    SELECT {'DISTINCT' if distinct else ''} ?{VALUE}
+
+                    WHERE {{
+                        ?ro a {build_rdf.ROGraph.class_rep_obl.n3()} ;
+                            {URIRef(has_type_uri).n3()} ?ent .
+                        ?ent skos:prefLabel ?{VALUE}
+                    }}
+                    ORDER BY (LCASE(?{VALUE}))
+                """
+
+                r = self.prov.graph_wrapper.query(q)
+                l = self.prov.graph_wrapper.get_column(r, VALUE)
+
+                d[has_type_uri] = l
+
+            return d
+
+        def get_d_implementation():
+            d = {}
+            for has_type_uri in l_has:
+                d[has_type_uri] = self.prov.get_all_from_type(has_type_uri)
+
+            return d
+
+        def get_d_simple():
+            d = {}
+
+            for has_type_uri in l_has:
+                q = f"""
+                                PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+                                SELECT {'DISTINCT' if distinct else ''} ?{VALUE}
+
+                                WHERE {{
+                                    ?ro {URIRef(has_type_uri).n3()} ?ent .
+                                    ?ent skos:prefLabel ?{VALUE}
+                                }}
+
+                                # ORDER BY (LCASE(?{VALUE}))
+                            """
+
+                r = self.prov.graph_wrapper.query(q)
+                l = self.prov.graph_wrapper.get_column(r, VALUE)
+
+                d[has_type_uri] = l
+
+            return d
+
+        d0 = get_d_correct()
+
+        with self.subTest('-- Implementation --'):
+
+            d = get_d_implementation()
+            check_equivalence(d0, d)
+
+        if 0:  # This simple Query sometimes give too much data back
+            with self.subTest('-- Simple --'):
+                d = get_d_simple()
+                check_equivalence(d0, d)
+
+        return
+
+    def test_speed(self):
+        """ Dropdown menu's seem to be the
+
+        Returns:
+
+        """
+
+        n_samples = 3
+
+        distinct = True
+
+        VALUE = 'value_ent'
+
+        l_has_types = self.prov.get_different_entity_types()
+
+        if 1:
+            s_subtest = 'Implemented query'
+            with self.subTest(s_subtest):
+                print(s_subtest)
+
+                l_T = []
+                for _ in range(n_samples):
+
+                    t0 = time.time()
+                    for has_type_uri in l_has_types:
+                        self.prov.get_all_from_type(has_type_uri)
+                    t1 = time.time()
+
+                    l_T.append(t1 - t0)
+
+                print(f'T query = {np.mean(l_T):.2f} +- {np.std(l_T):.2f} s')
+
+        if 1:
+            s_subtest = 'minimal query'
+            with self.subTest(s_subtest):
+                print(s_subtest)
+
+                l_T = []
+                for _ in range(n_samples):
+
+                    t0 = time.time()
+                    for has_type_uri in l_has_types:
+                        q = f"""
+                                    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+            
+                                    SELECT {'DISTINCT' if distinct else ''} ?{VALUE}
+            
+                                    WHERE {{
+                                        ?ro    {URIRef(has_type_uri).n3()} ?ent .
+                                        ?ent skos:prefLabel ?{VALUE}
+                                    }}
+                                """
+
+                        self.prov.graph_wrapper.query(q)
+                    t1 = time.time()
+
+                    l_T.append(t1 - t0)
+
+                print(f'T query = {np.mean(l_T):.2f} +- {np.std(l_T):.2f} s')
+
+        if 1:
+            s_subtest = 'Type based:'
+            with self.subTest(s_subtest):
+                print(s_subtest)
+
+                l_T = []
+
+                def get_type(has_uri):
+
+                    for has_i, type_i in build_rdf.D_ENTITIES.values():
+                        if URIRef(has_i) == URIRef(has_uri):
+                            return type_i
+
+                    return build_rdf.SKOS.Concept
+
+                for _ in range(n_samples):
+
+                    t0 = time.time()
+                    for has_type_uri in l_has_types:
+                        type_uri = get_type(has_type_uri)
+
+                        q = f"""
+                                    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+        
+                                    SELECT {'DISTINCT' if distinct else ''} ?{VALUE}
+        
+                                    WHERE {{
+                                        ?ent a {URIRef(type_uri).n3()};
+                                            skos:prefLabel ?{VALUE}
+                                    }}
+                                """
+
+                        r = self.prov.graph_wrapper.query(q)
+
+                    t1 = time.time()
+                    l_T.append(t1 - t0)
+
+                print(f'T query = {np.mean(l_T):.2f} +- {np.std(l_T):.2f} s')
+
+        if 1:
+            s_subtest = 'Single query:'
+            with self.subTest(s_subtest):
+                print(s_subtest)
+
+                l_T = []
+
+                L_TYPE = [type_i for has_i, type_i in build_rdf.D_ENTITIES.values()]
+
+                for _ in range(n_samples):
+                    t0 = time.time()
+
+                    q_value = f"""
+                        VALUES ?type {{{' '.join(map(lambda x: x.n3(), L_TYPE))}}}
+                    """
+
+                    q = f"""
+                        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+                        SELECT DISTINCT ?type ?value_ent
+                    
+                        WHERE {{
+                        
+                            {q_value}
+                                           
+                            ?ent a ?type;
+                                skos:prefLabel ?value_ent ;
+                        }}
+                    """
+
+                    r = self.prov.graph_wrapper.query(q)
+
+                    t1 = time.time()
+                    l_T.append(t1 - t0)
+
+                print(f'T query = {np.mean(l_T):.2f} +- {np.std(l_T):.2f} s')
+
+        return
 
 
 class TestGetRO(unittest.TestCase):
@@ -295,7 +544,7 @@ class TestGetRO(unittest.TestCase):
 
     def test_get_filter_single(self):
 
-        l_ent_types = self.get_ro_provider().get_different_entities()
+        l_ent_types = self.get_ro_provider().get_different_entity_types()
 
         # Get verb predicate
         pred = list(filter(lambda x: 'Verb' in x, l_ent_types))[0]
@@ -319,7 +568,7 @@ class TestGetRO(unittest.TestCase):
 
     def test_get_filter_multiple(self):
 
-        l_ent_types = self.get_ro_provider().get_different_entities()
+        l_ent_types = self.get_ro_provider().get_different_entity_types()
 
         pred0 = list(filter(lambda s: 'hasVerb' in s, l_ent_types))[0]
         pred1 = list(filter(lambda s: 'hasRegulatoryBody' in s, l_ent_types))[0]
@@ -342,7 +591,7 @@ class TestGetRO(unittest.TestCase):
 
     def test_filter_case_insensitive(self):
 
-        l_ent_types = self.get_ro_provider().get_different_entities()
+        l_ent_types = self.get_ro_provider().get_different_entity_types()
 
         pred0 = list(filter(lambda s: 'hasVerb' in s, l_ent_types))[0]
         pred1 = list(filter(lambda s: 'hasRegulatoryBody' in s, l_ent_types))[0]
@@ -636,7 +885,7 @@ class TestFilterDropdown(unittest.TestCase):
 
         """
 
-        l_types_ent = self.prov.get_different_entities()
+        l_types_ent = self.prov.get_different_entity_types()
 
         type_ent0 = l_types_ent[0]
         type_ent1 = l_types_ent[1]
@@ -679,7 +928,7 @@ class TestFilterDropdown(unittest.TestCase):
 
         """
 
-        l_types_ent = self.prov.get_different_entities()
+        l_types_ent = self.prov.get_different_entity_types()
 
         for type_ent_i in l_types_ent:
             with self.subTest(f'{type_ent_i}'):
@@ -698,7 +947,7 @@ class TestFilterDropdown(unittest.TestCase):
 
         """
 
-        l_types_ent = self.prov.get_different_entities()
+        l_types_ent = self.prov.get_different_entity_types()
 
         n_test_count = 0
         n_test_max = 2
@@ -752,7 +1001,7 @@ class TestFilterDropdown(unittest.TestCase):
         Returns:
 
         """
-        l_types_ent = self.prov.get_different_entities()
+        l_types_ent = self.prov.get_different_entity_types()
 
         # n_test_count = 0
         # n_test_max = 2
@@ -800,7 +1049,7 @@ class TestFilterDropdown(unittest.TestCase):
         Returns:
 
         """
-        l_types_ent = self.prov.get_different_entities()
+        l_types_ent = self.prov.get_different_entity_types()
 
         # n_test_count = 0
         # n_test_max = 2
@@ -842,6 +1091,80 @@ class TestFilterDropdown(unittest.TestCase):
 
                                     return  # Done
 
+    def test_equivalence(self):
+
+        l_uri_has = self.prov.get_different_entity_types()
+
+        def check_equivalence(d0, d1,
+                              b_subtest=False
+                              ):
+
+            for has_type_uri in l_uri_has:
+
+                if b_subtest:
+                    with self.subTest(has_type_uri):
+                        self.assertEqual(d0.get(has_type_uri),
+                                         d1.get(has_type_uri),
+                                         'Output should be the same.')
+                else:
+                    self.assertEqual(d0.get(has_type_uri),
+                                     d1.get(has_type_uri),
+                                     'Output should be the same.')
+
+        def get_d_correct():
+            #
+            # d = {}
+            # for has_type_uri in l_has:
+            #     q = f"""
+            #         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+            #
+            #         SELECT {'DISTINCT' if distinct else ''} ?{VALUE}
+            #
+            #         WHERE {{
+            #             ?ro a {build_rdf.ROGraph.class_rep_obl.n3()} ;
+            #                 {URIRef(has_type_uri).n3()} ?ent .
+            #             ?ent skos:prefLabel ?{VALUE}
+            #         }}
+            #         ORDER BY (LCASE(?{VALUE}))
+            #     """
+            #
+            #     r = self.prov.graph_wrapper.query(q)
+            #     l = self.prov.graph_wrapper.get_column(r, VALUE)
+            #
+            #     d[has_type_uri] = l
+
+            return d_base
+
+        def get0():
+            d = self.prov.get_filter_entities()
+
+            for uri_has in l_uri_has:
+                if d.get(uri_has) is None:
+                    d[uri_has] = []
+
+                else:
+                    d[uri_has] = [l_i.get('value_ent') for l_i in d[uri_has]]
+
+            return d
+
+        def get_filtered_entities():
+            d1 = {}
+            for uri_has in l_uri_has:
+                l = self.prov.get_filter_entities_from_type(uri_has)
+                d1[uri_has] = l
+
+            return d1
+
+        d_base = get0()
+
+        with self.subTest('Filtered entities'):
+
+            d1 = get_filtered_entities()
+
+            check_equivalence(d_base, d1)
+
+        return
+
     def test_speed(self):
 
         n_samples = 10
@@ -849,7 +1172,7 @@ class TestFilterDropdown(unittest.TestCase):
         graph_wrapper = SPARQLGraphWrapper(URL_FUSEKI_PRD)
         prov = SPARQLReportingObligationProvider(graph_wrapper)
 
-        l_types_ent = prov.get_different_entities()
+        l_types_ent = prov.get_different_entity_types()
 
         s_test = 'querying without filter'
         with self.subTest(s_test):
@@ -863,7 +1186,7 @@ class TestFilterDropdown(unittest.TestCase):
 
                 l_T.append(t1 - t0)
 
-            print(f'T query = {np.mean(l_T):.2f} s')
+            print(f'T query = {np.mean(l_T):.2f} +- {np.std(l_T):.2f} s')
 
         s_test = 'querying with filter'
         with self.subTest(s_test):
@@ -884,7 +1207,199 @@ class TestFilterDropdown(unittest.TestCase):
 
                 l_T.append(t1 - t0)
 
-            print(f'T query = {np.mean(l_T):.2f} s')
+            print(f'T query = {np.mean(l_T):.2f} +- {np.std(l_T):.2f} s')
+
+
+class TestGetEntities(unittest.TestCase):
+    def setUp(self) -> None:
+
+        graph_wrapper = SPARQLGraphWrapper(URL_FUSEKI)
+        self.prov = SPARQLReportingObligationProvider(graph_wrapper)
+
+    def test_result(self):
+
+        r = self.prov.get_entities()
+
+        r_backup = self.prov.get_filter_entities()
+
+        with self.subTest('Non-empty'):
+            self.assertTrue(r)
+
+        with self.subTest('Equivalent'):
+            self.assertEqual(r, r_backup)
+
+        for has_uri in self.prov.get_different_entity_types():
+            with self.subTest(f'URI {has_uri}:'):
+                self.assertEqual(r.get(has_uri), r_backup.get(has_uri))
+
+    def test_speed(self):
+        n_samples = 1
+
+        # "Overwrite" for this test
+        graph_wrapper = SPARQLGraphWrapper(URL_FUSEKI_PRD)
+        self.prov = SPARQLReportingObligationProvider(graph_wrapper)
+
+        PRED = 'pred'
+        TYPE = 'type'
+        VALUE = 'value_ent'
+
+        L_HAS = [has_i for has_i, type_i in build_rdf.D_ENTITIES.values()]
+        L_TYPE = [type_i for has_i, type_i in build_rdf.D_ENTITIES.values()]
+
+        if 1:
+            s_subtest = 'Baseline'
+            with self.subTest(s_subtest):
+                print(s_subtest)
+
+                l_T = []
+                for _ in range(n_samples):
+                    t0 = time.time()
+                    l_types = self.prov.get_different_entity_types()
+                    for type_i in l_types:
+                        r = self.prov.get_all_from_type(type_i)
+                    t1 = time.time()
+
+                    l_T.append(t1 - t0)
+
+                print(f'delta T = {np.mean(l_T)}')
+
+        if 0:
+            s_subtest = 'Simple'
+            with self.subTest(s_subtest):
+                print(s_subtest)
+                q = """
+                    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+                    PREFIX dgfro: <http://dgfisma.com/reporting_obligations/>
+                    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                    SELECT DISTINCT ?pred ?value_ent (count(?ro_id) as ?count)
+                    WHERE {
+                        ?ro_id rdf:type <http://dgfisma.com/reporting_obligations/ReportingObligation> ;
+                            ?pred ?ent .
+                        ?ent skos:prefLabel ?value_ent .       
+                    }
+                    
+                    GROUPBY ?pred ?value_ent
+            
+                    ORDER BY (LCASE(?pred)) (LCASE(?value_ent))
+                """
+
+                l_T = []
+                for _ in range(n_samples):
+                    t0 = time.time()
+                    r = self.prov.graph_wrapper.query(q)
+                    t1 = time.time()
+
+                    l_T.append(t1 - t0)
+
+                print(f'delta T = {np.mean(l_T)}')
+
+        if 0:
+            s_subtest = 'Filter the HAS predicates'
+            with self.subTest(s_subtest):
+                print(s_subtest)
+
+                q_values = f"""
+                VALUES ?{PRED} {{{' '.join(map(lambda x: x.n3(), L_HAS))}}}
+                """
+
+                q = f"""
+                    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+                    PREFIX dgfro: <http://dgfisma.com/reporting_obligations/>
+                    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                    SELECT DISTINCT ?pred ?value_ent (count(?ro_id) as ?count)
+                    WHERE {{        
+                        {q_values}
+                
+                        ?ro_id rdf:type <http://dgfisma.com/reporting_obligations/ReportingObligation> ;
+                            ?pred ?ent .
+                        ?ent skos:prefLabel ?value_ent .       
+                    }}
+    
+                    GROUPBY ?pred ?value_ent
+    
+                    ORDER BY (LCASE(?pred)) (LCASE(?value_ent))
+                """
+
+                l_T = []
+                for _ in range(n_samples):
+                    t0 = time.time()
+                    r = self.prov.graph_wrapper.query(q)
+                    t1 = time.time()
+
+                    l_T.append(t1 - t0)
+
+                print(f'delta T = {np.mean(l_T)}')
+
+        if 0:
+            s_subtest = "Ignore RO's"
+            with self.subTest(s_subtest):
+                print(s_subtest)
+
+                q_values = f"""
+                VALUES ?{PRED} {{{' '.join(map(lambda x: x.n3(), L_HAS))}}}
+                """
+
+                q = f"""
+                    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+                    PREFIX dgfro: <http://dgfisma.com/reporting_obligations/>
+                    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                    SELECT DISTINCT ?pred ?value_ent # (count(?ro_id) as ?count)
+                    WHERE {{        
+                        {q_values}
+    
+                        ?ro_id ?pred ?ent .
+                        ?ent skos:prefLabel ?value_ent .       
+                    }}
+    
+                    GROUPBY ?pred ?value_ent
+    
+                    ORDER BY (LCASE(?pred)) (LCASE(?value_ent))
+                """
+
+                l_T = []
+                for _ in range(n_samples):
+                    t0 = time.time()
+                    r = self.prov.graph_wrapper.query(q)
+                    t1 = time.time()
+
+                    l_T.append(t1 - t0)
+
+                print(f'delta T = {np.mean(l_T)}')
+
+        s_subtest = "Ignore RO's V2"
+        with self.subTest(s_subtest):
+            print(s_subtest)
+
+            q_values = f"""
+                    VALUES ?{TYPE} {{{' '.join(map(lambda x: x.n3(), L_TYPE))}}}
+                    """
+
+            q = f"""
+                        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+                        PREFIX dgfro: <http://dgfisma.com/reporting_obligations/>
+                        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                        SELECT DISTINCT ?{TYPE} ?{VALUE} # (count(?ro_id) as ?count)
+                        WHERE {{        
+                            {q_values}
+
+                            ?ent a ?{TYPE} ;
+                                skos:prefLabel ?{VALUE} .       
+                        }}
+
+                        GROUPBY ?{TYPE} ?{VALUE}
+
+                        ORDER BY (LCASE(?pred)) (LCASE(?{VALUE}))
+                    """
+
+            l_T = []
+            for _ in range(n_samples):
+                t0 = time.time()
+                r = self.prov.graph_wrapper.query(q)
+                t1 = time.time()
+
+                l_T.append(t1 - t0)
+
+            print(f'delta T = {np.mean(l_T)}')
 
 
 class TestFilterDropdownAllAtOnce(unittest.TestCase):
@@ -912,7 +1427,7 @@ class TestFilterDropdownAllAtOnce(unittest.TestCase):
 
         """
 
-        l_types_ent = self.prov.get_different_entities()
+        l_types_ent = self.prov.get_different_entity_types()
 
         d_filtered_ents = self.prov.get_filter_entities()
 
@@ -929,7 +1444,7 @@ class TestFilterDropdownAllAtOnce(unittest.TestCase):
         graph_wrapper = SPARQLGraphWrapper(URL_FUSEKI_PRD)
         prov = SPARQLReportingObligationProvider(graph_wrapper)
 
-        l_types_ent = prov.get_different_entities()
+        l_types_ent = prov.get_different_entity_types()
 
         if 0:  # Bad idea as this is incredibly slow!
             s_test = 'querying without filter'
@@ -953,6 +1468,9 @@ class TestFilterDropdownAllAtOnce(unittest.TestCase):
             l_T = []
             for type_ent_i in random.sample(l_types_ent, n_samples):
                 l_ent_i = prov.get_all_from_type(type_ent_i)
+                if len(l_ent_i) == 0:
+                    # Entity type without entities. E.g. hasPropGol
+                    continue
 
                 ent_i = _sample_single(l_ent_i)
 
@@ -963,6 +1481,79 @@ class TestFilterDropdownAllAtOnce(unittest.TestCase):
                 l_T.append(t1 - t0)
 
             print(f'T query = {np.mean(l_T):.2f} s')
+
+
+class TestFilterEntitiesFromTypeLazyLoading(unittest.TestCase):
+
+    def setUp(self) -> None:
+
+        graph_wrapper = SPARQLGraphWrapper(URL_STAGING)
+        self.prov = SPARQLReportingObligationProvider(graph_wrapper)
+
+    def test_starts_with(self):
+        l_uri_has = self.prov.get_different_entity_types()
+
+        for uri_type_has in l_uri_has:
+
+            with self.subTest(uri_type_has):
+
+                l_no_filter = self.prov.get_filter_entities_from_type_lazy_loading(uri_type_has)
+
+                if len(l_no_filter) == 0:
+                    continue
+
+                l = []
+                for c in string.ascii_lowercase:
+                    l += self.prov.get_filter_entities_from_type_lazy_loading(uri_type_has,
+                                                                              str_match=c,
+                                                                              type_match=rdf_parser.STARTS_WITH)
+
+                self.assertTrue(len(l), 'Should return something')
+
+                self.assertTrue(set(l).issubset(l_no_filter))
+
+                self.assertEqual(len(l), len(set(l)), "There shouldn't be any duplicates")
+
+        return
+
+    def test_starts_with(self):
+        l_uri_has = self.prov.get_different_entity_types()
+
+        for uri_type_has in l_uri_has:
+
+            with self.subTest(uri_type_has):
+
+                l_no_filter = self.prov.get_filter_entities_from_type_lazy_loading(uri_type_has)
+
+                if len(l_no_filter) == 0:
+                    continue
+
+                v0_i = l_no_filter[0]
+
+                for uri_type_has_j in l_uri_has:
+                    # Filter
+
+                    l_no_filter_j = self.prov.get_filter_entities_from_type_lazy_loading(uri_type_has_j,
+                                                                                         list_pred_value=[
+                                                                                             (uri_type_has, v0_i)]
+                                                                                         )
+                    if len(l_no_filter_j) == 0:
+                        continue
+
+                    print()
+
+                # l = []
+                # for c in string.ascii_lowercase:
+                #     l += self.prov.get_filter_entities_from_type_lazy_loading(uri_type_has,
+                #                                                               starts_with=c)
+                #
+                # self.assertTrue(len(l), 'Should return something')
+                #
+                # self.assertTrue(set(l).issubset(l_no_filter))
+                #
+                # self.assertEqual(len(l), len(set(l)), "There shouldn't be any duplicates")
+
+        return
 
 
 def _sample_single(l):
