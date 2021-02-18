@@ -493,6 +493,8 @@ class SPARQLReportingObligationProvider:
 
         q_filter = _get_q_filter(list_pred_value, ro=RO, exact_match=exact_match) if list_pred_value else ''
 
+        str_match = str_match.strip()
+
         if str_match == '':
             q_filter_entity = ''
         elif type_match == CONTAINS:
