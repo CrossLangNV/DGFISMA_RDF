@@ -551,29 +551,37 @@ def _get_q_filter(list_pred_value: List[Tuple[str]] = [],
     Returns:
 
     """
-    q_filter = ""
+    q_total = ""
+
+    def get_q_filter_i(i, value_i, exact_match=True):
+
+        if exact_match:
+            q_filter_i = f"""
+                lcase(str(?p{i})) = lcase({Literal(value_i.strip()).n3()})
+            """
+        else:
+            q_filter_i = f"""
+                CONTAINS(
+                    lcase(str(?p{i})), lcase({Literal(value_i.strip()).n3()})
+                )
+            """
+
+        return q_filter_i
 
     for i, (pred, value) in enumerate(list_pred_value):
 
-        if exact_match:
-            q_i = f"""
-                ?{ro} {URIRef(pred).n3()} ?ent{i} .
-                ?ent{i} skos:prefLabel ?p{i} .
-                FILTER (
-                    lcase(str(?p{i})) = lcase({Literal(value.strip()).n3()})
-                )
-            """
+        if isinstance(value, (list, tuple)):
+            q_filter_i = '||'.join(map(lambda value_i_j : get_q_filter_i(i, value_i_j, exact_match=exact_match), value ))
+
         else:
-            q_i = f"""
-                ?{ro} {URIRef(pred).n3()} ?ent{i} .
-                ?ent{i} skos:prefLabel ?p{i} .
-                FILTER (
-                    CONTAINS(
-                        lcase(str(?p{i})), lcase({Literal(value.strip()).n3()})
-                    )
-                )
-            """
+            q_filter_i = get_q_filter_i(i, value, exact_match=exact_match)
 
-        q_filter += q_i
+        q_i = f"""
+            ?{ro} {URIRef(pred).n3()} ?ent{i} .
+            ?ent{i} skos:prefLabel ?p{i} .
+            FILTER({q_filter_i})
+        """
 
-    return q_filter
+        q_total += q_i
+
+    return q_total
