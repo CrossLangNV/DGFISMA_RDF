@@ -472,7 +472,8 @@ class SPARQLReportingObligationProvider:
                                                    str_match: str = '',
                                                    type_match=CONTAINS,
                                                    list_pred_value: List[Tuple[str]] = [],
-                                                   exact_match=False
+                                                   exact_match=False,
+                                                   limit: int = 0,
                                                    ):
 
         """ Filter the entities for a certain entity type.
@@ -528,6 +529,8 @@ class SPARQLReportingObligationProvider:
         
         ORDER BY (LCASE(?{VALUE}))
         
+        {f"LIMIT {limit}" if limit else ''}
+                
         """
 
         # print(q)
@@ -571,7 +574,7 @@ def _get_q_filter(list_pred_value: List[Tuple[str]] = [],
     for i, (pred, value) in enumerate(list_pred_value):
 
         if isinstance(value, (list, tuple)):
-            q_filter_i = '||'.join(map(lambda value_i_j : get_q_filter_i(i, value_i_j, exact_match=exact_match), value ))
+            q_filter_i = '||'.join(map(lambda value_i_j: get_q_filter_i(i, value_i_j, exact_match=exact_match), value))
 
         else:
             q_filter_i = get_q_filter_i(i, value, exact_match=exact_match)
