@@ -1,12 +1,11 @@
 import os
 import random
+import re
 import string
 import tempfile
-import time
 import unittest
-from typing import Iterable
+from typing import Iterable, List
 
-import numpy as np
 from rdflib.term import URIRef
 
 from dgfisma_rdf.reporting_obligations import build_rdf, rdf_parser
@@ -335,143 +334,6 @@ class TestGetAllFromType(unittest.TestCase):
 
         return
 
-    def test_speed(self):
-        """ Dropdown menu's seem to be the
-
-        Returns:
-
-        """
-
-        n_samples = 3
-
-        distinct = True
-
-        VALUE = 'value_ent'
-
-        l_has_types = self.prov.get_different_entity_types()
-
-        if 1:
-            s_subtest = 'Implemented query'
-            with self.subTest(s_subtest):
-                print(s_subtest)
-
-                l_T = []
-                for _ in range(n_samples):
-
-                    t0 = time.time()
-                    for has_type_uri in l_has_types:
-                        self.prov.get_all_from_type(has_type_uri)
-                    t1 = time.time()
-
-                    l_T.append(t1 - t0)
-
-                print(f'T query = {np.mean(l_T):.2f} +- {np.std(l_T):.2f} s')
-
-        if 1:
-            s_subtest = 'minimal query'
-            with self.subTest(s_subtest):
-                print(s_subtest)
-
-                l_T = []
-                for _ in range(n_samples):
-
-                    t0 = time.time()
-                    for has_type_uri in l_has_types:
-                        q = f"""
-                                    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-            
-                                    SELECT {'DISTINCT' if distinct else ''} ?{VALUE}
-            
-                                    WHERE {{
-                                        ?ro    {URIRef(has_type_uri).n3()} ?ent .
-                                        ?ent skos:prefLabel ?{VALUE}
-                                    }}
-                                """
-
-                        self.prov.graph_wrapper.query(q)
-                    t1 = time.time()
-
-                    l_T.append(t1 - t0)
-
-                print(f'T query = {np.mean(l_T):.2f} +- {np.std(l_T):.2f} s')
-
-        if 1:
-            s_subtest = 'Type based:'
-            with self.subTest(s_subtest):
-                print(s_subtest)
-
-                l_T = []
-
-                def get_type(has_uri):
-
-                    for has_i, type_i in build_rdf.D_ENTITIES.values():
-                        if URIRef(has_i) == URIRef(has_uri):
-                            return type_i
-
-                    return build_rdf.SKOS.Concept
-
-                for _ in range(n_samples):
-
-                    t0 = time.time()
-                    for has_type_uri in l_has_types:
-                        type_uri = get_type(has_type_uri)
-
-                        q = f"""
-                                    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-        
-                                    SELECT {'DISTINCT' if distinct else ''} ?{VALUE}
-        
-                                    WHERE {{
-                                        ?ent a {URIRef(type_uri).n3()};
-                                            skos:prefLabel ?{VALUE}
-                                    }}
-                                """
-
-                        r = self.prov.graph_wrapper.query(q)
-
-                    t1 = time.time()
-                    l_T.append(t1 - t0)
-
-                print(f'T query = {np.mean(l_T):.2f} +- {np.std(l_T):.2f} s')
-
-        if 1:
-            s_subtest = 'Single query:'
-            with self.subTest(s_subtest):
-                print(s_subtest)
-
-                l_T = []
-
-                L_TYPE = [type_i for has_i, type_i in build_rdf.D_ENTITIES.values()]
-
-                for _ in range(n_samples):
-                    t0 = time.time()
-
-                    q_value = f"""
-                        VALUES ?type {{{' '.join(map(lambda x: x.n3(), L_TYPE))}}}
-                    """
-
-                    q = f"""
-                        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-                        SELECT DISTINCT ?type ?value_ent
-                    
-                        WHERE {{
-                        
-                            {q_value}
-                                           
-                            ?ent a ?type;
-                                skos:prefLabel ?value_ent ;
-                        }}
-                    """
-
-                    r = self.prov.graph_wrapper.query(q)
-
-                    t1 = time.time()
-                    l_T.append(t1 - t0)
-
-                print(f'T query = {np.mean(l_T):.2f} +- {np.std(l_T):.2f} s')
-
-        return
-
 
 class TestGetRO(unittest.TestCase):
     def __init__(self, *args, **kwargs):
@@ -794,8 +656,8 @@ class TestSPARQLReportingObligationProviderGetFilterMultiple(unittest.TestCase):
         l_ro = self.ro_provider.get_filter_ro_id_multiple(list_filters, exact_match=True)
 
         list_filters_substring = [(D_ENTITIES[self.L_ENT1][0], '1'),
-                        (D_ENTITIES[self.L_ENT2][0], 'a2')
-                        ]
+                                  (D_ENTITIES[self.L_ENT2][0], 'a2')
+                                  ]
 
         l_ro_exact = self.ro_provider.get_filter_ro_id_multiple(list_filters_substring, exact_match=True)
 
@@ -816,8 +678,8 @@ class TestSPARQLReportingObligationProviderGetFilterMultiple(unittest.TestCase):
         l_ro = self.ro_provider.get_filter_ro_id_multiple(list_filters, exact_match=True)
 
         list_filters_substring = [(D_ENTITIES[self.L_ENT1][0], 'a'),
-                        (D_ENTITIES[self.L_ENT2][0], 'a2')
-                        ]
+                                  (D_ENTITIES[self.L_ENT2][0], 'a2')
+                                  ]
 
         l_ro_exact = self.ro_provider.get_filter_ro_id_multiple(list_filters_substring, exact_match=True)
 
@@ -966,6 +828,32 @@ class TestFilterDropdown(unittest.TestCase):
                     self.assertIn(ent_0_i, l_ent_1_filtered, 'Expect same value')
 
         return
+
+    def test_exact_match_or(self):
+        l_types_ent = self.prov.get_different_entity_types()
+
+        type_ent0 = l_types_ent[0]
+        # type_ent1 = l_types_ent[1]
+
+        l_types_ent
+
+        l_ent_0 = self.prov.get_all_from_type(type_ent0)
+        # l_ent_1 = self.prov.get_all_from_type(type_ent1)
+
+        ent_0_0 = l_ent_0[0]
+        # ent_1_0 = l_ent_1[0]
+
+        l_ro_baseline = self.prov.get_filter_ro_id_multiple([(type_ent0, ent_0_0)])
+
+        with self.subTest('single'):
+            l_ro_single = self.prov.get_filter_ro_id_multiple([(type_ent0, [ent_0_0])])
+
+            self.assertEqual(l_ro_baseline, l_ro_single)
+
+        with self.subTest('double'):
+            l_ro_double = self.prov.get_filter_ro_id_multiple([(type_ent0, [ent_0_0, ent_0_0])])
+
+            self.assertEqual(l_ro_baseline, l_ro_double)
 
     def test_no_filters_return_all(self):
         """ When no filters are applied, it's should probably still work and return everything
@@ -1211,59 +1099,13 @@ class TestFilterDropdown(unittest.TestCase):
 
         return
 
-    def test_speed(self):
-
-        n_samples = 10
-
-        graph_wrapper = SPARQLGraphWrapper(URL_FUSEKI_PRD)
-        prov = SPARQLReportingObligationProvider(graph_wrapper)
-
-        l_types_ent = prov.get_different_entity_types()
-
-        s_test = 'querying without filter'
-        with self.subTest(s_test):
-            print(s_test)
-
-            l_T = []
-            for type_ent_i in random.sample(l_types_ent, n_samples):
-                t0 = time.time()
-                prov.get_filter_entities_from_type(type_ent_i)
-                t1 = time.time()
-
-                l_T.append(t1 - t0)
-
-            print(f'T query = {np.mean(l_T):.2f} +- {np.std(l_T):.2f} s')
-
-        s_test = 'querying with filter'
-        with self.subTest(s_test):
-            print(s_test)
-
-            l_T = []
-            for type_ent_i in random.sample(l_types_ent, n_samples):
-                type_ent_j = _sample_single(l_types_ent)
-                l_ent_j = prov.get_all_from_type(type_ent_j)
-                if len(l_ent_j) == 0:
-                    continue  # Could be empty
-                ent_j = _sample_single(l_ent_j)
-
-                t0 = time.time()
-                r = prov.get_filter_entities_from_type(type_ent_i,
-                                                       [(type_ent_j, ent_j)])
-                t1 = time.time()
-
-                l_T.append(t1 - t0)
-
-            print(f'T query = {np.mean(l_T):.2f} +- {np.std(l_T):.2f} s')
-
 
 class TestGetEntities(unittest.TestCase):
     def setUp(self) -> None:
-
         graph_wrapper = SPARQLGraphWrapper(URL_FUSEKI)
         self.prov = SPARQLReportingObligationProvider(graph_wrapper)
 
     def test_result(self):
-
         r = self.prov.get_entities()
 
         r_backup = self.prov.get_filter_entities()
@@ -1277,175 +1119,6 @@ class TestGetEntities(unittest.TestCase):
         for has_uri in self.prov.get_different_entity_types():
             with self.subTest(f'URI {has_uri}:'):
                 self.assertEqual(r.get(has_uri), r_backup.get(has_uri))
-
-    def test_speed(self):
-        n_samples = 1
-
-        # "Overwrite" for this test
-        graph_wrapper = SPARQLGraphWrapper(URL_FUSEKI_PRD)
-        self.prov = SPARQLReportingObligationProvider(graph_wrapper)
-
-        PRED = 'pred'
-        TYPE = 'type'
-        VALUE = 'value_ent'
-
-        L_HAS = [has_i for has_i, type_i in build_rdf.D_ENTITIES.values()]
-        L_TYPE = [type_i for has_i, type_i in build_rdf.D_ENTITIES.values()]
-
-        if 1:
-            s_subtest = 'Baseline'
-            with self.subTest(s_subtest):
-                print(s_subtest)
-
-                l_T = []
-                for _ in range(n_samples):
-                    t0 = time.time()
-                    l_types = self.prov.get_different_entity_types()
-                    for type_i in l_types:
-                        r = self.prov.get_all_from_type(type_i)
-                    t1 = time.time()
-
-                    l_T.append(t1 - t0)
-
-                print(f'delta T = {np.mean(l_T)}')
-
-        if 0:
-            s_subtest = 'Simple'
-            with self.subTest(s_subtest):
-                print(s_subtest)
-                q = """
-                    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-                    PREFIX dgfro: <http://dgfisma.com/reporting_obligations/>
-                    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                    SELECT DISTINCT ?pred ?value_ent (count(?ro_id) as ?count)
-                    WHERE {
-                        ?ro_id rdf:type <http://dgfisma.com/reporting_obligations/ReportingObligation> ;
-                            ?pred ?ent .
-                        ?ent skos:prefLabel ?value_ent .       
-                    }
-                    
-                    GROUPBY ?pred ?value_ent
-            
-                    ORDER BY (LCASE(?pred)) (LCASE(?value_ent))
-                """
-
-                l_T = []
-                for _ in range(n_samples):
-                    t0 = time.time()
-                    r = self.prov.graph_wrapper.query(q)
-                    t1 = time.time()
-
-                    l_T.append(t1 - t0)
-
-                print(f'delta T = {np.mean(l_T)}')
-
-        if 0:
-            s_subtest = 'Filter the HAS predicates'
-            with self.subTest(s_subtest):
-                print(s_subtest)
-
-                q_values = f"""
-                VALUES ?{PRED} {{{' '.join(map(lambda x: x.n3(), L_HAS))}}}
-                """
-
-                q = f"""
-                    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-                    PREFIX dgfro: <http://dgfisma.com/reporting_obligations/>
-                    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                    SELECT DISTINCT ?pred ?value_ent (count(?ro_id) as ?count)
-                    WHERE {{        
-                        {q_values}
-                
-                        ?ro_id rdf:type <http://dgfisma.com/reporting_obligations/ReportingObligation> ;
-                            ?pred ?ent .
-                        ?ent skos:prefLabel ?value_ent .       
-                    }}
-    
-                    GROUPBY ?pred ?value_ent
-    
-                    ORDER BY (LCASE(?pred)) (LCASE(?value_ent))
-                """
-
-                l_T = []
-                for _ in range(n_samples):
-                    t0 = time.time()
-                    r = self.prov.graph_wrapper.query(q)
-                    t1 = time.time()
-
-                    l_T.append(t1 - t0)
-
-                print(f'delta T = {np.mean(l_T)}')
-
-        if 0:
-            s_subtest = "Ignore RO's"
-            with self.subTest(s_subtest):
-                print(s_subtest)
-
-                q_values = f"""
-                VALUES ?{PRED} {{{' '.join(map(lambda x: x.n3(), L_HAS))}}}
-                """
-
-                q = f"""
-                    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-                    PREFIX dgfro: <http://dgfisma.com/reporting_obligations/>
-                    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                    SELECT DISTINCT ?pred ?value_ent # (count(?ro_id) as ?count)
-                    WHERE {{        
-                        {q_values}
-    
-                        ?ro_id ?pred ?ent .
-                        ?ent skos:prefLabel ?value_ent .       
-                    }}
-    
-                    GROUPBY ?pred ?value_ent
-    
-                    ORDER BY (LCASE(?pred)) (LCASE(?value_ent))
-                """
-
-                l_T = []
-                for _ in range(n_samples):
-                    t0 = time.time()
-                    r = self.prov.graph_wrapper.query(q)
-                    t1 = time.time()
-
-                    l_T.append(t1 - t0)
-
-                print(f'delta T = {np.mean(l_T)}')
-
-        s_subtest = "Ignore RO's V2"
-        with self.subTest(s_subtest):
-            print(s_subtest)
-
-            q_values = f"""
-                    VALUES ?{TYPE} {{{' '.join(map(lambda x: x.n3(), L_TYPE))}}}
-                    """
-
-            q = f"""
-                        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-                        PREFIX dgfro: <http://dgfisma.com/reporting_obligations/>
-                        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                        SELECT DISTINCT ?{TYPE} ?{VALUE} # (count(?ro_id) as ?count)
-                        WHERE {{        
-                            {q_values}
-
-                            ?ent a ?{TYPE} ;
-                                skos:prefLabel ?{VALUE} .       
-                        }}
-
-                        GROUPBY ?{TYPE} ?{VALUE}
-
-                        ORDER BY (LCASE(?pred)) (LCASE(?{VALUE}))
-                    """
-
-            l_T = []
-            for _ in range(n_samples):
-                t0 = time.time()
-                r = self.prov.graph_wrapper.query(q)
-                t1 = time.time()
-
-                l_T.append(t1 - t0)
-
-            print(f'delta T = {np.mean(l_T)}')
 
 
 class TestFilterDropdownAllAtOnce(unittest.TestCase):
@@ -1483,50 +1156,6 @@ class TestFilterDropdownAllAtOnce(unittest.TestCase):
 
             with self.subTest(f'Non-empty {ent_type}'):
                 self.assertTrue(len(l_ent_filtered), 'Should return at least one element')
-
-    def test_speed(self):
-        n_samples = 10
-
-        graph_wrapper = SPARQLGraphWrapper(URL_FUSEKI_PRD)
-        prov = SPARQLReportingObligationProvider(graph_wrapper)
-
-        l_types_ent = prov.get_different_entity_types()
-
-        if 0:  # Bad idea as this is incredibly slow!
-            s_test = 'querying without filter'
-            with self.subTest(s_test):
-                print(s_test)
-
-                l_T = []
-                for _ in range(n_samples):
-                    t0 = time.time()
-                    r = prov.get_filter_entities()
-                    t1 = time.time()
-
-                    l_T.append(t1 - t0)
-
-                print(f'T query = {np.mean(l_T):.2f} s')
-
-        s_test = 'querying with filter'
-        with self.subTest(s_test):
-            print(s_test)
-
-            l_T = []
-            for type_ent_i in random.sample(l_types_ent, n_samples):
-                l_ent_i = prov.get_all_from_type(type_ent_i)
-                if len(l_ent_i) == 0:
-                    # Entity type without entities. E.g. hasPropGol
-                    continue
-
-                ent_i = _sample_single(l_ent_i)
-
-                t0 = time.time()
-                r = prov.get_filter_entities([(type_ent_i, ent_i)])
-                t1 = time.time()
-
-                l_T.append(t1 - t0)
-
-            print(f'T query = {np.mean(l_T):.2f} s')
 
 
 class TestFilterEntitiesFromTypeLazyLoading(unittest.TestCase):
@@ -1588,18 +1217,98 @@ class TestFilterEntitiesFromTypeLazyLoading(unittest.TestCase):
 
                     print()
 
-                # l = []
-                # for c in string.ascii_lowercase:
-                #     l += self.prov.get_filter_entities_from_type_lazy_loading(uri_type_has,
-                #                                                               starts_with=c)
-                #
-                # self.assertTrue(len(l), 'Should return something')
-                #
-                # self.assertTrue(set(l).issubset(l_no_filter))
-                #
-                # self.assertEqual(len(l), len(set(l)), "There shouldn't be any duplicates")
-
         return
+
+
+class TestSorting(unittest.TestCase):
+    def setUp(self) -> None:
+        graph_wrapper = SPARQLGraphWrapper(URL_STAGING)
+        self.prov = SPARQLReportingObligationProvider(graph_wrapper)
+
+    @staticmethod
+    def prefered_sorting(l_str: List[str]):
+
+        s = l_str[0]
+        re.sub('[^a-zA-Z]+', '', s)
+
+        return sorted(l_str, key=lambda s: (re.sub('[^a-zA-Z]+', '', s).lower() + chr(ord('z') + 1), s))
+
+    def test_preferred_sorting(self):
+        """
+        Make sure the sorter acts as desired.
+
+        Returns:
+            None
+        """
+
+        def _tester(l_base):
+            l_compare = self.prefered_sorting(l_base)
+            l_compare_reverse = self.prefered_sorting(l_base[::-1])
+
+            self.assertEqual(l_base, l_compare)
+            self.assertEqual(l_base, l_compare_reverse)
+
+        with self.subTest('Weird characters towards the end: capital before non-capital'):
+            l = ['A', 'a', '!', '(', ')', '-', '~']
+
+            _tester(l)
+
+        with self.subTest('Case insensitive I'):
+            l = ['A bc',
+                 'a de']
+
+            _tester(l)
+
+        with self.subTest('Case insensitive II'):
+            l = ['a bc',
+                 'A de']
+
+            _tester(l)
+
+        with self.subTest('Case insensitive: capital before non-capital'):
+            l = ['A BC',
+                 'a BC']
+
+            _tester(l)
+
+    def test_sort_filter_ent(self):
+        l_ent_types = self.prov.get_different_entity_types()
+
+        ent_type_ent = [has_i for has_i in l_ent_types if 'hasent'.lower() in has_i.lower()][0]
+        ent_type_prp = [has_i for has_i in l_ent_types if 'hasPropPrp'.lower() in has_i.lower()][0]
+        ent_type_adv = [has_i for has_i in l_ent_types if 'hasPropAdv'.lower() in has_i.lower()][0]
+        ent_type_reporter = [has_i for has_i in l_ent_types if 'hasReporter'.lower() in has_i.lower()][0]
+        # Interesting one!
+        ent_type_prd = [has_i for has_i in l_ent_types if 'hasPropprd'.lower() in has_i.lower()][0]
+        # Good one too!
+        ent_type_report = [has_i for has_i in l_ent_types if has_i.lower().endswith('hasReport'.lower())][0]
+
+        for ent_type_i in [
+            ent_type_ent,
+            ent_type_prp,
+            ent_type_adv,
+            ent_type_reporter,
+            ent_type_prd,
+            ent_type_report
+        ]:
+            with self.subTest(ent_type_i):
+                l_prd = self.prov.get_filter_entities_from_type_lazy_loading(ent_type_i)
+
+                l_prd_sored = self.prefered_sorting(l_prd)
+
+                with self.subTest('Compare elements:'):
+                    for i, (ent_i, ent_i_sorted) in enumerate(zip(l_prd, l_prd_sored)):
+                        self.assertEqual(ent_i, ent_i_sorted,
+                                         f'i={i}. Produced data should already be sorted according to our preferred sorting.')
+
+                with self.subTest('Compare whole list:'):
+                    self.assertEqual(l_prd, l_prd_sored,
+                                     'produced data should already be sorted according to our preferred sorting.')
+
+                l_first_chars = [l_i[:10] for l_i in l_prd]
+                print('Results from query:', l_first_chars[:20])
+                l_first_chars_sorted = [l_i[:10] for l_i in l_prd_sored]
+                print('Correct sorting:', l_first_chars_sorted[:20])
 
 
 def _sample_single(l):
