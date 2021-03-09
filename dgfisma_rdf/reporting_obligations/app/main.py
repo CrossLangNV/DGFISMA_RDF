@@ -42,31 +42,35 @@ async def root():
 async def create_file(file: UploadFile = File(...),
                       docid: str = Header(...),
                       endpoint: str = Header(...),
+                      updateendpoint: str = Header(...),
                       ) -> cas_parser.CasContent:
     """
 
     Args:
         file: CAS
-        endpoint: URL to Fuseki endpoint. e.g. f'http://fuseki_RO:3030/RO/'
+        endpoint: URL to Fuseki endpoint. e.g. f'http://fuseki_RO:3030/RO/query'
+        updateendpoint: URL to the Fuseki update endpoint. e.g. f'http://fuseki_RO:3030/RO/update'
         doc_id: ID to the document
 
     Returns:
         None
     """
 
-    return create_file_shared(file.file, endpoint, docid)
+    return create_file_shared(file.file, endpoint, updateendpoint, docid)
 
 
 @app.post("/ro_cas/base64")
 async def create_file_base64(cas_base64: CasBase64,
                              docid: str = Header(...),
                              endpoint: str = Header(...),
+                             updateendpoint: str = Header(...),
                              ) -> cas_parser.CasContent:
     """
 
     Args:
         cas_base64: CAS in base64 string
-        endpoint: URL to Fuseki endpoint. e.g. f'http://fuseki_RO:3030/RO/'
+        endpoint: URL to Fuseki endpoint. e.g. 'http://fuseki_RO:3030/RO/query'
+        updateendpoint: URL to the Fuseki update endpoint. e.g. 'http://fuseki_RO:3030/RO/update'
         doc_id: ID to the document
 
     Returns:
@@ -82,24 +86,26 @@ async def create_file_base64(cas_base64: CasBase64,
         logging.info(end)
         return JSONResponse(cas_base64)
 
-    return create_file_shared(decoded_cas_content, endpoint, docid)
+    return create_file_shared(decoded_cas_content, endpoint, updateendpoint, docid)
 
 
 @app.post("/ro_cas/init")
 async def create_file_base64(endpoint: str = Header(...),
+                             updateendpoint: str = Header(...),
                              ):
     """ Initialise the RDF with the reporting obligation schema
 
     Args:
-        endpoint: URL to Fuseki endpoint. e.g. f'http://fuseki_RO:3030/RO/'
+        endpoint: URL to Fuseki endpoint. e.g. 'http://fuseki_RO:3030/RO/query'
+        updateendpoint: URL to the Fuseki update endpoint. e.g. 'http://fuseki_RO:3030/RO/update'
 
     Returns:
         None
     """
 
     sparql_update_store = SPARQLUpdateStore(queryEndpoint=endpoint,
-                                            update_endpoint=endpoint + '/update',  # Might have to add "/update"
-                                            auth=(SECRET_USER, SECRET_PASS),
+                                            update_endpoint=updateendpoint,
+                                            auth=(SECRET_USER, SECRET_PASS),  # needed
                                             context_aware=False,
                                             )
 
@@ -112,6 +118,7 @@ async def create_file_base64(endpoint: str = Header(...),
 
 def create_file_shared(decoded_cas_content,
                        endpoint,
+                       update_endpoint,
                        doc_id):
     # Get relevant data of reporting obligations out of the CAS:
     cas = load_cas_from_xmi(decoded_cas_content, typesystem=TYPESYSTEM)
@@ -123,16 +130,17 @@ def create_file_shared(decoded_cas_content,
     except Exception as e:
         raise HTTPException(status_code=406, detail=f"Unable to extract content from CAS.\n{e}")
 
-    return update_rdf_from_cas_content(cas_content, endpoint, doc_id)
+    return update_rdf_from_cas_content(cas_content, endpoint, update_endpoint, doc_id)
 
 
 def update_rdf_from_cas_content(cas_content: cas_parser.CasContent,
-                                endpoint: str,
+                                query_endpoint: str,
+                                update_endpoint: str,
                                 doc_id: str) -> cas_parser.CasContent:
     # Context-aware has to be set to false to allow querying from the Graph object
-    sparql_update_store = SPARQLUpdateStore(queryEndpoint=endpoint,
-                                            update_endpoint=endpoint + '/update',  # Might have to add "/update"
-                                            auth=(SECRET_USER, SECRET_PASS),
+    sparql_update_store = SPARQLUpdateStore(queryEndpoint=query_endpoint,
+                                            update_endpoint=update_endpoint,
+                                            auth=(SECRET_USER, SECRET_PASS),  # needed
                                             context_aware=False,
                                             autocommit=False
                                             )
@@ -143,7 +151,7 @@ def update_rdf_from_cas_content(cas_content: cas_parser.CasContent,
 
     try:
 
-        g.add_cas_content(cas_content, doc_id, endpoint=endpoint)
+        g.add_cas_content(cas_content, doc_id, query_endpoint=query_endpoint)
 
     except Exception as e:
 

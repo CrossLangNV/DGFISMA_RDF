@@ -11,12 +11,11 @@ from ..shared.rdf_dgfisma import NS_BASE
 RO_BASE = Namespace(NS_BASE + 'reporting_obligations/')
 
 ROOT = os.path.join(os.path.dirname(__file__), '../..')
-MOCKUP_FILENAME = os.path.join(ROOT, 'data/examples', 'reporting_obligations_mockup.rdf')
 folder_cas = 'dgfisma_rdf/reporting_obligations/output_reporting_obligations'
 # filename_cas = 'cas_laurens.xml'
 PATH_CAS = os.path.join(ROOT, folder_cas, 'ro + html2text.xml')  # 17 RO's0
 PATH_TYPESYSTEM = os.path.join(ROOT, folder_cas, 'typesystem_tmp.xml')
-for PATH in (MOCKUP_FILENAME, PATH_CAS, PATH_TYPESYSTEM):
+for PATH in (PATH_CAS, PATH_TYPESYSTEM):
     assert os.path.exists(PATH), os.path.abspath(PATH)
 
 # FROM https://github.com/CrossLangNV/DGFISMA_reporting_obligations
@@ -137,13 +136,13 @@ class ROGraph(Graph):
 
     def add_cas_content(self, cas_content: CasContent,
                         doc_id: str,
-                        endpoint=None):
+                        query_endpoint=None):
         """ Build the RDF from cas content.
 
         Args:
             cas_content:
             doc_id:
-            endpoint: Optional, is used to check if RO already exist. If so, the ID is re-used.
+            query_endpoint: (Optional) is used to check if RO already exist. If so, the ID is re-used.
                 If an endpoint is provided, all previous RO's will be removed!
 
         Returns:
@@ -154,8 +153,8 @@ class ROGraph(Graph):
         l_add = []
         l_remove = []
 
-        if endpoint:
-            ro_update = ROUpdate(endpoint)
+        if query_endpoint:
+            ro_update = ROUpdate(query_endpoint)
 
         # add a document
         cat_doc = RO_BASE['cat_doc/' + doc_id.strip().replace(' ', '_')]
@@ -174,7 +173,7 @@ class ROGraph(Graph):
 
             value_i = ro_i[KEY_VALUE]
 
-            if endpoint:
+            if query_endpoint:
                 l_ro_uri = ro_update.get_l_ro(value_i,
                                               doc_uri=cat_doc)
 
@@ -389,7 +388,8 @@ def get_UID_node(base=RO_BASE, info=None):
 
 class ROUpdate:
     def __init__(self,
-                 endpoint):
+                 endpoint,
+                 ):
         self.sparql = SPARQLWrapper(endpoint)
         self.sparql.setReturnFormat(JSON)
 

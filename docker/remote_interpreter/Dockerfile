@@ -1,3 +1,4 @@
+# WARNING never use this docker for production!
 
 # set base image (host OS)
 FROM python:3.8

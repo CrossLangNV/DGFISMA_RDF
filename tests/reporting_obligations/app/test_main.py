@@ -28,12 +28,20 @@ SECRET_PASS = os.getenv("FUSEKI_ADMIN_PASSWORD")
 See <ROOT>/reporting_obligations/README.md OR 
 <ROOT>/reporting_obligations/DockerDebugging/README.md + run_uvicorn.py
 """
-if 0:
+b_local = False
+if b_local:
     LOCAL_URL = 'http://127.0.0.1:8081'
-    URL_ENDPOINT = 'http://127.0.0.1:8080/fuseki/RO_test'  # Make sure to run fusek locally!
+    URL_ENDPOINT = 'http://gpu1.crosslang.com:3030/RO_test/query'  # /query'
+    UPDATE_ENDPOINT = 'http://gpu1.crosslang.com:3030/RO_test/update'
+
 else:
     LOCAL_URL = 'http://gpu1.crosslang.com:10080'
-    URL_ENDPOINT = 'http://gpu1.crosslang.com:3030/RO_test'  # Make sure to run fusek locally!
+    URL_ENDPOINT = 'http://gpu1.crosslang.com:3030/RO_test/query'
+    UPDATE_ENDPOINT = 'http://gpu1.crosslang.com:3030/RO_test/update'
+
+# Make sure this a test version of production!
+ENDPOINT_PRD = 'http://gpu1.crosslang.com:3030/RO_prd_clone/query'
+UPDATE_ENDPOINT_PRD = 'http://gpu1.crosslang.com:3030/RO_prd_clone/update'
 
 URL_CAS_UPLOAD = LOCAL_URL + '/ro_cas/upload'
 URL_CAS_B64 = LOCAL_URL + '/ro_cas/base64'
@@ -91,7 +99,10 @@ class TestUpdateRDFFromCasContent(unittest.TestCase):
         for i, cas_content_i in enumerate(cas_content_iterator(cas_content)):
             with self.subTest(f'RO {i}'):
                 try:
-                    update_rdf_from_cas_content(cas_content_i, endpoint=URL_ENDPOINT, doc_id='example.com/doc/1')
+                    update_rdf_from_cas_content(cas_content_i,
+                                                query_endpoint=URL_ENDPOINT,
+                                                update_endpoint=UPDATE_ENDPOINT,
+                                                doc_id='example.com/doc/1')
                 except Exception as e:
                     self.fail((e, cas_content_i))
 
@@ -103,12 +114,15 @@ class TestUploadCas(unittest.TestCase):
             files = {'file': f}
 
             headers = {'endpoint': URL_ENDPOINT,
+                       'updateendpoint': UPDATE_ENDPOINT,
                        'docid': os.path.basename(path)}
 
             r = TEST_CLIENT.post(URL_CAS_UPLOAD, files=files, headers=headers)
 
         with self.subTest('status code'):
-            self.assertLess(r.status_code, 300, "Status code should indicate a proper connection.")
+            s = f'Status code: {r.status_code}\n{r.content}'
+            self.assertLess(r.status_code, 300,
+                            f"Status code should indicate a proper connection.\n{s}")
 
         with self.subTest('cas content'):
             cas_content = r.json()
@@ -130,11 +144,13 @@ class TestUploadCas(unittest.TestCase):
                 files = {'file': f}
 
                 headers = {'endpoint': URL_ENDPOINT,
+                           'updateendpoint': UPDATE_ENDPOINT,
                            'docid': filename}
 
                 r = TEST_CLIENT.post(URL_CAS_UPLOAD, files=files, headers=headers)
 
-            self.assertLess(r.status_code, 300, "Status code should indicate a proper connection.")
+            s = f'Status code: {r.status_code}\n{r.content}'
+            self.assertLess(r.status_code, 300, f"Status code should indicate a proper connection.\n{s}")
 
             with self.subTest(f'cas content: {filename}'):
                 cas_content = r.json()
@@ -169,6 +185,7 @@ class TestUploadCas(unittest.TestCase):
 
                 values = {'docid': str(filename),
                           'endpoint': URL_ENDPOINT,
+                          'updateendpoint': UPDATE_ENDPOINT,
                           }
 
                 r = TEST_CLIENT.post(URL_CAS_UPLOAD,
@@ -177,7 +194,8 @@ class TestUploadCas(unittest.TestCase):
                                      )
 
             with self.subTest(f'Status code: {filename}'):
-                self.assertLess(r.status_code, 300, r.text)
+                s = f'Status code: {r.status_code}\n{r.content}'
+                self.assertLess(r.status_code, 300, s)
             if r.status_code >= 300:
                 continue
 
@@ -217,6 +235,7 @@ class TestUploadCasB64(unittest.TestCase):
             values = {'content': encoded_cas,
                       }
             headers = {'endpoint': URL_ENDPOINT,
+                       'updateendpoint': UPDATE_ENDPOINT,
                        'docid': os.path.basename(path)}
 
             r = TEST_CLIENT.post(URL_CAS_B64, json=values,
@@ -224,7 +243,8 @@ class TestUploadCasB64(unittest.TestCase):
                                  )
 
         with self.subTest('status code'):
-            self.assertLess(r.status_code, 300, "Status code should indicate a proper connection.")
+            s = f'Status code: {r.status_code}\n{r.content}'
+            self.assertLess(r.status_code, 300, f"Status code should indicate a proper connection.\n{s}")
 
         with self.subTest('cas content'):
             cas_content = r.json()
@@ -251,13 +271,14 @@ class TestUID(unittest.TestCase):
             with open(path, 'rb') as f:
                 files = {'file': f}
                 headers = {'endpoint': URL_ENDPOINT,
+                           'updateendpoint': UPDATE_ENDPOINT,
                            'docid': 'f6e61f10-d970-5b20-83ca-cb3a76d74eaf'}  # Example doc_id
                 r = TEST_CLIENT.post(URL_CAS_UPLOAD, files=files,
                                      headers=headers)
 
             if r.status_code >= 300:  # uploading failed
                 with self.subTest('POST request'):
-                    self.fail('Uploading failed')
+                    self.fail(f'Uploading failed.\nStatus code: {r.status_code}\n{r.content}')
                 continue
 
             cas_content = r.json()
@@ -312,7 +333,8 @@ class UpdateReportingObligations(unittest.TestCase):
         cas_content1 = cas_parser.CasContent.from_list(l1)
 
         cas_content0_update = update_rdf_from_cas_content(cas_content0,
-                                                          endpoint=URL_ENDPOINT,
+                                                          query_endpoint=URL_ENDPOINT,
+                                                          update_endpoint=UPDATE_ENDPOINT,
                                                           doc_id='test123')
 
         # TODO check if CAS_content0 is correctly updated
@@ -320,7 +342,8 @@ class UpdateReportingObligations(unittest.TestCase):
         # TODO check if ENDPOINT contains correct data
 
         cas_content1_update = update_rdf_from_cas_content(cas_content1,
-                                                          endpoint=URL_ENDPOINT,
+                                                          query_endpoint=URL_ENDPOINT,
+                                                          update_endpoint=UPDATE_ENDPOINT,
                                                           doc_id='test123')
 
         # TODO check if CAS_content1 is correctly updated
@@ -348,7 +371,8 @@ class UpdateReportingObligations(unittest.TestCase):
                                                                path_typesystem)
 
             cas_content0_update = update_rdf_from_cas_content(cas_content0,
-                                                              endpoint=URL_ENDPOINT,
+                                                              query_endpoint=URL_ENDPOINT,
+                                                              update_endpoint=UPDATE_ENDPOINT,
                                                               doc_id='test123')
 
             self.assertTrue(cas_content0_update)
@@ -540,7 +564,7 @@ class TestRDFStore(unittest.TestCase):
     def test_rollback_with_endpoint(self):
 
         sparql_update_store = SPARQLUpdateStore(queryEndpoint=URL_ENDPOINT,
-                                                update_endpoint=URL_ENDPOINT + '/update',  # Might have to add "/update"
+                                                update_endpoint=UPDATE_ENDPOINT,  # You have to add update!
                                                 auth=(SECRET_USER, SECRET_PASS)
                                                 )
 
@@ -650,32 +674,36 @@ class TestTransactions(unittest.TestCase):
         def _get_set_l_i(l_i):
             return set([a['value'] for a in l_i[0]['children']])
 
-        update_rdf_from_cas_content(cas_content0,
-                                    endpoint=URL_ENDPOINT,
-                                    doc_id=doc_id)
-
         with self.subTest('0'):
-            self.assertEqual(_get_set_values(), _get_set_l_i(l0))
+            update_rdf_from_cas_content(cas_content0,
+                                        query_endpoint=URL_ENDPOINT,
+                                        update_endpoint=UPDATE_ENDPOINT,
+                                        doc_id=doc_id)
 
-        update_rdf_from_cas_content(cas_content1,
-                                    endpoint=URL_ENDPOINT,
-                                    doc_id=doc_id)
+            self.assertEqual(_get_set_values(), _get_set_l_i(l0))
 
         with self.subTest('1'):
+            update_rdf_from_cas_content(cas_content1,
+                                        query_endpoint=URL_ENDPOINT,
+                                        update_endpoint=UPDATE_ENDPOINT,
+                                        doc_id=doc_id)
+
             self.assertEqual(_get_set_values(), _get_set_l_i(l1))
 
-        update_rdf_from_cas_content(cas_content0,
-                                    endpoint=URL_ENDPOINT,
-                                    doc_id=doc_id)
-
         with self.subTest('0 again'):
+            update_rdf_from_cas_content(cas_content0,
+                                        query_endpoint=URL_ENDPOINT,
+                                        update_endpoint=UPDATE_ENDPOINT,
+                                        doc_id=doc_id)
+
             self.assertEqual(_get_set_values(), _get_set_l_i(l0))
 
-        update_rdf_from_cas_content(cas_content1,
-                                    endpoint=URL_ENDPOINT,
-                                    doc_id=doc_id)
-
         with self.subTest('1 again'):
+            update_rdf_from_cas_content(cas_content1,
+                                        query_endpoint=URL_ENDPOINT,
+                                        update_endpoint=UPDATE_ENDPOINT,
+                                        doc_id=doc_id)
+
             self.assertEqual(_get_set_values(), _get_set_l_i(l1))
 
         return
@@ -687,9 +715,6 @@ class TestSpeed(unittest.TestCase):
     """
 
     def test_speed_production_clone(self):
-        # Make sure this a test version of production!
-        ENDPOINT_PRD = 'http://gpu1.crosslang.com:3030/RO_prd_clone'
-
         rel_path_typesystem = 'dgfisma_rdf/reporting_obligations/output_reporting_obligations/typesystem_tmp.xml'
         path_typesystem = os.path.abspath(os.path.join(ROOT, rel_path_typesystem))
 
@@ -699,7 +724,7 @@ class TestSpeed(unittest.TestCase):
 
             cas_content = cas_parser.CasContent.from_cas_file(path, path_typesystem)
 
-            self._timer(cas_content, ENDPOINT_PRD)
+            self._timer(cas_content, ENDPOINT_PRD, UPDATE_ENDPOINT_PRD)
 
         with self.subTest('oan_2021_01_18_N03'):
             path = os.path.abspath(
@@ -707,12 +732,12 @@ class TestSpeed(unittest.TestCase):
 
             cas_content = cas_parser.CasContent.from_cas_file(path, path_typesystem)
 
-            self._timer(cas_content, ENDPOINT_PRD)
+            self._timer(cas_content, ENDPOINT_PRD, UPDATE_ENDPOINT_PRD)
 
         return
 
     @staticmethod
-    def _timer(cas_content, endpoint):
+    def _timer(cas_content, endpoint, update_endpoint):
         # Expected number of triples
         n_RO_ent = sum((1 for ro_i in cas_content['children'] for a in ro_i['children']))
         n_RO = sum((1 for ro_i in cas_content['children']))
@@ -731,7 +756,8 @@ class TestSpeed(unittest.TestCase):
 
         t0 = time.time()
         update_rdf_from_cas_content(cas_content,
-                                    endpoint=endpoint,
+                                    query_endpoint=endpoint,
+                                    update_endpoint=update_endpoint,
                                     doc_id='test_doc_id')
         t1 = time.time()
 

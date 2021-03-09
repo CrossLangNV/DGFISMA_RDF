@@ -18,7 +18,7 @@ from dgfisma_rdf.reporting_obligations.rdf_parser import SPARQLReportingObligati
 ROOT = os.path.join(os.path.dirname(__file__), '../..')
 
 # You might have to change this
-URL_FUSEKI_PRD = "http://gpu1.crosslang.com:3030/RO_prd_clone"
+URL_FUSEKI_PRD = "http://gpu1.crosslang.com:3030/RO_prd_clone/query"
 
 
 class TestFilterDropdown(unittest.TestCase):

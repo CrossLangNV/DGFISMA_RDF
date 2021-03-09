@@ -9,7 +9,7 @@ from typing import Iterable, List
 from rdflib.term import URIRef
 
 from dgfisma_rdf.reporting_obligations import build_rdf, rdf_parser
-from dgfisma_rdf.reporting_obligations.build_rdf import D_ENTITIES, ExampleCasContent, ROGraph, MOCKUP_FILENAME
+from dgfisma_rdf.reporting_obligations.build_rdf import D_ENTITIES, ExampleCasContent, ROGraph
 from dgfisma_rdf.reporting_obligations.rdf_parser import SPARQLReportingObligationProvider, RDFLibGraphWrapper, \
     SPARQLGraphWrapper
 
@@ -18,9 +18,11 @@ ROOT = os.path.join(os.path.dirname(__file__), '../..')
 # You might have to change this
 # URL_FUSEKI = "http://localhost:8080/fuseki/sandbox/sparql"
 # URL_FUSEKI = "http://fuseki_RO:3030/RO"
-URL_FUSEKI = "http://gpu1.crosslang.com:3030/RO_test"
-URL_STAGING = "http://gpu1.crosslang.com:3030/RO_staging"
-URL_FUSEKI_PRD = "http://gpu1.crosslang.com:3030/RO_prd_clone"
+URL_FUSEKI = "http://gpu1.crosslang.com:3030/RO_test/query"
+URL_STAGING = "http://gpu1.crosslang.com:3030/RO_staging/query"
+URL_FUSEKI_PRD = "http://gpu1.crosslang.com:3030/RO_prd_clone/query"
+
+MOCKUP_FILENAME = os.path.join(ROOT, 'data/examples', 'reporting_obligations_mockup.rdf')
 
 
 class TestRDFLibGraphWrapper(unittest.TestCase):
