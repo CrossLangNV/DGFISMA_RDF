@@ -164,9 +164,19 @@ class SPARQLReportingObligationProvider:
             WHERE {{
                 ?ro a {build_rdf.ROGraph.class_rep_obl.n3()} ;
                     {URIRef(type_uri).n3()} ?ent .
-    			?ent skos:prefLabel ?{VALUE}
+                ?ent skos:prefLabel ?{VALUE}
+    
+                BIND (LCASE(?{VALUE}) AS ?value_ent_lower)
+                BIND (REPLACE(REPLACE(?value_ent_lower,'[^a-zA-Z\\\\s]+', ''), '^[ \\t]+|[ \\t]+$','') AS ?special_sort)          
+
             }}
-            ORDER BY (LCASE(?{VALUE}))
+          
+            ORDER BY 
+            ASC(?special_sort = '')
+            (?special_sort)
+            ASC(?value_ent_lower)
+            ASC(?{VALUE})
+
         """
         #                 FILTER (lang(?value) = 'en')
         l = list(self.graph_wrapper.query(q))
@@ -297,13 +307,13 @@ class SPARQLReportingObligationProvider:
 
             WHERE {{
                 ?ro_id rdf:type {build_rdf.ROGraph.class_rep_obl.n3()} ;
-                   rdf:value ?value .
+                   rdf:value ?{VALUE} .
                 
             {q_filter}
 
         }}
         
-        ORDER BY (LCASE(?value))
+        ORDER BY ASC(LCASE(?{VALUE})) ASC(?{VALUE})
 
         """
 
@@ -354,7 +364,7 @@ class SPARQLReportingObligationProvider:
 
             GROUPBY ?{PRED} ?{VALUE}
 
-            ORDER BY (LCASE(?{PRED})) (LCASE(?{VALUE}))
+            ORDER BY (LCASE(?{PRED})) (LCASE(?{VALUE})) ASC(?{VALUE})
 
         """
 
@@ -406,7 +416,7 @@ class SPARQLReportingObligationProvider:
             
             GROUPBY ?{PRED} ?{VALUE}
     
-            ORDER BY (LCASE(?{PRED})) (LCASE(?{VALUE}))
+            ORDER BY (LCASE(?{PRED})) (LCASE(?{VALUE})) (?{VALUE})
 
         """
 
@@ -458,7 +468,7 @@ class SPARQLReportingObligationProvider:
                 {q_filter}
           }}
 
-          ORDER BY (LCASE(?{VALUE}))
+          ORDER BY (LCASE(?{VALUE})) (?{VALUE})
 
           """
 
@@ -509,6 +519,8 @@ class SPARQLReportingObligationProvider:
         else:
             raise ValueError(f'Unknown value for {type_match}. Expected a value from {starts_with_options}).')
 
+        q_sort_str_match = f'DESC(strStarts(?value_ent_lower, LCASE({Literal(str_match).n3()})))' if str_match else ''
+
         q = f"""
         
         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -521,19 +533,29 @@ class SPARQLReportingObligationProvider:
             ?{RO} a dgfro:ReportingObligation ;
                 {URIRef(uri_type_has).n3()} ?ent .
             ?ent skos:prefLabel ?{VALUE} .
+            
+            BIND (LCASE(?{VALUE}) AS ?value_ent_lower)
+            BIND (REPLACE(REPLACE(?value_ent_lower,'[^a-zA-Z\\\\s]+', ''), '^[ \\t]+|[ \\t]+$','') AS ?special_sort)          
+
             {q_filter}
         
             {q_filter_entity}      
 
         }}
         
-        ORDER BY (LCASE(?{VALUE}))
-        
+        ORDER BY 
+        {q_sort_str_match}
+        ASC(?special_sort = '')
+        (?special_sort)
+        ASC(?value_ent_lower)
+        ASC(?{VALUE})
+
         {f"LIMIT {limit}" if limit else ''}
                 
         """
 
-        # print(q)
+        if 0:
+            print(q)
 
         l = list(self.graph_wrapper.query(q))
         l_values = self.graph_wrapper.get_column(l, VALUE)

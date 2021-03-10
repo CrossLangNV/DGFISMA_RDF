@@ -1230,10 +1230,18 @@ class TestSorting(unittest.TestCase):
     @staticmethod
     def prefered_sorting(l_str: List[str]):
 
+        # Sandbox
         s = l_str[0]
         re.sub('[^a-zA-Z]+', '', s)
 
-        return sorted(l_str, key=lambda s: (re.sub('[^a-zA-Z]+', '', s).lower() + chr(ord('z') + 1), s))
+        def f(s):
+            # If empty, replace with character after z
+            return re.sub('[^a-zA-Z\\s]+', '', s).lower().strip()
+            # re.sub(s_, '^$', chr(ord('z') + 1))
+
+        s_f = list(map(f, l_str))
+
+        return sorted(l_str, key=lambda s: (f(s) == '', f(s), s.lower(), s))
 
     def test_preferred_sorting(self):
         """
@@ -1247,11 +1255,14 @@ class TestSorting(unittest.TestCase):
             l_compare = self.prefered_sorting(l_base)
             l_compare_reverse = self.prefered_sorting(l_base[::-1])
 
-            self.assertEqual(l_base, l_compare)
-            self.assertEqual(l_base, l_compare_reverse)
+            self.assertEqual(l_base, l_compare, 'Second should be sorted according to the first one!')
+            self.assertEqual(l_base, l_compare_reverse, 'Second should be sorted according to the first one!')
 
         with self.subTest('Weird characters towards the end: capital before non-capital'):
-            l = ['A', 'a', '!', '(', ')', '-', '~']
+            # Characters first
+            # Trailing and leading spaces should be stripped
+            # l = ['', 'A', '!a', 'a', ' a c ', 'a  d', 'a d', 'ab', ' ', '!', '(', ')', '-', '~']
+            l = ['!a', 'A', 'a', 'a  d', ' a c ', 'a d', 'ab', '', ' ', '!', '(', ')', '-', '~']
 
             _tester(l)
 
@@ -1311,6 +1322,70 @@ class TestSorting(unittest.TestCase):
                 print('Results from query:', l_first_chars[:20])
                 l_first_chars_sorted = [l_i[:10] for l_i in l_prd_sored]
                 print('Correct sorting:', l_first_chars_sorted[:20])
+
+
+class TestSortingStartsWithFirst(unittest.TestCase):
+    """
+    When sorting items you should probably first return items that start with a string and then those that just contain the string.
+    """
+
+    def setUp(self) -> None:
+
+        graph_wrapper = SPARQLGraphWrapper(URL_STAGING)
+        self.prov = SPARQLReportingObligationProvider(graph_wrapper)
+
+    def test_get_dropdown_items(self):
+
+        def get_type(type_contains: str) -> str:
+            type_i = list(filter(lambda x: type_contains in x.lower(), self.prov.get_different_entity_types()))[0]
+
+            return type_i
+
+        def get_some_lists(type_tmp):
+
+            l_tmp = self.prov.get_all_from_type(type_tmp)
+
+            return l_tmp
+
+        def split_start_with(l: List[str], s: str) -> (List[str], List[str]):
+            """
+
+            :param l: List of strings to split.
+            :param s: Which string the item should start with.
+            :return: two lists of strings
+            """
+
+            s = s.lower()
+
+            l_starts_with = []
+            l_not_starts_with = []
+            for x in l:
+                if x.lower().startswith(s):
+                    l_starts_with.append(x)
+                else:
+                    l_not_starts_with.append(x)
+
+            return l_starts_with, l_not_starts_with
+
+        for type_contains, keyword in {'tmp': 'year',
+                                       'reg': 'the commission'}.items():
+            with self.subTest(type_contains):
+                type_i = get_type(type_contains)
+                l_type_i = get_some_lists(type_i)
+
+                l_starts_with, l_not_starts_with = split_start_with(l_type_i, keyword)
+                l_contains_not_starts_with = list(filter(lambda x: keyword.lower() in x.lower(), l_not_starts_with))
+
+                l_type_i_filter = self.prov.get_filter_entities_from_type_lazy_loading(type_i,
+                                                                                       str_match=keyword,
+                                                                                       # list_pred_value = [(type_i, keyword)]
+                                                                                       )
+
+                l_ordered_baseline = l_starts_with + l_contains_not_starts_with
+                self.assertEqual(len(l_type_i_filter), len(l_ordered_baseline),
+                                 'Sanity check. Should contain same amount of items.')
+
+                self.assertEqual(l_type_i_filter, l_ordered_baseline, 'Should have the same order')
 
 
 def _sample_single(l):
