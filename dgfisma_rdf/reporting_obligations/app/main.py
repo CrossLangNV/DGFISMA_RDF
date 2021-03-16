@@ -90,9 +90,9 @@ async def create_file_base64(cas_base64: CasBase64,
 
 
 @app.post("/ro_cas/init")
-async def create_file_base64(endpoint: str = Header(...),
-                             updateendpoint: str = Header(...),
-                             ):
+async def init_file_base64(endpoint: str = Header(...),
+                           updateendpoint: str = Header(...),
+                           ):
     """ Initialise the RDF with the reporting obligation schema
 
     Args:

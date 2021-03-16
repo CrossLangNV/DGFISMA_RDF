@@ -1,0 +1,41 @@
+version: '3'
+services:
+#  fuseki-data-RO:
+#    image: busybox
+#    volumes:
+#      - /fuseki
+#
+#  fuseki_RO:
+#    # In ro-rdf API set endpoint to http://fuseki_RO:3030/<dataset>
+#    # in order to connect to this dataset
+#    container_name: fuseki_RO
+#    image: stain/jena-fuseki
+#    ports:
+#      - 3030:3030
+#    volumes_from:
+#      - fuseki-data-RO
+#    environment:
+#      - ADMIN_PASSWORD=neuro
+#      - FUSEKI_BASE=/fuseki
+#    networks:
+#      - net
+
+  ro-rdf:
+
+    build:
+      context: ./
+      dockerfile: ./dgfisma_rdf/reporting_obligations/Dockerfile
+    container_name: ro_rdf_container
+    ports:
+      - 10080:80
+    environment:
+      - MODULE_NAME=dgfisma_rdf.reporting_obligations.app.main
+    networks:
+      - net
+    env_file:
+      - ./secrets/dgfisma.env
+
+networks:
+  net:
+    # interconnect the containers
+    name: custom_network

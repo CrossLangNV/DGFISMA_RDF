@@ -1,6 +1,5 @@
 import abc
 import logging
-import os
 from typing import Iterable, List, Tuple, Dict
 
 import rdflib
@@ -8,8 +7,6 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 from rdflib import Literal, BNode, URIRef
 
 from . import build_rdf
-
-ROOT = os.path.join(os.path.dirname(__file__), '..')
 
 B_LOG_QUERIES = False
 
