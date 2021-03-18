@@ -918,8 +918,6 @@ class TestFilterDropdown(unittest.TestCase):
                         if len(l_ro_filter_intersection) == 0:
                             continue
 
-                        # TODO Finding a match
-
                         l_ent_filter_j = self.prov.get_filter_entities_from_type(type_ent_j, [(type_ent_i, ent_i_i)])
 
                         with self.subTest(f'{ent_i_i} x {ent_j_j}'):
@@ -1047,30 +1045,6 @@ class TestFilterDropdown(unittest.TestCase):
                                      d1.get(has_type_uri),
                                      'Output should be the same.')
 
-        def get_d_correct():
-            #
-            # d = {}
-            # for has_type_uri in l_has:
-            #     q = f"""
-            #         PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-            #
-            #         SELECT {'DISTINCT' if distinct else ''} ?{VALUE}
-            #
-            #         WHERE {{
-            #             ?ro a {build_rdf.ROGraph.class_rep_obl.n3()} ;
-            #                 {URIRef(has_type_uri).n3()} ?ent .
-            #             ?ent skos:prefLabel ?{VALUE}
-            #         }}
-            #         ORDER BY (LCASE(?{VALUE}))
-            #     """
-            #
-            #     r = self.prov.graph_wrapper.query(q)
-            #     l = self.prov.graph_wrapper.get_column(r, VALUE)
-            #
-            #     d[has_type_uri] = l
-
-            return d_base
-
         def get0():
             d = self.prov.get_filter_entities()
 
@@ -1116,7 +1090,10 @@ class TestGetEntities(unittest.TestCase):
             self.assertTrue(r)
 
         with self.subTest('Equivalent'):
-            self.assertEqual(r, r_backup)
+            self.assertEqual(len(r), len(r_backup), 'Should give same amount of entities')
+
+        with self.subTest('Equivalent'):
+            self.assertEqual(r, r_backup, 'Should give same entities')
 
         for has_uri in self.prov.get_different_entity_types():
             with self.subTest(f'URI {has_uri}:'):

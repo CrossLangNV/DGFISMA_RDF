@@ -1,5 +1,6 @@
 import abc
 import logging
+import warnings
 from typing import Iterable, List, Tuple, Dict
 
 import rdflib
@@ -14,6 +15,7 @@ CONTAINS = 'contains'
 STARTS_WITH = 'starts with'
 
 VALUE = 'value_ent'
+SUB = 'subject'
 PRED = 'pred'
 COUNT = 'count'
 
@@ -150,6 +152,8 @@ class SPARQLReportingObligationProvider:
         Returns:
 
         """
+        warnings.warn(f'Use {self.get_filter_entities_from_type_lazy_loading} instead',
+                      DeprecationWarning)
 
         VALUE = 'value_ent'
 
@@ -182,6 +186,30 @@ class SPARQLReportingObligationProvider:
 
         return l_values
 
+    def get_all_doc_uri(self) -> List[str]:
+        """
+        There was a demand to retrieve all documents from fuseki
+        :return:
+        """
+
+        q = f"""
+            PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+            PREFIX dgfro: {build_rdf.RO_BASE[None].n3()}
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+            SELECT ?{SUB}
+
+            WHERE {{
+                ?{SUB} a {build_rdf.ROGraph.class_cat_doc.n3()} .
+            }}
+            """
+
+        l = self.graph_wrapper.query(q)
+
+        l_uri = self.graph_wrapper.get_column(l, SUB)
+
+        return l_uri
+
     def get_all_ro_uri(self) -> List[str]:
         q = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -194,6 +222,7 @@ class SPARQLReportingObligationProvider:
                 ?ro_id rdf:type {build_rdf.ROGraph.class_rep_obl.n3()} .
             }}
             """
+
         l = self.graph_wrapper.query(q)
 
         l_uri = self.graph_wrapper.get_column(l, 'ro_id')
@@ -229,6 +258,8 @@ class SPARQLReportingObligationProvider:
         Returns:
             List of reporting obligations with matching content.
         """
+        warnings.warn(f'Use {self.get_filter_ro_id_multiple} instead',
+                      DeprecationWarning)
 
         return self.get_filter_multiple([(pred, value)])
 
@@ -245,8 +276,10 @@ class SPARQLReportingObligationProvider:
         Returns:
 
         """
+        warnings.warn(f'Use {self.get_filter_ro_id_multiple} instead',
+                      DeprecationWarning)
 
-        q_filter = _get_q_filter(list_pred_value, exact_match=exact_match)
+        q_filter = self._get_q_filter(list_pred_value, exact_match=exact_match)
 
         q = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -272,7 +305,9 @@ class SPARQLReportingObligationProvider:
 
         return l_ro
 
-    def get_filter_ro_id_multiple(self, list_pred_value: List[Tuple[str]] = [],
+    def get_filter_ro_id_multiple(self,
+                                  list_pred_value: List[Tuple[str]] = [],
+                                  l_doc_uri: List[str] = [],  # TODO
                                   limit=None,
                                   offset=0,
                                   exact_match: bool = False) -> List[str]:
@@ -291,9 +326,13 @@ class SPARQLReportingObligationProvider:
             List with URI's of the Reporting obligations.
         """
 
-        q_filter = _get_q_filter(list_pred_value,
-                                 ro='ro_id',
-                                 exact_match=exact_match)
+        q_doc_uri_filter = self._get_filter_doc_uri(l_doc_uri,
+                                                    ro_var='ro_id',
+                                                    )
+
+        q_filter = self._get_q_filter(list_pred_value,
+                                      ro='ro_id',
+                                      exact_match=exact_match)
 
         q = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -303,6 +342,7 @@ class SPARQLReportingObligationProvider:
             SELECT DISTINCT ?ro_id
 
             WHERE {{
+                {q_doc_uri_filter}
                 ?ro_id rdf:type {build_rdf.ROGraph.class_rep_obl.n3()} ;
                    rdf:value ?{VALUE} .
                 
@@ -310,7 +350,7 @@ class SPARQLReportingObligationProvider:
 
         }}
         
-        ORDER BY ASC(LCASE(?{VALUE})) ASC(?{VALUE})
+        ORDER BY ASC(LCASE(?{VALUE})) ASC(?{VALUE}) ?ro_id
 
         """
 
@@ -394,7 +434,13 @@ class SPARQLReportingObligationProvider:
         PRED = 'pred'
         COUNT = 'count'
 
-        q_filter = _get_q_filter(list_pred_value, exact_match=exact_match)
+        l_has = [has_i for has_i, type_i in build_rdf.D_ENTITIES.values()]
+
+        q_values = f"""
+        VALUES ?{PRED} {{{' '.join(map(lambda x: x.n3(), l_has))}}}
+        """
+
+        q_filter = self._get_q_filter(list_pred_value, exact_match=exact_match)
 
         q = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -404,6 +450,8 @@ class SPARQLReportingObligationProvider:
             SELECT {'DISTINCT' if distinct else ''} ?{PRED} ?{VALUE} (count(?ro_id) as ?{COUNT})
 
             WHERE {{
+                {q_values}
+                
                 ?ro_id rdf:type {build_rdf.ROGraph.class_rep_obl.n3()} ;
                     ?{PRED} ?ent .
                 ?ent skos:prefLabel ?{VALUE} .
@@ -446,7 +494,7 @@ class SPARQLReportingObligationProvider:
 
         VALUE = 'value_ent'
 
-        q_filter = _get_q_filter(list_pred_value, exact_match=exact_match)
+        q_filter = self._get_q_filter(list_pred_value, exact_match=exact_match)
 
         q = f"""
             PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -479,6 +527,7 @@ class SPARQLReportingObligationProvider:
                                                    str_match: str = '',
                                                    type_match=CONTAINS,
                                                    list_pred_value: List[Tuple[str]] = [],
+                                                   l_doc_uri: List[str] = [],
                                                    exact_match=False,
                                                    limit: int = 0,
                                                    ):
@@ -498,8 +547,14 @@ class SPARQLReportingObligationProvider:
         RO = 'RO'
 
         starts_with_options = [CONTAINS, STARTS_WITH]
+        if type_match not in starts_with_options:
+            warnings.warn(f'Unknown value for type_match: {type_match}', UserWarning)
 
-        q_filter = _get_q_filter(list_pred_value, ro=RO, exact_match=exact_match) if list_pred_value else ''
+        q_doc_uri_filter = self._get_filter_doc_uri(l_doc_uri,
+                                                    ro_var=RO,
+                                                    )
+
+        q_filter = self._get_q_filter(list_pred_value, ro=RO, exact_match=exact_match) if list_pred_value else ''
 
         str_match = str_match.strip()
 
@@ -526,6 +581,7 @@ class SPARQLReportingObligationProvider:
         SELECT DISTINCT ?{VALUE}
         
         WHERE {{
+            {q_doc_uri_filter}
         
             ?{RO} a dgfro:ReportingObligation ;
                 {URIRef(uri_type_has).n3()} ?ent .
@@ -559,51 +615,69 @@ class SPARQLReportingObligationProvider:
 
         return l_values
 
-
-def _get_q_filter(list_pred_value: List[Tuple[str]] = [],
-                  ro='ro_id',
-                  exact_match: bool = False):
-    """
-    values of the filters are stripped from leading and trailing spaces.
-
-    Args:
-        list_pred_value: e.g. [("dgfisma.com/hasReporter", "The highest authority")]
-        exact_match: (boolean) True means exact matches, although case insensitive, are retrieved
-            False means we look for substrings.
-    Returns:
-
-    """
-    q_total = ""
-
-    def get_q_filter_i(i, value_i, exact_match=True):
-
-        if exact_match:
-            q_filter_i = f"""
-                lcase(str(?p{i})) = lcase({Literal(value_i.strip()).n3()})
-            """
-        else:
-            q_filter_i = f"""
-                CONTAINS(
-                    lcase(str(?p{i})), lcase({Literal(value_i.strip()).n3()})
-                )
-            """
-
-        return q_filter_i
-
-    for i, (pred, value) in enumerate(list_pred_value):
-
-        if isinstance(value, (list, tuple)):
-            q_filter_i = '||'.join(map(lambda value_i_j: get_q_filter_i(i, value_i_j, exact_match=exact_match), value))
-
-        else:
-            q_filter_i = get_q_filter_i(i, value, exact_match=exact_match)
-
-        q_i = f"""
-            ?{ro} {URIRef(pred).n3()} ?ent{i} .
-            ?ent{i} skos:prefLabel ?p{i} .
-            FILTER({q_filter_i})
+    @staticmethod
+    def _get_q_filter(list_pred_value: List[Tuple[str]] = [],
+                      ro='ro_id',
+                      exact_match: bool = False):
         """
+        values of the filters are stripped from leading and trailing spaces.
 
-        q_total += q_i
+        Args:
+            list_pred_value: e.g. [("dgfisma.com/hasReporter", "The highest authority")]
+            exact_match: (boolean) True means exact matches, although case insensitive, are retrieved
+                False means we look for substrings.
+        Returns:
 
-    return q_total
+        """
+        q_total = ""
+
+        def get_q_filter_i(i, value_i, exact_match=True):
+
+            if exact_match:
+                q_filter_i = f"""
+                    lcase(str(?p{i})) = lcase({Literal(value_i.strip()).n3()})
+                """
+            else:
+                q_filter_i = f"""
+                    CONTAINS(
+                        lcase(str(?p{i})), lcase({Literal(value_i.strip()).n3()})
+                    )
+                """
+
+            return q_filter_i
+
+        for i, (pred, value) in enumerate(list_pred_value):
+
+            if isinstance(value, (list, tuple)):
+                q_filter_i = '||'.join(
+                    map(lambda value_i_j: get_q_filter_i(i, value_i_j, exact_match=exact_match), value))
+
+            else:
+                q_filter_i = get_q_filter_i(i, value, exact_match=exact_match)
+
+            q_i = f"""
+                ?{ro} {URIRef(pred).n3()} ?ent{i} .
+                ?ent{i} skos:prefLabel ?p{i} .
+                FILTER({q_filter_i})
+            """
+
+            q_total += q_i
+
+        return q_total
+
+    @staticmethod
+    def _get_filter_doc_uri(list_doc_uri: List[str],
+                            ro_var: str = 'ro_id',
+                            doc_var: str = 'doc_id',
+                            ):
+
+        if not list_doc_uri:
+            return ''
+
+        # dgfro:hasReportingObligation
+        q = f'''
+        values ?{doc_var} {{ {' '.join(map(lambda s: URIRef(s).n3(), list_doc_uri))} }}
+        ?{doc_var} {build_rdf.RO_BASE.hasReportingObligation.n3()} ?{ro_var} .   
+        '''
+
+        return q
