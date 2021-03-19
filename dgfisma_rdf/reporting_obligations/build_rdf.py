@@ -157,7 +157,7 @@ class ROGraph(Graph):
             ro_update = ROUpdate(query_endpoint)
 
         # add a document
-        cat_doc = RO_BASE['cat_doc/' + doc_id.strip().replace(' ', '_')]
+        cat_doc = self.get_cat_doc_uri(doc_id)
 
         cas_content['id'] = cat_doc.toPython()  # adding ID to cas
 
@@ -332,6 +332,10 @@ class ROGraph(Graph):
         l_remove.extend(a)
 
         return l_remove
+
+    @staticmethod
+    def _get_cat_doc_uri(doc_id):
+        return RO_BASE['cat_doc/' + doc_id.strip().replace(' ', '_')]
 
 
 class ExampleCasContent(CasContent):
