@@ -1,4 +1,5 @@
 import os
+import warnings
 
 from SPARQLWrapper import SPARQLWrapper, JSON, GET
 from rdflib import BNode, Literal, Namespace, Graph
@@ -16,7 +17,8 @@ folder_cas = 'dgfisma_rdf/reporting_obligations/output_reporting_obligations'
 PATH_CAS = os.path.join(ROOT, folder_cas, 'ro + html2text.xml')  # 17 RO's0
 PATH_TYPESYSTEM = os.path.join(ROOT, folder_cas, 'typesystem_tmp.xml')
 for PATH in (PATH_CAS, PATH_TYPESYSTEM):
-    assert os.path.exists(PATH), os.path.abspath(PATH)
+    if not os.path.exists(PATH):
+        warnings.warn(f"Couldn't find file: {os.path.abspath(PATH)}")
 
 # FROM https://github.com/CrossLangNV/DGFISMA_reporting_obligations
 D_ENTITIES = {'ARG0': (RO_BASE['hasReporter'], RO_BASE['Reporter']),
