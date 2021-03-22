@@ -307,7 +307,7 @@ class SPARQLReportingObligationProvider:
 
     def get_filter_ro_id_multiple(self,
                                   list_pred_value: List[Tuple[str]] = [],
-                                  l_doc_uri: List[str] = [],  # TODO
+                                  l_doc_uri: List[str] = [],
                                   limit=None,
                                   offset=0,
                                   exact_match: bool = False) -> List[str]:
@@ -326,9 +326,9 @@ class SPARQLReportingObligationProvider:
             List with URI's of the Reporting obligations.
         """
 
-        q_doc_uri_filter = self._get_filter_doc_uri(l_doc_uri,
-                                                    ro_var='ro_id',
-                                                    )
+        q_doc_uri_filter = '' if l_doc_uri is None else self._get_filter_doc_uri(l_doc_uri,
+                                                                                 ro_var='ro_id',
+                                                                                 )
 
         q_filter = self._get_q_filter(list_pred_value,
                                       ro='ro_id',
@@ -527,7 +527,7 @@ class SPARQLReportingObligationProvider:
                                                    str_match: str = '',
                                                    type_match=CONTAINS,
                                                    list_pred_value: List[Tuple[str]] = [],
-                                                   l_doc_uri: List[str] = [],
+                                                   l_doc_uri: List[str] = None,
                                                    exact_match=False,
                                                    limit: int = 0,
                                                    ):
@@ -550,9 +550,9 @@ class SPARQLReportingObligationProvider:
         if type_match not in starts_with_options:
             warnings.warn(f'Unknown value for type_match: {type_match}', UserWarning)
 
-        q_doc_uri_filter = self._get_filter_doc_uri(l_doc_uri,
-                                                    ro_var=RO,
-                                                    )
+        q_doc_uri_filter = '' if l_doc_uri is None else self._get_filter_doc_uri(l_doc_uri,
+                                                                                 ro_var=RO,
+                                                                                 )
 
         q_filter = self._get_q_filter(list_pred_value, ro=RO, exact_match=exact_match) if list_pred_value else ''
 
