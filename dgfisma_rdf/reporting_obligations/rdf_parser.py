@@ -671,9 +671,6 @@ class SPARQLReportingObligationProvider:
                             doc_var: str = 'doc_id',
                             ):
 
-        if not list_doc_uri:
-            return ''
-
         # dgfro:hasReportingObligation
         q = f'''
         values ?{doc_var} {{ {' '.join(map(lambda s: URIRef(s).n3(), list_doc_uri))} }}
