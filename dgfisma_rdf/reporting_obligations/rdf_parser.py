@@ -307,7 +307,7 @@ class SPARQLReportingObligationProvider:
 
     def get_filter_ro_id_multiple(self,
                                   list_pred_value: List[Tuple[str]] = [],
-                                  l_doc_uri: List[str] = [],
+                                  l_doc_uri: List[str] = None,
                                   limit=None,
                                   offset=0,
                                   exact_match: bool = False) -> List[str]:
