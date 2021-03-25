@@ -3,7 +3,7 @@ from typing import Dict, List
 from rdflib import Literal, Namespace, Graph, URIRef
 from rdflib.namespace import SKOS, RDF
 
-from reporting_obligations.build_rdf import NS_BASE
+from dgfisma_rdf.shared.rdf_dgfisma import NS_BASE
 
 CONCEPT_BASE = Namespace(NS_BASE + 'concepts/')
 EN = 'en'
@@ -29,19 +29,24 @@ class ConceptGraph(Graph):
 
         self.uid_iterator = UIDIterator()
 
-    def add_terms(self, l_terms: List[str], lang=EN):
+    def add_terms(self, l_terms: List[str], l_def: List[str] = None, lang=EN):
         """ Add new terms to the RDF as SKOS concepts.
 
         Args:
             l_terms: List of the terms in string format
+            l_def: Optional. List with definitions alongside the terms. If bool(term_i) is False, it is not added.
             lang: optional language parameter of the terms.
 
         Returns:
             list of RDF URI's of the new SKOS concepts.
         """
 
-        l_terms = list(map(str, l_terms)) #
-        l_uri = [None for _ in l_terms]    # Initialisation
+        l_terms = list(map(str, l_terms))  #
+
+        if l_def is not None:
+            assert len(l_terms) == len(l_def), "Terms and definitions should have the same length."
+
+        l_uri = [None for _ in l_terms]  # Initialisation
         for i, term_i in enumerate(l_terms):
             node_term_i = self.uid_iterator.get_next()
 
@@ -56,6 +61,14 @@ class ConceptGraph(Graph):
                       SKOS.prefLabel,
                       Literal(term_i, lang=lang)
                       ))
+
+            if l_def is not None:
+                def_i = l_def[i]
+                if bool(def_i):
+                    self.add((node_term_i,
+                              SKOS.definition,
+                              Literal(def_i, lang=lang)
+                              ))
 
         return l_uri
 

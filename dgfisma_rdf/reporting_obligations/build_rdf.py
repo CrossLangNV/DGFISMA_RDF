@@ -1,16 +1,24 @@
 import os
+import warnings
 
+from SPARQLWrapper import SPARQLWrapper, JSON, GET
 from rdflib import BNode, Literal, Namespace, Graph
 from rdflib.namespace import SKOS, RDF, RDFS, OWL, URIRef, DC
 from rdflib.term import _serial_number_generator
 
-from reporting_obligations.cas_parser import CasContent, KEY_CHILDREN, KEY_SENTENCE_FRAG_CLASS, KEY_VALUE
+from .cas_parser import CasContent, KEY_CHILDREN, KEY_SENTENCE_FRAG_CLASS, KEY_VALUE
+from ..shared.rdf_dgfisma import NS_BASE
 
-NS_BASE = Namespace("http://dgfisma.com/")
 RO_BASE = Namespace(NS_BASE + 'reporting_obligations/')
 
-ROOT = os.path.join(os.path.dirname(__file__), '..')
-MOCKUP_FILENAME = os.path.join(ROOT, 'data/examples', 'reporting_obligations_mockup.rdf')
+ROOT = os.path.join(os.path.dirname(__file__), '../..')
+folder_cas = 'dgfisma_rdf/reporting_obligations/output_reporting_obligations'
+# filename_cas = 'cas_laurens.xml'
+PATH_CAS = os.path.join(ROOT, folder_cas, 'ro + html2text.xml')  # 17 RO's0
+PATH_TYPESYSTEM = os.path.join(ROOT, folder_cas, 'typesystem_tmp.xml')
+for PATH in (PATH_CAS, PATH_TYPESYSTEM):
+    if not os.path.exists(PATH):
+        warnings.warn(f"Couldn't find file: {os.path.abspath(PATH)}")
 
 # FROM https://github.com/CrossLangNV/DGFISMA_reporting_obligations
 D_ENTITIES = {'ARG0': (RO_BASE['hasReporter'], RO_BASE['Reporter']),
@@ -44,6 +52,8 @@ D_ENTITIES = {'ARG0': (RO_BASE['hasReporter'], RO_BASE['Reporter']),
 
 PROP_HAS_ENTITY = RO_BASE.hasEntity
 
+i = 0
+
 
 class ROGraph(Graph):
     """
@@ -58,7 +68,7 @@ class ROGraph(Graph):
     # Connections
     prop_has_rep_obl = RO_BASE.hasReportingObligation
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, include_schema=False, **kwargs):
         """ Looks quite clean if implemented with RDFLib https://github.com/RDFLib/rdflib
         Ontology can be visualised with http://www.visualdataweb.de/webvowl/
 
@@ -66,8 +76,8 @@ class ROGraph(Graph):
             *args:
             **kwargs:
         """
+
         super(ROGraph, self).__init__(
-            # identifier=RO_BASE,  # Not needed at the moment
             *args, **kwargs)
 
         self.bind("skos", SKOS)
@@ -75,6 +85,11 @@ class ROGraph(Graph):
         self.bind("dgf", NS_BASE)
         self.bind("dgfro", RO_BASE)
         self.bind("dc", DC)
+
+        if include_schema:
+            self._init_schema()
+
+    def _init_schema(self):
 
         """
         describe ontology
@@ -89,19 +104,8 @@ class ROGraph(Graph):
                   DC.title,
                   Literal("Reporting obligations (RO) vocabulary")))
 
-        # OWL classes
-        def add_owl_class(cls):
-            self.add((cls,
-                      RDF.type,
-                      RDFS.Class
-                      ))
-            self.add((cls,
-                      RDF.type,
-                      OWL.Class
-                      ))
-
-        add_owl_class(self.class_cat_doc)
-        add_owl_class(self.class_rep_obl)
+        self._add_owl_class(self.class_cat_doc)
+        self._add_owl_class(self.class_rep_obl)
 
         # OWL properties
         self._add_property(self.prop_has_rep_obl, self.class_cat_doc, self.class_rep_obl)
@@ -121,27 +125,78 @@ class ROGraph(Graph):
                       ))
             self._add_sub_class(cls, SKOS.Concept)
 
-    def add_cas_content(self, cas_content: CasContent):
+    # OWL classes
+    def _add_owl_class(self, cls):
+        self.add((cls,
+                  RDF.type,
+                  RDFS.Class
+                  ))
+        self.add((cls,
+                  RDF.type,
+                  OWL.Class
+                  ))
+
+    def add_cas_content(self, cas_content: CasContent,
+                        doc_id: str,
+                        query_endpoint=None):
         """ Build the RDF from cas content.
+
+        Args:
+            cas_content:
+            doc_id:
+            query_endpoint: (Optional) is used to check if RO already exist. If so, the ID is re-used.
+                If an endpoint is provided, all previous RO's will be removed!
+
+        Returns:
+
         """
 
-        # add a document
-        cat_doc = get_UID_node(info='cat_doc_')
+        # Only add (and remove) triples at the end to enable auto-commit/transactions to work.
+        l_add = []
+        l_remove = []
 
-        self.add((cat_doc, RDF.type, self.class_cat_doc))
+        if query_endpoint:
+            ro_update = ROUpdate(query_endpoint)
+
+        # add a document
+        cat_doc = self.get_cat_doc_uri(doc_id)
+
         cas_content['id'] = cat_doc.toPython()  # adding ID to cas
 
         # iterate over reporting obligations (RO's)
         list_ro = cas_content[KEY_CHILDREN]
+
+        if len(list_ro) == 0:  # No reporting obligations, no need to add to fuseki
+            return
+
+        l_add.append((cat_doc, RDF.type, self.class_cat_doc))
+
         for i, ro_i in enumerate(list_ro):
 
-            rep_obl_i = get_UID_node(info='rep_obl_')
+            value_i = ro_i[KEY_VALUE]
 
-            self.add((rep_obl_i, RDF.type, self.class_rep_obl))
+            if query_endpoint:
+                l_ro_uri = ro_update.get_l_ro(value_i,
+                                              doc_uri=cat_doc)
+
+                if len(l_ro_uri):  # At least one RO's found, keep 1 and remove the rest
+                    rep_obl_i = URIRef(l_ro_uri[0])
+                else:  # RO not found, just make a new one
+                    rep_obl_i = get_UID_node(info='rep_obl_')
+
+                for i_ro_uri, ro_uri_i in enumerate(l_ro_uri):
+                    l_remove.extend(self._get_triples_remove_reporting_obligation(ro_uri_i,
+                                                                                  keep_value=i_ro_uri == 0,
+                                                                                  ))
+
+            else:
+                rep_obl_i = get_UID_node(info='rep_obl_')
+
+            l_add.append((rep_obl_i, RDF.type, self.class_rep_obl))
             # link to catalog document + ontology
-            self.add((cat_doc, self.prop_has_rep_obl, rep_obl_i))
+            l_add.append((cat_doc, self.prop_has_rep_obl, rep_obl_i))
             # add whole reporting obligation
-            self.add((rep_obl_i, RDF.value, Literal(ro_i[KEY_VALUE])))
+            l_add.append((rep_obl_i, RDF.value, Literal(value_i)))
             cas_content[KEY_CHILDREN][i]['id'] = rep_obl_i.toPython()  # adding ID to cas
 
             # iterate over different entities of RO
@@ -163,15 +218,23 @@ class ROGraph(Graph):
                     pred_i, cls = t_pred_cls
 
                 # type definition
-                self.add((concept_j, RDF.type, cls))
+                l_add.append((concept_j, RDF.type, cls))
                 # Add the string representation
-                value_i = Literal(ent_j[KEY_VALUE], lang='en')
-                self.add((concept_j, SKOS.prefLabel, value_i))
+                value_j = Literal(ent_j[KEY_VALUE], lang='en')
+                l_add.append((concept_j, SKOS.prefLabel, value_j))
 
                 # connect entity with RO
-                self.add((rep_obl_i, pred_i, concept_j))
+                l_add.append((rep_obl_i, pred_i, concept_j))
 
                 cas_content[KEY_CHILDREN][i][KEY_CHILDREN][j]['id'] = concept_j.toPython()  # adding ID to cas
+
+        for triple in l_remove:
+            self.remove(triple)
+
+        for triple in l_add:
+            self.add(triple)
+
+        return cas_content
 
     def _add_property(self, prop: URIRef, domain: URIRef, ran: URIRef) -> None:
         """ shared function to build all necessary triples for a property in the ontology.
@@ -206,6 +269,76 @@ class ROGraph(Graph):
                   parent_cls
                   ))
 
+    def _get_triples_remove_reporting_obligation(self,
+                                                 ro_i: URIRef,
+                                                 keep_value=True):
+        """
+        The reporting obligation (with it's entities should be deleted)
+
+        Args:
+            ro_i:
+            keep_value: Boolean, if keep_value, then a single triple stays with (RO URI, value, string)
+
+        Returns:
+
+        """
+
+        q_ent_construct = f"""
+        PREFIX dgfisma: <http://dgfisma.com/reporting_obligations/>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+        # For testing, replace DELETE with SELECT 
+        CONSTRUCT {{
+            ?ent ?p ?o .
+        }}
+        WHERE {{
+        VALUES ?ro_uri {{ {URIRef(ro_i).n3()} }}
+
+        ?ro_uri a dgfisma:ReportingObligation ;
+            ?hasEnt ?ent .
+
+        ?ent ?p ?o
+
+        FILTER (?hasEnt != rdf:type)
+        }}
+        """
+
+        q_ro_construct = f"""
+        PREFIX dgfisma: <http://dgfisma.com/reporting_obligations/>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+        # For testing, replace DELETE with SELECT 
+        CONSTRUCT {{
+            ?s_ro ?p_ro2 ?ro_uri.
+            ?ro_uri ?p_ro ?o_ro .
+        }}
+        WHERE {{
+        VALUES ?ro_uri {{ {URIRef(ro_i).n3()} }}
+            ?ro_uri ?p_ro ?o_ro .
+            ?s_ro ?p_ro2 ?ro_uri .
+
+        {
+        "FILTER(?p_ro2 != rdf:value)" if keep_value else ""
+        }
+
+        }}
+        """
+
+        l_remove = []
+
+        # CONSTRUCT
+        a = self.query(q_ent_construct)
+        l_remove.extend(a)
+
+        a = self.query(q_ro_construct)
+        l_remove.extend(a)
+
+        return l_remove
+
+    @staticmethod
+    def _get_cat_doc_uri(doc_id):
+        return RO_BASE['cat_doc/' + doc_id.strip().replace(' ', '_')]
+
 
 class ExampleCasContent(CasContent):
     """
@@ -234,15 +367,8 @@ class ExampleCasContent(CasContent):
         Returns:
             The example cas content
         """
-        folder_cas = 'reporting_obligations/output_reporting_obligations'
-        # filename_cas = 'cas_laurens.xml'
-        filename_cas = 'ro + html2text.xml'  # 17 RO's0
-        rel_path_typesystem = 'reporting_obligations/output_reporting_obligations/typesystem_tmp.xml'
 
-        # from ROOT
-        path_cas = os.path.join(ROOT, folder_cas, filename_cas)
-        path_typesystem = os.path.join(ROOT, rel_path_typesystem)
-        return cls.from_cas_file(path_cas, path_typesystem)
+        return cls.from_cas_file(PATH_CAS, PATH_TYPESYSTEM)
 
 
 def get_UID_node(base=RO_BASE, info=None):
@@ -266,22 +392,33 @@ def get_UID_node(base=RO_BASE, info=None):
     return node
 
 
-if __name__ == '__main__':
+class ROUpdate:
+    def __init__(self,
+                 endpoint,
+                 ):
+        self.sparql = SPARQLWrapper(endpoint)
+        self.sparql.setReturnFormat(JSON)
 
-    b_build = 1
-    if b_build:  # already processed
-        b_save = True
-        b_print = True
+    def get_l_ro(self, value: str,
+                 doc_uri=None):
+        RO_URI = 'ro_uri'
+        q = f"""
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            PREFIX dgfisma: <http://dgfisma.com/reporting_obligations/>
 
-        g = ROGraph()
+            SELECT ?{RO_URI}
 
-        l = ExampleCasContent.build()
+            WHERE {{
+                {URIRef(doc_uri).n3() if doc_uri else "?cat_doc_uri"} dgfisma:hasReportingObligation ?{RO_URI} .
+                ?{RO_URI} a dgfisma:ReportingObligation ;
+                rdf:value ?o 
+            FILTER(?o = {Literal(value).n3()})
+            }}
+        """
+        self.sparql.setQuery(q)
+        self.sparql.setMethod(GET)
 
-        g.add_cas_content(l)
+        results = self.sparql.query().convert()['results']['bindings']
+        l_ro_uri = [res[RO_URI]['value'] for res in results]
 
-        if b_print:
-            # XML = RDF
-            print(g.serialize(format="pretty-xml").decode("utf-8"))
-
-        if b_save:  # save
-            g.serialize(destination=MOCKUP_FILENAME, format="pretty-xml")
+        return l_ro_uri

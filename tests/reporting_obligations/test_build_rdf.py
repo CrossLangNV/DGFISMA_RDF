@@ -2,7 +2,7 @@ import os
 import tempfile
 import unittest
 
-from reporting_obligations.build_rdf import ExampleCasContent, ROGraph
+from dgfisma_rdf.reporting_obligations.build_rdf import ExampleCasContent, ROGraph
 
 
 class TestBuild(unittest.TestCase):

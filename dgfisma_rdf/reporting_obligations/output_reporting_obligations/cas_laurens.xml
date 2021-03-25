@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmlns:xmi="http://www.omg.org/XMI" xmlns:cas="http:///uima/cas.ecore" xmlns:html="http:///com/crosslang/sdk/types/html.ecore" xmlns:tcas="http:///uima/tcas.ecore" xmlns:type="http:///de/tudarmstadt/ukp/dkpro/core/api/metadata/type.ecore" xmlns:type0="http:///com/crosslang/uimahtmltotext/uima/type.ecore" xmi:version="2.0">
+	<cas:NULL xmi:id="0"/>
+	<html:HtmlTag xmi:id="13" tagName="!doctype" tagRole="UNKNOWN" begin="0" end="15" sofa="1"/>
+	<html:HtmlTag xmi:id="22" tagName="style" tagRole="OPENING" attributes="" begin="16" end="23" sofa="1"/>
+	<html:HtmlTag xmi:id="29" tagName="style" tagRole="CLOSING" begin="2539" end="2547" sofa="1"/>
+	<html:TagAttribute xmi:id="46" name="data-frequency-class" value="2" begin="2549" end="2861" sofa="1"/>
+	<html:TagAttribute xmi:id="52" name="data-frequency-could-be-1" value="false" begin="2549" end="2861" sofa="1"/>
+	<html:TagAttribute xmi:id="58" name="data-frequency-could-be-2" value="true" begin="2549" end="2861" sofa="1"/>
+	<html:TagAttribute xmi:id="64" name="data-frequency-could-be-3" value="false" begin="2549" end="2861" sofa="1"/>
+	<html:TagAttribute xmi:id="70" name="data-frequency-might-be-1" value="false" begin="2549" end="2861" sofa="1"/>
+	<html:TagAttribute xmi:id="76" name="data-frequency-might-be-2" value="true" begin="2549" end="2861" sofa="1"/>
+	<html:TagAttribute xmi:id="82" name="data-frequency-might-be-3" value="true" begin="2549" end="2861" sofa="1"/>
+	<html:TagAttribute xmi:id="88" name="data-frequency-split" value="0.041251007467508316|0.7011293858289719|0.25761963524855674" begin="2549" end="2861" sofa="1"/>
+	<html:HtmlTag xmi:id="94" tagName="p" tagRole="OPENING" attributes="46 52 58 64 70 76 82 88" begin="2549" end="2861" sofa="1"/>
+	<html:TagAttribute xmi:id="104" name="class" value="ARGM-TMP" begin="3100" end="3123" sofa="1"/>
+	<html:HtmlTag xmi:id="110" tagName="span" tagRole="OPENING" attributes="104" begin="3100" end="3123" sofa="1"/>
+	<html:HtmlTag xmi:id="117" tagName="span" tagRole="CLOSING" begin="3173" end="3180" sofa="1"/>
+	<html:TagAttribute xmi:id="127" name="class" value="ARG0" begin="3183" end="3202" sofa="1"/>
+	<html:HtmlTag xmi:id="133" tagName="span" tagRole="OPENING" attributes="127" begin="3183" end="3202" sofa="1"/>
+	<html:HtmlTag xmi:id="140" tagName="span" tagRole="CLOSING" begin="3227" end="3234" sofa="1"/>
+	<html:TagAttribute xmi:id="150" name="class" value="ARGM-MOD" begin="3235" end="3258" sofa="1"/>
+	<html:HtmlTag xmi:id="156" tagName="span" tagRole="OPENING" attributes="150" begin="3235" end="3258" sofa="1"/>
+	<html:HtmlTag xmi:id="163" tagName="span" tagRole="CLOSING" begin="3263" end="3270" sofa="1"/>
+	<html:TagAttribute xmi:id="173" name="class" value="V" begin="3271" end="3287" sofa="1"/>
+	<html:HtmlTag xmi:id="179" tagName="span" tagRole="OPENING" attributes="173" begin="3271" end="3287" sofa="1"/>
+	<html:HtmlTag xmi:id="186" tagName="span" tagRole="CLOSING" begin="3293" end="3300" sofa="1"/>
+	<html:TagAttribute xmi:id="196" name="class" value="ARG2" begin="3301" end="3320" sofa="1"/>
+	<html:HtmlTag xmi:id="202" tagName="span" tagRole="OPENING" attributes="196" begin="3301" end="3320" sofa="1"/>
+	<html:HtmlTag xmi:id="209" tagName="span" tagRole="CLOSING" begin="3323" end="3330" sofa="1"/>
+	<html:TagAttribute xmi:id="219" name="class" value="ARG1" begin="3331" end="3350" sofa="1"/>
+	<html:HtmlTag xmi:id="225" tagName="span" tagRole="OPENING" attributes="219" begin="3331" end="3350" sofa="1"/>
+	<html:HtmlTag xmi:id="232" tagName="span" tagRole="CLOSING" begin="3414" end="3421" sofa="1"/>
+	<html:HtmlTag xmi:id="239" tagName="p" tagRole="CLOSING" begin="3535" end="3539" sofa="1"/>
+	<html:TagAttribute xmi:id="256" name="data-frequency-class" value="3" begin="3540" end="3852" sofa="1"/>
+	<html:TagAttribute xmi:id="262" name="data-frequency-could-be-1" value="false" begin="3540" end="3852" sofa="1"/>
+	<html:TagAttribute xmi:id="268" name="data-frequency-could-be-2" value="false" begin="3540" end="3852" sofa="1"/>
+	<html:TagAttribute xmi:id="274" name="data-frequency-could-be-3" value="true" begin="3540" end="3852" sofa="1"/>
+	<html:TagAttribute xmi:id="280" name="data-frequency-might-be-1" value="false" begin="3540" end="3852" sofa="1"/>
+	<html:TagAttribute xmi:id="286" name="data-frequency-might-be-2" value="true" begin="3540" end="3852" sofa="1"/>
+	<html:TagAttribute xmi:id="292" name="data-frequency-might-be-3" value="true" begin="3540" end="3852" sofa="1"/>
+	<html:TagAttribute xmi:id="298" name="data-frequency-split" value="0.003947803931077942|0.34864878952503203|0.6474034041166306" begin="3540" end="3852" sofa="1"/>
+	<html:HtmlTag xmi:id="304" tagName="p" tagRole="OPENING" attributes="256 262 268 274 280 286 292 298" begin="3540" end="3852" sofa="1"/>
+	<html:TagAttribute xmi:id="314" name="class" value="ARG1" begin="4254" end="4273" sofa="1"/>
+	<html:HtmlTag xmi:id="320" tagName="span" tagRole="OPENING" attributes="314" begin="4254" end="4273" sofa="1"/>
+	<html:HtmlTag xmi:id="327" tagName="span" tagRole="CLOSING" begin="4325" end="4332" sofa="1"/>
+	<html:TagAttribute xmi:id="337" name="class" value="ARGM-MOD" begin="4333" end="4356" sofa="1"/>
+	<html:HtmlTag xmi:id="343" tagName="span" tagRole="OPENING" attributes="337" begin="4333" end="4356" sofa="1"/>
+	<html:HtmlTag xmi:id="350" tagName="span" tagRole="CLOSING" begin="4361" end="4368" sofa="1"/>
+	<html:TagAttribute xmi:id="360" name="class" value="ARGM-TMP" begin="4372" end="4395" sofa="1"/>
+	<html:HtmlTag xmi:id="366" tagName="span" tagRole="OPENING" attributes="360" begin="4372" end="4395" sofa="1"/>
+	<html:HtmlTag xmi:id="373" tagName="span" tagRole="CLOSING" begin="4404" end="4411" sofa="1"/>
+	<html:TagAttribute xmi:id="383" name="class" value="V" begin="4412" end="4428" sofa="1"/>
+	<html:HtmlTag xmi:id="389" tagName="span" tagRole="OPENING" attributes="383" begin="4412" end="4428" sofa="1"/>
+	<html:HtmlTag xmi:id="396" tagName="span" tagRole="CLOSING" begin="4436" end="4443" sofa="1"/>
+	<html:TagAttribute xmi:id="406" name="class" value="ARG0" begin="4444" end="4463" sofa="1"/>
+	<html:HtmlTag xmi:id="412" tagName="span" tagRole="OPENING" attributes="406" begin="4444" end="4463" sofa="1"/>
+	<html:HtmlTag xmi:id="419" tagName="span" tagRole="CLOSING" begin="4491" end="4498" sofa="1"/>
+	<html:HtmlTag xmi:id="426" tagName="p" tagRole="CLOSING" begin="4500" end="4504" sofa="1"/>
+	<html:TagAttribute xmi:id="443" name="data-frequency-class" value="1" begin="4505" end="4821" sofa="1"/>
+	<html:TagAttribute xmi:id="449" name="data-frequency-could-be-1" value="true" begin="4505" end="4821" sofa="1"/>
+	<html:TagAttribute xmi:id="455" name="data-frequency-could-be-2" value="false" begin="4505" end="4821" sofa="1"/>
+	<html:TagAttribute xmi:id="461" name="data-frequency-could-be-3" value="false" begin="4505" end="4821" sofa="1"/>
+	<html:TagAttribute xmi:id="467" name="data-frequency-might-be-1" value="true" begin="4505" end="4821" sofa="1"/>
+	<html:TagAttribute xmi:id="473" name="data-frequency-might-be-2" value="false" begin="4505" end="4821" sofa="1"/>
+	<html:TagAttribute xmi:id="479" name="data-frequency-might-be-3" value="false" begin="4505" end="4821" sofa="1"/>
+	<html:TagAttribute xmi:id="485" name="data-frequency-split" value="0.9998475036025049|0.0001116087380432873|4.089976706666221e-05" begin="4505" end="4821" sofa="1"/>
+	<html:HtmlTag xmi:id="491" tagName="p" tagRole="OPENING" attributes="443 449 455 461 467 473 479 485" begin="4505" end="4821" sofa="1"/>
+	<html:TagAttribute xmi:id="501" name="class" value="ARG0" begin="4821" end="4840" sofa="1"/>
+	<html:HtmlTag xmi:id="507" tagName="span" tagRole="OPENING" attributes="501" begin="4821" end="4840" sofa="1"/>
+	<html:HtmlTag xmi:id="514" tagName="span" tagRole="CLOSING" begin="4843" end="4850" sofa="1"/>
+	<html:TagAttribute xmi:id="524" name="class" value="ARGM-MOD" begin="4851" end="4874" sofa="1"/>
+	<html:HtmlTag xmi:id="530" tagName="span" tagRole="OPENING" attributes="524" begin="4851" end="4874" sofa="1"/>
+	<html:HtmlTag xmi:id="537" tagName="span" tagRole="CLOSING" begin="4879" end="4886" sofa="1"/>
+	<html:TagAttribute xmi:id="547" name="class" value="V" begin="4887" end="4903" sofa="1"/>
+	<html:HtmlTag xmi:id="553" tagName="span" tagRole="OPENING" attributes="547" begin="4887" end="4903" sofa="1"/>
+	<html:HtmlTag xmi:id="560" tagName="span" tagRole="CLOSING" begin="4909" end="4916" sofa="1"/>
+	<html:TagAttribute xmi:id="570" name="class" value="ARG1" begin="4917" end="4936" sofa="1"/>
+	<html:HtmlTag xmi:id="576" tagName="span" tagRole="OPENING" attributes="570" begin="4917" end="4936" sofa="1"/>
+	<html:HtmlTag xmi:id="583" tagName="span" tagRole="CLOSING" begin="4978" end="4985" sofa="1"/>
+	<html:TagAttribute xmi:id="593" name="class" value="ARG2" begin="4986" end="5005" sofa="1"/>
+	<html:HtmlTag xmi:id="599" tagName="span" tagRole="OPENING" attributes="593" begin="4986" end="5005" sofa="1"/>
+	<html:HtmlTag xmi:id="606" tagName="span" tagRole="CLOSING" begin="5022" end="5029" sofa="1"/>
+	<html:TagAttribute xmi:id="616" name="class" value="ARGM-TMP" begin="5030" end="5053" sofa="1"/>
+	<html:HtmlTag xmi:id="622" tagName="span" tagRole="OPENING" attributes="616" begin="5030" end="5053" sofa="1"/>
+	<html:HtmlTag xmi:id="629" tagName="span" tagRole="CLOSING" begin="5070" end="5077" sofa="1"/>
+	<html:HtmlTag xmi:id="636" tagName="p" tagRole="CLOSING" begin="5079" end="5083" sofa="1"/>
+	<html:TagAttribute xmi:id="653" name="data-frequency-class" value="1" begin="5084" end="5395" sofa="1"/>
+	<html:TagAttribute xmi:id="659" name="data-frequency-could-be-1" value="true" begin="5084" end="5395" sofa="1"/>
+	<html:TagAttribute xmi:id="665" name="data-frequency-could-be-2" value="false" begin="5084" end="5395" sofa="1"/>
+	<html:TagAttribute xmi:id="671" name="data-frequency-could-be-3" value="false" begin="5084" end="5395" sofa="1"/>
+	<html:TagAttribute xmi:id="677" name="data-frequency-might-be-1" value="true" begin="5084" end="5395" sofa="1"/>
+	<html:TagAttribute xmi:id="683" name="data-frequency-might-be-2" value="true" begin="5084" end="5395" sofa="1"/>
+	<html:TagAttribute xmi:id="689" name="data-frequency-might-be-3" value="false" begin="5084" end="5395" sofa="1"/>
+	<html:TagAttribute xmi:id="695" name="data-frequency-split" value="0.7954082429409027|0.2006009064614773|0.003990896826144308" begin="5084" end="5395" sofa="1"/>
+	<html:HtmlTag xmi:id="701" tagName="p" tagRole="OPENING" attributes="653 659 665 671 677 683 689 695" begin="5084" end="5395" sofa="1"/>
+	<html:TagAttribute xmi:id="711" name="class" value="ARG0" begin="5395" end="5414" sofa="1"/>
+	<html:HtmlTag xmi:id="717" tagName="span" tagRole="OPENING" attributes="711" begin="5395" end="5414" sofa="1"/>
+	<html:HtmlTag xmi:id="724" tagName="span" tagRole="CLOSING" begin="5426" end="5433" sofa="1"/>
+	<html:TagAttribute xmi:id="734" name="class" value="ARGM-MOD" begin="5434" end="5457" sofa="1"/>
+	<html:HtmlTag xmi:id="740" tagName="span" tagRole="OPENING" attributes="734" begin="5434" end="5457" sofa="1"/>
+	<html:HtmlTag xmi:id="747" tagName="span" tagRole="CLOSING" begin="5462" end="5469" sofa="1"/>
+	<html:TagAttribute xmi:id="757" name="class" value="ARGM-NEG" begin="5470" end="5493" sofa="1"/>
+	<html:HtmlTag xmi:id="763" tagName="span" tagRole="OPENING" attributes="757" begin="5470" end="5493" sofa="1"/>
+	<html:HtmlTag xmi:id="770" tagName="span" tagRole="CLOSING" begin="5496" end="5503" sofa="1"/>
+	<html:TagAttribute xmi:id="780" name="class" value="V" begin="5504" end="5520" sofa="1"/>
+	<html:HtmlTag xmi:id="786" tagName="span" tagRole="OPENING" attributes="780" begin="5504" end="5520" sofa="1"/>
+	<html:HtmlTag xmi:id="793" tagName="span" tagRole="CLOSING" begin="5526" end="5533" sofa="1"/>
+	<html:TagAttribute xmi:id="803" name="class" value="ARG1" begin="5534" end="5553" sofa="1"/>
+	<html:HtmlTag xmi:id="809" tagName="span" tagRole="OPENING" attributes="803" begin="5534" end="5553" sofa="1"/>
+	<html:HtmlTag xmi:id="816" tagName="span" tagRole="CLOSING" begin="5724" end="5731" sofa="1"/>
+	<html:HtmlTag xmi:id="823" tagName="p" tagRole="CLOSING" begin="5733" end="5737" sofa="1"/>
+	<html:TagAttribute xmi:id="840" name="data-frequency-class" value="2" begin="5738" end="6051" sofa="1"/>
+	<html:TagAttribute xmi:id="846" name="data-frequency-could-be-1" value="false" begin="5738" end="6051" sofa="1"/>
+	<html:TagAttribute xmi:id="852" name="data-frequency-could-be-2" value="true" begin="5738" end="6051" sofa="1"/>
+	<html:TagAttribute xmi:id="858" name="data-frequency-could-be-3" value="false" begin="5738" end="6051" sofa="1"/>
+	<html:TagAttribute xmi:id="864" name="data-frequency-might-be-1" value="false" begin="5738" end="6051" sofa="1"/>
+	<html:TagAttribute xmi:id="870" name="data-frequency-might-be-2" value="true" begin="5738" end="6051" sofa="1"/>
+	<html:TagAttribute xmi:id="876" name="data-frequency-might-be-3" value="false" begin="5738" end="6051" sofa="1"/>
+	<html:TagAttribute xmi:id="882" name="data-frequency-split" value="0.019838490383699538|0.8749605715274812|0.10520097240805626" begin="5738" end="6051" sofa="1"/>
+	<html:HtmlTag xmi:id="888" tagName="p" tagRole="OPENING" attributes="840 846 852 858 864 870 876 882" begin="5738" end="6051" sofa="1"/>
+	<html:TagAttribute xmi:id="898" name="class" value="ARG0" begin="6051" end="6070" sofa="1"/>
+	<html:HtmlTag xmi:id="904" tagName="span" tagRole="OPENING" attributes="898" begin="6051" end="6070" sofa="1"/>
+	<html:HtmlTag xmi:id="911" tagName="span" tagRole="CLOSING" begin="6082" end="6089" sofa="1"/>
+	<html:TagAttribute xmi:id="921" name="class" value="ARGM-MOD" begin="6090" end="6113" sofa="1"/>
+	<html:HtmlTag xmi:id="927" tagName="span" tagRole="OPENING" attributes="921" begin="6090" end="6113" sofa="1"/>
+	<html:HtmlTag xmi:id="934" tagName="span" tagRole="CLOSING" begin="6118" end="6125" sofa="1"/>
+	<html:TagAttribute xmi:id="944" name="class" value="ARGM-NEG" begin="6126" end="6149" sofa="1"/>
+	<html:HtmlTag xmi:id="950" tagName="span" tagRole="OPENING" attributes="944" begin="6126" end="6149" sofa="1"/>
+	<html:HtmlTag xmi:id="957" tagName="span" tagRole="CLOSING" begin="6152" end="6159" sofa="1"/>
+	<html:TagAttribute xmi:id="967" name="class" value="V" begin="6160" end="6176" sofa="1"/>
+	<html:HtmlTag xmi:id="973" tagName="span" tagRole="OPENING" attributes="967" begin="6160" end="6176" sofa="1"/>
+	<html:HtmlTag xmi:id="980" tagName="span" tagRole="CLOSING" begin="6182" end="6189" sofa="1"/>
+	<html:TagAttribute xmi:id="990" name="class" value="ARG1" begin="6190" end="6209" sofa="1"/>
+	<html:HtmlTag xmi:id="996" tagName="span" tagRole="OPENING" attributes="990" begin="6190" end="6209" sofa="1"/>
+	<html:HtmlTag xmi:id="1003" tagName="span" tagRole="CLOSING" begin="6254" end="6261" sofa="1"/>
+	<html:HtmlTag xmi:id="1010" tagName="p" tagRole="CLOSING" begin="6263" end="6267" sofa="1"/>
+	<html:HtmlTag xmi:id="1019" tagName="h2" tagRole="OPENING" attributes="" begin="6268" end="6272" sofa="1"/>
+	<html:HtmlTag xmi:id="1026" tagName="h2" tagRole="CLOSING" begin="6281" end="6286" sofa="1"/>
+	<html:HtmlTag xmi:id="1035" tagName="h6" tagRole="OPENING" attributes="" begin="6287" end="6291" sofa="1"/>
+	<html:HtmlTag xmi:id="1042" tagName="h6" tagRole="CLOSING" begin="6302" end="6307" sofa="1"/>
+	<html:TagAttribute xmi:id="1059" name="data-frequency-class" value="2" begin="6308" end="6621" sofa="1"/>
+	<html:TagAttribute xmi:id="1065" name="data-frequency-could-be-1" value="false" begin="6308" end="6621" sofa="1"/>
+	<html:TagAttribute xmi:id="1071" name="data-frequency-could-be-2" value="true" begin="6308" end="6621" sofa="1"/>
+	<html:TagAttribute xmi:id="1077" name="data-frequency-could-be-3" value="false" begin="6308" end="6621" sofa="1"/>
+	<html:TagAttribute xmi:id="1083" name="data-frequency-might-be-1" value="false" begin="6308" end="6621" sofa="1"/>
+	<html:TagAttribute xmi:id="1089" name="data-frequency-might-be-2" value="true" begin="6308" end="6621" sofa="1"/>
+	<html:TagAttribute xmi:id="1095" name="data-frequency-might-be-3" value="false" begin="6308" end="6621" sofa="1"/>
+	<html:TagAttribute xmi:id="1101" name="data-frequency-split" value="0.020463182621824675|0.9452603191137314|0.03427645036367721" begin="6308" end="6621" sofa="1"/>
+	<html:HtmlTag xmi:id="1107" tagName="p" tagRole="OPENING" attributes="1059 1065 1071 1077 1083 1089 1095 1101" begin="6308" end="6621" sofa="1"/>
+	<html:TagAttribute xmi:id="1117" name="class" value="ARG0" begin="6621" end="6640" sofa="1"/>
+	<html:HtmlTag xmi:id="1123" tagName="span" tagRole="OPENING" attributes="1117" begin="6621" end="6640" sofa="1"/>
+	<html:HtmlTag xmi:id="1130" tagName="span" tagRole="CLOSING" begin="6652" end="6659" sofa="1"/>
+	<html:TagAttribute xmi:id="1140" name="class" value="ARGM-MOD" begin="6660" end="6683" sofa="1"/>
+	<html:HtmlTag xmi:id="1146" tagName="span" tagRole="OPENING" attributes="1140" begin="6660" end="6683" sofa="1"/>
+	<html:HtmlTag xmi:id="1153" tagName="span" tagRole="CLOSING" begin="6688" end="6695" sofa="1"/>
+	<html:TagAttribute xmi:id="1163" name="class" value="V" begin="6696" end="6712" sofa="1"/>
+	<html:HtmlTag xmi:id="1169" tagName="span" tagRole="OPENING" attributes="1163" begin="6696" end="6712" sofa="1"/>
+	<html:HtmlTag xmi:id="1176" tagName="span" tagRole="CLOSING" begin="6718" end="6725" sofa="1"/>
+	<html:TagAttribute xmi:id="1186" name="class" value="ARG2" begin="6726" end="6745" sofa="1"/>
+	<html:HtmlTag xmi:id="1192" tagName="span" tagRole="OPENING" attributes="1186" begin="6726" end="6745" sofa="1"/>
+	<html:HtmlTag xmi:id="1199" tagName="span" tagRole="CLOSING" begin="6773" end="6780" sofa="1"/>
+	<html:TagAttribute xmi:id="1209" name="class" value="ARGM-MNR" begin="6783" end="6806" sofa="1"/>
+	<html:HtmlTag xmi:id="1215" tagName="span" tagRole="OPENING" attributes="1209" begin="6783" end="6806" sofa="1"/>
+	<html:HtmlTag xmi:id="1222" tagName="span" tagRole="CLOSING" begin="6943" end="6950" sofa="1"/>
+	<html:TagAttribute xmi:id="1232" name="class" value="ARG1" begin="6953" end="6972" sofa="1"/>
+	<html:HtmlTag xmi:id="1238" tagName="span" tagRole="OPENING" attributes="1232" begin="6953" end="6972" sofa="1"/>
+	<html:HtmlTag xmi:id="1245" tagName="span" tagRole="CLOSING" begin="9079" end="9086" sofa="1"/>
+	<html:TagAttribute xmi:id="1255" name="class" value="ARGM-PRP" begin="9087" end="9110" sofa="1"/>
+	<html:HtmlTag xmi:id="1261" tagName="span" tagRole="OPENING" attributes="1255" begin="9087" end="9110" sofa="1"/>
+	<html:HtmlTag xmi:id="1268" tagName="span" tagRole="CLOSING" begin="9179" end="9186" sofa="1"/>
+	<html:HtmlTag xmi:id="1275" tagName="p" tagRole="CLOSING" begin="9186" end="9190" sofa="1"/>
+	<tcas:DocumentAnnotation xmi:id="1289" language="en" begin="0" end="6323" sofa="1282"/>
+	<type:DocumentMetaData xmi:id="1294" documentTitle="docTitle" documentId="docId" collectionId="colId" isLastSegment="false" begin="0" end="9190" sofa="1" language="en"/>
+	<type0:ValueBetweenTagType xmi:id="1305" tagName="style" attributes="" begin="23" end="2539" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1312" tagName="span" attributes="class='ARGM-TMP'" begin="3123" end="3173" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1319" tagName="span" attributes="class='ARG0'" begin="3202" end="3227" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1326" tagName="span" attributes="class='ARGM-MOD'" begin="3258" end="3263" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1333" tagName="span" attributes="class='V'" begin="3287" end="3293" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1340" tagName="span" attributes="class='ARG2'" begin="3320" end="3323" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1347" tagName="span" attributes="class='ARG1'" begin="3350" end="3414" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1354" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='false'data-frequency-might-be-2='true'data-frequency-might-be-3='true'data-frequency-split='0.041251007467508316|0.7011293858289719|0.25761963524855674'" begin="2861" end="3535" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1361" tagName="span" attributes="class='ARG1'" begin="4273" end="4325" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1368" tagName="span" attributes="class='ARGM-MOD'" begin="4356" end="4361" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1375" tagName="span" attributes="class='ARGM-TMP'" begin="4395" end="4404" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1382" tagName="span" attributes="class='V'" begin="4428" end="4436" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1389" tagName="span" attributes="class='ARG0'" begin="4463" end="4491" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1396" tagName="p" attributes="data-frequency-class='3'data-frequency-could-be-1='false'data-frequency-could-be-2='false'data-frequency-could-be-3='true'data-frequency-might-be-1='false'data-frequency-might-be-2='true'data-frequency-might-be-3='true'data-frequency-split='0.003947803931077942|0.34864878952503203|0.6474034041166306'" begin="3852" end="4500" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1403" tagName="span" attributes="class='ARG0'" begin="4840" end="4843" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1410" tagName="span" attributes="class='ARGM-MOD'" begin="4874" end="4879" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1417" tagName="span" attributes="class='V'" begin="4903" end="4909" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1424" tagName="span" attributes="class='ARG1'" begin="4936" end="4978" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1431" tagName="span" attributes="class='ARG2'" begin="5005" end="5022" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1438" tagName="span" attributes="class='ARGM-TMP'" begin="5053" end="5070" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1445" tagName="p" attributes="data-frequency-class='1'data-frequency-could-be-1='true'data-frequency-could-be-2='false'data-frequency-could-be-3='false'data-frequency-might-be-1='true'data-frequency-might-be-2='false'data-frequency-might-be-3='false'data-frequency-split='0.9998475036025049|0.0001116087380432873|4.089976706666221e-05'" begin="4821" end="5079" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1452" tagName="span" attributes="class='ARG0'" begin="5414" end="5426" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1459" tagName="span" attributes="class='ARGM-MOD'" begin="5457" end="5462" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1466" tagName="span" attributes="class='ARGM-NEG'" begin="5493" end="5496" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1473" tagName="span" attributes="class='V'" begin="5520" end="5526" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1480" tagName="span" attributes="class='ARG1'" begin="5553" end="5724" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1487" tagName="p" attributes="data-frequency-class='1'data-frequency-could-be-1='true'data-frequency-could-be-2='false'data-frequency-could-be-3='false'data-frequency-might-be-1='true'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.7954082429409027|0.2006009064614773|0.003990896826144308'" begin="5395" end="5733" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1494" tagName="span" attributes="class='ARG0'" begin="6070" end="6082" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1501" tagName="span" attributes="class='ARGM-MOD'" begin="6113" end="6118" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1508" tagName="span" attributes="class='ARGM-NEG'" begin="6149" end="6152" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1515" tagName="span" attributes="class='V'" begin="6176" end="6182" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1522" tagName="span" attributes="class='ARG1'" begin="6209" end="6254" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1529" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='false'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.019838490383699538|0.8749605715274812|0.10520097240805626'" begin="6051" end="6263" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1536" tagName="h2" attributes="" begin="6272" end="6281" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1543" tagName="h6" attributes="" begin="6291" end="6302" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1550" tagName="span" attributes="class='ARG0'" begin="6640" end="6652" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1557" tagName="span" attributes="class='ARGM-MOD'" begin="6683" end="6688" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1564" tagName="span" attributes="class='V'" begin="6712" end="6718" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1571" tagName="span" attributes="class='ARG2'" begin="6745" end="6773" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1578" tagName="span" attributes="class='ARGM-MNR'" begin="6806" end="6943" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1585" tagName="span" attributes="class='ARG1'" begin="6972" end="9079" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1592" tagName="span" attributes="class='ARGM-PRP'" begin="9110" end="9179" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1599" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='false'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.020463182621824675|0.9452603191137314|0.03427645036367721'" begin="6621" end="9186" sofa="1"/>
+	<type0:ValueBetweenTagType xmi:id="1606" tagName="style" attributes="" begin="1" end="2517" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1613" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='false'data-frequency-might-be-2='true'data-frequency-might-be-3='true'data-frequency-split='0.041251007467508316|0.7011293858289719|0.25761963524855674'" begin="2519" end="3032" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1620" tagName="span" attributes="class='ARGM-TMP'" begin="2758" end="2808" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1627" tagName="span" attributes="class='ARG0'" begin="2811" end="2836" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1634" tagName="span" attributes="class='ARGM-MOD'" begin="2837" end="2842" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1641" tagName="span" attributes="class='V'" begin="2843" end="2849" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1648" tagName="span" attributes="class='ARG2'" begin="2850" end="2853" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1655" tagName="span" attributes="class='ARG1'" begin="2854" end="2918" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1662" tagName="p" attributes="data-frequency-class='3'data-frequency-could-be-1='false'data-frequency-could-be-2='false'data-frequency-could-be-3='true'data-frequency-might-be-1='false'data-frequency-might-be-2='true'data-frequency-might-be-3='true'data-frequency-split='0.003947803931077942|0.34864878952503203|0.6474034041166306'" begin="3033" end="3546" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1669" tagName="span" attributes="class='ARG1'" begin="3435" end="3487" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1676" tagName="span" attributes="class='ARGM-MOD'" begin="3488" end="3493" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1683" tagName="span" attributes="class='ARGM-TMP'" begin="3497" end="3506" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1690" tagName="span" attributes="class='V'" begin="3507" end="3515" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1697" tagName="span" attributes="class='ARG0'" begin="3516" end="3544" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1704" tagName="p" attributes="data-frequency-class='1'data-frequency-could-be-1='true'data-frequency-could-be-2='false'data-frequency-could-be-3='false'data-frequency-might-be-1='true'data-frequency-might-be-2='false'data-frequency-might-be-3='false'data-frequency-split='0.9998475036025049|0.0001116087380432873|4.089976706666221e-05'" begin="3547" end="3644" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1711" tagName="span" attributes="class='ARG0'" begin="3547" end="3550" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1718" tagName="span" attributes="class='ARGM-MOD'" begin="3551" end="3556" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1725" tagName="span" attributes="class='V'" begin="3557" end="3563" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1732" tagName="span" attributes="class='ARG1'" begin="3564" end="3606" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1739" tagName="span" attributes="class='ARG2'" begin="3607" end="3624" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1746" tagName="span" attributes="class='ARGM-TMP'" begin="3625" end="3642" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1753" tagName="p" attributes="data-frequency-class='1'data-frequency-could-be-1='true'data-frequency-could-be-2='false'data-frequency-could-be-3='false'data-frequency-might-be-1='true'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.7954082429409027|0.2006009064614773|0.003990896826144308'" begin="3645" end="3848" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1760" tagName="span" attributes="class='ARG0'" begin="3645" end="3657" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1767" tagName="span" attributes="class='ARGM-MOD'" begin="3658" end="3663" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1774" tagName="span" attributes="class='ARGM-NEG'" begin="3664" end="3667" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1781" tagName="span" attributes="class='V'" begin="3668" end="3674" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1788" tagName="span" attributes="class='ARG1'" begin="3675" end="3846" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1795" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='false'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.019838490383699538|0.8749605715274812|0.10520097240805626'" begin="3849" end="3926" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1802" tagName="span" attributes="class='ARG0'" begin="3849" end="3861" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1809" tagName="span" attributes="class='ARGM-MOD'" begin="3862" end="3867" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1816" tagName="span" attributes="class='ARGM-NEG'" begin="3868" end="3871" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1823" tagName="span" attributes="class='V'" begin="3872" end="3878" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1830" tagName="span" attributes="class='ARG1'" begin="3879" end="3924" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1837" tagName="h2" attributes="" begin="3927" end="3936" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1844" tagName="h6" attributes="" begin="3937" end="3948" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1851" tagName="p" attributes="data-frequency-class='2'data-frequency-could-be-1='false'data-frequency-could-be-2='true'data-frequency-could-be-3='false'data-frequency-might-be-1='false'data-frequency-might-be-2='true'data-frequency-might-be-3='false'data-frequency-split='0.020463182621824675|0.9452603191137314|0.03427645036367721'" begin="3949" end="6323" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1858" tagName="span" attributes="class='ARG0'" begin="3949" end="3961" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1865" tagName="span" attributes="class='ARGM-MOD'" begin="3962" end="3967" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1872" tagName="span" attributes="class='V'" begin="3968" end="3974" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1879" tagName="span" attributes="class='ARG2'" begin="3975" end="4003" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1886" tagName="span" attributes="class='ARGM-MNR'" begin="4006" end="4143" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1893" tagName="span" attributes="class='ARG1'" begin="4146" end="6253" sofa="1282"/>
+	<type0:ValueBetweenTagType xmi:id="1900" tagName="span" attributes="class='ARGM-PRP'" begin="6254" end="6323" sofa="1282"/>
+	<cas:Sofa xmi:id="1" sofaNum="1" sofaID="_InitialView" mimeType="text" sofaString="&lt;!doctype html&gt;&#10;&lt;style&gt;&#10;&#10;    p {&#10;        margin: 0.75em 0px;&#10;        line-height: 2em;&#10;        white-space: nowrap;&#10;    }&#10;&#10;    span {&#10;        border: 2px solid currentColor;&#10;        border-radius: 5px;&#10;        padding: 5px;&#10;    }&#10;&#10;    span {&#10;        background: lightblue;&#10;        color: royalblue;&#10;    }&#10;&#10;    .V {&#10;        background: yellow;&#10;        color: orangered;&#10;        font-weight: bold;&#10;    }&#10;&#10;    .ARG0,.ARG1,.ARG2,.C-ARG1 {&#10;        color: black;&#10;        background: white;&#10;    }&#10;&#10;    .ARGM-TMP {&#10;        color: green;&#10;        background: lightgreen;&#10;    }&#10;&#10;    .ARGM-NEG {&#10;        color: pink;&#10;        background: darkred;&#10;        border-color: darkred;&#10;    }&#10;&#10;    .PUNCT {&#10;        color: silver;&#10;        background: white;&#10;        border: none; padding: 0;&#10;    }&#10;&#10;    .ARG2 {&#10;        border-style: dotted;&#10;    }&#10;&#10;    .ARG1, .C-ARG1 {&#10;        color: white;&#10;        background: black;&#10;        border-color: black;&#10;        border-style: solid;&#10;    }&#10;&#10;    .ARG3, .ARGM-PRP, .ARGM-PRD, .ARGM-PNC {&#10;        color: white;&#10;        background: royalblue;&#10;        border-color: royalblue;&#10;        border-style: solid;&#10;    }&#10;&#10;    .updated-tag {&#10;        outline: 3px solid fuchsia;&#10;        outline-offset: 2px;&#10;    }&#10;&#10;    p[data-frequency-class=&quot;1&quot;] {&#10;        opacity: 0.15;&#10;    }&#10;&#10;    p[data-frequency-might-be-3=&quot;true&quot;]::before {&#10;        content: &quot;&#9850;&quot;;&#10;        border: 7px solid royalblue;&#10;        margin-right: 5px;&#10;        border-radius: 5px;&#10;        background: royalblue;&#10;        color: white;&#10;    }&#10;    p[data-frequency-class=&quot;3&quot;]::before {&#10;        border-color: red;&#10;        background: red;&#10;        color: yellow;&#10;    }&#10;&#10;    h1,h2,h3,h4,h5,h6 {&#10;        font-family: sans-serif;&#10;        font-size: 12px;&#10;        color: silver;&#10;        font-weight: bold;&#10;        margin: 5px 0px;&#10;        border-left: 3px solid silver;&#10;        padding-left: 3px;&#10;    }&#10;    h2 { border-left-width: 3px; }&#10;    h2 { border-left-width: 6px; }&#10;    h3 { border-left-width: 9px; }&#10;    h4 { border-left-width: 12px; }&#10;    h5 { border-left-width: 15px; }&#10;    h6 { border-left-width: 18px; }&#10;    p + :not(p):not(h6) { margin-top: 45px; }&#10;&#10;    [data-old-text] {&#10;        outline: 4px dashed fuchsia;&#10;        outline-offset: 1px;&#10;        position: relative;&#10;    }&#10;    [TODO] {&#10;        outline: 4px dashed red;&#10;        outline-offset: 1px;&#10;    }&#10;&#10;    [data-old-text]:hover::before {&#10;        content: attr(data-old-text);&#10;        background: fuchsia;&#10;        color: white;&#10;        position: absolute; top: -2em;&#10;        padding: 1px 6px; border-radius: 4px;&#10;    }&#10;&#10;&lt;/style&gt;&#10;&#10;&lt;p data-frequency-class=&quot;2&quot; data-frequency-could-be-1=&quot;false&quot; data-frequency-could-be-2=&quot;true&quot; data-frequency-could-be-3=&quot;false&quot; data-frequency-might-be-1=&quot;false&quot; data-frequency-might-be-2=&quot;true&quot; data-frequency-might-be-3=&quot;true&quot; data-frequency-split=&quot;0.041251007467508316|0.7011293858289719|0.25761963524855674&quot;&gt;Competent authorities may waive the condition set out in point ( d ) of paragraph 4 when Article 20(1)(b ) is applied . In that case additional objective criteria as set out in the delegated act referred to in Article 460 have to be met . &lt;span class=&quot;ARGM-TMP&quot;&gt;When such higher inflow is permitted to be applied&lt;/span&gt; , &lt;span class=&quot;ARG0&quot;&gt;the competent authorities&lt;/span&gt; &lt;span class=&quot;ARGM-MOD&quot;&gt;shall&lt;/span&gt; &lt;span class=&quot;V&quot;&gt;inform&lt;/span&gt; &lt;span class=&quot;ARG2&quot;&gt;EBA&lt;/span&gt; &lt;span class=&quot;ARG1&quot;&gt;about the result of the process referred to in Article 20(1)(b )&lt;/span&gt; . Fulfilment of the conditions for such higher inflows shall be regularly reviewed by the competent authorities .&lt;/p&gt;&#10;&lt;p data-frequency-class=&quot;3&quot; data-frequency-could-be-1=&quot;false&quot; data-frequency-could-be-2=&quot;false&quot; data-frequency-could-be-3=&quot;true&quot; data-frequency-might-be-1=&quot;false&quot; data-frequency-might-be-2=&quot;true&quot; data-frequency-might-be-3=&quot;true&quot; data-frequency-split=&quot;0.003947803931077942|0.34864878952503203|0.6474034041166306&quot;&gt;Competent authorities may waive the condition set out in point ( d ) of paragraph 4 when Article 20(1)(b ) is applied . In that case additional objective criteria as set out in the delegated act referred to in Article 460 have to be met . When such higher inflow is permitted to be applied , the competent authorities shall inform EBA about the result of the process referred to in Article 20(1)(b ) . &lt;span class=&quot;ARG1&quot;&gt;Fulfilment of the conditions for such higher inflows&lt;/span&gt; &lt;span class=&quot;ARGM-MOD&quot;&gt;shall&lt;/span&gt; be &lt;span class=&quot;ARGM-TMP&quot;&gt;regularly&lt;/span&gt; &lt;span class=&quot;V&quot;&gt;reviewed&lt;/span&gt; &lt;span class=&quot;ARG0&quot;&gt;by the competent authorities&lt;/span&gt; .&lt;/p&gt;&#10;&lt;p data-frequency-class=&quot;1&quot; data-frequency-could-be-1=&quot;true&quot; data-frequency-could-be-2=&quot;false&quot; data-frequency-could-be-3=&quot;false&quot; data-frequency-might-be-1=&quot;true&quot; data-frequency-might-be-2=&quot;false&quot; data-frequency-might-be-3=&quot;false&quot; data-frequency-split=&quot;0.9998475036025049|0.0001116087380432873|4.089976706666221e-05&quot;&gt;&lt;span class=&quot;ARG0&quot;&gt;EBA&lt;/span&gt; &lt;span class=&quot;ARGM-MOD&quot;&gt;shall&lt;/span&gt; &lt;span class=&quot;V&quot;&gt;submit&lt;/span&gt; &lt;span class=&quot;ARG1&quot;&gt;those draft regulatory technical standards&lt;/span&gt; &lt;span class=&quot;ARG2&quot;&gt;to the Commission&lt;/span&gt; &lt;span class=&quot;ARGM-TMP&quot;&gt;by 1 January 2015&lt;/span&gt; .&lt;/p&gt;&#10;&lt;p data-frequency-class=&quot;1&quot; data-frequency-could-be-1=&quot;true&quot; data-frequency-could-be-2=&quot;false&quot; data-frequency-could-be-3=&quot;false&quot; data-frequency-might-be-1=&quot;true&quot; data-frequency-might-be-2=&quot;true&quot; data-frequency-might-be-3=&quot;false&quot; data-frequency-split=&quot;0.7954082429409027|0.2006009064614773|0.003990896826144308&quot;&gt;&lt;span class=&quot;ARG0&quot;&gt;Institutions&lt;/span&gt; &lt;span class=&quot;ARGM-MOD&quot;&gt;shall&lt;/span&gt; &lt;span class=&quot;ARGM-NEG&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;V&quot;&gt;report&lt;/span&gt; &lt;span class=&quot;ARG1&quot;&gt;inflows from any of the liquid assets reported in accordance with Article 416 other than payments due on the assets that are not reflected in the market value of the asset&lt;/span&gt; .&lt;/p&gt;&#10;&lt;p data-frequency-class=&quot;2&quot; data-frequency-could-be-1=&quot;false&quot; data-frequency-could-be-2=&quot;true&quot; data-frequency-could-be-3=&quot;false&quot; data-frequency-might-be-1=&quot;false&quot; data-frequency-might-be-2=&quot;true&quot; data-frequency-might-be-3=&quot;false&quot; data-frequency-split=&quot;0.019838490383699538|0.8749605715274812|0.10520097240805626&quot;&gt;&lt;span class=&quot;ARG0&quot;&gt;Institutions&lt;/span&gt; &lt;span class=&quot;ARGM-MOD&quot;&gt;shall&lt;/span&gt; &lt;span class=&quot;ARGM-NEG&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;V&quot;&gt;report&lt;/span&gt; &lt;span class=&quot;ARG1&quot;&gt;inflows from any new obligations entered into&lt;/span&gt; .&lt;/p&gt;&#10;&lt;h2&gt;TITLE III&lt;/h2&gt;&#10;&lt;h6&gt;Article 427&lt;/h6&gt;&#10;&lt;p data-frequency-class=&quot;2&quot; data-frequency-could-be-1=&quot;false&quot; data-frequency-could-be-2=&quot;true&quot; data-frequency-could-be-3=&quot;false&quot; data-frequency-might-be-1=&quot;false&quot; data-frequency-might-be-2=&quot;true&quot; data-frequency-might-be-3=&quot;false&quot; data-frequency-split=&quot;0.020463182621824675|0.9452603191137314|0.03427645036367721&quot;&gt;&lt;span class=&quot;ARG0&quot;&gt;Institutions&lt;/span&gt; &lt;span class=&quot;ARGM-MOD&quot;&gt;shall&lt;/span&gt; &lt;span class=&quot;V&quot;&gt;report&lt;/span&gt; &lt;span class=&quot;ARG2&quot;&gt;to the competent authorities&lt;/span&gt; , &lt;span class=&quot;ARGM-MNR&quot;&gt;in accordance with the reporting requirements set out in Article 415(1 ) and the uniform reporting formats referred to in Article 415(3 )&lt;/span&gt; , &lt;span class=&quot;ARG1&quot;&gt;the following items and their components &#10094;the following own funds, after deductions have been applied, where appropriate &#10092;tier 1 capital instruments &#8214; and/or tier 2 capital instruments &#8214; and/or other preferred shares and capital instruments in excess of Tier 2 allowable amount having an effective maturity of one year or greater&#10093; &#8214; the following liabilities not included in point (a) &#10092;retail deposits that qualify for the treatment set out in Article 421(1) &#8214; and/or retail deposits that qualify for the treatment set out in Article 421(2) &#8214; and/or deposits that qualify for the treatment set out in Article 422 (3) and (4) &#8214; and/or of the deposits referred to in point (iii), those that are subject to a deposit guarantee scheme in accordance with Directive 94/19/EC or an equivalent deposit guarantee scheme in a third country deposit guarantees within the terms of Article 421(2) &#8214; and/or of the deposits referred to in point (iii), those that fall under point (b) of Article 422(3) &#8214; and/or of the deposits referred to in point (iii), those that fall under point (d) of Article 422(3) &#8214; and/or amounts deposited not falling under point (i), (ii) or (iii) if they are not deposited by financial customers &#8214; and/or all funding obtained from financial customers &#8214; and/or separately for amounts falling under points (vii) and (viii) respectively, funding from secured lending and capital market-driven transactions as defined in point (3) of Article 192 &#10216;collateralised by assets that would qualify as liquid assets in accordance with Article 416 &#8214; and/or collateralised by any other assets&#10217; &#8214; and/or liabilities resulting from securities issued qualifying for the treatment set out in Article 129(4) or (5) or as referred to in Article 52(4) of Directive 2009/65/EC &#8214; and/or the following other liabilities resulting from securities issued that do not fall under point (a) &#10216;liabilities resulting from securities issued with an effective maturity of one year or greater &#8214; and/or liabilities resulting from securities issued with an effective maturity of less than one year&#10217; &#8214; and/or any other liabilities&#10093;&#10095;&lt;/span&gt; &lt;span class=&quot;ARGM-PRP&quot;&gt;in order to allow an assessment of the availability of stable funding&lt;/span&gt;&lt;/p&gt;"/>
+	<cas:Sofa xmi:id="1282" sofaNum="2" sofaID="html2textView" mimeType="text" sofaString="&#10;&#10;&#10;    p {&#10;        margin: 0.75em 0px;&#10;        line-height: 2em;&#10;        white-space: nowrap;&#10;    }&#10;&#10;    span {&#10;        border: 2px solid currentColor;&#10;        border-radius: 5px;&#10;        padding: 5px;&#10;    }&#10;&#10;    span {&#10;        background: lightblue;&#10;        color: royalblue;&#10;    }&#10;&#10;    .V {&#10;        background: yellow;&#10;        color: orangered;&#10;        font-weight: bold;&#10;    }&#10;&#10;    .ARG0,.ARG1,.ARG2,.C-ARG1 {&#10;        color: black;&#10;        background: white;&#10;    }&#10;&#10;    .ARGM-TMP {&#10;        color: green;&#10;        background: lightgreen;&#10;    }&#10;&#10;    .ARGM-NEG {&#10;        color: pink;&#10;        background: darkred;&#10;        border-color: darkred;&#10;    }&#10;&#10;    .PUNCT {&#10;        color: silver;&#10;        background: white;&#10;        border: none; padding: 0;&#10;    }&#10;&#10;    .ARG2 {&#10;        border-style: dotted;&#10;    }&#10;&#10;    .ARG1, .C-ARG1 {&#10;        color: white;&#10;        background: black;&#10;        border-color: black;&#10;        border-style: solid;&#10;    }&#10;&#10;    .ARG3, .ARGM-PRP, .ARGM-PRD, .ARGM-PNC {&#10;        color: white;&#10;        background: royalblue;&#10;        border-color: royalblue;&#10;        border-style: solid;&#10;    }&#10;&#10;    .updated-tag {&#10;        outline: 3px solid fuchsia;&#10;        outline-offset: 2px;&#10;    }&#10;&#10;    p[data-frequency-class=&quot;1&quot;] {&#10;        opacity: 0.15;&#10;    }&#10;&#10;    p[data-frequency-might-be-3=&quot;true&quot;]::before {&#10;        content: &quot;&#9850;&quot;;&#10;        border: 7px solid royalblue;&#10;        margin-right: 5px;&#10;        border-radius: 5px;&#10;        background: royalblue;&#10;        color: white;&#10;    }&#10;    p[data-frequency-class=&quot;3&quot;]::before {&#10;        border-color: red;&#10;        background: red;&#10;        color: yellow;&#10;    }&#10;&#10;    h1,h2,h3,h4,h5,h6 {&#10;        font-family: sans-serif;&#10;        font-size: 12px;&#10;        color: silver;&#10;        font-weight: bold;&#10;        margin: 5px 0px;&#10;        border-left: 3px solid silver;&#10;        padding-left: 3px;&#10;    }&#10;    h2 { border-left-width: 3px; }&#10;    h2 { border-left-width: 6px; }&#10;    h3 { border-left-width: 9px; }&#10;    h4 { border-left-width: 12px; }&#10;    h5 { border-left-width: 15px; }&#10;    h6 { border-left-width: 18px; }&#10;    p + :not(p):not(h6) { margin-top: 45px; }&#10;&#10;    [data-old-text] {&#10;        outline: 4px dashed fuchsia;&#10;        outline-offset: 1px;&#10;        position: relative;&#10;    }&#10;    [TODO] {&#10;        outline: 4px dashed red;&#10;        outline-offset: 1px;&#10;    }&#10;&#10;    [data-old-text]:hover::before {&#10;        content: attr(data-old-text);&#10;        background: fuchsia;&#10;        color: white;&#10;        position: absolute; top: -2em;&#10;        padding: 1px 6px; border-radius: 4px;&#10;    }&#10;&#10;&#10;&#10;Competent authorities may waive the condition set out in point ( d ) of paragraph 4 when Article 20(1)(b ) is applied . In that case additional objective criteria as set out in the delegated act referred to in Article 460 have to be met . When such higher inflow is permitted to be applied , the competent authorities shall inform EBA about the result of the process referred to in Article 20(1)(b ) . Fulfilment of the conditions for such higher inflows shall be regularly reviewed by the competent authorities .&#10;Competent authorities may waive the condition set out in point ( d ) of paragraph 4 when Article 20(1)(b ) is applied . In that case additional objective criteria as set out in the delegated act referred to in Article 460 have to be met . When such higher inflow is permitted to be applied , the competent authorities shall inform EBA about the result of the process referred to in Article 20(1)(b ) . Fulfilment of the conditions for such higher inflows shall be regularly reviewed by the competent authorities .&#10;EBA shall submit those draft regulatory technical standards to the Commission by 1 January 2015 .&#10;Institutions shall not report inflows from any of the liquid assets reported in accordance with Article 416 other than payments due on the assets that are not reflected in the market value of the asset .&#10;Institutions shall not report inflows from any new obligations entered into .&#10;TITLE III&#10;Article 427&#10;Institutions shall report to the competent authorities , in accordance with the reporting requirements set out in Article 415(1 ) and the uniform reporting formats referred to in Article 415(3 ) , the following items and their components &#10094;the following own funds, after deductions have been applied, where appropriate &#10092;tier 1 capital instruments &#8214; and/or tier 2 capital instruments &#8214; and/or other preferred shares and capital instruments in excess of Tier 2 allowable amount having an effective maturity of one year or greater&#10093; &#8214; the following liabilities not included in point (a) &#10092;retail deposits that qualify for the treatment set out in Article 421(1) &#8214; and/or retail deposits that qualify for the treatment set out in Article 421(2) &#8214; and/or deposits that qualify for the treatment set out in Article 422 (3) and (4) &#8214; and/or of the deposits referred to in point (iii), those that are subject to a deposit guarantee scheme in accordance with Directive 94/19/EC or an equivalent deposit guarantee scheme in a third country deposit guarantees within the terms of Article 421(2) &#8214; and/or of the deposits referred to in point (iii), those that fall under point (b) of Article 422(3) &#8214; and/or of the deposits referred to in point (iii), those that fall under point (d) of Article 422(3) &#8214; and/or amounts deposited not falling under point (i), (ii) or (iii) if they are not deposited by financial customers &#8214; and/or all funding obtained from financial customers &#8214; and/or separately for amounts falling under points (vii) and (viii) respectively, funding from secured lending and capital market-driven transactions as defined in point (3) of Article 192 &#10216;collateralised by assets that would qualify as liquid assets in accordance with Article 416 &#8214; and/or collateralised by any other assets&#10217; &#8214; and/or liabilities resulting from securities issued qualifying for the treatment set out in Article 129(4) or (5) or as referred to in Article 52(4) of Directive 2009/65/EC &#8214; and/or the following other liabilities resulting from securities issued that do not fall under point (a) &#10216;liabilities resulting from securities issued with an effective maturity of one year or greater &#8214; and/or liabilities resulting from securities issued with an effective maturity of less than one year&#10217; &#8214; and/or any other liabilities&#10093;&#10095; in order to allow an assessment of the availability of stable funding"/>
+	<cas:View sofa="1" members="13 22 29 94 110 117 133 140 156 163 179 186 202 209 225 232 239 304 320 327 343 350 366 373 389 396 412 419 426 491 507 514 530 537 553 560 576 583 599 606 622 629 636 701 717 724 740 747 763 770 786 793 809 816 823 888 904 911 927 934 950 957 973 980 996 1003 1010 1019 1026 1035 1042 1107 1123 1130 1146 1153 1169 1176 1192 1199 1215 1222 1238 1245 1261 1268 1275 1294 1305 1312 1319 1326 1333 1340 1347 1354 1361 1368 1375 1382 1389 1396 1403 1410 1417 1424 1431 1438 1445 1452 1459 1466 1473 1480 1487 1494 1501 1508 1515 1522 1529 1536 1543 1550 1557 1564 1571 1578 1585 1592 1599"/>
+	<cas:View sofa="1282" members="1289 1606 1613 1620 1627 1634 1641 1648 1655 1662 1669 1676 1683 1690 1697 1704 1711 1718 1725 1732 1739 1746 1753 1760 1767 1774 1781 1788 1795 1802 1809 1816 1823 1830 1837 1844 1851 1858 1865 1872 1879 1886 1893 1900"/>
+</xmi:XMI>

@@ -5,3 +5,4 @@ requests==2.25.0
 dkpro-cassis==0.5.0
 rdflib==5.0.0
 SPARQLWrapper==1.8.5
+python-dotenv==0.15.0
