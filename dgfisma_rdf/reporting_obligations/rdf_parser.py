@@ -175,7 +175,7 @@ class SPARQLReportingObligationProvider:
             }}
           
             ORDER BY 
-            ASC(?special_sort = '')
+            ASC(str(?special_sort) = '')
             (?special_sort)
             ASC(?value_ent_lower)
             ASC(?{VALUE})
@@ -603,7 +603,7 @@ class SPARQLReportingObligationProvider:
         
         ORDER BY 
         {q_sort_str_match}
-        ASC(?special_sort = '')
+        ASC(str(?special_sort) = '')
         (?special_sort)
         ASC(?value_ent_lower)
         ASC(?{VALUE})

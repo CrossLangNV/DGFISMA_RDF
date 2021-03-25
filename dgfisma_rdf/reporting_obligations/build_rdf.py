@@ -159,7 +159,7 @@ class ROGraph(Graph):
             ro_update = ROUpdate(query_endpoint)
 
         # add a document
-        cat_doc = self.get_cat_doc_uri(doc_id)
+        cat_doc = self._get_cat_doc_uri(doc_id)
 
         cas_content['id'] = cat_doc.toPython()  # adding ID to cas
 
