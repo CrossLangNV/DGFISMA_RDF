@@ -1285,20 +1285,20 @@ class TestSorting(unittest.TestCase):
             with self.subTest(ent_type_i):
                 l_prd = self.prov.get_filter_entities_from_type_lazy_loading(ent_type_i)
 
-                l_prd_sored = self.prefered_sorting(l_prd)
+                l_prd_sorted = self.prefered_sorting(l_prd)
 
                 with self.subTest('Compare elements:'):
-                    for i, (ent_i, ent_i_sorted) in enumerate(zip(l_prd, l_prd_sored)):
+                    for i, (ent_i, ent_i_sorted) in enumerate(zip(l_prd, l_prd_sorted)):
                         self.assertEqual(ent_i, ent_i_sorted,
                                          f'i={i}. Produced data should already be sorted according to our preferred sorting.')
 
                 with self.subTest('Compare whole list:'):
-                    self.assertEqual(l_prd, l_prd_sored,
+                    self.assertEqual(l_prd, l_prd_sorted,
                                      'produced data should already be sorted according to our preferred sorting.')
 
                 l_first_chars = [l_i[:10] for l_i in l_prd]
                 print('Results from query:', l_first_chars[:20])
-                l_first_chars_sorted = [l_i[:10] for l_i in l_prd_sored]
+                l_first_chars_sorted = [l_i[:10] for l_i in l_prd_sorted]
                 print('Correct sorting:', l_first_chars_sorted[:20])
 
 
