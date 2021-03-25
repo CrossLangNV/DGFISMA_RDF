@@ -18,6 +18,8 @@ VALUE = 'value_ent'
 SUB = 'subject'
 PRED = 'pred'
 COUNT = 'count'
+QUERY = 'query'
+URIS = 'uris'
 
 
 class GraphWrapper(abc.ABC):
@@ -367,7 +369,10 @@ class SPARQLReportingObligationProvider:
 
         l_ro_id = self.graph_wrapper.get_column(l, 'ro_id')
 
-        return l_ro_id
+        r = {QUERY: q,
+             URIS: l_ro_id}
+
+        return r
 
     def get_entities(self,
                      distinct=True):

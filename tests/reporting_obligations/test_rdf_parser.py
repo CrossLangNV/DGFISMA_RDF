@@ -11,7 +11,7 @@ from rdflib.term import URIRef
 from dgfisma_rdf.reporting_obligations import build_rdf, rdf_parser
 from dgfisma_rdf.reporting_obligations.build_rdf import D_ENTITIES, ExampleCasContent, ROGraph
 from dgfisma_rdf.reporting_obligations.rdf_parser import SPARQLReportingObligationProvider, RDFLibGraphWrapper, \
-    SPARQLGraphWrapper
+    SPARQLGraphWrapper, URIS
 
 ROOT = os.path.join(os.path.dirname(__file__), '../..')
 
@@ -655,15 +655,15 @@ class TestSPARQLReportingObligationProviderGetFilterMultiple(unittest.TestCase):
         list_filters = [(D_ENTITIES[self.L_ENT1][0], 'a1'),
                         (D_ENTITIES[self.L_ENT2][0], 'a2')
                         ]
-        l_ro = self.ro_provider.get_filter_ro_id_multiple(list_filters, exact_match=True)
+        l_ro = self.ro_provider.get_filter_ro_id_multiple(list_filters, exact_match=True).get(URIS)
 
         list_filters_substring = [(D_ENTITIES[self.L_ENT1][0], '1'),
                                   (D_ENTITIES[self.L_ENT2][0], 'a2')
                                   ]
 
-        l_ro_exact = self.ro_provider.get_filter_ro_id_multiple(list_filters_substring, exact_match=True)
+        l_ro_exact = self.ro_provider.get_filter_ro_id_multiple(list_filters_substring, exact_match=True).get(URIS)
 
-        l_ro_non_exact = self.ro_provider.get_filter_ro_id_multiple(list_filters_substring, exact_match=False)
+        l_ro_non_exact = self.ro_provider.get_filter_ro_id_multiple(list_filters_substring, exact_match=False).get(URIS)
 
         with self.subTest('subset 1'):
             self.assertTrue(set(l_ro_exact).issubset(set(l_ro)), 'Should be a subset')
@@ -677,15 +677,15 @@ class TestSPARQLReportingObligationProviderGetFilterMultiple(unittest.TestCase):
         list_filters = [(D_ENTITIES[self.L_ENT1][0], 'a1'),
                         (D_ENTITIES[self.L_ENT2][0], 'a2')
                         ]
-        l_ro = self.ro_provider.get_filter_ro_id_multiple(list_filters, exact_match=True)
+        l_ro = self.ro_provider.get_filter_ro_id_multiple(list_filters, exact_match=True).get(URIS)
 
         list_filters_substring = [(D_ENTITIES[self.L_ENT1][0], 'a'),
                                   (D_ENTITIES[self.L_ENT2][0], 'a2')
                                   ]
 
-        l_ro_exact = self.ro_provider.get_filter_ro_id_multiple(list_filters_substring, exact_match=True)
+        l_ro_exact = self.ro_provider.get_filter_ro_id_multiple(list_filters_substring, exact_match=True).get(URIS)
 
-        l_ro_non_exact = self.ro_provider.get_filter_ro_id_multiple(list_filters_substring, exact_match=False)
+        l_ro_non_exact = self.ro_provider.get_filter_ro_id_multiple(list_filters_substring, exact_match=False).get(URIS)
 
         with self.subTest('subset 1'):
             self.assertTrue(set(l_ro_exact).issubset(set(l_ro)), 'Should be a subset')
@@ -705,7 +705,7 @@ class TestSPARQLReportingObligationProviderGetFilterMultiple(unittest.TestCase):
             list_filters = [(D_ENTITIES[self.L_ENT1][0], 'a1'),
                             (D_ENTITIES[self.L_ENT2][0], 'a2')
                             ]
-            l_ro = self.ro_provider.get_filter_ro_id_multiple(list_filters)
+            l_ro = self.ro_provider.get_filter_ro_id_multiple(list_filters).get(URIS)
 
             l_ro_GT = [a.get('id') for a in self.l.get(build_rdf.KEY_CHILDREN) if
                        a.get(build_rdf.KEY_VALUE) in [self.S0, self.S2]]
@@ -718,7 +718,7 @@ class TestSPARQLReportingObligationProviderGetFilterMultiple(unittest.TestCase):
             list_filters = [(D_ENTITIES[self.L_ENT1][0], 'a1'),
                             (D_ENTITIES[self.L_ENT2][0], 'b2')
                             ]
-            l_ro = self.ro_provider.get_filter_ro_id_multiple(list_filters)
+            l_ro = self.ro_provider.get_filter_ro_id_multiple(list_filters).get(URIS)
 
             l_ro_GT = [a.get('id') for a in self.l.get(build_rdf.KEY_CHILDREN) if
                        a.get(build_rdf.KEY_VALUE) in [self.S1]]
@@ -755,12 +755,12 @@ class TestSPARQLPagination(unittest.TestCase):
 
         limit = 10
         l_ro_uri = self.get_ro_provider().get_filter_ro_id_multiple(limit=limit,
-                                                                    offset=0)
+                                                                    offset=0).get(URIS)
         with self.subTest("Limit"):
             self.assertEqual(len(l_ro_uri), limit, 'Should return less than limit')
 
         with self.subTest("Next batch"):
-            l_ro_uri_next = self.get_ro_provider().get_filter_ro_id_multiple(limit=limit, offset=limit)
+            l_ro_uri_next = self.get_ro_provider().get_filter_ro_id_multiple(limit=limit, offset=limit).get(URIS)
 
             self.assertFalse(set(l_ro_uri).intersection(set(l_ro_uri_next)), 'There should be no overlap.')
 
@@ -808,12 +808,12 @@ class TestFilterDropdown(unittest.TestCase):
         ent_0_0 = l_ent_0[0]
         ent_1_0 = l_ent_1[0]
 
-        l_ro = self.prov.get_filter_ro_id_multiple([(type_ent0, ent_0_0)])
+        l_ro = self.prov.get_filter_ro_id_multiple([(type_ent0, ent_0_0)]).get(URIS)
 
         with self.subTest("Sanity check: some RO's"):
             self.assertGreater(len(l_ro), 0, 'Sanity check, should return some reporting obligations')
 
-        l_ro_multiple = self.prov.get_filter_ro_id_multiple([(type_ent0, ent_0_0), (type_ent1, ent_1_0)])
+        l_ro_multiple = self.prov.get_filter_ro_id_multiple([(type_ent0, ent_0_0), (type_ent1, ent_1_0)]).get(URIS)
         with self.subTest("Unlikely to get results with multiple filters"):
             self.assertEqual(len(l_ro_multiple), 0, 'If lucky, this could give results, but most likely not')
 
@@ -845,15 +845,15 @@ class TestFilterDropdown(unittest.TestCase):
         ent_0_0 = l_ent_0[0]
         # ent_1_0 = l_ent_1[0]
 
-        l_ro_baseline = self.prov.get_filter_ro_id_multiple([(type_ent0, ent_0_0)])
+        l_ro_baseline = self.prov.get_filter_ro_id_multiple([(type_ent0, ent_0_0)]).get(URIS)
 
         with self.subTest('single'):
-            l_ro_single = self.prov.get_filter_ro_id_multiple([(type_ent0, [ent_0_0])])
+            l_ro_single = self.prov.get_filter_ro_id_multiple([(type_ent0, [ent_0_0])]).get(URIS)
 
             self.assertEqual(l_ro_baseline, l_ro_single)
 
         with self.subTest('double'):
-            l_ro_double = self.prov.get_filter_ro_id_multiple([(type_ent0, [ent_0_0, ent_0_0])])
+            l_ro_double = self.prov.get_filter_ro_id_multiple([(type_ent0, [ent_0_0, ent_0_0])]).get(URIS)
 
             self.assertEqual(l_ro_baseline, l_ro_double)
 
@@ -898,7 +898,7 @@ class TestFilterDropdown(unittest.TestCase):
 
             for ent_i_i in l_ent_i:
 
-                l_ro_filter_i_i = self.prov.get_filter_ro_id_multiple([(type_ent_i, ent_i_i)])
+                l_ro_filter_i_i = self.prov.get_filter_ro_id_multiple([(type_ent_i, ent_i_i)]).get(URIS)
 
                 for type_ent_j in l_types_ent:
                     if type_ent_i == type_ent_j:
@@ -911,7 +911,7 @@ class TestFilterDropdown(unittest.TestCase):
 
                     for ent_j_j in l_ent_j:
 
-                        l_ro_filter_j_j = self.prov.get_filter_ro_id_multiple([(type_ent_j, ent_j_j)])
+                        l_ro_filter_j_j = self.prov.get_filter_ro_id_multiple([(type_ent_j, ent_j_j)]).get(URIS)
 
                         l_ro_filter_intersection = set(l_ro_filter_i_i).intersection(l_ro_filter_j_j)
 
@@ -946,7 +946,7 @@ class TestFilterDropdown(unittest.TestCase):
 
             for ent_i_i in l_ent_i:
 
-                # l_ro_filter_i_i = self.prov.get_filter_ro_id_multiple([(type_ent_i, ent_i_i)])
+                # l_ro_filter_i_i = self.prov.get_filter_ro_id_multiple([(type_ent_i, ent_i_i)]).get(URIS)
 
                 for type_ent_j in l_types_ent:
                     if type_ent_i == type_ent_j:
@@ -971,7 +971,7 @@ class TestFilterDropdown(unittest.TestCase):
                                     l_ro = self.prov.get_filter_ro_id_multiple([(type_ent_i, ent_i_i),
                                                                                 (type_ent_j, ent_j_j),
                                                                                 (type_ent_k, l_ent_filter_k[0]),
-                                                                                ])
+                                                                                ]).get(URIS)
 
                                     self.assertTrue(len(l_ro), 'Should return at least one RO.')
 
@@ -994,7 +994,7 @@ class TestFilterDropdown(unittest.TestCase):
 
             for ent_i_i in l_ent_i:
 
-                # l_ro_filter_i_i = self.prov.get_filter_ro_id_multiple([(type_ent_i, ent_i_i)])
+                # l_ro_filter_i_i = self.prov.get_filter_ro_id_multiple([(type_ent_i, ent_i_i)]).get(URIS)
 
                 for type_ent_j in l_types_ent:
                     if type_ent_i == type_ent_j:
@@ -1019,7 +1019,7 @@ class TestFilterDropdown(unittest.TestCase):
                                     l_ro = self.prov.get_filter_ro_id_multiple([(type_ent_i, ent_i_i),
                                                                                 (type_ent_j, ent_j_j),
                                                                                 (type_ent_k, l_ent_filter_k[0]),
-                                                                                ])
+                                                                                ]).get(URIS)
 
                                     self.assertTrue(len(l_ro), 'Should return at least one RO.')
 
@@ -1071,7 +1071,8 @@ class TestFilterDropdown(unittest.TestCase):
 
             d1 = get_filtered_entities()
 
-            check_equivalence(d_base, d1)
+            check_equivalence(d_base, d1,
+                              b_subtest=True)
 
         return
 
