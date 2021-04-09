@@ -109,9 +109,11 @@ async def init_file_base64(endpoint: str = Header(...),
                                             context_aware=False,
                                             )
 
-    ROGraph(sparql_update_store,
-            DATASET_DEFAULT_GRAPH_ID,
-            include_schema=True)
+    g = ROGraph(sparql_update_store,
+                DATASET_DEFAULT_GRAPH_ID,
+                include_schema=True)
+
+    g.commit()
 
     return JSONResponse(content={"message": "RDF model initialised succesfully"})
 
