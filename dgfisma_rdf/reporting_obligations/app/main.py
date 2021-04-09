@@ -113,7 +113,7 @@ async def init_file_base64(endpoint: str = Header(...),
             DATASET_DEFAULT_GRAPH_ID,
             include_schema=True)
 
-    return
+    return JSONResponse(content={"message": "RDF model initialised succesfully"})
 
 
 def create_file_shared(decoded_cas_content,
