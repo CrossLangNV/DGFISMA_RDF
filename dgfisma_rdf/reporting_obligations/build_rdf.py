@@ -65,8 +65,10 @@ class ROGraph(Graph):
     # Classes
     class_cat_doc = RO_BASE.CatalogueDocument
     class_rep_obl = RO_BASE.ReportingObligation
+    class_doc_src = RO_BASE.DocumentSource
     # Connections
     prop_has_rep_obl = RO_BASE.hasReportingObligation
+    prop_has_doc_src = RO_BASE.hasDocumentSource
 
     def __init__(self, *args, include_schema=False, **kwargs):
         """ Looks quite clean if implemented with RDFLib https://github.com/RDFLib/rdflib
@@ -106,12 +108,17 @@ class ROGraph(Graph):
 
         self._add_owl_class(self.class_cat_doc)
         self._add_owl_class(self.class_rep_obl)
+        self._add_owl_class(self.class_doc_src)
 
         # OWL properties
         self._add_property(self.prop_has_rep_obl, self.class_cat_doc, self.class_rep_obl)
+        self._add_property(self.prop_has_doc_src, self.class_cat_doc, self.class_doc_src)
 
         self._add_property(RDF.value,
                            self.class_rep_obl,
+                           RDFS.Literal)
+        self._add_property(RDF.value,
+                           self.class_doc_src,
                            RDFS.Literal)
 
         self._add_property(PROP_HAS_ENTITY, self.class_rep_obl, SKOS.Concept)

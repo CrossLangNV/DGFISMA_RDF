@@ -2,7 +2,9 @@ import os
 import tempfile
 import unittest
 
-from dgfisma_rdf.reporting_obligations.build_rdf import ExampleCasContent, ROGraph
+from dgfisma_rdf.reporting_obligations.build_rdf import ExampleCasContent, ROGraph, RO_BASE, OWL, RDFS, RDF
+
+HAS_DOC_SRC = RO_BASE.hasDocumentSource
 
 
 class TestBuild(unittest.TestCase):
@@ -17,9 +19,121 @@ class TestBuild(unittest.TestCase):
 
         g = ROGraph()
 
-        g.add_cas_content(l)
+        g.add_cas_content(l, doc_id='abcd-123')
 
         with self.subTest("Save RDF"):
             with tempfile.TemporaryDirectory() as d:
                 filename = os.path.join(d, 'tmp.rdf')
                 g.serialize(destination=filename, format="pretty-xml")
+
+    def test_init_graph(self):
+        """
+        Check if it contains all the expected schema elements
+        """
+
+        g = ROGraph(include_schema=True)
+
+        q = f"""
+        PREFIX skos: {RO_BASE[''].n3()}
+        PREFIX owl: {OWL[''].n3()}
+        PREFIX rdfs: {RDFS.uri.n3()}
+        
+        SELECT distinct ?c
+        
+        WHERE {{            
+              
+              VALUES (?class) {{ ({OWL.Class.n3()}) ({RDFS.Class.n3()}) }} 
+              
+              ?c a ?class .
+        }}
+        """
+
+        q = f"""
+        PREFIX skos: {RO_BASE[''].n3()}
+        PREFIX owl: {OWL[''].n3()}
+        PREFIX rdfs: {RDFS.uri.n3()}
+
+        SELECT distinct ?c
+
+        WHERE {{            
+
+              VALUES (?class) {{ ({OWL.Class.n3()}) ({RDFS.Class.n3()}) }} 
+
+              ?c a ?class .
+        }}
+        """
+
+        q_property = """
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            SELECT DISTINCT ?s ?r ?o
+            WHERE {       
+              ?s a rdf:Property
+            }
+        """
+
+        q_domain = """
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            SELECT DISTINCT ?s ?p ?o
+            WHERE {       
+                BIND (rdfs:domain as ?p) 
+                ?s ?p ?o.
+            }
+        """
+
+        q_range = """
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            SELECT DISTINCT ?s ?p ?o
+            WHERE {       
+                BIND (rdfs:range as ?p) 
+                ?s ?p ?o.
+            }
+        """
+
+        l_cls = list(map(lambda x: x[0], g.query(q)))
+
+        l_prop = list(map(lambda x: x[0], g.query(q_property)))
+
+        l_domain_spo = list(g.query(q_domain))
+        l_range_spo = list(g.query(q_range))
+
+        l_domain_s = list(map(lambda spo: spo[0], l_domain_spo))
+        l_domain_o = list(map(lambda spo: spo[2], l_domain_spo))
+        l_range_s = list(map(lambda spo: spo[0], l_range_spo))
+        l_range_o = list(map(lambda spo: spo[2], l_range_spo))
+
+        with self.subTest('Has Catalogue Document'):
+            self.assertIn(RO_BASE.CatalogueDocument, l_cls)
+
+        with self.subTest('Has Reporting obligations'):
+            self.assertIn(RO_BASE.ReportingObligation, l_cls)
+
+        with self.subTest('Has (website) source'):
+            self.assertIn(RO_BASE.DocumentSource, l_cls)
+
+        with self.subTest('Has has_doc_source'):
+            self.assertIn(HAS_DOC_SRC, l_prop)
+
+            self.assertIn(HAS_DOC_SRC, l_domain_s)
+            self.assertTrue(list(filter(lambda xy:
+                                        (xy[0] == HAS_DOC_SRC) and (xy[1] == RO_BASE.CatalogueDocument),
+                                        zip(l_domain_s, l_domain_o))))
+
+            self.assertIn(HAS_DOC_SRC, l_range_s)
+            self.assertTrue(list(filter(lambda xy:
+                                        (xy[0] == HAS_DOC_SRC) and (xy[1] == RO_BASE.DocumentSource),
+                                        zip(l_range_s, l_range_o))))
+
+        with self.subTest('Doc source label'):
+            has_i = RDF.value
+
+            self.assertIn(has_i, l_prop)
+
+            self.assertIn(has_i, l_domain_s)
+            self.assertTrue(list(filter(lambda xy:
+                                        (xy[0] == has_i) and (xy[1] == RO_BASE.DocumentSource),
+                                        zip(l_domain_s, l_domain_o))))
+
+            self.assertIn(has_i, l_range_s)
+            self.assertTrue(list(filter(lambda xy:
+                                        (xy[0] == has_i) and (xy[1] == RDFS.Literal),
+                                        zip(l_range_s, l_range_o))))
