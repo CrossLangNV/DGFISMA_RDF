@@ -2,9 +2,9 @@ import os
 import warnings
 
 from SPARQLWrapper import SPARQLWrapper, JSON, GET
-from rdflib import BNode, Literal, Namespace, Graph
-from rdflib.namespace import SKOS, RDF, RDFS, OWL, URIRef, DC
-from rdflib.term import _serial_number_generator
+from rdflib import BNode, Namespace, Graph
+from rdflib.namespace import SKOS, RDF, RDFS, OWL, DC
+from rdflib.term import _serial_number_generator, _is_valid_uri, URIRef, Literal
 
 from .cas_parser import CasContent, KEY_CHILDREN, KEY_SENTENCE_FRAG_CLASS, KEY_VALUE
 from ..shared.rdf_dgfisma import NS_BASE
@@ -242,6 +242,43 @@ class ROGraph(Graph):
             self.add(triple)
 
         return cas_content
+
+    def add_doc_source(self,
+                       doc_id: str,
+                       source_id: str,
+                       source_name: str = None,
+                       query_endpoint=None
+                       ) -> None:
+        """
+
+        :param doc_id: id that refers to the document (From Django)
+        :param source_id: document/website source id, ideally the URL
+        :param source_name: (Optional) label of the document source
+        :param query_endpoint:
+        :return: None
+        """
+
+        l_add = []
+
+        cat_doc = self._get_cat_doc_uri(doc_id)
+
+        # Check if uri like, else convert to one.
+
+        def _get_source_uri(source_id):
+
+            if _is_valid_uri(source_id):
+                return URIRef(source_id)
+            else:
+                return RO_BASE['doc_src/' + source_id.strip().replace(' ', '_')]
+
+        source_uri = _get_source_uri(source_id)
+
+        l_add.append((cat_doc, self.prop_has_doc_src, source_uri))
+        if source_name:
+            l_add.append((source_uri, RDF.value, Literal(source_name)))
+
+        for triple in l_add:
+            self.add(triple)
 
     def _add_property(self, prop: URIRef, domain: URIRef, ran: URIRef) -> None:
         """ shared function to build all necessary triples for a property in the ontology.
