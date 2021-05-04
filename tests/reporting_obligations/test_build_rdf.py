@@ -143,55 +143,6 @@ class TestAddDocSource(unittest.TestCase):
     def setUp(self) -> None:
         self.g = ROGraph(include_schema=True)
 
-        # L_ENTITIES = list(D_ENTITIES.keys())
-        # self.L_ENT1 = L_ENTITIES[1]
-        # self.L_ENT2 = L_ENTITIES[2]
-        # self.L_ENT3 = L_ENTITIES[3]
-        #
-        # self.S0 = 'a0 a1 a2 a0 a0'
-        # self.S1 = 'b2 a0 a3 a1 a0 a0 a0'
-        # self.S2 = 'b0 c0 a2 a2, a1, a0.'
-        # self.l = {build_rdf.KEY_CHILDREN: [
-        #     # Base sentence
-        #     {build_rdf.KEY_VALUE: self.S0,
-        #      build_rdf.KEY_CHILDREN: [
-        #          {build_rdf.KEY_VALUE: 'a1',
-        #           build_rdf.KEY_SENTENCE_FRAG_CLASS: self.L_ENT1},
-        #          {build_rdf.KEY_VALUE: 'a2',
-        #           build_rdf.KEY_SENTENCE_FRAG_CLASS: self.L_ENT2},
-        #      ]
-        #      },
-        #     # 1 key matching
-        #     {build_rdf.KEY_VALUE: self.S1,
-        #      build_rdf.KEY_CHILDREN: [
-        #          {build_rdf.KEY_VALUE: 'a1',
-        #           build_rdf.KEY_SENTENCE_FRAG_CLASS: self.L_ENT1},
-        #          {build_rdf.KEY_VALUE: 'b2',
-        #           build_rdf.KEY_SENTENCE_FRAG_CLASS: self.L_ENT2},
-        #          {build_rdf.KEY_VALUE: 'a3',
-        #           build_rdf.KEY_SENTENCE_FRAG_CLASS: self.L_ENT3},
-        #      ]
-        #      },
-        #     # 2 same but different order
-        #     {build_rdf.KEY_VALUE: self.S2,
-        #      build_rdf.KEY_CHILDREN: [
-        #          {build_rdf.KEY_VALUE: 'a1',
-        #           build_rdf.KEY_SENTENCE_FRAG_CLASS: self.L_ENT1},
-        #          {build_rdf.KEY_VALUE: 'a2',
-        #           build_rdf.KEY_SENTENCE_FRAG_CLASS: self.L_ENT2},
-        #      ]
-        #      },
-        # ]}
-        #
-        # g = ROGraph(include_schema=True)
-        # g.add_cas_content(self.l, 'test_doc')
-        # # Building the Reporting Obligation Provider
-        # with tempfile.TemporaryDirectory() as d:
-        #     filename = os.path.join(d, 'tmp.rdf')
-        #     g.serialize(destination=filename, format="pretty-xml")
-        #     graph_wrapper = RDFLibGraphWrapper(filename)
-        # self.ro_provider = SPARQLReportingObligationProvider(graph_wrapper)
-
     def test_add_doc_source(self):
         doc_id = 'https://example.com/doc1'
 

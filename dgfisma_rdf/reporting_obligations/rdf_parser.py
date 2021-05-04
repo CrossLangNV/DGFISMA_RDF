@@ -62,10 +62,18 @@ class RDFLibGraphWrapper(GraphWrapper):
         self.g = g
 
     def query(self, q) -> List[Tuple[str]]:
+
+        # TODO Order by not working when using group
+        if ('group by' in q.lower()) or ('groupby' in q.lower()):
+            # This removes the sorting part, hacky fix, but it works.
+            i_order_by = max(q.lower().find('order by'),
+                             q.lower().find('orderby'))
+            if i_order_by > 0:
+                q = q[:i_order_by]
+
         qres = self.g.query(q)
 
         l = []
-
         for binding_i in qres.bindings:
 
             l_i = {}
@@ -310,6 +318,7 @@ class SPARQLReportingObligationProvider:
     def get_filter_ro_id_multiple(self,
                                   list_pred_value: List[Tuple[str]] = [],
                                   l_doc_uri: List[str] = None,
+                                  doc_src: str = None,
                                   limit=None,
                                   offset=0,
                                   exact_match: bool = False) -> List[str]:
@@ -320,6 +329,7 @@ class SPARQLReportingObligationProvider:
             e.g. [ ("<pred 1>", "<value 1>"),
                     ...
                     ("<pred n>", "<value n>") ]
+            doc_src: uri/url to document source/website.
             limit: number of id's to return
             offset: what index to start from (counting from 0)
             exact_match: (boolean) if exact matches or contains in matches should be retrieved
@@ -331,6 +341,10 @@ class SPARQLReportingObligationProvider:
         q_doc_uri_filter = '' if l_doc_uri is None else self._get_filter_doc_uri(l_doc_uri,
                                                                                  ro_var='ro_id',
                                                                                  )
+
+        q_doc_src_filter = '' if doc_src is None else self._get_filter_doc_src(doc_src,
+                                                                               ro_var='ro_id',
+                                                                               )
 
         q_filter = self._get_q_filter(list_pred_value,
                                       ro='ro_id',
@@ -345,6 +359,7 @@ class SPARQLReportingObligationProvider:
 
             WHERE {{
                 {q_doc_uri_filter}
+                {q_doc_src_filter}
                 ?ro_id rdf:type {build_rdf.ROGraph.class_rep_obl.n3()} ;
                    rdf:value ?{VALUE} .
                 
@@ -399,12 +414,12 @@ class SPARQLReportingObligationProvider:
             
                 {q_values}
             
-                ?ro_id rdf:type {build_rdf.ROGraph.class_rep_obl.n3()} ;
+                ?ro_id a {build_rdf.ROGraph.class_rep_obl.n3()} ;
                     ?{PRED} ?ent .
                 ?ent skos:prefLabel ?{VALUE} .
             }}
 
-            GROUPBY ?{PRED} ?{VALUE}
+            GROUP BY ?{PRED} ?{VALUE}
 
             ORDER BY (LCASE(?{PRED})) (LCASE(?{VALUE})) ASC(?{VALUE})
 
@@ -464,7 +479,7 @@ class SPARQLReportingObligationProvider:
                 {q_filter}
             }}
             
-            GROUPBY ?{PRED} ?{VALUE}
+            GROUP BY ?{PRED} ?{VALUE}
     
             ORDER BY (LCASE(?{PRED})) (LCASE(?{VALUE})) (?{VALUE})
 
@@ -533,6 +548,7 @@ class SPARQLReportingObligationProvider:
                                                    type_match=CONTAINS,
                                                    list_pred_value: List[Tuple[str]] = [],
                                                    l_doc_uri: List[str] = None,
+                                                   doc_src: str = None,
                                                    exact_match=False,
                                                    limit: int = 0,
                                                    ):
@@ -543,6 +559,7 @@ class SPARQLReportingObligationProvider:
             uri_type_has: The URI of the <hasEntity> predicate type.
             str_match: (str) the string to match to.
             type_match: rdf_parser.CONTAINS or rdf_parser.STARTS_WITH
+            doc_src: uri/url to document source/website.
 
         Returns:
             List of strings with the labels of the entities.
@@ -558,6 +575,10 @@ class SPARQLReportingObligationProvider:
         q_doc_uri_filter = '' if l_doc_uri is None else self._get_filter_doc_uri(l_doc_uri,
                                                                                  ro_var=RO,
                                                                                  )
+
+        q_doc_src_filter = '' if doc_src is None else self._get_filter_doc_src(doc_src,
+                                                                               ro_var='ro_id',
+                                                                               )
 
         q_filter = self._get_q_filter(list_pred_value, ro=RO, exact_match=exact_match) if list_pred_value else ''
 
@@ -587,6 +608,7 @@ class SPARQLReportingObligationProvider:
         
         WHERE {{
             {q_doc_uri_filter}
+            {q_doc_src_filter}
         
             ?{RO} a dgfro:ReportingObligation ;
                 {URIRef(uri_type_has).n3()} ?ent .
@@ -680,6 +702,23 @@ class SPARQLReportingObligationProvider:
         q = f'''
         values ?{doc_var} {{ {' '.join(map(lambda s: URIRef(s).n3(), list_doc_uri))} }}
         ?{doc_var} {build_rdf.RO_BASE.hasReportingObligation.n3()} ?{ro_var} .   
+        '''
+
+        return q
+
+    @staticmethod
+    def _get_filter_doc_src(doc_src: str,
+                            ro_var: str = 'ro_id',
+                            doc_var: str = 'doc_id',
+                            doc_src_var: str = 'doc_src_id'
+                            ):
+
+        # dgfro:hasDocumentSource
+        q = f'''
+        values ?{doc_src_var} {{ {URIRef(doc_src).n3()} }}
+
+        ?{doc_var} {build_rdf.ROGraph.prop_has_doc_src.n3()} ?{doc_src_var} ;
+            {build_rdf.ROGraph.prop_has_rep_obl.n3()} ?{ro_var} .
         '''
 
         return q

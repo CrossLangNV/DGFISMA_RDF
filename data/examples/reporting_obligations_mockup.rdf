@@ -1,242 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rdf:RDF
-  xmlns:dgfro="http://dgfisma.com/reporting_obligations/"
-  xmlns:dc="http://purl.org/dc/elements/1.1/"
-  xmlns:owl="http://www.w3.org/2002/07/owl#"
-  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:dgfro="http://dgfisma.com/reporting_obligations/"
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
 >
-  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropPrd">
+  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasVerb">
     <rdfs:subPropertyOf>
       <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasEntity">
         <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
         <rdfs:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
       </rdf:Property>
     </rdfs:subPropertyOf>
-    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
     <rdfs:range>
-      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropPrd">
-        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-      </rdf:Description>
-    </rdfs:range>
-  </rdf:Property>
-  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropGol">
-    <rdfs:range>
-      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropGol">
-        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-      </rdf:Description>
-    </rdfs:range>
-    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
-    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
-  </rdf:Property>
-  <dgfro:CatalogueDocument rdf:about="http://dgfisma.com/reporting_obligations/cat_doc/mockup">
-    <dgfro:hasReportingObligation>
-      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_168a275c4fa847058c5fbafcd9f9d86e">
-        <rdf:value>In case the ECB issues additional invoices or recalculates the annual supervisory fee in accordance with Article 7 of Regulation ( EU ) No 1163/2014 , the ECB shall communicate to the Board the new data within 5 days of the issuance of fee notices .</rdf:value>
-        <dgfro:hasPropAdv rdf:resource="http://dgfisma.com/reporting_obligations/entity_9c44aca1bcda468682f0b680e0447583"/>
-        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_724b946817464402a237aa863a982c63"/>
-        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_38c8052f8a2444c68e5fb858692dfb87"/>
-        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_1d3663246f434b6fa9d6d5d200251ab4"/>
-        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_07d0603ace584cc59de2348bf82fe366"/>
-        <dgfro:hasPropTmp rdf:resource="http://dgfisma.com/reporting_obligations/entity_be04709a55184b619bbe30bc93aa77c9"/>
-        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_bc4f84bbbdc34be39463795114743085"/>
-      </dgfro:ReportingObligation>
-    </dgfro:hasReportingObligation>
-    <dgfro:hasReportingObligation>
-      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_1c0419346a274c47ba23e187953f8be2">
-        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_6dc429b4d1d14a34821cb4bbf86bb281"/>
-        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_41c8f74af08e463285b6e89f68d0d1b1"/>
-        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_b4af7e8dc8834153a2e3196af6967c11"/>
-        <rdf:value>Any mandate given to a service provider for the purposes of outsourcing tasks shall clearly state the duration of the mandate and the specific tasks that are outsourced and establish a framework for regular reporting by the service provider to the Board .</rdf:value>
-        <dgfro:hasPropMnr rdf:resource="http://dgfisma.com/reporting_obligations/entity_ad439c9ff1424621a113154f5e0f5162"/>
-        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_1fa918bf493d490d8a72ea6cf29097f2"/>
-      </dgfro:ReportingObligation>
-    </dgfro:hasReportingObligation>
-    <dgfro:hasReportingObligation>
-      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_11b12ec3585d4299ad3a28650272ee19">
-        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_09586b81c8784ec28642f8d0f2d85c72"/>
-        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_1a322c8ae24e4ffdafdcbaf6a4f4eebc"/>
-        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_718af197ae4f4c709c9a8dc30f18da9b"/>
-        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_ccaee70073f94944859665ecf0c08d79"/>
-        <rdf:value>Before taking any decision on outsourcing , the Board shall obtain the consent of the ECB to share the data provided by the ECB with a service provider , in accordance with applicable confidentiality provisions .</rdf:value>
-        <dgfro:hasPropMnr rdf:resource="http://dgfisma.com/reporting_obligations/entity_8e4a718880d04438a6b588840407aa12"/>
-      </dgfro:ReportingObligation>
-    </dgfro:hasReportingObligation>
-    <dgfro:hasReportingObligation>
-      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_92f08ba0c1154f40a1a2c3096bc27f19">
-        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_ee8186d9e32f4713ac0b0fb6e4c2d48e"/>
-        <rdf:value>For the calculation of the individual annual contributions to be collected in a given financial year , the Board shall use the data collected by the ECB in the previous financial year in accordance with Regulation ( EU ) No 1163/2014 and provided to the Board in accordance with this Article or Article 11 , as applicable .</rdf:value>
-        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_63566ca8e2f04659991950069e9b5fbb"/>
-        <dgfro:hasPropTmp rdf:resource="http://dgfisma.com/reporting_obligations/entity_5f4216458bcc4723a978f379b0d68a92"/>
-        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_65d2eaccb7864e30871bc4f348044237"/>
-      </dgfro:ReportingObligation>
-    </dgfro:hasReportingObligation>
-    <dgfro:hasReportingObligation>
-      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_5edcc057f70740509ff89d8e5fe208d8">
-        <rdf:value>The government of each participating Member State shall designate and notify to the Board and to the Court of Justice of the European Union an authority for the purposes of verifying the authenticity of individual contribution decisions .</rdf:value>
-        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_0c593fc1a5014585a54fc070c339748d"/>
-        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_a9ad665d227a44f39cb280775566429f"/>
-        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_1508dd65186945689403ca47b92eb569"/>
-        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_69b6205924c24ea4a05a00bb2e29959c"/>
-        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_b7f2c8a4279743efb670b4d4995608ac"/>
-      </dgfro:ReportingObligation>
-    </dgfro:hasReportingObligation>
-    <dgfro:hasReportingObligation>
-      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_03f1b1381ad04972a99e8bdcf60d335a">
-        <dgfro:hasPropTmp rdf:resource="http://dgfisma.com/reporting_obligations/entity_298f78a2266242f39f9c5e0809296e2d"/>
-        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_f1efc3ed3b514a90ae813c423d25edff"/>
-        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_54067c8fa3c846ddbc91ea95dc30f78b"/>
-        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_52ff80d5a00449fcbb954e5dcb63a03a"/>
-        <rdf:value>In case no data provided by the ECB is available , the relevant national competent authority shall upon request provide the Board with the data at its disposal .</rdf:value>
-        <dgfro:hasPropAdv rdf:resource="http://dgfisma.com/reporting_obligations/entity_1bc976ede03246c88f738fcf17a6f546"/>
-        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_94054872e14143e1818371e77d06920f"/>
-        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_9bb19da014e74565b4866ec3bc2f669b"/>
-      </dgfro:ReportingObligation>
-    </dgfro:hasReportingObligation>
-    <dgfro:hasReportingObligation>
-      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_4e7bdf97bd934cdfa77564d4ae9b8a81">
-        <rdf:value>It is more efficient to request the ECB to transmit data it received and verified in the exercise of its tasks and powers conferred on it by Council Regulation ( EU ) No 1024/2013 ( 4 ) to the Board , than to duplicate the reporting burden for the institutions and entities concerned . Data sharing between the ECB and the Board would also allow avoiding duplication of the data verification process by the Board and builds on the obligation of the Board and the ECB to cooperate closely in the exercise of their respective responsibilities under Regulation ( EU ) No 806/2014 . Any duplication of the data reporting and verification processes would inevitably require more time for the calculation and raising of contributions and would lead to a less efficient system . It follows that , as a part of the cooperation obligation , the ECB should be required to transmit to the Board the data received from the institutions and entities concerned for the purpose of calculating contributions to the Board . The Board should rely to the greatest extent possible on the data collected by the ECB .</rdf:value>
-        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_00a11d35a6bd4780b61f3d94ecb8121f"/>
-        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_6532514e5d1a430e80599ca69f19916d"/>
-        <dgfro:hasPropAdv rdf:resource="http://dgfisma.com/reporting_obligations/entity_5d655320cc844f8594eb435129c1d877"/>
-        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_c502094130434109ae8da2a4de3d85f7"/>
-        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_cfc14259a76d40b9aca0b824d5fd0420"/>
-      </dgfro:ReportingObligation>
-    </dgfro:hasReportingObligation>
-    <dgfro:hasReportingObligation>
-      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_ded6dc33cfa0467e8a45e7c23b05787a">
-        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_aba7a95cc6734f2e81820add5f540311"/>
-        <rdf:value>The Board shall notify the contribution notice through any of the following means ❮electronically or by other comparable means of communication ‖ by fax ‖ by express courier service ‖ by registered mail with a form for acknowledgement of receipt ‖ by service or delivery by hand❯</rdf:value>
-        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_5d20dcb450cc46878a59a85f13d1826b"/>
-        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_141b1b698c144a0cadd0f232f90d5129"/>
-        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_d3f92612ba874c04be4ff6ea3db933d1"/>
-        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_779953b19aff453eb2df13ace0a9aa07"/>
-      </dgfro:ReportingObligation>
-    </dgfro:hasReportingObligation>
-    <dgfro:hasReportingObligation>
-      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_868b42a32a3a4a3b88346a0fcaf3ef9f">
-        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_ef4a4ee7c7254622b19e22360394b6be"/>
-        <rdf:value>The annual contribution due by the entities referred to in Article 2 of Regulation ( EU ) No 806/2014 that are members of the same group shall be collected from the contribution debtor of that group .</rdf:value>
-        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_62157abad6d14c1aa2960803238551cd"/>
-        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_38db80ceab514952a95af92edf369abb"/>
-        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_e610d1af0b584570ae1610a59ddfdd7b"/>
-      </dgfro:ReportingObligation>
-    </dgfro:hasReportingObligation>
-    <dgfro:hasReportingObligation>
-      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_d15d20e3987d4066ba978e6e70b960a0">
-        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_a7b040199f014f139ea0095d76c2cfa6"/>
-        <dgfro:hasPropTmp rdf:resource="http://dgfisma.com/reporting_obligations/entity_6e0b2cf70fda4cd4a191b77602681a65"/>
-        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_648e6d23cb9f46b8a2794894c20a05ce"/>
-        <rdf:value>Without prejudice to Article 6(4 ) , for the recalculation of the amount of contributions due by each entity in the financial years belonging to the provisional period , the Board shall use the data collected by the ECB in those financial years in accordance with Regulation ( EU ) No 1163/2014 and provided to the Board in accordance with Article 11 .</rdf:value>
-        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_b3f4fd5919484f94badd8ca1476c8045"/>
-      </dgfro:ReportingObligation>
-    </dgfro:hasReportingObligation>
-    <dgfro:hasReportingObligation>
-      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_99c8f9728e064dc0bed2be5a49b0cc79">
-        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_0684ac2df4274f80bf5a59e2cfaa9f2e"/>
-        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_0263cfab3b364e42a83e92f1a9716a9d"/>
-        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_d41bde0f252d4455804e242e6d9c4cb4"/>
-        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_e618a8b72c4144b2878ad9a30475f2dd"/>
-        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_e9c4f7a3efe34d18a6c13bf25627f53d"/>
-        <rdf:value>A contribution notice shall be issued by the Board to the contribution debtors .</rdf:value>
-      </dgfro:ReportingObligation>
-    </dgfro:hasReportingObligation>
-    <dgfro:hasReportingObligation>
-      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_09bdd268308a4157877703de367333a5">
-        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_275710e5e106433781aba21e91c32213"/>
-        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_972443ad6b5449b19ec5c5ed89d7cb56"/>
-        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_347f8d1efe2b4e1cb0d06ac1c5f2ce15"/>
-        <dgfro:hasPropPrp rdf:resource="http://dgfisma.com/reporting_obligations/entity_681d4c2efed749b980b19f59158c161f"/>
-        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_b695bc977eaa480d88161a36ff5a9918"/>
-        <rdf:value>Whereas , , Such a final system should provide for the determination and raising of administrative contributions not only for significant entities , but for all entities that are subjected to the Single Resolution Mechanism . The contributions should be calculated at the highest level of consolidation of those entities within the participating Member States , since all subsidiaries of a group inside the perimeter of consolidation fall within the scope of the decision - making powers of the Board when adopting group resolution plans , carrying out the assessment of resolvability of groups and adopting resolution decisions for groups . The exercise of those tasks implies expenditures for the Board for collecting and analysing information and data related to each subsidiary included in the perimeter of consolidation . Since those are expenditures related to the services provided by the Board to the entities that are subjected to the Single Resolution Mechanism , they should be paid by those entities and therefore the administrative contributions should be calculated on the basis of their consolidated accounts at the highest level of consolidation within the participating Member States and only one contribution per group should be calculated .</rdf:value>
-      </dgfro:ReportingObligation>
-    </dgfro:hasReportingObligation>
-    <dgfro:hasReportingObligation>
-      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_5f3671c55f3a4560a1c97736cb21da82">
-        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_ff21cfead1f647b288cdd8e13284a8ef"/>
-        <rdf:value>Within 30 days of the entry into force of this Regulation , the ECB shall provide the Board with the data as specified in Article 6 and collected by the ECB in accordance with Regulation ( EU ) No 1163/2014 in financial years belonging to the provisional period .</rdf:value>
-        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_f728979a9d0b4ad49a4b3c7f67b5eeb5"/>
-        <dgfro:hasPropTmp rdf:resource="http://dgfisma.com/reporting_obligations/entity_8dc82418b77743248b1de6625b7e305e"/>
-        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_8e31715248ab4f66b5a94024f12b5250"/>
-        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_4e749c231a3148f0b370a5d202d98853"/>
-        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_9436bd89eb094e81ae9009086b4763b7"/>
-      </dgfro:ReportingObligation>
-    </dgfro:hasReportingObligation>
-    <dgfro:hasReportingObligation>
-      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_8e882237f46d43029556e32dc0159b17">
-        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_2f0c4c7c7bc74d41a51182010855019b"/>
-        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_7ecc8ede2b424496bde9f302304ee596"/>
-        <dgfro:hasPropAdv rdf:resource="http://dgfisma.com/reporting_obligations/entity_3b6e3177ee7c4e3da239191a2b4b0a47"/>
-        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_ce7d70317eb24a6dbc8a66bdc83f3a20"/>
-        <dgfro:hasPropTmp rdf:resource="http://dgfisma.com/reporting_obligations/entity_e3a106d597564db8a1c68125be28110f"/>
-        <dgfro:hasPropTmp rdf:resource="http://dgfisma.com/reporting_obligations/entity_a5055649a00843b1937ceff8005fb61f"/>
-        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_34c58b96b0894660862f362a9bbcd31f"/>
-        <rdf:value>In case no data provided by the national competent authority is available , the contribution debtor shall upon request provide the Board with the necessary data within a deadline set by the Board . In the absence of a reply by the contribution debtor within the deadline set by the Board , the Board may determine the data on the basis of reasonable assumptions .</rdf:value>
-        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_77a42aee2772493d8e46f9027fbb6cd4"/>
-      </dgfro:ReportingObligation>
-    </dgfro:hasReportingObligation>
-    <dgfro:hasReportingObligation>
-      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_ef48a537c075448da1f2cda82d74b285">
-        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_a725f438c5e042f3bd1b805242664ae1"/>
-        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_cd2ae6cd04f74f75b8c2abe9ad04085e"/>
-        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_d44a982d5f7f4b529981105554ed789e"/>
-        <rdf:value>Each year , within 5 working days of the issuance of fee notices in accordance with Article 12(1 ) of Regulation ( EU ) No 1163/2014 , and in any case no later than 31 December of the year for which the fee notices are issued , the ECB shall provide the Board with data on each contribution debtor as collected by the ECB in that year and used to determine the supervisory fees in accordance with Regulation ( EU ) No 1163/2014 .</rdf:value>
-        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_320914eda7ce4f998f073856c59e2eaf"/>
-        <dgfro:hasPropPrd rdf:resource="http://dgfisma.com/reporting_obligations/entity_8cad52a1e2e0410295c7b2f33869a423"/>
-        <dgfro:hasPropTmp rdf:resource="http://dgfisma.com/reporting_obligations/entity_6439445e90f54784a389076afae14eac"/>
-        <dgfro:hasPropTmp rdf:resource="http://dgfisma.com/reporting_obligations/entity_acd8bc7faedb40d8b5d2bffba478dc19"/>
-        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_af93bca1a0644261ac277ac864636f7c"/>
-      </dgfro:ReportingObligation>
-    </dgfro:hasReportingObligation>
-    <dgfro:hasReportingObligation>
-      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_055ea7975ac64fa88dbdcb3700120e21">
-        <rdf:value>In the event of any partial payment , non - payment or non - compliance with the conditions for payment specified in the contribution notice by the contribution debtor , the Board shall inform the national resolution authority of the participating Member State in which the contribution debtor is established .</rdf:value>
-        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_190a7b13bd884e7b9aec63f2e794a4dd"/>
-        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_73ff0f445d704cb7929713c427cc8dee"/>
-        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_3a489d8b40104689bc4ddeeda2da21e7"/>
-        <dgfro:hasPropAdv rdf:resource="http://dgfisma.com/reporting_obligations/entity_1b0e0f411cfd4c21a514ab09660d6eb7"/>
-        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_8ec72119dc7442fca3664e2f4da8f750"/>
-      </dgfro:ReportingObligation>
-    </dgfro:hasReportingObligation>
-    <dgfro:hasReportingObligation>
-      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_8d64ba7c8cdd4d98a4473cda9ee15a6c">
-        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_918a3b23770e42dcb6fb8856fbc2e2d5"/>
-        <dgfro:hasPropTmp rdf:resource="http://dgfisma.com/reporting_obligations/entity_cdca279b91cb498a84d3d8758555b2a2"/>
-        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_061c97d33f32467bab05d569c23ff482"/>
-        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_20241200c16749a18c491c84465b7652"/>
-        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_0c73d61abd104d73b4e7b8ae9769af4c"/>
-        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_57baa7117fb74415ae8dcc59652721aa"/>
-        <rdf:value>The Board shall report yearly to the Commission on the appropriateness of the allocation laid down in paragraph 1 , in the light of the changing composition of the two categories of entities and groups .</rdf:value>
-      </dgfro:ReportingObligation>
-    </dgfro:hasReportingObligation>
-  </dgfro:CatalogueDocument>
-  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropAdv">
-    <rdfs:range>
-      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropAdv">
+      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/Verb">
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
       </rdf:Description>
     </rdfs:range>
     <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
-    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
-  </rdf:Property>
-  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropDis">
-    <rdfs:range>
-      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropDis">
-        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-      </rdf:Description>
-    </rdfs:range>
-    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
-    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
-  </rdf:Property>
-  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropMod">
-    <rdfs:range>
-      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropMod">
-        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-      </rdf:Description>
-    </rdfs:range>
-    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
-    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
   </rdf:Property>
   <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropCau">
     <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
@@ -247,32 +30,254 @@
       </rdf:Description>
     </rdfs:range>
   </rdf:Property>
-  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropRec">
+  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropCom">
+    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
     <rdfs:range>
-      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropRec">
+      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropCom">
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
       </rdf:Description>
     </rdfs:range>
-    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
     <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
-  </rdf:Property>
-  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasReportingObligation">
-    <rdfs:range rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
-    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/CatalogueDocument"/>
   </rdf:Property>
   <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasDetails">
-    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
     <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
     <rdfs:range>
       <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/Details">
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
       </rdf:Description>
     </rdfs:range>
+    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
   </rdf:Property>
-  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasVerb">
+  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropLoc">
+    <rdfs:range>
+      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropLoc">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      </rdf:Description>
+    </rdfs:range>
+    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
+    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropPnc">
+    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
     <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
     <rdfs:range>
-      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/Verb">
+      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropPnc">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      </rdf:Description>
+    </rdfs:range>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropPrd">
+    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
+    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
+    <rdfs:range>
+      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropPrd">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      </rdf:Description>
+    </rdfs:range>
+  </rdf:Property>
+  <dgfro:CatalogueDocument rdf:about="http://dgfisma.com/reporting_obligations/cat_doc/mockup">
+    <dgfro:hasReportingObligation>
+      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_865ea4fd6f79474abb98edcb50baeb0f">
+        <dgfro:hasPropPrd rdf:resource="http://dgfisma.com/reporting_obligations/entity_62bd8655a73642318c21975cb5c9445b"/>
+        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_4203fc98c7004cc2bf2084d6ff34211b"/>
+        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_23554cfeb5e64436a6bc364c3e5392b5"/>
+        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_5aaa149905384658ae1fea128fa0d82d"/>
+        <dgfro:hasPropTmp rdf:resource="http://dgfisma.com/reporting_obligations/entity_7e13dc1bd3b041b384d92e3617eae784"/>
+        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_0029ba1a069743439cb3264402450756"/>
+        <dgfro:hasPropTmp rdf:resource="http://dgfisma.com/reporting_obligations/entity_5e9de47de11943d384887d7a220f6d6e"/>
+        <rdf:value>Each year , within 5 working days of the issuance of fee notices in accordance with Article 12(1 ) of Regulation ( EU ) No 1163/2014 , and in any case no later than 31 December of the year for which the fee notices are issued , the ECB shall provide the Board with data on each contribution debtor as collected by the ECB in that year and used to determine the supervisory fees in accordance with Regulation ( EU ) No 1163/2014 .</rdf:value>
+        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_be72ca05ea634d71993bba2ccbea50f7"/>
+      </dgfro:ReportingObligation>
+    </dgfro:hasReportingObligation>
+    <dgfro:hasReportingObligation>
+      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_4abed2abe61049f88d6fbecd86d4aeac">
+        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_b998ef5e158b41e1a014d86b71123db0"/>
+        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_4cce70851e774df48ad5ebb5f7414c5e"/>
+        <dgfro:hasPropTmp rdf:resource="http://dgfisma.com/reporting_obligations/entity_c5fe25e6ad464d90bd25fef3ff828b08"/>
+        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_3970b9ca9d4c421fbe66e2dea2c9a912"/>
+        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_747444f1031c4a5387c4fe7b3366d3a9"/>
+        <rdf:value>In case no data provided by the national competent authority is available , the contribution debtor shall upon request provide the Board with the necessary data within a deadline set by the Board . In the absence of a reply by the contribution debtor within the deadline set by the Board , the Board may determine the data on the basis of reasonable assumptions .</rdf:value>
+        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_242884a45576435e8dc97a271a889e0c"/>
+        <dgfro:hasPropTmp rdf:resource="http://dgfisma.com/reporting_obligations/entity_e87c3bb8df4c42b6872970db55ac46a2"/>
+        <dgfro:hasPropAdv rdf:resource="http://dgfisma.com/reporting_obligations/entity_e8d97002feb24f6780fa2981fd65a83a"/>
+      </dgfro:ReportingObligation>
+    </dgfro:hasReportingObligation>
+    <dgfro:hasReportingObligation>
+      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_13255428d97049e7af4fe79108df826f">
+        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_91693ef23d8a4e53bf594d9ab5c4f7b4"/>
+        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_b15e35eaf1d24e63b2c17e1e24524a1f"/>
+        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_2525aadd38e54d0d9b7a39c7b190d9b6"/>
+        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_7347937c46d0496b834807ff971de684"/>
+        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_0eee2e40a3f14a0386c27f1992675a18"/>
+        <rdf:value>The Board shall notify the contribution notice through any of the following means ❮electronically or by other comparable means of communication ‖ by fax ‖ by express courier service ‖ by registered mail with a form for acknowledgement of receipt ‖ by service or delivery by hand❯</rdf:value>
+      </dgfro:ReportingObligation>
+    </dgfro:hasReportingObligation>
+    <dgfro:hasReportingObligation>
+      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_99eb02ac1b984a9a88cf5411e87b4f7d">
+        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_cc2996ac8218452aa2d7179311e7cc13"/>
+        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_b28eb8294a934db1b8a862a17ad85b70"/>
+        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_82ae5903cbb34914b913e6d9ac58f730"/>
+        <dgfro:hasPropTmp rdf:resource="http://dgfisma.com/reporting_obligations/entity_9e125e70df76438ab5a9c41257b6fb9a"/>
+        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_63ce0e36116a4171b1735a83db703215"/>
+        <rdf:value>In case the ECB issues additional invoices or recalculates the annual supervisory fee in accordance with Article 7 of Regulation ( EU ) No 1163/2014 , the ECB shall communicate to the Board the new data within 5 days of the issuance of fee notices .</rdf:value>
+        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_a2aad20483d948a3850a3f7fcec2c8d5"/>
+        <dgfro:hasPropAdv rdf:resource="http://dgfisma.com/reporting_obligations/entity_5831bf20d00f46c5bba8ba2cf0c75bda"/>
+      </dgfro:ReportingObligation>
+    </dgfro:hasReportingObligation>
+    <dgfro:hasReportingObligation>
+      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_647641a86a264a8eb39f96a2a6beb3c0">
+        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_bc6b1fedde2b487db5b02e6ebba4cf7d"/>
+        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_69cc08ffe69543fcbd1c31565d289ecd"/>
+        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_6fa4c2669b1743418ea5776978a46157"/>
+        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_8b308159b1184c539c3ee9b3fc7c6b6a"/>
+        <dgfro:hasPropTmp rdf:resource="http://dgfisma.com/reporting_obligations/entity_1c18ab45df6e44c1bf63cc2f6da32c70"/>
+        <rdf:value>Within 30 days of the entry into force of this Regulation , the ECB shall provide the Board with the data as specified in Article 6 and collected by the ECB in accordance with Regulation ( EU ) No 1163/2014 in financial years belonging to the provisional period .</rdf:value>
+        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_0ecf5991d8a54ae4b91268e710a81611"/>
+      </dgfro:ReportingObligation>
+    </dgfro:hasReportingObligation>
+    <dgfro:hasReportingObligation>
+      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_a9de6f94c49f4d4ca529d54ea4ffae08">
+        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_564623eb5c724399932f549035ea4388"/>
+        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_cac548e76e1346539110ff5ea93dc406"/>
+        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_712c249a1c014471af1d40f2e816323e"/>
+        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_7287fb310558436d9b4db79a8d302dbe"/>
+        <rdf:value>In the event of any partial payment , non - payment or non - compliance with the conditions for payment specified in the contribution notice by the contribution debtor , the Board shall inform the national resolution authority of the participating Member State in which the contribution debtor is established .</rdf:value>
+        <dgfro:hasPropAdv rdf:resource="http://dgfisma.com/reporting_obligations/entity_67cc9643705442f7abf76202c1f7f3f8"/>
+      </dgfro:ReportingObligation>
+    </dgfro:hasReportingObligation>
+    <dgfro:hasReportingObligation>
+      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_5015b5b5d921465cbeef0bb7140e2a73">
+        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_ea1cd3248bf54440977cbe714edf9d27"/>
+        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_b15f1e719ab34c3ba80bac54d6d3aaaa"/>
+        <rdf:value>The annual contribution due by the entities referred to in Article 2 of Regulation ( EU ) No 806/2014 that are members of the same group shall be collected from the contribution debtor of that group .</rdf:value>
+        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_06e0ee82b4e848a1b6cdd29941f65e9b"/>
+        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_36b0df59e68e49d8903b125ef8deb809"/>
+      </dgfro:ReportingObligation>
+    </dgfro:hasReportingObligation>
+    <dgfro:hasReportingObligation>
+      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_ebf8c7fb12c84b808544af227be17e52">
+        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_99f72e10983641688e3eafc15b714cf6"/>
+        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_e1f6fe087adc46cc9ccafd2fb008d709"/>
+        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_12856cc073664858899837dd99b8aa66"/>
+        <dgfro:hasPropMnr rdf:resource="http://dgfisma.com/reporting_obligations/entity_25b1b68f6fc14762987beea467552849"/>
+        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_c0acd564c0fd46a393fce0c39263aa16"/>
+        <rdf:value>Before taking any decision on outsourcing , the Board shall obtain the consent of the ECB to share the data provided by the ECB with a service provider , in accordance with applicable confidentiality provisions .</rdf:value>
+      </dgfro:ReportingObligation>
+    </dgfro:hasReportingObligation>
+    <dgfro:hasReportingObligation>
+      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_6e72694afe16406d9ae1ec909ca1f275">
+        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_53085dbd2885433a8968e1296926ffa5"/>
+        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_7f55ace1e51e496bada5740d0178713c"/>
+        <dgfro:hasPropTmp rdf:resource="http://dgfisma.com/reporting_obligations/entity_a748865b26104e67a54d3e7757685707"/>
+        <rdf:value>The Board shall report yearly to the Commission on the appropriateness of the allocation laid down in paragraph 1 , in the light of the changing composition of the two categories of entities and groups .</rdf:value>
+        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_ec1efe42e27446f2a2fe47de37502771"/>
+        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_b57eb2e4fe664057a9feedf8d0eef197"/>
+        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_2cfb57332eef41a5b2393f8e3fadc095"/>
+      </dgfro:ReportingObligation>
+    </dgfro:hasReportingObligation>
+    <dgfro:hasReportingObligation>
+      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_c94b7adb75c34dcb9e64b786dbf0ca8b">
+        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_e3041ff296894189a5875513f036e2b0"/>
+        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_b0b9a3ec6714489aaa29a3003e3fb87a"/>
+        <rdf:value>The government of each participating Member State shall designate and notify to the Board and to the Court of Justice of the European Union an authority for the purposes of verifying the authenticity of individual contribution decisions .</rdf:value>
+        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_bdcc9b39d6c14dac89ef7c7a57bdb52e"/>
+        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_a065193f763342c3bacc20a6e77b87e8"/>
+        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_d22ff0aa281c4487a3bf87ab7b10225e"/>
+      </dgfro:ReportingObligation>
+    </dgfro:hasReportingObligation>
+    <dgfro:hasReportingObligation>
+      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_1c1708b23a6743d3bf75695791bd701e">
+        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_29117a1847d042c0b65c04ca9d080028"/>
+        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_549fe8145e324750b4284141524bae9a"/>
+        <rdf:value>A contribution notice shall be issued by the Board to the contribution debtors .</rdf:value>
+        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_e0a9164e84614b34ac8bfc794d2635a5"/>
+        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_ffce6f18d2b440089ce1f331bcc988a2"/>
+        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_0aa82b8573574abf8f63c61cec8b23aa"/>
+      </dgfro:ReportingObligation>
+    </dgfro:hasReportingObligation>
+    <dgfro:hasReportingObligation>
+      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_67675b7f2474402fbd7b9b7d108cbeeb">
+        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_f587fff134904342af143b215447d580"/>
+        <rdf:value>It is more efficient to request the ECB to transmit data it received and verified in the exercise of its tasks and powers conferred on it by Council Regulation ( EU ) No 1024/2013 ( 4 ) to the Board , than to duplicate the reporting burden for the institutions and entities concerned . Data sharing between the ECB and the Board would also allow avoiding duplication of the data verification process by the Board and builds on the obligation of the Board and the ECB to cooperate closely in the exercise of their respective responsibilities under Regulation ( EU ) No 806/2014 . Any duplication of the data reporting and verification processes would inevitably require more time for the calculation and raising of contributions and would lead to a less efficient system . It follows that , as a part of the cooperation obligation , the ECB should be required to transmit to the Board the data received from the institutions and entities concerned for the purpose of calculating contributions to the Board . The Board should rely to the greatest extent possible on the data collected by the ECB .</rdf:value>
+        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_592abd5f9aee497184d5570731cebbc4"/>
+        <dgfro:hasPropAdv rdf:resource="http://dgfisma.com/reporting_obligations/entity_52e7ee4f934a46e3a3e72a0131ed1720"/>
+        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_4d22375e32b143ddb7358b7bf4052176"/>
+        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_c74ce3bfac91471aa52b6f2a9425da8a"/>
+      </dgfro:ReportingObligation>
+    </dgfro:hasReportingObligation>
+    <dgfro:hasReportingObligation>
+      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_df8934c459e84af5933491171657b0fd">
+        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_b7e61ff9afc54bb6acf53deff18a9069"/>
+        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_ba180b2ebdbf49999d739600b0473ea9"/>
+        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_0bce9e144271462c9d2850eb1a85f0b9"/>
+        <dgfro:hasPropMnr rdf:resource="http://dgfisma.com/reporting_obligations/entity_f340e478c82b4b9dbdb3736af0648206"/>
+        <rdf:value>Any mandate given to a service provider for the purposes of outsourcing tasks shall clearly state the duration of the mandate and the specific tasks that are outsourced and establish a framework for regular reporting by the service provider to the Board .</rdf:value>
+        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_0d582913dc9748dabf5e425c33563b05"/>
+      </dgfro:ReportingObligation>
+    </dgfro:hasReportingObligation>
+    <dgfro:hasReportingObligation>
+      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_68f40e66fa9d4272aaf4daa82e225619">
+        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_b07bd12fdefb4175931a8ddbd588c2e8"/>
+        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_81d3ecc5cb9e4ad49a20bd9a17e99ccd"/>
+        <dgfro:hasPropAdv rdf:resource="http://dgfisma.com/reporting_obligations/entity_c6dd7936d0bb40fda47dacfafad1afc2"/>
+        <dgfro:hasPropTmp rdf:resource="http://dgfisma.com/reporting_obligations/entity_a15171e335214399902fa42a4d4498b0"/>
+        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_a53358baea8244d09ef160c5410b8632"/>
+        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_59832616f8ad448181c64a1aa1d5da00"/>
+        <dgfro:hasRegulatoryBody rdf:resource="http://dgfisma.com/reporting_obligations/entity_d1725522cc544d6f96647f0008f99bfc"/>
+        <rdf:value>In case no data provided by the ECB is available , the relevant national competent authority shall upon request provide the Board with the data at its disposal .</rdf:value>
+      </dgfro:ReportingObligation>
+    </dgfro:hasReportingObligation>
+    <dgfro:hasReportingObligation>
+      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_75f7c519deee4d64931ca7299f325f93">
+        <dgfro:hasPropTmp rdf:resource="http://dgfisma.com/reporting_obligations/entity_c04927e098954f74bb70ff34ac8c9a45"/>
+        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_0814f826618f488e8d9c252f8abb23ca"/>
+        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_9e91711bdfd94ed7af5a0d605643ceea"/>
+        <rdf:value>For the calculation of the individual annual contributions to be collected in a given financial year , the Board shall use the data collected by the ECB in the previous financial year in accordance with Regulation ( EU ) No 1163/2014 and provided to the Board in accordance with this Article or Article 11 , as applicable .</rdf:value>
+        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_75135870e4314123a591cae6c665c53f"/>
+      </dgfro:ReportingObligation>
+    </dgfro:hasReportingObligation>
+    <dgfro:hasReportingObligation>
+      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_480bd834048541ed90dc2cf87e08f41b">
+        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_1886d7df11af4e048606c35cabe18323"/>
+        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_818c29dbf119474491adfc703f5f8775"/>
+        <dgfro:hasPropPrp rdf:resource="http://dgfisma.com/reporting_obligations/entity_f94bd7f0f97843a8bab3e4fa7cd2dd66"/>
+        <dgfro:hasPropMod rdf:resource="http://dgfisma.com/reporting_obligations/entity_19d5dda9632a46bba1d958c59c9ac0aa"/>
+        <rdf:value>Whereas , , Such a final system should provide for the determination and raising of administrative contributions not only for significant entities , but for all entities that are subjected to the Single Resolution Mechanism . The contributions should be calculated at the highest level of consolidation of those entities within the participating Member States , since all subsidiaries of a group inside the perimeter of consolidation fall within the scope of the decision - making powers of the Board when adopting group resolution plans , carrying out the assessment of resolvability of groups and adopting resolution decisions for groups . The exercise of those tasks implies expenditures for the Board for collecting and analysing information and data related to each subsidiary included in the perimeter of consolidation . Since those are expenditures related to the services provided by the Board to the entities that are subjected to the Single Resolution Mechanism , they should be paid by those entities and therefore the administrative contributions should be calculated on the basis of their consolidated accounts at the highest level of consolidation within the participating Member States and only one contribution per group should be calculated .</rdf:value>
+        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_409de3a859b94427843094c50125c33e"/>
+      </dgfro:ReportingObligation>
+    </dgfro:hasReportingObligation>
+    <dgfro:hasReportingObligation>
+      <dgfro:ReportingObligation rdf:about="http://dgfisma.com/reporting_obligations/rep_obl_cc71e6e059314a288c83d437665caa24">
+        <rdf:value>Without prejudice to Article 6(4 ) , for the recalculation of the amount of contributions due by each entity in the financial years belonging to the provisional period , the Board shall use the data collected by the ECB in those financial years in accordance with Regulation ( EU ) No 1163/2014 and provided to the Board in accordance with Article 11 .</rdf:value>
+        <dgfro:hasReport rdf:resource="http://dgfisma.com/reporting_obligations/entity_2f8ed86ca9ae42d59e8bc00c404e46c0"/>
+        <dgfro:hasReporter rdf:resource="http://dgfisma.com/reporting_obligations/entity_8be3b80d4ba045be8e1602fd2a9fc680"/>
+        <dgfro:hasPropTmp rdf:resource="http://dgfisma.com/reporting_obligations/entity_69f2c439bcef4ed6aa1ecc5425da4e05"/>
+        <dgfro:hasVerb rdf:resource="http://dgfisma.com/reporting_obligations/entity_ed4b595307e0420e9f773de6ad0009b9"/>
+      </dgfro:ReportingObligation>
+    </dgfro:hasReportingObligation>
+  </dgfro:CatalogueDocument>
+  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropMod">
+    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
+    <rdfs:range>
+      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropMod">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      </rdf:Description>
+    </rdfs:range>
+    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasReport">
+    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
+    <rdfs:range>
+      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/Report">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      </rdf:Description>
+    </rdfs:range>
+    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropDis">
+    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
+    <rdfs:range>
+      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropDis">
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
       </rdf:Description>
     </rdfs:range>
@@ -280,61 +285,17 @@
   </rdf:Property>
   <rdf:Property rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#value">
     <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
+    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/DocumentSource"/>
     <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
   </rdf:Property>
-  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropExt">
-    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
-    <rdfs:range>
-      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropExt">
-        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-      </rdf:Description>
-    </rdfs:range>
-    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
-  </rdf:Property>
-  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropLoc">
-    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
-    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
-    <rdfs:range>
-      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropLoc">
-        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-      </rdf:Description>
-    </rdfs:range>
-  </rdf:Property>
-  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropLVB">
-    <rdfs:range>
-      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropLvb">
-        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-      </rdf:Description>
-    </rdfs:range>
-    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
-    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
-  </rdf:Property>
-  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasReport">
-    <rdfs:range>
-      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/Report">
-        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-      </rdf:Description>
-    </rdfs:range>
-    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
-    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
-  </rdf:Property>
-  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasRegulatoryBody">
-    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
-    <rdfs:range>
-      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/RegulatoryBody">
-        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-      </rdf:Description>
-    </rdfs:range>
-    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
-  </rdf:Property>
   <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropMnr">
+    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
+    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
     <rdfs:range>
       <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropMnr">
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
       </rdf:Description>
     </rdfs:range>
-    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
-    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
   </rdf:Property>
   <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropTmp">
     <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
@@ -345,62 +306,54 @@
       </rdf:Description>
     </rdfs:range>
   </rdf:Property>
-  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropPrp">
-    <rdfs:range>
-      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropPrp">
-        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-      </rdf:Description>
-    </rdfs:range>
-    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
-    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
-  </rdf:Property>
-  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropPnc">
-    <rdfs:range>
-      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropPnc">
-        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-      </rdf:Description>
-    </rdfs:range>
-    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
-    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
-  </rdf:Property>
-  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasReporter">
-    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
-    <rdfs:range>
-      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/Reporter">
-        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-      </rdf:Description>
-    </rdfs:range>
-    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
-  </rdf:Property>
-  <owl:Ontology rdf:about="http://dgfisma.com/reporting_obligations/">
-    <dc:title>Reporting obligations (RO) vocabulary</dc:title>
-  </owl:Ontology>
-  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropDsp">
-    <rdfs:range>
-      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropDsp">
-        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-      </rdf:Description>
-    </rdfs:range>
-    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
-    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
-  </rdf:Property>
   <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropDir">
-    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
     <rdfs:range>
       <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropDir">
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
       </rdf:Description>
     </rdfs:range>
     <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
-  </rdf:Property>
-  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropCom">
     <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropAdv">
     <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
     <rdfs:range>
-      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropCom">
+      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropAdv">
         <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
       </rdf:Description>
     </rdfs:range>
+    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropRec">
+    <rdfs:range>
+      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropRec">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      </rdf:Description>
+    </rdfs:range>
+    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
+    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropGol">
+    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
+    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
+    <rdfs:range>
+      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropGol">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      </rdf:Description>
+    </rdfs:range>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasRegulatoryBody">
+    <rdfs:range>
+      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/RegulatoryBody">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      </rdf:Description>
+    </rdfs:range>
+    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
+    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasReportingObligation">
+    <rdfs:range rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
+    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/CatalogueDocument"/>
   </rdf:Property>
   <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropNeg">
     <rdfs:range>
@@ -411,292 +364,347 @@
     <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
     <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
   </rdf:Property>
-  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_54067c8fa3c846ddbc91ea95dc30f78b">
-    <skos:prefLabel xml:lang="en">the Board</skos:prefLabel>
-  </dgfro:RegulatoryBody>
-  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_e618a8b72c4144b2878ad9a30475f2dd">
-    <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
-  </dgfro:PropMod>
-  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_141b1b698c144a0cadd0f232f90d5129">
-    <skos:prefLabel xml:lang="en">notify</skos:prefLabel>
-  </dgfro:Verb>
-  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_7ecc8ede2b424496bde9f302304ee596">
-    <skos:prefLabel xml:lang="en">provide</skos:prefLabel>
-  </dgfro:Verb>
-  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_62157abad6d14c1aa2960803238551cd">
-    <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
-  </dgfro:PropMod>
-  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_69b6205924c24ea4a05a00bb2e29959c">
-    <skos:prefLabel xml:lang="en">The government of each participating Member State</skos:prefLabel>
-  </dgfro:Reporter>
-  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_718af197ae4f4c709c9a8dc30f18da9b">
-    <skos:prefLabel xml:lang="en">the data provided by the ECB</skos:prefLabel>
-  </dgfro:Report>
-  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_8e31715248ab4f66b5a94024f12b5250">
-    <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
-  </dgfro:PropMod>
-  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_e9c4f7a3efe34d18a6c13bf25627f53d">
-    <skos:prefLabel xml:lang="en">issued</skos:prefLabel>
-  </dgfro:Verb>
-  <dgfro:PropTmp rdf:about="http://dgfisma.com/reporting_obligations/entity_a5055649a00843b1937ceff8005fb61f">
-    <skos:prefLabel xml:lang="en">within a deadline set by the Board</skos:prefLabel>
-  </dgfro:PropTmp>
-  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_347f8d1efe2b4e1cb0d06ac1c5f2ce15">
-    <skos:prefLabel xml:lang="en">Such a final system</skos:prefLabel>
-  </dgfro:Reporter>
-  <dgfro:PropAdv rdf:about="http://dgfisma.com/reporting_obligations/entity_5d655320cc844f8594eb435129c1d877">
-    <skos:prefLabel xml:lang="en">also</skos:prefLabel>
-  </dgfro:PropAdv>
-  <dgfro:PropTmp rdf:about="http://dgfisma.com/reporting_obligations/entity_6e0b2cf70fda4cd4a191b77602681a65">
-    <skos:prefLabel xml:lang="en">in those financial years</skos:prefLabel>
-  </dgfro:PropTmp>
-  <dgfro:PropMnr rdf:about="http://dgfisma.com/reporting_obligations/entity_8e4a718880d04438a6b588840407aa12">
-    <skos:prefLabel xml:lang="en">in accordance with applicable confidentiality provisions</skos:prefLabel>
-  </dgfro:PropMnr>
-  <owl:Class rdf:about="http://dgfisma.com/reporting_obligations/CatalogueDocument">
-    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
-  </owl:Class>
-  <dgfro:PropAdv rdf:about="http://dgfisma.com/reporting_obligations/entity_3b6e3177ee7c4e3da239191a2b4b0a47">
-    <skos:prefLabel xml:lang="en">In case no data provided by the national competent authority is available</skos:prefLabel>
-  </dgfro:PropAdv>
-  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_3a489d8b40104689bc4ddeeda2da21e7">
-    <skos:prefLabel xml:lang="en">the Board</skos:prefLabel>
-  </dgfro:Reporter>
-  <dgfro:PropAdv rdf:about="http://dgfisma.com/reporting_obligations/entity_1bc976ede03246c88f738fcf17a6f546">
-    <skos:prefLabel xml:lang="en">In case no data provided by the ECB is available</skos:prefLabel>
-  </dgfro:PropAdv>
-  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_e610d1af0b584570ae1610a59ddfdd7b">
-    <skos:prefLabel xml:lang="en">from the contribution debtor of that group</skos:prefLabel>
-  </dgfro:RegulatoryBody>
-  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_ce7d70317eb24a6dbc8a66bdc83f3a20">
-    <skos:prefLabel xml:lang="en">the Board</skos:prefLabel>
-  </dgfro:RegulatoryBody>
-  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_a7b040199f014f139ea0095d76c2cfa6">
-    <skos:prefLabel xml:lang="en">the data</skos:prefLabel>
-  </dgfro:Report>
-  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_6dc429b4d1d14a34821cb4bbf86bb281">
+  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasReporter">
+    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
+    <rdfs:range>
+      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/Reporter">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      </rdf:Description>
+    </rdfs:range>
+    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropExt">
+    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
+    <rdfs:range>
+      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropExt">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      </rdf:Description>
+    </rdfs:range>
+    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropPrp">
+    <rdfs:range>
+      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropPrp">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      </rdf:Description>
+    </rdfs:range>
+    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
+    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropDsp">
+    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
+    <rdfs:range>
+      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropDsp">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      </rdf:Description>
+    </rdfs:range>
+    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasPropLVB">
+    <rdfs:range>
+      <rdf:Description rdf:about="http://dgfisma.com/reporting_obligations/PropLvb">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      </rdf:Description>
+    </rdfs:range>
+    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/ReportingObligation"/>
+    <rdfs:subPropertyOf rdf:resource="http://dgfisma.com/reporting_obligations/hasEntity"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://dgfisma.com/reporting_obligations/hasDocumentSource">
+    <rdfs:domain rdf:resource="http://dgfisma.com/reporting_obligations/CatalogueDocument"/>
+    <rdfs:range rdf:resource="http://dgfisma.com/reporting_obligations/DocumentSource"/>
+  </rdf:Property>
+  <owl:Ontology rdf:about="http://dgfisma.com/reporting_obligations/">
+    <dc:title>Reporting obligations (RO) vocabulary</dc:title>
+  </owl:Ontology>
+  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_0bce9e144271462c9d2850eb1a85f0b9">
     <skos:prefLabel xml:lang="en">the duration of the mandate and the specific tasks that are outsourced</skos:prefLabel>
   </dgfro:Report>
-  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_0684ac2df4274f80bf5a59e2cfaa9f2e">
-    <skos:prefLabel xml:lang="en">A contribution notice</skos:prefLabel>
+  <owl:Class rdf:about="http://dgfisma.com/reporting_obligations/DocumentSource">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+  </owl:Class>
+  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_c74ce3bfac91471aa52b6f2a9425da8a">
+    <skos:prefLabel xml:lang="en">avoiding duplication of the data verification process by the Board</skos:prefLabel>
   </dgfro:Report>
-  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_918a3b23770e42dcb6fb8856fbc2e2d5">
-    <skos:prefLabel xml:lang="en">on the appropriateness of the allocation laid down in paragraph 1 , in the light of the changing composition of the two categories of entities and groups</skos:prefLabel>
+  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_a065193f763342c3bacc20a6e77b87e8">
+    <skos:prefLabel xml:lang="en">to the Board and to the Court of Justice of the European Union</skos:prefLabel>
+  </dgfro:RegulatoryBody>
+  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_e1f6fe087adc46cc9ccafd2fb008d709">
+    <skos:prefLabel xml:lang="en">the data provided by the ECB</skos:prefLabel>
   </dgfro:Report>
-  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_2f0c4c7c7bc74d41a51182010855019b">
-    <skos:prefLabel xml:lang="en">with the necessary data</skos:prefLabel>
-  </dgfro:Report>
-  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_1d3663246f434b6fa9d6d5d200251ab4">
-    <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
-  </dgfro:PropMod>
-  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_275710e5e106433781aba21e91c32213">
-    <skos:prefLabel xml:lang="en">provide</skos:prefLabel>
+  <dgfro:PropAdv rdf:about="http://dgfisma.com/reporting_obligations/entity_c6dd7936d0bb40fda47dacfafad1afc2">
+    <skos:prefLabel xml:lang="en">In case no data provided by the ECB is available</skos:prefLabel>
+  </dgfro:PropAdv>
+  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_ed4b595307e0420e9f773de6ad0009b9">
+    <skos:prefLabel xml:lang="en">collected</skos:prefLabel>
   </dgfro:Verb>
-  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_38db80ceab514952a95af92edf369abb">
-    <skos:prefLabel xml:lang="en">The annual contribution due by the entities referred to in Article 2 of Regulation ( EU ) No 806/2014 that are members of the same group</skos:prefLabel>
-  </dgfro:Report>
-  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_b3f4fd5919484f94badd8ca1476c8045">
+  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_9e91711bdfd94ed7af5a0d605643ceea">
     <skos:prefLabel xml:lang="en">by the ECB</skos:prefLabel>
   </dgfro:Reporter>
-  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_1508dd65186945689403ca47b92eb569">
-    <skos:prefLabel xml:lang="en">an authority for the purposes of verifying the authenticity of individual contribution decisions</skos:prefLabel>
-  </dgfro:RegulatoryBody>
-  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_cd2ae6cd04f74f75b8c2abe9ad04085e">
-    <skos:prefLabel xml:lang="en">with data on each contribution debtor</skos:prefLabel>
-  </dgfro:Report>
-  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_0263cfab3b364e42a83e92f1a9716a9d">
-    <skos:prefLabel xml:lang="en">to the contribution debtors</skos:prefLabel>
-  </dgfro:RegulatoryBody>
-  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_061c97d33f32467bab05d569c23ff482">
-    <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
-  </dgfro:PropMod>
-  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_aba7a95cc6734f2e81820add5f540311">
-    <skos:prefLabel xml:lang="en">through any of the following means ❮electronically or by other comparable means of communication ‖ by fax ‖ by express courier service ‖ by registered mail with a form for acknowledgement of receipt ‖ by service or delivery by hand❯</skos:prefLabel>
-  </dgfro:RegulatoryBody>
-  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_6532514e5d1a430e80599ca69f19916d">
-    <skos:prefLabel xml:lang="en">Data sharing between the ECB and the Board</skos:prefLabel>
-  </dgfro:Reporter>
-  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_8ec72119dc7442fca3664e2f4da8f750">
-    <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
-  </dgfro:PropMod>
-  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_648e6d23cb9f46b8a2794894c20a05ce">
-    <skos:prefLabel xml:lang="en">collected</skos:prefLabel>
-  </dgfro:Verb>
-  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_0c73d61abd104d73b4e7b8ae9769af4c">
-    <skos:prefLabel xml:lang="en">to the Commission</skos:prefLabel>
-  </dgfro:RegulatoryBody>
-  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_d3f92612ba874c04be4ff6ea3db933d1">
+  <dgfro:PropPrd rdf:about="http://dgfisma.com/reporting_obligations/entity_62bd8655a73642318c21975cb5c9445b">
+    <skos:prefLabel xml:lang="en">as collected by the ECB in that year and used to determine the supervisory fees in accordance with Regulation ( EU ) No 1163/2014</skos:prefLabel>
+  </dgfro:PropPrd>
+  <dgfro:PropTmp rdf:about="http://dgfisma.com/reporting_obligations/entity_e87c3bb8df4c42b6872970db55ac46a2">
+    <skos:prefLabel xml:lang="en">within a deadline set by the Board</skos:prefLabel>
+  </dgfro:PropTmp>
+  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_b15e35eaf1d24e63b2c17e1e24524a1f">
     <skos:prefLabel xml:lang="en">The Board</skos:prefLabel>
   </dgfro:Reporter>
-  <dgfro:PropTmp rdf:about="http://dgfisma.com/reporting_obligations/entity_acd8bc7faedb40d8b5d2bffba478dc19">
-    <skos:prefLabel xml:lang="en">Each year</skos:prefLabel>
-  </dgfro:PropTmp>
-  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_94054872e14143e1818371e77d06920f">
+  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_2cfb57332eef41a5b2393f8e3fadc095">
+    <skos:prefLabel xml:lang="en">on the appropriateness of the allocation laid down in paragraph 1 , in the light of the changing composition of the two categories of entities and groups</skos:prefLabel>
+  </dgfro:Report>
+  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_818c29dbf119474491adfc703f5f8775">
     <skos:prefLabel xml:lang="en">provide</skos:prefLabel>
   </dgfro:Verb>
-  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_57baa7117fb74415ae8dcc59652721aa">
-    <skos:prefLabel xml:lang="en">report</skos:prefLabel>
-  </dgfro:Verb>
-  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_9bb19da014e74565b4866ec3bc2f669b">
-    <skos:prefLabel xml:lang="en">the relevant national competent authority</skos:prefLabel>
-  </dgfro:Reporter>
-  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_bc4f84bbbdc34be39463795114743085">
-    <skos:prefLabel xml:lang="en">the new data</skos:prefLabel>
-  </dgfro:Report>
-  <dgfro:PropPrp rdf:about="http://dgfisma.com/reporting_obligations/entity_681d4c2efed749b980b19f59158c161f">
-    <skos:prefLabel xml:lang="en">not only for significant entities , but for all entities that are subjected to the Single Resolution Mechanism</skos:prefLabel>
-  </dgfro:PropPrp>
-  <dgfro:PropTmp rdf:about="http://dgfisma.com/reporting_obligations/entity_e3a106d597564db8a1c68125be28110f">
-    <skos:prefLabel xml:lang="en">upon request</skos:prefLabel>
-  </dgfro:PropTmp>
-  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_f1efc3ed3b514a90ae813c423d25edff">
-    <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
-  </dgfro:PropMod>
-  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_20241200c16749a18c491c84465b7652">
-    <skos:prefLabel xml:lang="en">The Board</skos:prefLabel>
-  </dgfro:Reporter>
-  <dgfro:PropTmp rdf:about="http://dgfisma.com/reporting_obligations/entity_cdca279b91cb498a84d3d8758555b2a2">
-    <skos:prefLabel xml:lang="en">yearly</skos:prefLabel>
-  </dgfro:PropTmp>
-  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_190a7b13bd884e7b9aec63f2e794a4dd">
-    <skos:prefLabel xml:lang="en">the national resolution authority of the participating Member State in which the contribution debtor is established</skos:prefLabel>
-  </dgfro:RegulatoryBody>
-  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_77a42aee2772493d8e46f9027fbb6cd4">
-    <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
-  </dgfro:PropMod>
-  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_ef4a4ee7c7254622b19e22360394b6be">
-    <skos:prefLabel xml:lang="en">collected</skos:prefLabel>
-  </dgfro:Verb>
-  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_5d20dcb450cc46878a59a85f13d1826b">
-    <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
-  </dgfro:PropMod>
-  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_972443ad6b5449b19ec5c5ed89d7cb56">
+  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_1886d7df11af4e048606c35cabe18323">
     <skos:prefLabel xml:lang="en">for the determination and raising of administrative contributions</skos:prefLabel>
   </dgfro:Report>
-  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_63566ca8e2f04659991950069e9b5fbb">
-    <skos:prefLabel xml:lang="en">collected</skos:prefLabel>
-  </dgfro:Verb>
-  <dgfro:PropTmp rdf:about="http://dgfisma.com/reporting_obligations/entity_6439445e90f54784a389076afae14eac">
-    <skos:prefLabel xml:lang="en">within 5 working days of the issuance of fee notices in accordance with Article 12(1 ) of Regulation ( EU ) No 1163/2014 , and in any case no later than 31 December of the year for which the fee notices are issued</skos:prefLabel>
+  <dgfro:PropTmp rdf:about="http://dgfisma.com/reporting_obligations/entity_69f2c439bcef4ed6aa1ecc5425da4e05">
+    <skos:prefLabel xml:lang="en">in those financial years</skos:prefLabel>
   </dgfro:PropTmp>
-  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_38c8052f8a2444c68e5fb858692dfb87">
-    <skos:prefLabel xml:lang="en">to the Board</skos:prefLabel>
-  </dgfro:RegulatoryBody>
-  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_09586b81c8784ec28642f8d0f2d85c72">
-    <skos:prefLabel xml:lang="en">with a service provider</skos:prefLabel>
-  </dgfro:RegulatoryBody>
-  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_1fa918bf493d490d8a72ea6cf29097f2">
+  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_63ce0e36116a4171b1735a83db703215">
     <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
   </dgfro:PropMod>
-  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_1a322c8ae24e4ffdafdcbaf6a4f4eebc">
+  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_99f72e10983641688e3eafc15b714cf6">
     <skos:prefLabel xml:lang="en">the Board</skos:prefLabel>
   </dgfro:Reporter>
-  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_a725f438c5e042f3bd1b805242664ae1">
+  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_b7e61ff9afc54bb6acf53deff18a9069">
+    <skos:prefLabel xml:lang="en">state</skos:prefLabel>
+  </dgfro:Verb>
+  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_cac548e76e1346539110ff5ea93dc406">
+    <skos:prefLabel xml:lang="en">the national resolution authority of the participating Member State in which the contribution debtor is established</skos:prefLabel>
+  </dgfro:RegulatoryBody>
+  <dgfro:PropPrp rdf:about="http://dgfisma.com/reporting_obligations/entity_f94bd7f0f97843a8bab3e4fa7cd2dd66">
+    <skos:prefLabel xml:lang="en">not only for significant entities , but for all entities that are subjected to the Single Resolution Mechanism</skos:prefLabel>
+  </dgfro:PropPrp>
+  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_c0acd564c0fd46a393fce0c39263aa16">
+    <skos:prefLabel xml:lang="en">with a service provider</skos:prefLabel>
+  </dgfro:RegulatoryBody>
+  <dgfro:PropMnr rdf:about="http://dgfisma.com/reporting_obligations/entity_f340e478c82b4b9dbdb3736af0648206">
+    <skos:prefLabel xml:lang="en">clearly</skos:prefLabel>
+  </dgfro:PropMnr>
+  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_29117a1847d042c0b65c04ca9d080028">
+    <skos:prefLabel xml:lang="en">by the Board</skos:prefLabel>
+  </dgfro:Reporter>
+  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_d22ff0aa281c4487a3bf87ab7b10225e">
+    <skos:prefLabel xml:lang="en">an authority for the purposes of verifying the authenticity of individual contribution decisions</skos:prefLabel>
+  </dgfro:RegulatoryBody>
+  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_7287fb310558436d9b4db79a8d302dbe">
+    <skos:prefLabel xml:lang="en">inform</skos:prefLabel>
+  </dgfro:Verb>
+  <dgfro:PropTmp rdf:about="http://dgfisma.com/reporting_obligations/entity_9e125e70df76438ab5a9c41257b6fb9a">
+    <skos:prefLabel xml:lang="en">within 5 days of the issuance of fee notices</skos:prefLabel>
+  </dgfro:PropTmp>
+  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_36b0df59e68e49d8903b125ef8deb809">
+    <skos:prefLabel xml:lang="en">collected</skos:prefLabel>
+  </dgfro:Verb>
+  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_81d3ecc5cb9e4ad49a20bd9a17e99ccd">
+    <skos:prefLabel xml:lang="en">provide</skos:prefLabel>
+  </dgfro:Verb>
+  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_75135870e4314123a591cae6c665c53f">
+    <skos:prefLabel xml:lang="en">collected</skos:prefLabel>
+  </dgfro:Verb>
+  <dgfro:PropTmp rdf:about="http://dgfisma.com/reporting_obligations/entity_a15171e335214399902fa42a4d4498b0">
+    <skos:prefLabel xml:lang="en">upon request</skos:prefLabel>
+  </dgfro:PropTmp>
+  <dgfro:PropTmp rdf:about="http://dgfisma.com/reporting_obligations/entity_c04927e098954f74bb70ff34ac8c9a45">
+    <skos:prefLabel xml:lang="en">in the previous financial year</skos:prefLabel>
+  </dgfro:PropTmp>
+  <dgfro:PropAdv rdf:about="http://dgfisma.com/reporting_obligations/entity_67cc9643705442f7abf76202c1f7f3f8">
+    <skos:prefLabel xml:lang="en">In the event of any partial payment , non - payment or non - compliance with the conditions for payment specified in the contribution notice by the contribution debtor</skos:prefLabel>
+  </dgfro:PropAdv>
+  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_ea1cd3248bf54440977cbe714edf9d27">
+    <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
+  </dgfro:PropMod>
+  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_0029ba1a069743439cb3264402450756">
+    <skos:prefLabel xml:lang="en">with data on each contribution debtor</skos:prefLabel>
+  </dgfro:Report>
+  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_ec1efe42e27446f2a2fe47de37502771">
+    <skos:prefLabel xml:lang="en">to the Commission</skos:prefLabel>
+  </dgfro:RegulatoryBody>
+  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_8be3b80d4ba045be8e1602fd2a9fc680">
+    <skos:prefLabel xml:lang="en">by the ECB</skos:prefLabel>
+  </dgfro:Reporter>
+  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_bc6b1fedde2b487db5b02e6ebba4cf7d">
+    <skos:prefLabel xml:lang="en">with the data as specified in Article 6 and collected by the ECB in accordance with Regulation ( EU ) No 1163/2014 in financial years belonging to the provisional period</skos:prefLabel>
+  </dgfro:Report>
+  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_d1725522cc544d6f96647f0008f99bfc">
     <skos:prefLabel xml:lang="en">the Board</skos:prefLabel>
   </dgfro:RegulatoryBody>
-  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_af93bca1a0644261ac277ac864636f7c">
-    <skos:prefLabel xml:lang="en">the ECB</skos:prefLabel>
-  </dgfro:Reporter>
-  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_ccaee70073f94944859665ecf0c08d79">
-    <skos:prefLabel xml:lang="en">share</skos:prefLabel>
+  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_242884a45576435e8dc97a271a889e0c">
+    <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
+  </dgfro:PropMod>
+  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_7f55ace1e51e496bada5740d0178713c">
+    <skos:prefLabel xml:lang="en">report</skos:prefLabel>
   </dgfro:Verb>
+  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_53085dbd2885433a8968e1296926ffa5">
+    <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
+  </dgfro:PropMod>
+  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_0eee2e40a3f14a0386c27f1992675a18">
+    <skos:prefLabel xml:lang="en">notify</skos:prefLabel>
+  </dgfro:Verb>
+  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_0ecf5991d8a54ae4b91268e710a81611">
+    <skos:prefLabel xml:lang="en">provide</skos:prefLabel>
+  </dgfro:Verb>
+  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_5aaa149905384658ae1fea128fa0d82d">
+    <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
+  </dgfro:PropMod>
+  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_0814f826618f488e8d9c252f8abb23ca">
+    <skos:prefLabel xml:lang="en">the data</skos:prefLabel>
+  </dgfro:Report>
+  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_2f8ed86ca9ae42d59e8bc00c404e46c0">
+    <skos:prefLabel xml:lang="en">the data</skos:prefLabel>
+  </dgfro:Report>
+  <dgfro:PropTmp rdf:about="http://dgfisma.com/reporting_obligations/entity_7e13dc1bd3b041b384d92e3617eae784">
+    <skos:prefLabel xml:lang="en">within 5 working days of the issuance of fee notices in accordance with Article 12(1 ) of Regulation ( EU ) No 1163/2014 , and in any case no later than 31 December of the year for which the fee notices are issued</skos:prefLabel>
+  </dgfro:PropTmp>
   <rdfs:Class rdf:about="http://dgfisma.com/reporting_obligations/ReportingObligation">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
   </rdfs:Class>
-  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_724b946817464402a237aa863a982c63">
-    <skos:prefLabel xml:lang="en">communicate</skos:prefLabel>
-  </dgfro:Verb>
-  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_ff21cfead1f647b288cdd8e13284a8ef">
-    <skos:prefLabel xml:lang="en">with the data as specified in Article 6 and collected by the ECB in accordance with Regulation ( EU ) No 1163/2014 in financial years belonging to the provisional period</skos:prefLabel>
-  </dgfro:Report>
-  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_b7f2c8a4279743efb670b4d4995608ac">
-    <skos:prefLabel xml:lang="en">notify</skos:prefLabel>
-  </dgfro:Verb>
-  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_65d2eaccb7864e30871bc4f348044237">
-    <skos:prefLabel xml:lang="en">the data</skos:prefLabel>
-  </dgfro:Report>
-  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_779953b19aff453eb2df13ace0a9aa07">
-    <skos:prefLabel xml:lang="en">the contribution notice</skos:prefLabel>
-  </dgfro:RegulatoryBody>
-  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_320914eda7ce4f998f073856c59e2eaf">
-    <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
-  </dgfro:PropMod>
-  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_0c593fc1a5014585a54fc070c339748d">
-    <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
-  </dgfro:PropMod>
-  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_07d0603ace584cc59de2348bf82fe366">
-    <skos:prefLabel xml:lang="en">the ECB</skos:prefLabel>
+  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_59832616f8ad448181c64a1aa1d5da00">
+    <skos:prefLabel xml:lang="en">the relevant national competent authority</skos:prefLabel>
   </dgfro:Reporter>
-  <dgfro:PropTmp rdf:about="http://dgfisma.com/reporting_obligations/entity_8dc82418b77743248b1de6625b7e305e">
-    <skos:prefLabel xml:lang="en">Within 30 days of the entry into force of this Regulation</skos:prefLabel>
-  </dgfro:PropTmp>
-  <dgfro:PropTmp rdf:about="http://dgfisma.com/reporting_obligations/entity_298f78a2266242f39f9c5e0809296e2d">
-    <skos:prefLabel xml:lang="en">upon request</skos:prefLabel>
-  </dgfro:PropTmp>
-  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_b4af7e8dc8834153a2e3196af6967c11">
+  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_82ae5903cbb34914b913e6d9ac58f730">
+    <skos:prefLabel xml:lang="en">the new data</skos:prefLabel>
+  </dgfro:Report>
+  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_549fe8145e324750b4284141524bae9a">
+    <skos:prefLabel xml:lang="en">A contribution notice</skos:prefLabel>
+  </dgfro:Report>
+  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_0d582913dc9748dabf5e425c33563b05">
     <skos:prefLabel xml:lang="en">Any mandate given to a service provider for the purposes of outsourcing tasks</skos:prefLabel>
   </dgfro:Reporter>
-  <dgfro:PropAdv rdf:about="http://dgfisma.com/reporting_obligations/entity_9c44aca1bcda468682f0b680e0447583">
-    <skos:prefLabel xml:lang="en">In case the ECB issues additional invoices or recalculates the annual supervisory fee in accordance with Article 7 of Regulation ( EU ) No 1163/2014</skos:prefLabel>
-  </dgfro:PropAdv>
-  <dgfro:PropTmp rdf:about="http://dgfisma.com/reporting_obligations/entity_5f4216458bcc4723a978f379b0d68a92">
-    <skos:prefLabel xml:lang="en">in the previous financial year</skos:prefLabel>
+  <dgfro:PropTmp rdf:about="http://dgfisma.com/reporting_obligations/entity_5e9de47de11943d384887d7a220f6d6e">
+    <skos:prefLabel xml:lang="en">Each year</skos:prefLabel>
   </dgfro:PropTmp>
-  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_d44a982d5f7f4b529981105554ed789e">
-    <skos:prefLabel xml:lang="en">provide</skos:prefLabel>
-  </dgfro:Verb>
-  <dgfro:PropAdv rdf:about="http://dgfisma.com/reporting_obligations/entity_1b0e0f411cfd4c21a514ab09660d6eb7">
-    <skos:prefLabel xml:lang="en">In the event of any partial payment , non - payment or non - compliance with the conditions for payment specified in the contribution notice by the contribution debtor</skos:prefLabel>
-  </dgfro:PropAdv>
-  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_34c58b96b0894660862f362a9bbcd31f">
-    <skos:prefLabel xml:lang="en">the contribution debtor</skos:prefLabel>
-  </dgfro:Reporter>
-  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_d41bde0f252d4455804e242e6d9c4cb4">
-    <skos:prefLabel xml:lang="en">by the Board</skos:prefLabel>
-  </dgfro:Reporter>
-  <dgfro:PropMnr rdf:about="http://dgfisma.com/reporting_obligations/entity_ad439c9ff1424621a113154f5e0f5162">
-    <skos:prefLabel xml:lang="en">clearly</skos:prefLabel>
-  </dgfro:PropMnr>
-  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_c502094130434109ae8da2a4de3d85f7">
-    <skos:prefLabel xml:lang="en">avoiding duplication of the data verification process by the Board</skos:prefLabel>
-  </dgfro:Report>
-  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_b695bc977eaa480d88161a36ff5a9918">
-    <skos:prefLabel xml:lang="en">should</skos:prefLabel>
-  </dgfro:PropMod>
-  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_73ff0f445d704cb7929713c427cc8dee">
-    <skos:prefLabel xml:lang="en">inform</skos:prefLabel>
-  </dgfro:Verb>
-  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_a9ad665d227a44f39cb280775566429f">
-    <skos:prefLabel xml:lang="en">to the Board and to the Court of Justice of the European Union</skos:prefLabel>
-  </dgfro:RegulatoryBody>
-  <dgfro:PropTmp rdf:about="http://dgfisma.com/reporting_obligations/entity_be04709a55184b619bbe30bc93aa77c9">
-    <skos:prefLabel xml:lang="en">within 5 days of the issuance of fee notices</skos:prefLabel>
-  </dgfro:PropTmp>
-  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_4e749c231a3148f0b370a5d202d98853">
+  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_712c249a1c014471af1d40f2e816323e">
     <skos:prefLabel xml:lang="en">the Board</skos:prefLabel>
-  </dgfro:RegulatoryBody>
-  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_41c8f74af08e463285b6e89f68d0d1b1">
-    <skos:prefLabel xml:lang="en">state</skos:prefLabel>
-  </dgfro:Verb>
-  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_9436bd89eb094e81ae9009086b4763b7">
+  </dgfro:Reporter>
+  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_b57eb2e4fe664057a9feedf8d0eef197">
+    <skos:prefLabel xml:lang="en">The Board</skos:prefLabel>
+  </dgfro:Reporter>
+  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_6fa4c2669b1743418ea5776978a46157">
     <skos:prefLabel xml:lang="en">the ECB</skos:prefLabel>
   </dgfro:Reporter>
-  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_f728979a9d0b4ad49a4b3c7f67b5eeb5">
-    <skos:prefLabel xml:lang="en">provide</skos:prefLabel>
-  </dgfro:Verb>
-  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_00a11d35a6bd4780b61f3d94ecb8121f">
-    <skos:prefLabel xml:lang="en">would</skos:prefLabel>
-  </dgfro:PropMod>
-  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_52ff80d5a00449fcbb954e5dcb63a03a">
+  <dgfro:PropTmp rdf:about="http://dgfisma.com/reporting_obligations/entity_a748865b26104e67a54d3e7757685707">
+    <skos:prefLabel xml:lang="en">yearly</skos:prefLabel>
+  </dgfro:PropTmp>
+  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_a53358baea8244d09ef160c5410b8632">
     <skos:prefLabel xml:lang="en">with the data at its disposal</skos:prefLabel>
   </dgfro:Report>
-  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_ee8186d9e32f4713ac0b0fb6e4c2d48e">
-    <skos:prefLabel xml:lang="en">by the ECB</skos:prefLabel>
-  </dgfro:Reporter>
-  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_cfc14259a76d40b9aca0b824d5fd0420">
+  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_b998ef5e158b41e1a014d86b71123db0">
+    <skos:prefLabel xml:lang="en">provide</skos:prefLabel>
+  </dgfro:Verb>
+  <dgfro:PropMnr rdf:about="http://dgfisma.com/reporting_obligations/entity_25b1b68f6fc14762987beea467552849">
+    <skos:prefLabel xml:lang="en">in accordance with applicable confidentiality provisions</skos:prefLabel>
+  </dgfro:PropMnr>
+  <dgfro:PropTmp rdf:about="http://dgfisma.com/reporting_obligations/entity_c5fe25e6ad464d90bd25fef3ff828b08">
+    <skos:prefLabel xml:lang="en">upon request</skos:prefLabel>
+  </dgfro:PropTmp>
+  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_be72ca05ea634d71993bba2ccbea50f7">
+    <skos:prefLabel xml:lang="en">provide</skos:prefLabel>
+  </dgfro:Verb>
+  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_cc2996ac8218452aa2d7179311e7cc13">
+    <skos:prefLabel xml:lang="en">communicate</skos:prefLabel>
+  </dgfro:Verb>
+  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_b07bd12fdefb4175931a8ddbd588c2e8">
+    <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
+  </dgfro:PropMod>
+  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_0aa82b8573574abf8f63c61cec8b23aa">
+    <skos:prefLabel xml:lang="en">to the contribution debtors</skos:prefLabel>
+  </dgfro:RegulatoryBody>
+  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_19d5dda9632a46bba1d958c59c9ac0aa">
+    <skos:prefLabel xml:lang="en">should</skos:prefLabel>
+  </dgfro:PropMod>
+  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_06e0ee82b4e848a1b6cdd29941f65e9b">
+    <skos:prefLabel xml:lang="en">The annual contribution due by the entities referred to in Article 2 of Regulation ( EU ) No 806/2014 that are members of the same group</skos:prefLabel>
+  </dgfro:Report>
+  <dgfro:PropTmp rdf:about="http://dgfisma.com/reporting_obligations/entity_1c18ab45df6e44c1bf63cc2f6da32c70">
+    <skos:prefLabel xml:lang="en">Within 30 days of the entry into force of this Regulation</skos:prefLabel>
+  </dgfro:PropTmp>
+  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_592abd5f9aee497184d5570731cebbc4">
     <skos:prefLabel xml:lang="en">allow</skos:prefLabel>
   </dgfro:Verb>
-  <dgfro:PropPrd rdf:about="http://dgfisma.com/reporting_obligations/entity_8cad52a1e2e0410295c7b2f33869a423">
-    <skos:prefLabel xml:lang="en">as collected by the ECB in that year and used to determine the supervisory fees in accordance with Regulation ( EU ) No 1163/2014</skos:prefLabel>
-  </dgfro:PropPrd>
+  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_e3041ff296894189a5875513f036e2b0">
+    <skos:prefLabel xml:lang="en">notify</skos:prefLabel>
+  </dgfro:Verb>
+  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_ba180b2ebdbf49999d739600b0473ea9">
+    <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
+  </dgfro:PropMod>
+  <dgfro:PropAdv rdf:about="http://dgfisma.com/reporting_obligations/entity_52e7ee4f934a46e3a3e72a0131ed1720">
+    <skos:prefLabel xml:lang="en">also</skos:prefLabel>
+  </dgfro:PropAdv>
+  <owl:Class rdf:about="http://dgfisma.com/reporting_obligations/CatalogueDocument">
+    <rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/>
+  </owl:Class>
+  <dgfro:PropAdv rdf:about="http://dgfisma.com/reporting_obligations/entity_5831bf20d00f46c5bba8ba2cf0c75bda">
+    <skos:prefLabel xml:lang="en">In case the ECB issues additional invoices or recalculates the annual supervisory fee in accordance with Article 7 of Regulation ( EU ) No 1163/2014</skos:prefLabel>
+  </dgfro:PropAdv>
+  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_ffce6f18d2b440089ce1f331bcc988a2">
+    <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
+  </dgfro:PropMod>
+  <dgfro:PropAdv rdf:about="http://dgfisma.com/reporting_obligations/entity_e8d97002feb24f6780fa2981fd65a83a">
+    <skos:prefLabel xml:lang="en">In case no data provided by the national competent authority is available</skos:prefLabel>
+  </dgfro:PropAdv>
+  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_a2aad20483d948a3850a3f7fcec2c8d5">
+    <skos:prefLabel xml:lang="en">the ECB</skos:prefLabel>
+  </dgfro:Reporter>
+  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_e0a9164e84614b34ac8bfc794d2635a5">
+    <skos:prefLabel xml:lang="en">issued</skos:prefLabel>
+  </dgfro:Verb>
+  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_8b308159b1184c539c3ee9b3fc7c6b6a">
+    <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
+  </dgfro:PropMod>
+  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_91693ef23d8a4e53bf594d9ab5c4f7b4">
+    <skos:prefLabel xml:lang="en">the contribution notice</skos:prefLabel>
+  </dgfro:RegulatoryBody>
+  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_7347937c46d0496b834807ff971de684">
+    <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
+  </dgfro:PropMod>
+  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_4cce70851e774df48ad5ebb5f7414c5e">
+    <skos:prefLabel xml:lang="en">the contribution debtor</skos:prefLabel>
+  </dgfro:Reporter>
+  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_bdcc9b39d6c14dac89ef7c7a57bdb52e">
+    <skos:prefLabel xml:lang="en">The government of each participating Member State</skos:prefLabel>
+  </dgfro:Reporter>
+  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_4d22375e32b143ddb7358b7bf4052176">
+    <skos:prefLabel xml:lang="en">Data sharing between the ECB and the Board</skos:prefLabel>
+  </dgfro:Reporter>
+  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_b15f1e719ab34c3ba80bac54d6d3aaaa">
+    <skos:prefLabel xml:lang="en">from the contribution debtor of that group</skos:prefLabel>
+  </dgfro:RegulatoryBody>
+  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_564623eb5c724399932f549035ea4388">
+    <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
+  </dgfro:PropMod>
+  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_b28eb8294a934db1b8a862a17ad85b70">
+    <skos:prefLabel xml:lang="en">to the Board</skos:prefLabel>
+  </dgfro:RegulatoryBody>
+  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_23554cfeb5e64436a6bc364c3e5392b5">
+    <skos:prefLabel xml:lang="en">the ECB</skos:prefLabel>
+  </dgfro:Reporter>
+  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_747444f1031c4a5387c4fe7b3366d3a9">
+    <skos:prefLabel xml:lang="en">the Board</skos:prefLabel>
+  </dgfro:RegulatoryBody>
+  <dgfro:Verb rdf:about="http://dgfisma.com/reporting_obligations/entity_12856cc073664858899837dd99b8aa66">
+    <skos:prefLabel xml:lang="en">share</skos:prefLabel>
+  </dgfro:Verb>
+  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_f587fff134904342af143b215447d580">
+    <skos:prefLabel xml:lang="en">would</skos:prefLabel>
+  </dgfro:PropMod>
+  <dgfro:PropMod rdf:about="http://dgfisma.com/reporting_obligations/entity_b0b9a3ec6714489aaa29a3003e3fb87a">
+    <skos:prefLabel xml:lang="en">shall</skos:prefLabel>
+  </dgfro:PropMod>
+  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_4203fc98c7004cc2bf2084d6ff34211b">
+    <skos:prefLabel xml:lang="en">the Board</skos:prefLabel>
+  </dgfro:RegulatoryBody>
+  <dgfro:Report rdf:about="http://dgfisma.com/reporting_obligations/entity_3970b9ca9d4c421fbe66e2dea2c9a912">
+    <skos:prefLabel xml:lang="en">with the necessary data</skos:prefLabel>
+  </dgfro:Report>
+  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_69cc08ffe69543fcbd1c31565d289ecd">
+    <skos:prefLabel xml:lang="en">the Board</skos:prefLabel>
+  </dgfro:RegulatoryBody>
+  <dgfro:RegulatoryBody rdf:about="http://dgfisma.com/reporting_obligations/entity_2525aadd38e54d0d9b7a39c7b190d9b6">
+    <skos:prefLabel xml:lang="en">through any of the following means ❮electronically or by other comparable means of communication ‖ by fax ‖ by express courier service ‖ by registered mail with a form for acknowledgement of receipt ‖ by service or delivery by hand❯</skos:prefLabel>
+  </dgfro:RegulatoryBody>
+  <dgfro:Reporter rdf:about="http://dgfisma.com/reporting_obligations/entity_409de3a859b94427843094c50125c33e">
+    <skos:prefLabel xml:lang="en">Such a final system</skos:prefLabel>
+  </dgfro:Reporter>
 </rdf:RDF>

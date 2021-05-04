@@ -52,8 +52,6 @@ D_ENTITIES = {'ARG0': (RO_BASE['hasReporter'], RO_BASE['Reporter']),
 
 PROP_HAS_ENTITY = RO_BASE.hasEntity
 
-i = 0
-
 
 class ROGraph(Graph):
     """
@@ -82,6 +80,8 @@ class ROGraph(Graph):
         super(ROGraph, self).__init__(
             *args, **kwargs)
 
+        self.bind("rdf", RDF)
+        self.bind("rdfs", RDFS)
         self.bind("skos", SKOS)
         self.bind("owl", OWL)
         self.bind("dgf", NS_BASE)
