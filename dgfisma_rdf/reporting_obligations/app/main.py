@@ -151,7 +151,7 @@ async def add_doc_source(docid: str = Header(...),
     g.commit()
     g.close(False)
 
-    return JSONResponse(content={"message": "RDF model initialised succesfully"})
+    return JSONResponse(content={"message": "Document source added successfully."})
 
 
 def create_file_shared(decoded_cas_content,
@@ -203,13 +203,18 @@ def update_rdf_from_cas_content(cas_content: cas_parser.CasContent,
 
     g.close(False)  # commit_pending_transaction flag shouldn't matter, but just to be safe
 
-    if source_name is not None:
+    if (source_name is not None) or (source_url is not None):
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
-        result = loop.run_until_complete(add_doc_source(doc_id, source_url=source_url,
+        result = loop.run_until_complete(add_doc_source(doc_id,
+                                                        source_url=source_url,
                                                         source_name=source_name,
                                                         endpoint=query_endpoint,
                                                         updateendpoint=update_endpoint, ))
+
+        print(result)
+        print(result.status_code)
+        print(result.content)
 
     return cas_content
 
