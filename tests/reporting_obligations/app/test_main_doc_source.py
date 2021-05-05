@@ -72,7 +72,6 @@ class TestAddDocSource(unittest.TestCase):
             'docid': '#todo test',
             'endpoint': URL_ENDPOINT,
             'updateendpoint': UPDATE_ENDPOINT,
-            # 'docid': os.path.basename(path)
         }
 
         r = TEST_CLIENT.post(self.URL_DOC_SOURCE_ADD,

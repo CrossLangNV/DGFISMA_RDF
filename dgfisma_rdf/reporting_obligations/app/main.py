@@ -150,7 +150,8 @@ async def add_doc_source(docid: str = Header(...),
 
     g.commit()
     g.close(False)
-    return
+
+    return JSONResponse(content={"message": "RDF model initialised succesfully"})
 
 
 def create_file_shared(decoded_cas_content,
@@ -171,8 +172,8 @@ def create_file_shared(decoded_cas_content,
         raise HTTPException(status_code=406, detail=f"Unable to extract content from CAS.\n{e}")
 
     return update_rdf_from_cas_content(cas_content, endpoint, update_endpoint, doc_id,
-                                       source_name=None,
-                                       source_url=None,
+                                       source_name=source_name,
+                                       source_url=source_url,
                                        )
 
 
