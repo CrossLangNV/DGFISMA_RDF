@@ -1,4 +1,3 @@
-import asyncio
 import base64
 import binascii
 import logging
@@ -61,10 +60,17 @@ async def create_file(file: UploadFile = File(...),
         None
     """
 
-    return create_file_shared(file.file, endpoint, updateendpoint, docid,
-                              source_name=source_name,
-                              source_url=source_url,
-                              )
+    response = create_file_shared(file.file, endpoint, updateendpoint, docid,
+                                  )
+
+    if (source_name is not None) or (source_url is not None):
+        await add_doc_source(docid,
+                             source_url=source_url,
+                             source_name=source_name,
+                             endpoint=endpoint,
+                             updateendpoint=updateendpoint, )
+
+    return response
 
 
 @app.post("/ro_cas/base64")
@@ -96,9 +102,16 @@ async def create_file_base64(cas_base64: CasBase64,
         logging.info(end)
         return JSONResponse(cas_base64)
 
-    return create_file_shared(decoded_cas_content, endpoint, updateendpoint, docid,
-                              source_name=source_name,
-                              source_url=source_url)
+    response = create_file_shared(decoded_cas_content, endpoint, updateendpoint, docid,
+                                  )
+    if (source_name is not None) or (source_url is not None):
+        await add_doc_source(docid,
+                             source_url=source_url,
+                             source_name=source_name,
+                             endpoint=endpoint,
+                             updateendpoint=updateendpoint, )
+
+    return response
 
 
 @app.post("/ro_cas/init")
@@ -158,8 +171,6 @@ def create_file_shared(decoded_cas_content,
                        endpoint,
                        update_endpoint,
                        doc_id,
-                       source_name=None,
-                       source_url=None,
                        ):
     # Get relevant data of reporting obligations out of the CAS:
     cas = load_cas_from_xmi(decoded_cas_content, typesystem=TYPESYSTEM)
@@ -172,8 +183,6 @@ def create_file_shared(decoded_cas_content,
         raise HTTPException(status_code=406, detail=f"Unable to extract content from CAS.\n{e}")
 
     return update_rdf_from_cas_content(cas_content, endpoint, update_endpoint, doc_id,
-                                       source_name=source_name,
-                                       source_url=source_url,
                                        )
 
 
@@ -181,8 +190,6 @@ def update_rdf_from_cas_content(cas_content: cas_parser.CasContent,
                                 query_endpoint: str,
                                 update_endpoint: str,
                                 doc_id: str,
-                                source_name=None,
-                                source_url=None,
                                 ) -> cas_parser.CasContent:
     g = get_sparql_update_graph(query_endpoint,
                                 update_endpoint)
@@ -202,19 +209,6 @@ def update_rdf_from_cas_content(cas_content: cas_parser.CasContent,
         g.commit()
 
     g.close(False)  # commit_pending_transaction flag shouldn't matter, but just to be safe
-
-    if (source_name is not None) or (source_url is not None):
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        result = loop.run_until_complete(add_doc_source(doc_id,
-                                                        source_url=source_url,
-                                                        source_name=source_name,
-                                                        endpoint=query_endpoint,
-                                                        updateendpoint=update_endpoint, ))
-
-        print(result)
-        print(result.status_code)
-        print(result.content)
 
     return cas_content
 
