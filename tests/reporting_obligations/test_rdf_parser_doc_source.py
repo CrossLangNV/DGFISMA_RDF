@@ -10,9 +10,6 @@ from dgfisma_rdf.reporting_obligations.build_rdf import ExampleCasContent, ROGra
 from dgfisma_rdf.reporting_obligations.rdf_parser import SPARQLReportingObligationProvider, RDFLibGraphWrapper
 
 
-# TODO test if every RO has a doc source
-
-
 class TestLocalGraph(unittest.TestCase):
     def setUp(self) -> None:
         g = ROGraph(include_schema=True,
@@ -61,3 +58,7 @@ class TestLocalGraph(unittest.TestCase):
 
             self.assertGreaterEqual(len(r_doc_src), 1)
             self.assertLessEqual(len(r_doc_src), len(r_all))
+
+    def test_all_ro_doc(self):
+        # TODO test if every RO has a doc source
+        return

@@ -243,18 +243,21 @@ class ROGraph(Graph):
 
         return cas_content
 
+    def get_doc_source(self,
+                       doc_id: str):
+        # TODO
+        return
+
     def add_doc_source(self,
                        doc_id: str,
                        source_id: str,
                        source_name: str = None,
-                       query_endpoint=None
                        ) -> None:
         """
 
         :param doc_id: id that refers to the document (From Django)
         :param source_id: document/website source id, ideally the URL
         :param source_name: (Optional) label of the document source
-        :param query_endpoint:
         :return: None
         """
 
@@ -274,11 +277,74 @@ class ROGraph(Graph):
         source_uri = _get_source_uri(source_id)
 
         l_add.append((cat_doc, self.prop_has_doc_src, source_uri))
+        l_add.append((source_uri, RDF.type, self.class_doc_src))
+
         if source_name:
-            l_add.append((source_uri, RDF.value, Literal(source_name)))
+            l_add.append((source_uri, RDF.value, Literal(source_name, lang='en')))
 
         for triple in l_add:
             self.add(triple)
+
+    def remove_doc_source(self,
+                          doc_id: str,
+                          b_link_only: bool = True
+                          ) -> None:
+        """
+        Removes all document source information from a document.
+
+        :param doc_id:
+        :param b_link_only: (Optional) By default, only the link between the document and the source is broken.
+            When False, the doc_source element is deleted as well.
+        :return:
+        """
+
+        cat_doc = self._get_cat_doc_uri(doc_id)
+
+        # Same doc sources are shared, so you probably don't want to remove it's value
+        q_delete_doc_src = "" if b_link_only else f"""
+            BIND (rdf:value as ?val)
+            
+            OPTIONAL {{
+                ?doc_src_id a ?doc_src .
+            }}
+            
+            OPTIONAL {{ # Not every doc source has a name associated with it.
+               ?doc_src_id ?val ?src_name .
+            }}
+        """
+
+        q_construct_delete_doc_src = "" if b_link_only else f"""
+        	?doc_src_id a ?doc_src .
+        """
+
+        q_construct = f"""
+            PREFIX dgfisma: {RO_BASE[''].n3()}
+            PREFIX rdf: {RDF.uri.n3()}
+            # For testing, replace DELETE with SELECT 
+            CONSTRUCT {{
+                ?doc_id ?hasdocsrc ?doc_src_id .
+                ?doc_src_id  ?val ?src_name .
+                {q_construct_delete_doc_src}
+                
+            }}
+            WHERE {{
+                BIND ({cat_doc.n3()} as ?doc_id)
+                BIND (dgfisma:hasDocumentSource as ?hasdocsrc)
+
+                ?doc_id ?hasdocsrc ?doc_src_id .
+                
+                {q_delete_doc_src}
+            }}
+        """
+
+        a = self.query(q_construct)
+
+        l_remove = []
+        l_remove.extend(a)
+        for triple in l_remove:
+            self.remove(triple)
+
+        return
 
     def _add_property(self, prop: URIRef, domain: URIRef, ran: URIRef) -> None:
         """ shared function to build all necessary triples for a property in the ontology.

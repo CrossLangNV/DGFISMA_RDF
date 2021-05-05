@@ -181,3 +181,85 @@ class TestAddDocSource(unittest.TestCase):
 
         with self.subTest('Name'):
             self.assertIn(source_name, l_name, 'Trying to find the source name.')
+
+    def test_remove_doc_source(self):
+        n_g_start = len(self.g)
+
+        doc_id = 'https://example.com/doc1'
+        source_id = 'https://eba.europa.eu/'
+
+        self.g.add_doc_source(doc_id,
+                              source_id,
+                              )
+
+        self.g.remove_doc_source(doc_id,
+                                 b_link_only=False)
+
+        self.assertEqual(n_g_start, len(self.g), "Graph should be restored to previous state.")
+
+    def test_remove_doc_source_with_source_name(self):
+        n_g_start = len(self.g)
+
+        doc_id = 'https://example.com/doc1'
+        source_name = 'EBA'
+        source_id = 'https://eba.europa.eu/'
+
+        self.g.add_doc_source(doc_id,
+                              source_id,
+                              source_name=source_name
+                              )
+
+        self.g.remove_doc_source(doc_id,
+                                 b_link_only=False)
+
+        self.assertEqual(n_g_start, len(self.g), "Graph should be restored to previous state.")
+
+    def test_remove_single_doc_source(self):
+        n_g_start = len(self.g)
+
+        doc_id_base = 'https://example.com/doc0'
+
+        doc_id = 'https://example.com/doc1'
+        source_name = 'EBA'
+        source_id = 'https://eba.europa.eu/'
+
+        self.g.add_doc_source(doc_id_base,
+                              source_id,
+                              source_name=source_name
+                              )
+        n_g_update = len(self.g)
+
+        self.assertLess(n_g_start, n_g_update, "Sanity check, graph should have grown.")
+        self.g.add_doc_source(doc_id,
+                              source_id,
+                              source_name=source_name
+                              )
+
+        self.assertLess(n_g_start, len(self.g), "Sanity check 2, graph should have grown.")
+
+        self.g.remove_doc_source(doc_id)
+
+        self.assertEqual(n_g_update, len(self.g), "Graph should be restored to previous state.")
+
+
+class TestGetDocSource(unittest.TestCase):
+    def setUp(self) -> None:
+        self.g = ROGraph(include_schema=True)
+
+    def test_get_one(self):
+        doc_id = 'https://example.com/doc1'
+
+        source_name = 'EBA'
+        source_id = 'https://eba.europa.eu/'
+
+        l = self.g.get_doc_source(doc_id=doc_id)
+        self.assertFalse(l)
+
+        self.g.add_doc_source(doc_id,
+                              source_id,
+                              source_name,
+                              # query_endpoint=query_endpoint
+                              )
+
+        l = self.g.get_doc_source(doc_id=doc_id)
+        self.asserTrue(l)
