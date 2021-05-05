@@ -22,8 +22,9 @@ app = FastAPI()
 ROOT = os.path.join(os.path.dirname(__file__), '../../..')
 
 load_dotenv(os.path.join(ROOT, 'secrets/dgfisma.env'))
-SECRET_USER = os.getenv("FUSEKI_ADMIN_USERNAME")
-SECRET_PASS = os.getenv("FUSEKI_ADMIN_PASSWORD")
+
+SECRET_USER = os.environ["FUSEKI_ADMIN_USERNAME"]
+SECRET_PASS = os.environ["FUSEKI_ADMIN_PASSWORD"]
 
 rel_path_typesystem = 'dgfisma_rdf/reporting_obligations/output_reporting_obligations/typesystem_tmp.xml'
 path_typesystem = os.path.join(ROOT, rel_path_typesystem)
