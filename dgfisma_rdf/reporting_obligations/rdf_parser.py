@@ -1,7 +1,7 @@
 import abc
 import logging
 import warnings
-from typing import Iterable, List, Tuple, Dict
+from typing import Iterable, List, Tuple, Dict, Union
 
 import rdflib
 from SPARQLWrapper import SPARQLWrapper, JSON
@@ -39,7 +39,7 @@ class GraphWrapper(abc.ABC):
         """
         pass
 
-    def get_column(self, l, k: str):
+    def get_column(self, l, k: str) -> List[str]:
         """ Convert results to simpler format
 
         Args:
@@ -50,7 +50,10 @@ class GraphWrapper(abc.ABC):
 
         """
 
-        return [row[k]['value'] for row in l]
+        def get_val(row_k):
+            return row_k['value'] if row_k else None
+
+        return [get_val(row[k]) for row in l]
 
 
 class RDFLibGraphWrapper(GraphWrapper):
@@ -61,7 +64,7 @@ class RDFLibGraphWrapper(GraphWrapper):
 
         self.g = g
 
-    def query(self, q) -> List[Tuple[str]]:
+    def query(self, q) -> List[Dict[str, Union[Literal, URIRef, BNode]]]:
 
         # TODO Order by not working when using group
         if ('group by' in q.lower()) or ('groupby' in q.lower()):
@@ -71,32 +74,35 @@ class RDFLibGraphWrapper(GraphWrapper):
             if i_order_by > 0:
                 q = q[:i_order_by]
 
+        def get_identifier_dict(v):
+
+            t = 'literal' if isinstance(v, Literal) else (
+                'bnode' if isinstance(v, BNode) else (
+                    'uri' if isinstance(v, URIRef) else None)
+            )
+
+            d = {'type': t,
+                 'value': v.toPython()
+                 }
+
+            try:
+                lang = v.language
+            except AttributeError as e:
+                pass
+            else:
+                d_i['xml:lang'] = lang
+
+            return d
+
         qres = self.g.query(q)
 
         l = []
-        for binding_i in qres.bindings:
+        for l_i in qres:
+            d_i = {}
+            for k, v in zip(qres.vars, l_i):
+                d_i[str(k)] = get_identifier_dict(v) if v else None
 
-            l_i = {}
-            for k, v in binding_i.items():
-                t = 'literal' if isinstance(v, Literal) else (
-                    'bnode' if isinstance(v, BNode) else (
-                        'uri' if isinstance(v, URIRef) else None)
-                )
-
-                d_i = {'type': t,
-                       'value': v.toPython()
-                       }
-
-                try:
-                    lang = v.language
-                except AttributeError as e:
-                    pass
-                else:
-                    d_i['xml:lang'] = lang
-
-                l_i[str(k)] = d_i
-
-            l.append(l_i)
+            l.append(d_i)
 
         return l
 
@@ -111,14 +117,18 @@ class SPARQLGraphWrapper(GraphWrapper):
         ret = self.sparql.query()
         results = ret.convert()
 
+        vars = results['head']['vars']
+
         l = []
         for binding_i in results["results"]["bindings"]:
             # l.append({k: v['value'] for k, v in binding_i.items()})
             # list(binding_i.keys())
-            #
+
             # l_i = tuple(binding_i[k]['value'] for k in list(binding_i.keys()))
 
-            l.append(binding_i)
+            # Also add variables without results as None.
+            l_i = {k_j: binding_i.get(k_j, None) for k_j in vars}
+            l.append(l_i)
 
         return l
 
@@ -577,7 +587,7 @@ class SPARQLReportingObligationProvider:
                                                                                  )
 
         q_doc_src_filter = '' if doc_src is None else self._get_filter_doc_src(doc_src,
-                                                                               ro_var='ro_id',
+                                                                               ro_var=RO,
                                                                                )
 
         q_filter = self._get_q_filter(list_pred_value, ro=RO, exact_match=exact_match) if list_pred_value else ''
@@ -641,6 +651,36 @@ class SPARQLReportingObligationProvider:
         l_values = self.graph_wrapper.get_column(l, VALUE)
 
         return l_values
+
+    def get_document_and_source_pairs(self) -> List[Tuple[str, str]]:
+        """
+        Retrieves a list of document ID's with it's respective document source (if available).
+        :return:
+        """
+
+        DOC = 'doc_id'
+        SRC = 'src_id'
+
+        q = f"""
+        PREFIX dgfro: {build_rdf.RO_BASE[''].n3()}
+
+        SELECT DISTINCT ?{DOC} ?{SRC}
+
+        {{
+            ?{DOC} a {build_rdf.ROGraph.class_cat_doc.n3()} .
+
+            OPTIONAL {{
+                ?{DOC} {build_rdf.ROGraph.prop_has_doc_src.n3()} ?{SRC} .
+                ?{SRC} a {build_rdf.ROGraph.class_doc_src.n3()} .
+            }}
+        }}
+        """
+
+        l = list(self.graph_wrapper.query(q))
+        l_doc = self.graph_wrapper.get_column(l, DOC)
+        l_src = self.graph_wrapper.get_column(l, SRC)
+
+        return list(zip(l_doc, l_src))
 
     @staticmethod
     def _get_q_filter(list_pred_value: List[Tuple[str]] = [],
@@ -715,7 +755,7 @@ class SPARQLReportingObligationProvider:
 
         # dgfro:hasDocumentSource
         q = f'''
-        values ?{doc_src_var} {{ {URIRef(doc_src).n3()} }}
+        bind ({URIRef(doc_src).n3()} as ?{doc_src_var})
 
         ?{doc_var} {build_rdf.ROGraph.prop_has_doc_src.n3()} ?{doc_src_var} ;
             {build_rdf.ROGraph.prop_has_rep_obl.n3()} ?{ro_var} .
