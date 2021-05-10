@@ -3,6 +3,7 @@ import binascii
 import logging
 import os
 import time
+from typing import Optional
 
 from cassis import load_typesystem, load_cas_from_xmi
 from dotenv import load_dotenv
@@ -20,8 +21,9 @@ app = FastAPI()
 ROOT = os.path.join(os.path.dirname(__file__), '../../..')
 
 load_dotenv(os.path.join(ROOT, 'secrets/dgfisma.env'))
-SECRET_USER = os.getenv("FUSEKI_ADMIN_USERNAME")
-SECRET_PASS = os.getenv("FUSEKI_ADMIN_PASSWORD")
+
+SECRET_USER = os.environ["FUSEKI_ADMIN_USERNAME"]
+SECRET_PASS = os.environ["FUSEKI_ADMIN_PASSWORD"]
 
 rel_path_typesystem = 'dgfisma_rdf/reporting_obligations/output_reporting_obligations/typesystem_tmp.xml'
 path_typesystem = os.path.join(ROOT, rel_path_typesystem)
@@ -41,6 +43,8 @@ async def root():
 @app.post("/ro_cas/upload")
 async def create_file(file: UploadFile = File(...),
                       docid: str = Header(...),
+                      source_name: Optional[str] = Header(None),
+                      source_url: Optional[str] = Header(None),
                       endpoint: str = Header(...),
                       updateendpoint: str = Header(...),
                       ) -> cas_parser.CasContent:
@@ -56,12 +60,24 @@ async def create_file(file: UploadFile = File(...),
         None
     """
 
-    return create_file_shared(file.file, endpoint, updateendpoint, docid)
+    response = create_file_shared(file.file, endpoint, updateendpoint, docid,
+                                  )
+
+    if (source_name is not None) or (source_url is not None):
+        await add_doc_source(docid,
+                             source_url=source_url,
+                             source_name=source_name,
+                             endpoint=endpoint,
+                             updateendpoint=updateendpoint, )
+
+    return response
 
 
 @app.post("/ro_cas/base64")
 async def create_file_base64(cas_base64: CasBase64,
                              docid: str = Header(...),
+                             source_name: Optional[str] = Header(None),
+                             source_url: Optional[str] = Header(None),
                              endpoint: str = Header(...),
                              updateendpoint: str = Header(...),
                              ) -> cas_parser.CasContent:
@@ -86,7 +102,16 @@ async def create_file_base64(cas_base64: CasBase64,
         logging.info(end)
         return JSONResponse(cas_base64)
 
-    return create_file_shared(decoded_cas_content, endpoint, updateendpoint, docid)
+    response = create_file_shared(decoded_cas_content, endpoint, updateendpoint, docid,
+                                  )
+    if (source_name is not None) or (source_url is not None):
+        await add_doc_source(docid,
+                             source_url=source_url,
+                             source_name=source_name,
+                             endpoint=endpoint,
+                             updateendpoint=updateendpoint, )
+
+    return response
 
 
 @app.post("/ro_cas/init")
@@ -118,10 +143,35 @@ async def init_file_base64(endpoint: str = Header(...),
     return JSONResponse(content={"message": "RDF model initialised succesfully"})
 
 
+@app.post("/doc_source/add")
+async def add_doc_source(docid: str = Header(...),
+                         source_name: str = Header(...),
+                         source_url: str = Header(None),
+                         endpoint: str = Header(...),
+                         updateendpoint: str = Header(...),
+                         ):
+    if source_url is None:
+        # Give same name as source name and convert to URI.
+        source_url = source_name
+
+    g = get_sparql_update_graph(endpoint,
+                                updateendpoint)
+
+    g.add_doc_source(doc_id=docid,
+                     source_id=source_url,
+                     source_name=source_name)
+
+    g.commit()
+    g.close(False)
+
+    return JSONResponse(content={"message": "Document source added successfully."})
+
+
 def create_file_shared(decoded_cas_content,
                        endpoint,
                        update_endpoint,
-                       doc_id):
+                       doc_id,
+                       ):
     # Get relevant data of reporting obligations out of the CAS:
     cas = load_cas_from_xmi(decoded_cas_content, typesystem=TYPESYSTEM)
 
@@ -132,24 +182,17 @@ def create_file_shared(decoded_cas_content,
     except Exception as e:
         raise HTTPException(status_code=406, detail=f"Unable to extract content from CAS.\n{e}")
 
-    return update_rdf_from_cas_content(cas_content, endpoint, update_endpoint, doc_id)
+    return update_rdf_from_cas_content(cas_content, endpoint, update_endpoint, doc_id,
+                                       )
 
 
 def update_rdf_from_cas_content(cas_content: cas_parser.CasContent,
                                 query_endpoint: str,
                                 update_endpoint: str,
-                                doc_id: str) -> cas_parser.CasContent:
-    # Context-aware has to be set to false to allow querying from the Graph object
-    sparql_update_store = SPARQLUpdateStore(queryEndpoint=query_endpoint,
-                                            update_endpoint=update_endpoint,
-                                            auth=(SECRET_USER, SECRET_PASS),  # needed
-                                            context_aware=False,
-                                            autocommit=False
-                                            )
-
-    g = ROGraph(sparql_update_store,
-                DATASET_DEFAULT_GRAPH_ID,
-                include_schema=False)
+                                doc_id: str,
+                                ) -> cas_parser.CasContent:
+    g = get_sparql_update_graph(query_endpoint,
+                                update_endpoint)
 
     try:
 
@@ -168,3 +211,20 @@ def update_rdf_from_cas_content(cas_content: cas_parser.CasContent,
     g.close(False)  # commit_pending_transaction flag shouldn't matter, but just to be safe
 
     return cas_content
+
+
+def get_sparql_update_graph(query_endpoint,
+                            update_endpoint):
+    # Context-aware has to be set to false to allow querying from the Graph object
+    sparql_update_store = SPARQLUpdateStore(queryEndpoint=query_endpoint,
+                                            update_endpoint=update_endpoint,
+                                            auth=(SECRET_USER, SECRET_PASS),  # needed
+                                            context_aware=False,
+                                            autocommit=False
+                                            )
+
+    g = ROGraph(sparql_update_store,
+                DATASET_DEFAULT_GRAPH_ID,
+                include_schema=False)
+
+    return g

@@ -2,9 +2,9 @@ import os
 import warnings
 
 from SPARQLWrapper import SPARQLWrapper, JSON, GET
-from rdflib import BNode, Literal, Namespace, Graph
-from rdflib.namespace import SKOS, RDF, RDFS, OWL, URIRef, DC
-from rdflib.term import _serial_number_generator
+from rdflib import BNode, Namespace, Graph
+from rdflib.namespace import SKOS, RDF, RDFS, OWL, DC
+from rdflib.term import _serial_number_generator, _is_valid_uri, URIRef, Literal
 
 from .cas_parser import CasContent, KEY_CHILDREN, KEY_SENTENCE_FRAG_CLASS, KEY_VALUE
 from ..shared.rdf_dgfisma import NS_BASE
@@ -52,8 +52,6 @@ D_ENTITIES = {'ARG0': (RO_BASE['hasReporter'], RO_BASE['Reporter']),
 
 PROP_HAS_ENTITY = RO_BASE.hasEntity
 
-i = 0
-
 
 class ROGraph(Graph):
     """
@@ -65,8 +63,10 @@ class ROGraph(Graph):
     # Classes
     class_cat_doc = RO_BASE.CatalogueDocument
     class_rep_obl = RO_BASE.ReportingObligation
+    class_doc_src = RO_BASE.DocumentSource
     # Connections
     prop_has_rep_obl = RO_BASE.hasReportingObligation
+    prop_has_doc_src = RO_BASE.hasDocumentSource
 
     def __init__(self, *args, include_schema=False, **kwargs):
         """ Looks quite clean if implemented with RDFLib https://github.com/RDFLib/rdflib
@@ -80,6 +80,8 @@ class ROGraph(Graph):
         super(ROGraph, self).__init__(
             *args, **kwargs)
 
+        self.bind("rdf", RDF)
+        self.bind("rdfs", RDFS)
         self.bind("skos", SKOS)
         self.bind("owl", OWL)
         self.bind("dgf", NS_BASE)
@@ -106,12 +108,17 @@ class ROGraph(Graph):
 
         self._add_owl_class(self.class_cat_doc)
         self._add_owl_class(self.class_rep_obl)
+        self._add_owl_class(self.class_doc_src)
 
         # OWL properties
         self._add_property(self.prop_has_rep_obl, self.class_cat_doc, self.class_rep_obl)
+        self._add_property(self.prop_has_doc_src, self.class_cat_doc, self.class_doc_src)
 
         self._add_property(RDF.value,
                            self.class_rep_obl,
+                           RDFS.Literal)
+        self._add_property(RDF.value,
+                           self.class_doc_src,
                            RDFS.Literal)
 
         self._add_property(PROP_HAS_ENTITY, self.class_rep_obl, SKOS.Concept)
@@ -235,6 +242,109 @@ class ROGraph(Graph):
             self.add(triple)
 
         return cas_content
+
+    def get_doc_source(self,
+                       doc_id: str):
+        # TODO
+        return
+
+    def add_doc_source(self,
+                       doc_id: str,
+                       source_id: str,
+                       source_name: str = None,
+                       ) -> None:
+        """
+
+        :param doc_id: id that refers to the document (From Django)
+        :param source_id: document/website source id, ideally the URL
+        :param source_name: (Optional) label of the document source
+        :return: None
+        """
+
+        l_add = []
+
+        cat_doc = self._get_cat_doc_uri(doc_id)
+
+        # Check if uri like, else convert to one.
+
+        def _get_source_uri(source_id):
+
+            if _is_valid_uri(source_id):
+                return URIRef(source_id)
+            else:
+                return RO_BASE['doc_src/' + source_id.strip().replace(' ', '_')]
+
+        source_uri = _get_source_uri(source_id)
+
+        l_add.append((cat_doc, self.prop_has_doc_src, source_uri))
+        l_add.append((source_uri, RDF.type, self.class_doc_src))
+
+        if source_name:
+            l_add.append((source_uri, RDF.value, Literal(source_name, lang='en')))
+
+        for triple in l_add:
+            self.add(triple)
+
+    def remove_doc_source(self,
+                          doc_id: str,
+                          b_link_only: bool = True
+                          ) -> None:
+        """
+        Removes all document source information from a document.
+
+        :param doc_id:
+        :param b_link_only: (Optional) By default, only the link between the document and the source is broken.
+            When False, the doc_source element is deleted as well.
+        :return:
+        """
+
+        cat_doc = self._get_cat_doc_uri(doc_id)
+
+        # Same doc sources are shared, so you probably don't want to remove it's value
+        q_delete_doc_src = "" if b_link_only else f"""
+            BIND (rdf:value as ?val)
+            
+            OPTIONAL {{
+                ?doc_src_id a ?doc_src .
+            }}
+            
+            OPTIONAL {{ # Not every doc source has a name associated with it.
+               ?doc_src_id ?val ?src_name .
+            }}
+        """
+
+        q_construct_delete_doc_src = "" if b_link_only else f"""
+        	?doc_src_id a ?doc_src .
+        """
+
+        q_construct = f"""
+            PREFIX dgfisma: {RO_BASE[''].n3()}
+            PREFIX rdf: {RDF.uri.n3()}
+            # For testing, replace DELETE with SELECT 
+            CONSTRUCT {{
+                ?doc_id ?hasdocsrc ?doc_src_id .
+                ?doc_src_id  ?val ?src_name .
+                {q_construct_delete_doc_src}
+                
+            }}
+            WHERE {{
+                BIND ({cat_doc.n3()} as ?doc_id)
+                BIND (dgfisma:hasDocumentSource as ?hasdocsrc)
+
+                ?doc_id ?hasdocsrc ?doc_src_id .
+                
+                {q_delete_doc_src}
+            }}
+        """
+
+        a = self.query(q_construct)
+
+        l_remove = []
+        l_remove.extend(a)
+        for triple in l_remove:
+            self.remove(triple)
+
+        return
 
     def _add_property(self, prop: URIRef, domain: URIRef, ran: URIRef) -> None:
         """ shared function to build all necessary triples for a property in the ontology.

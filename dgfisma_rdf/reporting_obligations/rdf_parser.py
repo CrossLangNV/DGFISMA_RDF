@@ -1,7 +1,7 @@
 import abc
 import logging
 import warnings
-from typing import Iterable, List, Tuple, Dict
+from typing import Iterable, List, Tuple, Dict, Union
 
 import rdflib
 from SPARQLWrapper import SPARQLWrapper, JSON
@@ -39,7 +39,7 @@ class GraphWrapper(abc.ABC):
         """
         pass
 
-    def get_column(self, l, k: str):
+    def get_column(self, l, k: str) -> List[str]:
         """ Convert results to simpler format
 
         Args:
@@ -50,7 +50,10 @@ class GraphWrapper(abc.ABC):
 
         """
 
-        return [row[k]['value'] for row in l]
+        def get_val(row_k):
+            return row_k['value'] if row_k else None
+
+        return [get_val(row[k]) for row in l]
 
 
 class RDFLibGraphWrapper(GraphWrapper):
@@ -61,34 +64,45 @@ class RDFLibGraphWrapper(GraphWrapper):
 
         self.g = g
 
-    def query(self, q) -> List[Tuple[str]]:
+    def query(self, q) -> List[Dict[str, Union[Literal, URIRef, BNode]]]:
+
+        # TODO Order by not working when using group
+        if ('group by' in q.lower()) or ('groupby' in q.lower()):
+            # This removes the sorting part, hacky fix, but it works.
+            i_order_by = max(q.lower().find('order by'),
+                             q.lower().find('orderby'))
+            if i_order_by > 0:
+                q = q[:i_order_by]
+
+        def get_identifier_dict(v):
+
+            t = 'literal' if isinstance(v, Literal) else (
+                'bnode' if isinstance(v, BNode) else (
+                    'uri' if isinstance(v, URIRef) else None)
+            )
+
+            d = {'type': t,
+                 'value': v.toPython()
+                 }
+
+            try:
+                lang = v.language
+            except AttributeError as e:
+                pass
+            else:
+                d_i['xml:lang'] = lang
+
+            return d
+
         qres = self.g.query(q)
 
         l = []
+        for l_i in qres:
+            d_i = {}
+            for k, v in zip(qres.vars, l_i):
+                d_i[str(k)] = get_identifier_dict(v) if v else None
 
-        for binding_i in qres.bindings:
-
-            l_i = {}
-            for k, v in binding_i.items():
-                t = 'literal' if isinstance(v, Literal) else (
-                    'bnode' if isinstance(v, BNode) else (
-                        'uri' if isinstance(v, URIRef) else None)
-                )
-
-                d_i = {'type': t,
-                       'value': v.toPython()
-                       }
-
-                try:
-                    lang = v.language
-                except AttributeError as e:
-                    pass
-                else:
-                    d_i['xml:lang'] = lang
-
-                l_i[str(k)] = d_i
-
-            l.append(l_i)
+            l.append(d_i)
 
         return l
 
@@ -103,14 +117,18 @@ class SPARQLGraphWrapper(GraphWrapper):
         ret = self.sparql.query()
         results = ret.convert()
 
+        vars = results['head']['vars']
+
         l = []
         for binding_i in results["results"]["bindings"]:
             # l.append({k: v['value'] for k, v in binding_i.items()})
             # list(binding_i.keys())
-            #
+
             # l_i = tuple(binding_i[k]['value'] for k in list(binding_i.keys()))
 
-            l.append(binding_i)
+            # Also add variables without results as None.
+            l_i = {k_j: binding_i.get(k_j, None) for k_j in vars}
+            l.append(l_i)
 
         return l
 
@@ -310,6 +328,7 @@ class SPARQLReportingObligationProvider:
     def get_filter_ro_id_multiple(self,
                                   list_pred_value: List[Tuple[str]] = [],
                                   l_doc_uri: List[str] = None,
+                                  doc_src: str = None,
                                   limit=None,
                                   offset=0,
                                   exact_match: bool = False) -> List[str]:
@@ -320,6 +339,7 @@ class SPARQLReportingObligationProvider:
             e.g. [ ("<pred 1>", "<value 1>"),
                     ...
                     ("<pred n>", "<value n>") ]
+            doc_src: uri/url to document source/website.
             limit: number of id's to return
             offset: what index to start from (counting from 0)
             exact_match: (boolean) if exact matches or contains in matches should be retrieved
@@ -331,6 +351,10 @@ class SPARQLReportingObligationProvider:
         q_doc_uri_filter = '' if l_doc_uri is None else self._get_filter_doc_uri(l_doc_uri,
                                                                                  ro_var='ro_id',
                                                                                  )
+
+        q_doc_src_filter = '' if doc_src is None else self._get_filter_doc_src(doc_src,
+                                                                               ro_var='ro_id',
+                                                                               )
 
         q_filter = self._get_q_filter(list_pred_value,
                                       ro='ro_id',
@@ -345,6 +369,7 @@ class SPARQLReportingObligationProvider:
 
             WHERE {{
                 {q_doc_uri_filter}
+                {q_doc_src_filter}
                 ?ro_id rdf:type {build_rdf.ROGraph.class_rep_obl.n3()} ;
                    rdf:value ?{VALUE} .
                 
@@ -399,12 +424,12 @@ class SPARQLReportingObligationProvider:
             
                 {q_values}
             
-                ?ro_id rdf:type {build_rdf.ROGraph.class_rep_obl.n3()} ;
+                ?ro_id a {build_rdf.ROGraph.class_rep_obl.n3()} ;
                     ?{PRED} ?ent .
                 ?ent skos:prefLabel ?{VALUE} .
             }}
 
-            GROUPBY ?{PRED} ?{VALUE}
+            GROUP BY ?{PRED} ?{VALUE}
 
             ORDER BY (LCASE(?{PRED})) (LCASE(?{VALUE})) ASC(?{VALUE})
 
@@ -464,7 +489,7 @@ class SPARQLReportingObligationProvider:
                 {q_filter}
             }}
             
-            GROUPBY ?{PRED} ?{VALUE}
+            GROUP BY ?{PRED} ?{VALUE}
     
             ORDER BY (LCASE(?{PRED})) (LCASE(?{VALUE})) (?{VALUE})
 
@@ -533,6 +558,7 @@ class SPARQLReportingObligationProvider:
                                                    type_match=CONTAINS,
                                                    list_pred_value: List[Tuple[str]] = [],
                                                    l_doc_uri: List[str] = None,
+                                                   doc_src: str = None,
                                                    exact_match=False,
                                                    limit: int = 0,
                                                    ):
@@ -543,6 +569,7 @@ class SPARQLReportingObligationProvider:
             uri_type_has: The URI of the <hasEntity> predicate type.
             str_match: (str) the string to match to.
             type_match: rdf_parser.CONTAINS or rdf_parser.STARTS_WITH
+            doc_src: uri/url to document source/website.
 
         Returns:
             List of strings with the labels of the entities.
@@ -558,6 +585,10 @@ class SPARQLReportingObligationProvider:
         q_doc_uri_filter = '' if l_doc_uri is None else self._get_filter_doc_uri(l_doc_uri,
                                                                                  ro_var=RO,
                                                                                  )
+
+        q_doc_src_filter = '' if doc_src is None else self._get_filter_doc_src(doc_src,
+                                                                               ro_var=RO,
+                                                                               )
 
         q_filter = self._get_q_filter(list_pred_value, ro=RO, exact_match=exact_match) if list_pred_value else ''
 
@@ -587,6 +618,7 @@ class SPARQLReportingObligationProvider:
         
         WHERE {{
             {q_doc_uri_filter}
+            {q_doc_src_filter}
         
             ?{RO} a dgfro:ReportingObligation ;
                 {URIRef(uri_type_has).n3()} ?ent .
@@ -619,6 +651,36 @@ class SPARQLReportingObligationProvider:
         l_values = self.graph_wrapper.get_column(l, VALUE)
 
         return l_values
+
+    def get_document_and_source_pairs(self) -> List[Tuple[str, str]]:
+        """
+        Retrieves a list of document ID's with it's respective document source (if available).
+        :return:
+        """
+
+        DOC = 'doc_id'
+        SRC = 'src_id'
+
+        q = f"""
+        PREFIX dgfro: {build_rdf.RO_BASE[''].n3()}
+
+        SELECT DISTINCT ?{DOC} ?{SRC}
+
+        {{
+            ?{DOC} a {build_rdf.ROGraph.class_cat_doc.n3()} .
+
+            OPTIONAL {{
+                ?{DOC} {build_rdf.ROGraph.prop_has_doc_src.n3()} ?{SRC} .
+                ?{SRC} a {build_rdf.ROGraph.class_doc_src.n3()} .
+            }}
+        }}
+        """
+
+        l = list(self.graph_wrapper.query(q))
+        l_doc = self.graph_wrapper.get_column(l, DOC)
+        l_src = self.graph_wrapper.get_column(l, SRC)
+
+        return list(zip(l_doc, l_src))
 
     @staticmethod
     def _get_q_filter(list_pred_value: List[Tuple[str]] = [],
@@ -683,3 +745,58 @@ class SPARQLReportingObligationProvider:
         '''
 
         return q
+
+    @staticmethod
+    def _get_filter_doc_src(doc_src: str,
+                            ro_var: str = 'ro_id',
+                            doc_var: str = 'doc_id',
+                            doc_src_var: str = 'doc_src_id'
+                            ):
+
+        # dgfro:hasDocumentSource
+        q = f'''
+        bind ({URIRef(doc_src).n3()} as ?{doc_src_var})
+
+        ?{doc_var} {build_rdf.ROGraph.prop_has_doc_src.n3()} ?{doc_src_var} ;
+            {build_rdf.ROGraph.prop_has_rep_obl.n3()} ?{ro_var} .
+        '''
+
+        return q
+
+    def info_doc_source(self):
+        """
+        Retrieves a summary # documents and # reporting obligations per source.
+        :return:
+        """
+
+        SRC = 'doc_src_id'
+        SRC_NAME = 'src_name'
+        N_DOC = 'n_DOC'
+        N_RO = 'n_RO'
+
+        q = f"""
+            PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+            PREFIX dgfro: <http://dgfisma.com/reporting_obligations/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            SELECT ?{SRC} ?{SRC_NAME} (count(DISTINCT ?ro_id) as ?{N_RO}) (count(DISTINCT ?doc_id) as ?{N_DOC})
+            WHERE {{
+            
+              ?doc_id <http://dgfisma.com/reporting_obligations/hasDocumentSource> ?{SRC} .
+              ?{SRC} rdf:value ?{SRC_NAME} .
+            
+                ?doc_id <http://dgfisma.com/reporting_obligations/hasReportingObligation> ?ro_id .
+                ?ro_id a <http://dgfisma.com/reporting_obligations/ReportingObligation> .
+            
+            }}
+    
+            GROUP BY ?{SRC} ?{SRC_NAME}
+            ORDER BY ?{SRC} ?{SRC_NAME}
+        """
+
+        l = list(self.graph_wrapper.query(q))
+        l_src = self.graph_wrapper.get_column(l, SRC)
+        l_src_name = self.graph_wrapper.get_column(l, SRC_NAME)
+        l_n_doc = self.graph_wrapper.get_column(l, N_DOC)
+        l_n_ro = self.graph_wrapper.get_column(l, N_RO)
+
+        return list(zip(l_src, l_src_name, l_n_doc, l_n_ro))
