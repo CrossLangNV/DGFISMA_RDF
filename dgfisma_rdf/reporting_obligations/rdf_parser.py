@@ -762,3 +762,41 @@ class SPARQLReportingObligationProvider:
         '''
 
         return q
+
+    def info_doc_source(self):
+        """
+        Retrieves a summary # documents and # reporting obligations per source.
+        :return:
+        """
+
+        SRC = 'doc_src_id'
+        SRC_NAME = 'src_name'
+        N_DOC = 'n_DOC'
+        N_RO = 'n_RO'
+
+        q = f"""
+            PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+            PREFIX dgfro: <http://dgfisma.com/reporting_obligations/>
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            SELECT ?{SRC} ?{SRC_NAME} (count(DISTINCT ?ro_id) as ?{N_RO}) (count(DISTINCT ?doc_id) as ?{N_DOC})
+            WHERE {{
+            
+              ?doc_id <http://dgfisma.com/reporting_obligations/hasDocumentSource> ?{SRC} .
+              ?{SRC} rdf:value ?{SRC_NAME} .
+            
+                ?doc_id <http://dgfisma.com/reporting_obligations/hasReportingObligation> ?ro_id .
+                ?ro_id a <http://dgfisma.com/reporting_obligations/ReportingObligation> .
+            
+            }}
+    
+            GROUP BY ?{SRC} ?{SRC_NAME}
+            ORDER BY ?{SRC} ?{SRC_NAME}
+        """
+
+        l = list(self.graph_wrapper.query(q))
+        l_src = self.graph_wrapper.get_column(l, SRC)
+        l_src_name = self.graph_wrapper.get_column(l, SRC_NAME)
+        l_n_doc = self.graph_wrapper.get_column(l, N_DOC)
+        l_n_ro = self.graph_wrapper.get_column(l, N_RO)
+
+        return list(zip(l_src, l_src_name, l_n_doc, l_n_ro))

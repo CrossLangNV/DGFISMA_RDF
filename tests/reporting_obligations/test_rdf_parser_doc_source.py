@@ -15,7 +15,7 @@ from dgfisma_rdf.reporting_obligations.rdf_parser import SPARQLReportingObligati
 if 0:
     # Oan's localhost
     ENDPOINT = 'http://gpu1.crosslang.com:3030/RO_oan/query'
-elif 1:
+elif 0:
     # Staging
     ENDPOINT = 'http://gpu1.crosslang.com:3030/RO_staging/query'
 else:
@@ -131,5 +131,5 @@ class TestRemoteGraph(unittest.TestCase):
         print(f'Percentage of = {frac_src:.1%}')
 
         for doc, src in l_doc_src:
-            with self.subTest('Doc %s' % doc):
-                self.assertTrue(src, 'Expected a document source.')
+            # with self.subTest('Doc %s' % doc):
+            self.assertTrue(src, 'Expected a document source.')

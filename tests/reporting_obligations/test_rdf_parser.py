@@ -1370,5 +1370,21 @@ def _sample_single(l):
     return list(random.sample(l, 1))[0]
 
 
+class TestInfoDocSource(unittest.TestCase):
+
+    def setUp(self) -> None:
+        URL_FUSEKI_PRD = "http://gpu1.crosslang.com:3030/RO_prd"
+
+        graph_wrapper = SPARQLGraphWrapper(URL_FUSEKI_PRD)
+        self.prov = SPARQLReportingObligationProvider(graph_wrapper)
+
+    def test_get(self):
+        l = self.prov.info_doc_source()
+
+        print(l)
+
+        self.assertTrue(l)
+
+
 if __name__ == '__main__':
     unittest.main()
