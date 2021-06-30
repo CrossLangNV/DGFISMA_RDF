@@ -1,6 +1,6 @@
 from SPARQLWrapper import SPARQLWrapper, JSON
 
-URL = 'http://localhost:3030/DGFisma/query'  # make sure port number is correct.
+URL = "http://localhost:3030/DGFisma/query"  # make sure port number is correct.
 
 
 def main():
@@ -27,7 +27,7 @@ def main():
 
         results = ret.convert()
 
-        assert 'predicate' in results['head']['vars']
+        assert "predicate" in results["head"]["vars"]
 
         for result in results["results"]["bindings"]:
             print(result)  # subject, predicate, object
@@ -35,9 +35,9 @@ def main():
     if 1:
         predicates = get_predicates(sparql)
 
-        predicates_definition = list(filter(lambda x: 'definition' in x, predicates))
+        predicates_definition = list(filter(lambda x: "definition" in x, predicates))
 
-        predicates_term = list(filter(lambda x: 'term' in x, predicates))
+        predicates_term = list(filter(lambda x: "term" in x, predicates))
 
     # if 1:
     #
@@ -72,11 +72,11 @@ def get_predicates(sparql, verbose=0):
     ret = sparql.query()
     results = ret.convert()
 
-    assert 'predicate' in results['head']['vars']
+    assert "predicate" in results["head"]["vars"]
 
     predicates = []
     for result in results["results"]["bindings"]:
-        predicate = result['predicate']['value']
+        predicate = result["predicate"]["value"]
         predicates.append(predicate)
         if verbose:
             print(predicate)
@@ -84,8 +84,7 @@ def get_predicates(sparql, verbose=0):
     return predicates
 
 
-def get_definitions(sparql: SPARQLWrapper,
-                    verbose=1):
+def get_definitions(sparql: SPARQLWrapper, verbose=1):
     """Predicate is found before. http://www.w3.org/2004/02/skos/core#definition
 
     Args:
@@ -119,13 +118,12 @@ def get_definitions(sparql: SPARQLWrapper,
     l = []
     for result in bindings:
 
-        l.append({'label': result['label']['value'],
-                  'definition': result['definition']['value']})
+        l.append({"label": result["label"]["value"], "definition": result["definition"]["value"]})
         if verbose:
             print(result)
 
     return l
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

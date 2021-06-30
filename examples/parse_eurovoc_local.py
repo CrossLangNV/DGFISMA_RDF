@@ -1,5 +1,7 @@
-import rdflib
 import warnings
+
+import rdflib
+
 from media.data import get_eurovoc_rdf
 
 
@@ -26,5 +28,5 @@ def main():
     return g
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

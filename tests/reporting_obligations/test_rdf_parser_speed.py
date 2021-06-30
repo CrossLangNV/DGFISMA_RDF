@@ -15,7 +15,7 @@ from rdflib.term import URIRef
 from dgfisma_rdf.reporting_obligations import build_rdf
 from dgfisma_rdf.reporting_obligations.rdf_parser import SPARQLReportingObligationProvider, SPARQLGraphWrapper
 
-ROOT = os.path.join(os.path.dirname(__file__), '../..')
+ROOT = os.path.join(os.path.dirname(__file__), "../..")
 
 # You might have to change this
 URL_FUSEKI_PRD = "http://gpu1.crosslang.com:3030/RO_prd_clone/query"
@@ -48,7 +48,7 @@ class TestFilterDropdown(unittest.TestCase):
 
         l_types_ent = self.prov.get_different_entity_types()
 
-        s_test = 'querying without filter'
+        s_test = "querying without filter"
         with self.subTest(s_test):
             print(s_test)
 
@@ -60,9 +60,9 @@ class TestFilterDropdown(unittest.TestCase):
 
                 l_T.append(t1 - t0)
 
-            print(f'T query = {np.mean(l_T):.2f} +- {np.std(l_T):.2f} s')
+            print(f"T query = {np.mean(l_T):.2f} +- {np.std(l_T):.2f} s")
 
-        s_test = 'querying with filter'
+        s_test = "querying with filter"
         with self.subTest(s_test):
             print(s_test)
 
@@ -75,17 +75,15 @@ class TestFilterDropdown(unittest.TestCase):
                 ent_j = _sample_single(l_ent_j)
 
                 t0 = time.time()
-                r = self.prov.get_filter_entities_from_type(type_ent_i,
-                                                            [(type_ent_j, ent_j)])
+                r = self.prov.get_filter_entities_from_type(type_ent_i, [(type_ent_j, ent_j)])
                 t1 = time.time()
 
                 l_T.append(t1 - t0)
 
-            print(f'T query = {np.mean(l_T):.2f} +- {np.std(l_T):.2f} s')
+            print(f"T query = {np.mean(l_T):.2f} +- {np.std(l_T):.2f} s")
 
 
 class TestFilterDropdownAllAtOnce(unittest.TestCase):
-
     def setUp(self) -> None:
         """
         Make the connection to the rdf.
@@ -108,7 +106,7 @@ class TestFilterDropdownAllAtOnce(unittest.TestCase):
         l_types_ent = self.prov.get_different_entity_types()
 
         if 0:  # Bad idea as this is incredibly slow!
-            s_test = 'querying without filter'
+            s_test = "querying without filter"
             with self.subTest(s_test):
                 print(s_test)
 
@@ -120,9 +118,9 @@ class TestFilterDropdownAllAtOnce(unittest.TestCase):
 
                     l_T.append(t1 - t0)
 
-                print(f'T query = {np.mean(l_T):.2f} s')
+                print(f"T query = {np.mean(l_T):.2f} s")
 
-        s_test = 'querying with filter'
+        s_test = "querying with filter"
         with self.subTest(s_test):
             print(s_test)
 
@@ -141,18 +139,17 @@ class TestFilterDropdownAllAtOnce(unittest.TestCase):
 
                 l_T.append(t1 - t0)
 
-            print(f'T query = {np.mean(l_T):.2f} s')
+            print(f"T query = {np.mean(l_T):.2f} s")
 
 
 class TestGetAllFromType(unittest.TestCase):
-
     def setUp(self) -> None:
 
         graph_wrapper = SPARQLGraphWrapper(URL_FUSEKI_PRD)
         self.prov = SPARQLReportingObligationProvider(graph_wrapper)
 
     def test_speed(self):
-        """ Dropdown menu's seem to be the
+        """Dropdown menu's seem to be the
 
         Returns:
 
@@ -162,12 +159,12 @@ class TestGetAllFromType(unittest.TestCase):
 
         distinct = True
 
-        VALUE = 'value_ent'
+        VALUE = "value_ent"
 
         l_has_types = self.prov.get_different_entity_types()
 
         if 1:
-            s_subtest = 'Implemented query'
+            s_subtest = "Implemented query"
             with self.subTest(s_subtest):
                 print(s_subtest)
 
@@ -181,10 +178,10 @@ class TestGetAllFromType(unittest.TestCase):
 
                     l_T.append(t1 - t0)
 
-                print(f'T query = {np.mean(l_T):.2f} +- {np.std(l_T):.2f} s')
+                print(f"T query = {np.mean(l_T):.2f} +- {np.std(l_T):.2f} s")
 
         if 1:
-            s_subtest = 'minimal query'
+            s_subtest = "minimal query"
             with self.subTest(s_subtest):
                 print(s_subtest)
 
@@ -209,10 +206,10 @@ class TestGetAllFromType(unittest.TestCase):
 
                     l_T.append(t1 - t0)
 
-                print(f'T query = {np.mean(l_T):.2f} +- {np.std(l_T):.2f} s')
+                print(f"T query = {np.mean(l_T):.2f} +- {np.std(l_T):.2f} s")
 
         if 1:
-            s_subtest = 'Type based:'
+            s_subtest = "Type based:"
             with self.subTest(s_subtest):
                 print(s_subtest)
 
@@ -248,10 +245,10 @@ class TestGetAllFromType(unittest.TestCase):
                     t1 = time.time()
                     l_T.append(t1 - t0)
 
-                print(f'T query = {np.mean(l_T):.2f} +- {np.std(l_T):.2f} s')
+                print(f"T query = {np.mean(l_T):.2f} +- {np.std(l_T):.2f} s")
 
         if 1:
-            s_subtest = 'Single query:'
+            s_subtest = "Single query:"
             with self.subTest(s_subtest):
                 print(s_subtest)
 
@@ -284,7 +281,7 @@ class TestGetAllFromType(unittest.TestCase):
                     t1 = time.time()
                     l_T.append(t1 - t0)
 
-                print(f'T query = {np.mean(l_T):.2f} +- {np.std(l_T):.2f} s')
+                print(f"T query = {np.mean(l_T):.2f} +- {np.std(l_T):.2f} s")
 
         return
 
@@ -298,15 +295,15 @@ class TestGetEntities(unittest.TestCase):
     def test_speed(self):
         n_samples = 1
 
-        PRED = 'pred'
-        TYPE = 'type'
-        VALUE = 'value_ent'
+        PRED = "pred"
+        TYPE = "type"
+        VALUE = "value_ent"
 
         L_HAS = [has_i for has_i, type_i in build_rdf.D_ENTITIES.values()]
         L_TYPE = [type_i for has_i, type_i in build_rdf.D_ENTITIES.values()]
 
         if 1:
-            s_subtest = 'Baseline'
+            s_subtest = "Baseline"
             with self.subTest(s_subtest):
                 print(s_subtest)
 
@@ -320,10 +317,10 @@ class TestGetEntities(unittest.TestCase):
 
                     l_T.append(t1 - t0)
 
-                print(f'delta T = {np.mean(l_T)}')
+                print(f"delta T = {np.mean(l_T)}")
 
         if 0:
-            s_subtest = 'Simple'
+            s_subtest = "Simple"
             with self.subTest(s_subtest):
                 print(s_subtest)
                 q = """
@@ -350,10 +347,10 @@ class TestGetEntities(unittest.TestCase):
 
                     l_T.append(t1 - t0)
 
-                print(f'delta T = {np.mean(l_T)}')
+                print(f"delta T = {np.mean(l_T)}")
 
         if 0:
-            s_subtest = 'Filter the HAS predicates'
+            s_subtest = "Filter the HAS predicates"
             with self.subTest(s_subtest):
                 print(s_subtest)
 
@@ -387,7 +384,7 @@ class TestGetEntities(unittest.TestCase):
 
                     l_T.append(t1 - t0)
 
-                print(f'delta T = {np.mean(l_T)}')
+                print(f"delta T = {np.mean(l_T)}")
 
         if 0:
             s_subtest = "Ignore RO's"
@@ -423,7 +420,7 @@ class TestGetEntities(unittest.TestCase):
 
                     l_T.append(t1 - t0)
 
-                print(f'delta T = {np.mean(l_T)}')
+                print(f"delta T = {np.mean(l_T)}")
 
         s_subtest = "Ignore RO's V2"
         with self.subTest(s_subtest):
@@ -458,7 +455,7 @@ class TestGetEntities(unittest.TestCase):
 
                 l_T.append(t1 - t0)
 
-            print(f'delta T = {np.mean(l_T)}')
+            print(f"delta T = {np.mean(l_T)}")
 
 
 def _sample_single(l):

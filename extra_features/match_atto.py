@@ -3,16 +3,16 @@ For reporting obligations segments could be linked with
 """
 import os
 
-from rdflib import URIRef, BNode, Literal, Namespace, Graph
+from rdflib import Graph
 from rdflib.namespace import SKOS
 
-ROOT = os.path.join(os.path.dirname(__file__), '..')
+ROOT = os.path.join(os.path.dirname(__file__), "..")
 
-MOCKUP_RDF = os.path.join(ROOT, 'reporting_obligations/reporting_obligations_mockup.rdf')
+MOCKUP_RDF = os.path.join(ROOT, "reporting_obligations/reporting_obligations_mockup.rdf")
 # From https://op.europa.eu/en/web/eu-vocabularies/at-concept-scheme/-/resource/authority/frequency/
-ATTO_FREQUENCIES = os.path.join(ROOT, 'extra_features/frequencies-skos.rdf')
+ATTO_FREQUENCIES = os.path.join(ROOT, "extra_features/frequencies-skos.rdf")
 
-KEY_ANNUAL = 'annual'
+KEY_ANNUAL = "annual"
 
 
 def main(b_save=False):
@@ -68,24 +68,20 @@ def main(b_save=False):
 
     for label, uri in label_uri_temps:
         # annually
-        if 'year' in label.lower():
+        if "year" in label.lower():
 
-            g_matches.add(
-                (uri,
-                 SKOS.closeMatch,
-                 atto_value_uri[KEY_ANNUAL])
-            )
+            g_matches.add((uri, SKOS.closeMatch, atto_value_uri[KEY_ANNUAL]))
 
         else:
             # TODO make link
-            print('Has to be implemented')
+            print("Has to be implemented")
 
     print(g_matches.serialize(format="pretty-xml").decode("utf-8"))
     if b_save:  # save
-        g_matches.serialize(destination='matches_mockup_atto_freq.rfd', format="pretty-xml")
+        g_matches.serialize(destination="matches_mockup_atto_freq.rfd", format="pretty-xml")
 
     return g_matches
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -5,8 +5,8 @@ from rdflib.namespace import SKOS, RDF
 
 from dgfisma_rdf.shared.rdf_dgfisma import NS_BASE
 
-CONCEPT_BASE = Namespace(NS_BASE + 'concepts/')
-EN = 'en'
+CONCEPT_BASE = Namespace(NS_BASE + "concepts/")
+EN = "en"
 
 
 class ConceptGraph(Graph):
@@ -15,22 +15,21 @@ class ConceptGraph(Graph):
     """
 
     def __init__(self, *args, **kwargs):
-        """ Looks quite clean if implemented with RDFLib https://github.com/RDFLib/rdflib
+        """Looks quite clean if implemented with RDFLib https://github.com/RDFLib/rdflib
         Ontology can be visualised with http://www.visualdataweb.de/webvowl/
 
         Args:
             *args:
             **kwargs:
         """
-        super(ConceptGraph, self).__init__(
-            *args, **kwargs)
+        super(ConceptGraph, self).__init__(*args, **kwargs)
 
         self.bind("skos", SKOS)
 
         self.uid_iterator = UIDIterator()
 
     def add_terms(self, l_terms: List[str], l_def: List[str] = None, lang=EN):
-        """ Add new terms to the RDF as SKOS concepts.
+        """Add new terms to the RDF as SKOS concepts.
 
         Args:
             l_terms: List of the terms in string format
@@ -52,23 +51,14 @@ class ConceptGraph(Graph):
 
             l_uri[i] = node_term_i
 
-            self.add((node_term_i,
-                      RDF.type,
-                      SKOS.Concept
-                      ))
+            self.add((node_term_i, RDF.type, SKOS.Concept))
 
-            self.add((node_term_i,
-                      SKOS.prefLabel,
-                      Literal(term_i, lang=lang)
-                      ))
+            self.add((node_term_i, SKOS.prefLabel, Literal(term_i, lang=lang)))
 
             if l_def is not None:
                 def_i = l_def[i]
                 if bool(def_i):
-                    self.add((node_term_i,
-                              SKOS.definition,
-                              Literal(def_i, lang=lang)
-                              ))
+                    self.add((node_term_i, SKOS.definition, Literal(def_i, lang=lang)))
 
         return l_uri
 
@@ -90,10 +80,7 @@ class LinkConceptGraph(ConceptGraph):
 
         for uri_i, l_matches_uri in sim_terms.items():
             for uri_j in l_matches_uri:
-                self.add((URIRef(uri_i),
-                          SKOS.relatedMatch,
-                          URIRef(uri_j)
-                          ))
+                self.add((URIRef(uri_i), SKOS.relatedMatch, URIRef(uri_j)))
 
 
 class UIDIterator:

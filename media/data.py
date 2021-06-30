@@ -5,17 +5,17 @@ import requests
 
 
 def get_eurovoc_rdf():
-    """ Has 3,541,287 triplets.
+    """Has 3,541,287 triplets.
 
     :return:
     """
 
     media_folder = os.path.dirname(__file__)
 
-    filename_rdf = 'eurovoc_skos.rdf'
+    filename_rdf = "eurovoc_skos.rdf"
 
-    filename_zip = os.path.join(media_folder, 'eurovoc_skos.zip')
-    url = 'http://publications.europa.eu/resource/distribution/eurovoc/20200630-0/zip/skos_xl/eurovoc_skos.zip'
+    filename_zip = os.path.join(media_folder, "eurovoc_skos.zip")
+    url = "http://publications.europa.eu/resource/distribution/eurovoc/20200630-0/zip/skos_xl/eurovoc_skos.zip"
 
     download_if_not_exists(filename_zip, url)
 
@@ -23,14 +23,14 @@ def get_eurovoc_rdf():
     if not os.path.exists(filepath_rdf):
         download_if_not_exists(filename_zip, url)
 
-        with ZipFile(filename_zip, 'r') as zipObj:
+        with ZipFile(filename_zip, "r") as zipObj:
             zipObj.extract(filename_rdf, path=media_folder)
 
     return filepath_rdf
 
 
 def download_file(filename, url, chunk_size=2 ** 12):
-    """    Download an URL to a file
+    """Download an URL to a file
 
     Args:
         filename: to save file to locally
@@ -40,7 +40,7 @@ def download_file(filename, url, chunk_size=2 ** 12):
     Returns:
         None
     """
-    with open(filename, 'wb') as fout:
+    with open(filename, "wb") as fout:
         response = requests.get(url, stream=True)
         response.raise_for_status()
         # Write response data to file

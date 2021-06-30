@@ -10,9 +10,9 @@ from fastapi.testclient import TestClient
 
 from dgfisma_rdf.reporting_obligations.app.main import app, get_sparql_update_graph
 
-ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..'))
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
 
-load_dotenv(os.path.join(ROOT, 'secrets/dgfisma.env'))
+load_dotenv(os.path.join(ROOT, "secrets/dgfisma.env"))
 SECRET_USER = os.getenv("FUSEKI_ADMIN_USERNAME")
 SECRET_PASS = os.getenv("FUSEKI_ADMIN_PASSWORD")
 
@@ -22,14 +22,14 @@ See <ROOT>/reporting_obligations/README.md OR
 """
 b_local = False
 if b_local:
-    LOCAL_URL = 'http://127.0.0.1:8081'
-    URL_ENDPOINT = 'http://gpu1.crosslang.com:3030/RO_test/query'  # /query'
-    UPDATE_ENDPOINT = 'http://gpu1.crosslang.com:3030/RO_test/update'
+    LOCAL_URL = "http://127.0.0.1:8081"
+    URL_ENDPOINT = "http://gpu1.crosslang.com:3030/RO_test/query"  # /query'
+    UPDATE_ENDPOINT = "http://gpu1.crosslang.com:3030/RO_test/update"
 
 else:
-    LOCAL_URL = 'http://gpu1.crosslang.com:10080'
-    URL_ENDPOINT = 'http://gpu1.crosslang.com:3030/RO_test/query'
-    UPDATE_ENDPOINT = 'http://gpu1.crosslang.com:3030/RO_test/update'
+    LOCAL_URL = "http://gpu1.crosslang.com:10080"
+    URL_ENDPOINT = "http://gpu1.crosslang.com:3030/RO_test/query"
+    UPDATE_ENDPOINT = "http://gpu1.crosslang.com:3030/RO_test/update"
 
 # # Make sure this a test version of production!
 # ENDPOINT_PRD = 'http://gpu1.crosslang.com:3030/RO_prd_clone/query'
@@ -57,8 +57,7 @@ class TestAddDocSource(unittest.TestCase):
     URL_DOC_SOURCE_ADD = "/doc_source/add"
 
     def test_add_doc_source(self):
-        g_base = get_sparql_update_graph(URL_ENDPOINT,
-                                         UPDATE_ENDPOINT)
+        g_base = get_sparql_update_graph(URL_ENDPOINT, UPDATE_ENDPOINT)
 
         #     path = os.path.join(ROOT, 'dgfisma_rdf/reporting_obligations/output_reporting_obligations/ro + html2text.xml')
         #     with open(path, 'rb') as f:
@@ -68,19 +67,17 @@ class TestAddDocSource(unittest.TestCase):
         # g_base.remove_doc_source(doc_id=doc_id)
 
         headers = {
-            'source-name': '#todo test',
-            'docid': '#todo test',
-            'endpoint': URL_ENDPOINT,
-            'updateendpoint': UPDATE_ENDPOINT,
+            "source-name": "#todo test",
+            "docid": "#todo test",
+            "endpoint": URL_ENDPOINT,
+            "updateendpoint": UPDATE_ENDPOINT,
         }
 
-        r = TEST_CLIENT.post(self.URL_DOC_SOURCE_ADD,
-                             headers=headers)
+        r = TEST_CLIENT.post(self.URL_DOC_SOURCE_ADD, headers=headers)
 
-        with self.subTest('status code'):
-            s = f'Status code: {r.status_code}\n{r.content}'
-            self.assertLess(r.status_code, 300,
-                            f"Status code should indicate a proper connection.\n{s}")
+        with self.subTest("status code"):
+            s = f"Status code: {r.status_code}\n{r.content}"
+            self.assertLess(r.status_code, 300, f"Status code should indicate a proper connection.\n{s}")
 
     #     with self.subTest('cas content'):
     #         cas_content = r.json()
