@@ -1,6 +1,12 @@
 !Run from parent directory!
 
+# Docker compose
+
+`docker-compose up -d --build`
+
 # app
+
+!Deprecated, use docker compose instead
 
 An api is provided through fast api that extracts the *reporting obligations* from the *cas+*.
 
