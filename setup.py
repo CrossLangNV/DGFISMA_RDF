@@ -15,8 +15,8 @@ setuptools.setup(
     author="Laurens Meeus",
     author_email="laurens.meeus@crosslang.com",
     url="https://github.com/CrossLangNV/DGFISMA_RDF/",
-    # packages=['dgfisma_rdf'],  # 'concepts', 'reporting_obligations'],  # same as name
-    packages=setuptools.find_packages(),
+    packages=['dgfisma_rdf'],  # 'concepts', 'reporting_obligations'],  # same as name
+    # packages=setuptools.find_packages(), # We should avoid ./tests
     install_requires=required,  # external packages as dependencies
     # scripts=[
     #          'scripts/cool',
